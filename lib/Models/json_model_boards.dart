@@ -387,28 +387,36 @@ extension BoardsDisplay on BoardObjects {
       BoardObjects? Function(String, List<BoardObjects>) findBoardById,
     ) {
       switch (obj.type) { // type = 1, 2, 3, 4, 5, 6
-        case 1: //button
-          return BuildButton(obj: obj, synth: synth);
-        case 2: //pocketFolder
-          return BuildPocketFolder(
+        case 1: 
+          return ValueListenableBuilder(valueListenable: V4rs.searchPathUUIDS, builder: (context, search, _) { //button
+            return BuildButton(obj: obj, synth: synth); });
+        case 2: //pocketFolder 
+    return ValueListenableBuilder(valueListenable: V4rs.searchPathUUIDS, builder: (context, search, _) { 
+      return BuildPocketFolder(
             obj: obj,
             synth: synth,
             openBoard: openBoard,
             openBoardWithReturn: openBoardWithReturn,
             boards: boards,
             findBoardById: findBoardById,
-          );
+          );});
         case 3: //folder
-          return BuildFolder(obj: obj, synth: synth, openBoard: openBoard, openBoardWithReturn: openBoardWithReturn, boards: boards, findBoardById: findBoardById);
+          return ValueListenableBuilder(valueListenable: V4rs.searchPathUUIDS, builder: (context, search, _) { 
+            return BuildFolder(obj: obj, synth: synth, openBoard: openBoard, openBoardWithReturn: openBoardWithReturn, boards: boards, findBoardById: findBoardById);
+    });
         case 4: //audioTile
-          return BuildAudioTile(obj: obj, synth: synth);
+          return ValueListenableBuilder(valueListenable: V4rs.searchPathUUIDS, builder: (context, search, _) { 
+            return BuildAudioTile(obj: obj, synth: synth);});
         case 5: //typingKey
-          return BuildTypingKey(obj: obj, synth: synth);
+          return ValueListenableBuilder(valueListenable: V4rs.searchPathUUIDS, builder: (context, search, _) { 
+            return BuildTypingKey(obj: obj, synth: synth);});
         case 6:
-          return BuildButtonGrammer(obj: obj, synth: synth);
+          return ValueListenableBuilder(valueListenable: V4rs.searchPathUUIDS, builder: (context, search, _) { 
+            return BuildButtonGrammer(obj: obj, synth: synth);});
         default:
           return const SizedBox.shrink(); // fallback
       }
+    
     }
 
 

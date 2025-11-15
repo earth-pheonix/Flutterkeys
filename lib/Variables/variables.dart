@@ -3,6 +3,7 @@ import 'package:flutterkeysaac/Variables/color_variables.dart';
 import 'package:flutterkeysaac/Variables/tts/tts_interface.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutterkeysaac/Variables/settings_variable.dart';
+import 'package:flutterkeysaac/Variables/search_variables.dart';
 import 'package:flutterkeysaac/Variables/boardset_settings_variables.dart';
 import 'package:flutterkeysaac/Variables/more_font_variables.dart';
 import 'package:flutter/services.dart';
@@ -10,6 +11,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutterkeysaac/Models/json_model_nav_and_root.dart';
+import 'package:flutterkeysaac/Models/json_model_boards.dart';
 import 'dart:io';
 import 'dart:convert';
 import 'package:path/path.dart' as p;
@@ -90,6 +92,43 @@ class V4rs {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool(_showScrollButtons, showScrollButtons);
   } 
+
+//
+//search
+//
+  static BoardObjects? thisBoard;
+  static ValueNotifier<List<String>> searchPathUUIDS = ValueNotifier([]);
+
+  static bool isSearchPath(List<String> uuids, BoardObjects? obj){
+    if (obj != null) {
+      if (uuids.contains(obj.id) || uuids.contains(obj.linkToUUID)){
+        return true;
+      } 
+    }
+    return false;
+  }
+
+  static bool isSearchPathNav(List<String> uuids, NavObjects? obj){
+    if (obj != null) {
+      if (uuids.contains(obj.linkToUUID)){
+        return true;
+      } 
+    }
+    return false;
+  }
+
+  static void updateSearchPath(List<String> map, String location){
+    if (SeV4rs.openSearch.value) {
+      if (map.contains(location)){
+        map.remove(location);
+      }
+      if (map.isEmpty){
+        SeV4rs.openSearch.value = false;
+        SeV4rs.findAndPick.value = false;
+      }
+      V4rs.searchPathUUIDS.value = List.from(map);
+    }
+  }
 
 //
 //storage chest 
@@ -642,7 +681,7 @@ static Future<File> resolveImageFile(String relativePath) async {
     await prefs.remove('useSubFolders');
 
     //reset Json on load
-    deleteLocalCopy(); 
+    //deleteLocalCopy(); 
     deleteLocalCopytemplates();
 
     Fv4rs.loadSavedFontValues(); 

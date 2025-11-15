@@ -11,9 +11,14 @@ import 'package:flutterkeysaac/Variables/fonts.dart';
 import 'package:flutterkeysaac/Models/json_model_nav_and_root.dart';
 import 'package:file_picker/file_picker.dart';
 import 'dart:convert';
+import 'dart:async';
+import 'package:flutter/foundation.dart';
+
+//display contols, holding/ placeholder & selecting, 
+//back, undo redo, tap expander, pickers, json interfacing
 
 class Ev4rs {
-
+  
   //
   //display controls
   //
@@ -1680,7 +1685,15 @@ class Ev4rs {
   //
 
     static bool rootReady = false;
+    // in-memory root for editors to observe (reduces disk reloads)
+    static ValueNotifier<Root?> rootNotifier = ValueNotifier<Root?>(null);
     static ValueNotifier<bool> reloadJson = ValueNotifier(false);
+  static ValueNotifier<bool> isSaving = ValueNotifier<bool>(false);
+
+    static void setInMemoryRoot(Root root) {
+      rootNotifier.value = root;
+      rootReady = true;
+    }
 
     //find object via uuid
     static BoardObjects? findBoardById(List<BoardObjects> boards, String uuid) {
@@ -2828,23 +2841,112 @@ class Ev4rs {
           return true;
         }
 
-      //save json
-        static Future<void> saveJson(Root root) async {
-          final dir = await getApplicationDocumentsDirectory();
-          final file = File('${dir.path}/magma_vocab.json');
-          final jsonString = jsonEncode(root.toJson());
-          await file.writeAsString(jsonString);
-          updateJsonHistory(root);
-          reloadJson.value = !reloadJson.value;
+      // Debounced/background save to reduce frequent disk writes and rebuilds.
+      // Calls to saveJson while a save is pending will be batched into a single
+      // write. The returned Future completes when the write has finished.
+      static Timer? _saveTimer;
+      static Completer<void>? _pendingSaveCompleter;
+      static Map<String, dynamic>? _pendingSaveMap;
+      static const int _saveDebounceMs = 400;
+
+      // helper for compute(): encodes a Map to JSON string on a background isolate
+      static String _encodeMapToString(Map<String, dynamic> map) {
+        return jsonEncode(map);
+      }
+
+      static Future<void> saveJson(Root root) async {
+        // indicate save pending
+        isSaving.value = true;
+        // capture the latest map to write
+        _pendingSaveMap = root.toJson();
+
+        // Record history immediately so undo/redo granularity is preserved
+        // even though disk writes are debounced.
+        updateJsonHistory(root);
+
+        // if there's already a pending completer, reuse it so multiple callers
+        // await the same pending write
+        if (_pendingSaveCompleter != null && !_pendingSaveCompleter!.isCompleted) {
+          // reset the timer to delay the write (extend debounce)
+          _saveTimer?.cancel();
+          _saveTimer = Timer(Duration(milliseconds: _saveDebounceMs), () async {
+            try {
+              final mapToWrite = _pendingSaveMap ?? {};
+              final dir = await getApplicationDocumentsDirectory();
+              final file = File('${dir.path}/magma_vocab.json');
+              // offload encoding to background isolate
+              final jsonString = await compute(_encodeMapToString, mapToWrite);
+              await file.writeAsString(jsonString);
+              updateJsonHistory(root);
+              // toggle once per grouped write
+              reloadJson.value = !reloadJson.value;
+              _pendingSaveCompleter?.complete();
+            } catch (e, st) {
+              _pendingSaveCompleter?.completeError(e, st);
+            } finally {
+              _pendingSaveCompleter = null;
+              _saveTimer = null;
+              _pendingSaveMap = null;
+              // write finished
+              isSaving.value = false;
+            }
+          });
+          return _pendingSaveCompleter!.future;
         }
 
-      //undo save
+  // no pending save: create one and schedule the write
+  _pendingSaveCompleter = Completer<void>();
+        _saveTimer?.cancel();
+        _saveTimer = Timer(Duration(milliseconds: _saveDebounceMs), () async {
+          try {
+            final mapToWrite = _pendingSaveMap ?? root.toJson();
+            final dir = await getApplicationDocumentsDirectory();
+            final file = File('${dir.path}/magma_vocab.json');
+            final jsonString = await compute(_encodeMapToString, mapToWrite);
+            await file.writeAsString(jsonString);
+            updateJsonHistory(root);
+            reloadJson.value = !reloadJson.value;
+            _pendingSaveCompleter?.complete();
+          } catch (e, st) {
+            _pendingSaveCompleter?.completeError(e, st);
+          } finally {
+            _pendingSaveCompleter = null;
+            _saveTimer = null;
+            _pendingSaveMap = null;
+            // write finished
+            isSaving.value = false;
+          }
+        });
+
+  return _pendingSaveCompleter!.future;
+      }
+
+      // immediate, blocking save used by undo/redo to ensure disk state matches
+      // restored JSON immediately.
         static Future<void> undoSave(Root root) async {
+          // cancel any pending debounced save and run an immediate write
+          _saveTimer?.cancel();
+          _saveTimer = null;
+
+          // capture any pending completer to complete after the immediate write
+          final pending = _pendingSaveCompleter;
+          // clear pending map to avoid stale writes
+          _pendingSaveMap = null;
+          _pendingSaveCompleter = null;
+
           final dir = await getApplicationDocumentsDirectory();
           final file = File('${dir.path}/magma_vocab.json');
-          final jsonString = jsonEncode(root.toJson());
+          final jsonString = await compute(_encodeMapToString, root.toJson());
           await file.writeAsString(jsonString);
+
+          // ensure any callers awaiting the batched save are completed
+          try {
+            pending?.complete();
+          } catch (_) {}
+
           reloadJson.value = !reloadJson.value;
+          // immediate write done
+          isSaving.value = false;
         }
 
       //delete a board

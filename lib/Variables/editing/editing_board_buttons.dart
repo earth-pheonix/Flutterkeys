@@ -27,29 +27,23 @@ import 'dart:async';
     }
 
    class _BaseEditorState extends State<BaseEditor>{
-      late Future<Root> rootFuture;
-      late Root root;
+  late Future<Root> rootFuture;
+  late Root root;
 
       @override
       void initState(){
         Ev4rs.rootReady = false;
         super.initState();
+        // prefer in-memory root when available, otherwise load once
         rootFuture = V4rs.loadRootData();
-
-        Ev4rs.reloadJson.addListener(_handleReload);
       }
 
       @override
       void dispose(){
-        Ev4rs.reloadJson.removeListener(_handleReload);
         super.dispose();
       }
 
-      void _handleReload() {
-        setState(() {
-          rootFuture = V4rs.loadRootData();
-        });
-      }
+      
 
       @override
       Widget build(BuildContext context) {
@@ -57,9 +51,15 @@ import 'dart:async';
         final isLandscape = screenSize.width > screenSize.height;
 
         return Stack( children: [
-          ValueListenableBuilder<bool>(valueListenable: Ev4rs.reloadJson, builder: (context, reload, _) {
+          ValueListenableBuilder<Root?>(valueListenable: Ev4rs.rootNotifier, builder: (context, inMemoryRoot, _) {
+            // if an in-memory root is available, use it; otherwise fall back to the loaded future
+            if (inMemoryRoot != null) {
+              root = inMemoryRoot;
+              Ev4rs.rootReady = true;
+            }
+
             return FutureBuilder<Root>(
-            future: rootFuture, 
+            future: rootFuture,
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.done && snapshot.hasData) {
                 root = snapshot.data!;
@@ -73,7 +73,6 @@ import 'dart:async';
                 return Center(child: Text('No data found'));
               }
             }
-              
 
             return Row( 
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -370,22 +369,15 @@ import 'dart:async';
         rootFuture = V4rs.loadRootData();
 
         _player = AudioPlayer();
-
-        Ev4rs.reloadJson.addListener(_handleReload);
       }
 
       @override
       void dispose(){
         _player.dispose();
-        Ev4rs.reloadJson.removeListener(_handleReload);
         super.dispose();
       }
 
-      void _handleReload() {
-        setState(() {
-          rootFuture = V4rs.loadRootData();
-        });
-      }
+      
 
       @override
       Widget build(BuildContext context) {
@@ -393,9 +385,14 @@ import 'dart:async';
         final isLandscape = screenSize.width > screenSize.height;
 
         return Stack( children: [
-          ValueListenableBuilder<bool>(valueListenable: Ev4rs.reloadJson, builder: (context, reload, _) {
+          ValueListenableBuilder<Root?>(valueListenable: Ev4rs.rootNotifier, builder: (context, inMemoryRoot, _) {
+            if (inMemoryRoot != null) {
+              root = inMemoryRoot;
+              Ev4rs.rootReady = true;
+            }
+
             return FutureBuilder<Root>(
-            future: rootFuture, 
+            future:  rootFuture,
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.done && snapshot.hasData) {
                 root = snapshot.data!;
@@ -409,10 +406,9 @@ import 'dart:async';
                 return Center(child: Text('No data found'));
               }
             }
-              
+
             everyImage = Ev4rs.getAllImages(root);
             everyMp3 = Ev4rs.getAllMp3(root);
-          
 
             final obj_ = Ev4rs.findBoardById(root.boards, Ev4rs.selectedUUID);
             if (obj_ == null) {
@@ -2093,27 +2089,20 @@ import 'dart:async';
 
       @override
       void initState(){
-        Ev4rs.rootReady = false;
-        super.initState();
-        rootFuture = V4rs.loadRootData();
+  Ev4rs.rootReady = false;
+  super.initState();
+  rootFuture = V4rs.loadRootData();
 
-        _player = AudioPlayer();
-
-        Ev4rs.reloadJson.addListener(_handleReload);
+  _player = AudioPlayer();
       }
 
       @override
       void dispose(){
-        _player.dispose();
-        Ev4rs.reloadJson.removeListener(_handleReload);
-        super.dispose();
+  _player.dispose();
+  super.dispose();
       }
 
-      void _handleReload() {
-        setState(() {
-          rootFuture = V4rs.loadRootData();
-        });
-      }
+      
 
       @override
       Widget build(BuildContext context) {
@@ -2121,9 +2110,14 @@ import 'dart:async';
         final isLandscape = screenSize.width > screenSize.height;
 
         return Stack( children: [
-          ValueListenableBuilder<bool>(valueListenable: Ev4rs.reloadJson, builder: (context, reload, _) {
+          ValueListenableBuilder<Root?>(valueListenable: Ev4rs.rootNotifier, builder: (context, inMemoryRoot, _) {
+            if (inMemoryRoot != null) {
+              root = inMemoryRoot;
+              Ev4rs.rootReady = true;
+            }
+
             return FutureBuilder<Root>(
-            future: rootFuture, 
+            future:  rootFuture,
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.done && snapshot.hasData) {
                 root = snapshot.data!;
@@ -2137,10 +2131,9 @@ import 'dart:async';
                 return Center(child: Text('No data found'));
               }
             }
-              
+
             everyImage = Ev4rs.getAllImages(root);
             everyMp3 = Ev4rs.getAllMp3(root);
-          
 
             final obj_ = Ev4rs.findBoardById(root.boards, Ev4rs.selectedUUID);
             if (obj_ == null) {
@@ -3942,24 +3935,17 @@ import 'dart:async';
 
       @override
       void initState(){
-        Ev4rs.rootReady = false;
-        super.initState();
-        rootFuture = V4rs.loadRootData();
-
-        Ev4rs.reloadJson.addListener(_handleReload);
+  Ev4rs.rootReady = false;
+  super.initState();
+  rootFuture = V4rs.loadRootData();
       }
 
       @override
       void dispose(){
-        Ev4rs.reloadJson.removeListener(_handleReload);
-        super.dispose();
+  super.dispose();
       }
 
-      void _handleReload() {
-        setState(() {
-          rootFuture = V4rs.loadRootData();
-        });
-      }
+      
 
       @override
       Widget build(BuildContext context) {
@@ -3967,9 +3953,14 @@ import 'dart:async';
         final isLandscape = screenSize.width > screenSize.height;
 
         return Stack( children: [
-          ValueListenableBuilder<bool>(valueListenable: Ev4rs.reloadJson, builder: (context, reload, _) {
+          ValueListenableBuilder<Root?>(valueListenable: Ev4rs.rootNotifier, builder: (context, inMemoryRoot, _) {
+            if (inMemoryRoot != null) {
+              root = inMemoryRoot;
+              Ev4rs.rootReady = true;
+            }
+
             return FutureBuilder<Root>(
-            future: rootFuture, 
+            future:  rootFuture,
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.done && snapshot.hasData) {
                 root = snapshot.data!;
@@ -3983,9 +3974,8 @@ import 'dart:async';
                 return Center(child: Text('No data found'));
               }
             }
-              
+
             everyImage = Ev4rs.getAllImages(root);
-          
 
             final obj_ = Ev4rs.findBoardById(root.boards, Ev4rs.subFolderSelectedUUID);
             if (obj_ == null) {
@@ -5476,24 +5466,17 @@ import 'dart:async';
 
       @override
       void initState(){
-        Ev4rs.rootReady = false;
-        super.initState();
-        rootFuture = V4rs.loadRootData();
-
-        Ev4rs.reloadJson.addListener(_handleReload);
+  Ev4rs.rootReady = false;
+  super.initState();
+  rootFuture = V4rs.loadRootData();
       }
 
       @override
       void dispose(){
-        Ev4rs.reloadJson.removeListener(_handleReload);
-        super.dispose();
+  super.dispose();
       }
 
-      void _handleReload() {
-        setState(() {
-          rootFuture = V4rs.loadRootData();
-        });
-      }
+      
 
       @override
       Widget build(BuildContext context) {
@@ -5501,9 +5484,14 @@ import 'dart:async';
         final isLandscape = screenSize.width > screenSize.height;
 
         return Stack( children: [
-          ValueListenableBuilder<bool>(valueListenable: Ev4rs.reloadJson, builder: (context, reload, _) {
+          ValueListenableBuilder<Root?>(valueListenable: Ev4rs.rootNotifier, builder: (context, inMemoryRoot, _) {
+            if (inMemoryRoot != null) {
+              root = inMemoryRoot;
+              Ev4rs.rootReady = true;
+            }
+
             return FutureBuilder<Root>(
-            future: rootFuture, 
+            future:  rootFuture,
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.done && snapshot.hasData) {
                 root = snapshot.data!;
@@ -5517,9 +5505,8 @@ import 'dart:async';
                 return Center(child: Text('No data found'));
               }
             }
-              
+
             everyImage = Ev4rs.getAllImages(root);
-          
 
             final obj_ = Ev4rs.findBoardById(root.boards, Ev4rs.subFolderSelectedUUID);
             if (obj_ == null) {

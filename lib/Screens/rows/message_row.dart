@@ -7,16 +7,21 @@ import 'package:flutter/services.dart';
 import 'package:flutterkeysaac/Variables/tts/tts_interface.dart';
 import 'package:flutterkeysaac/Variables/more_font_variables.dart';
 import 'package:flutterkeysaac/Variables/settings_variable.dart';
+import 'package:flutterkeysaac/Variables/search_variables.dart';
+import 'package:flutterkeysaac/Models/json_model_nav_and_root.dart';
+import 'package:flutterkeysaac/Models/json_model_boards.dart';
 import 'dart:async';
 
 class MessageRow extends StatefulWidget {
   final TTSInterface synth;
   final int? highlightStart;
   final int? highlightLength;
+  final Root? root;
 
   const MessageRow({
     super.key, 
     required this.synth,
+    required this.root,
     this.highlightStart,
     this.highlightLength,
     });
@@ -125,13 +130,21 @@ class _MessageRowState extends State<MessageRow> {
             ),
             Expanded (
               flex: 3,
-              child: RightOfMessageWindow(
-                controller: _controller,
-                onUndo: _undo,
-                onRedo: _redo,
-                synth: widget.synth,
-              ),
+              child: ValueListenableBuilder(
+                valueListenable: SeV4rs.openSearch, 
+                builder: (context, openSearch, _) {
+                  return (openSearch && (widget.root != null)) 
+                    ? SearchDisplay(root: widget.root) 
+                    : RightOfMessageWindow(
+                      controller: _controller,
+                      onUndo: _undo,
+                      onRedo: _redo,
+                      synth: widget.synth,
+                    );
+                }
             )
+        ),
+            
           ],
         );
       },
@@ -198,67 +211,67 @@ class _LeftOfMessageWindow extends State<LeftOfMessageWindow> {
                 ),
               ],
             ),
-            //copy and bookmark button 
-            Row( 
-              children: [
-                SizedBox( 
-                  height: totalHeight * 0.33,
-                width: totalWidth * 0.5,
-                child: Padding (
-                padding: const EdgeInsets.all(3.0),
-                child: ButtonStyle1(
-                  imagePath: 'assets/interface_icons/interface_icons/iCopy.png',
-                  onPressed: () {
-                    if (Sv4rs.speakInterfaceButtonsOnSelect) {
-                          V4rs.speakOnSelect('copy', V4rs.selectedLanguage.value, widget.synth);
-                          }
-                     Clipboard.setData(ClipboardData(text: widget.controller.text));
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text('Text copied to clipboard'), 
-                                  duration: Duration(milliseconds: 750),
-                                  ),
-                              );
-                  },
-                ),
-                ),
-                ),
-                SizedBox(
-                  height: totalHeight * 0.33,
-                width: totalWidth * 0.5,
-                child: Padding (
-                padding: const EdgeInsets.all(3.0),
-                child: ButtonStyle1(
-                  imagePath: 'assets/interface_icons/interface_icons/iBookmark.png',
-                  onPressed: () {
-                    if (Sv4rs.speakInterfaceButtonsOnSelect) {
-                          V4rs.speakOnSelect('bookmark', V4rs.selectedLanguage.value, widget.synth);
-                          }
-                    // put action here
-                  },
-                ),
-                ),
-                ),
-              ],
-            ),
-            //boardset button 
-            SizedBox(
-              height: totalHeight * 0.33,
+          //copy and bookmark button 
+          Row( 
+            children: [
+              SizedBox( 
+                height: totalHeight * 0.33,
               width: totalWidth * 0.5,
               child: Padding (
-                padding: const EdgeInsets.all(3.0),
-                child: ButtonStyle1(
-                  imagePath: 'assets/interface_icons/interface_icons/iBoardset.png',
-                  onPressed: () {
-                    if (Sv4rs.speakInterfaceButtonsOnSelect) {
-                          V4rs.speakOnSelect('quick swap', V4rs.selectedLanguage.value, widget.synth);
-                          }
-                    // put action here
-                  },
-                ),
-                ),
+              padding: const EdgeInsets.all(3.0),
+              child: ButtonStyle1(
+                imagePath: 'assets/interface_icons/interface_icons/iCopy.png',
+                onPressed: () {
+                  if (Sv4rs.speakInterfaceButtonsOnSelect) {
+                        V4rs.speakOnSelect('copy', V4rs.selectedLanguage.value, widget.synth);
+                        }
+                    Clipboard.setData(ClipboardData(text: widget.controller.text));
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text('Text copied to clipboard'), 
+                                duration: Duration(milliseconds: 750),
+                                ),
+                            );
+                },
+              ),
+              ),
+              ),
+              SizedBox(
+                height: totalHeight * 0.33,
+              width: totalWidth * 0.5,
+              child: Padding (
+              padding: const EdgeInsets.all(3.0),
+              child: ButtonStyle1(
+                imagePath: 'assets/interface_icons/interface_icons/iBookmark.png',
+                onPressed: () {
+                  if (Sv4rs.speakInterfaceButtonsOnSelect) {
+                        V4rs.speakOnSelect('bookmark', V4rs.selectedLanguage.value, widget.synth);
+                        }
+                  // put action here
+                },
+              ),
+              ),
+              ),
+            ],
           ),
-          ],
+          //boardset button 
+          SizedBox(
+            height: totalHeight * 0.33,
+            width: totalWidth * 0.5,
+            child: Padding (
+              padding: const EdgeInsets.all(3.0),
+              child: ButtonStyle1(
+                imagePath: 'assets/interface_icons/interface_icons/iBoardset.png',
+                onPressed: () {
+                  if (Sv4rs.speakInterfaceButtonsOnSelect) {
+                        V4rs.speakOnSelect('quick swap', V4rs.selectedLanguage.value, widget.synth);
+                        }
+                  // put action here
+                },
+              ),
+              ),
+        ),
+         ],
         );
       },
     );
@@ -892,11 +905,14 @@ class _RightOfMessageWindowState extends State<RightOfMessageWindow> {
                     padding: const EdgeInsets.all(3.0),
                     child: ButtonStyle1(
                       imagePath: 'assets/interface_icons/interface_icons/iSearch.png',
-                      onPressed: () {
+                      onPressed: () { setState((){
                         if (Sv4rs.speakInterfaceButtonsOnSelect) {
                           V4rs.speakOnSelect('search', V4rs.selectedLanguage.value, widget.synth);
                           }
+                          SeV4rs.openSearch.value = true;
+                          SeV4rs.findAndPick.value = false;
                         // put action here
+                      });
                       },
                     ),
                     ),
@@ -926,20 +942,286 @@ class _RightOfMessageWindowState extends State<RightOfMessageWindow> {
   }
 }
 
+class SearchDisplay extends StatefulWidget {
+  final Root? root;
 
+  const SearchDisplay({
+    super.key, 
+    required this.root,
+    });
 
-class SearchDisplay extends StatelessWidget {
-  const SearchDisplay({super.key});
+  @override
+  State<SearchDisplay> createState() => _SearchDisplay();
+}
+
+class _SearchDisplay extends State<SearchDisplay> {
+
+  int searchIndex = 0;
+  List<BoardObjects?> foundObjects = [];
+  List<Widget> indexedChildren = [];
+  
+
+  void updateFoundObjects(List<BoardObjects?> objects) {
+    foundObjects = objects;
+    indexedChildren = foundObjects.map((obj) {
+      return (obj != null) ? SizedBox.expand(child: PreveiwButton(obj: obj)) : SizedBox();
+    }).toList();
+    searchIndex = 0;
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: ButtonStyle1(
-        imagePath: 'assets/interface_icons/interface_icons/iSettings.png',
-        onPressed: () {
-          // put action here
-        },
-      ),
+    return 
+          ValueListenableBuilder<bool>(valueListenable: SeV4rs.findAndPick, builder: (context, findAndPick, _) {
+            return (findAndPick) 
+              ? pickButton()
+              : startSearch();
+           }
+          );
+  }
+
+  Widget startSearch(){
+    return LayoutBuilder ( 
+       builder: (context, constraints) { 
+
+        var totalHeight = constraints.maxHeight;
+        var totalWidth = constraints.maxWidth;
+
+      return Column (
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+
+          //search box
+          Padding(
+            padding: EdgeInsets.fromLTRB(3, 3, 3, 8),
+            child: Container(
+              decoration: BoxDecoration(
+                color: Cv4rs.themeColor4,
+                borderRadius: BorderRadius.circular(10)
+                ),
+              child: SizedBox(
+                height: totalHeight * 0.35,
+                child: TextField(
+                  style: Fv4rs.mwLabelStyle,
+                  onChanged: (value){
+                    SeV4rs.searchFor = value;
+                    },
+                  decoration: InputDecoration(
+                    hintStyle: Fv4rs.mwLabelStyle.copyWith(
+                      color: Cv4rs.themeColor2
+                    ),
+                    hintText: 'Search:',
+                  ),
+                )
+              )
+            ),
+          ),
+          
+          //close and check 
+          Row( 
+            children: [
+              SizedBox(
+                height: totalHeight * 0.35,
+                width: totalWidth * 0.3,
+                child: Padding (
+                    padding: const EdgeInsets.all(3.0),
+                    child: ButtonStyle1(
+                      imagePath: 'assets/interface_icons/interface_icons/iClose.png',
+                      onPressed: () {
+                        setState(() {
+                          SeV4rs.openSearch.value = false;
+                          SeV4rs.searchFor = '';
+                        });
+                      },
+                    ),
+                    ),
+                    ),
+              SizedBox(
+                height: totalHeight * 0.35,
+                width: totalWidth * 0.3
+              ),
+              SizedBox(
+              height: totalHeight * 0.35,
+              width: totalWidth * 0.4,
+              child: Padding (
+                padding: const EdgeInsets.all(2.0),
+                child: ButtonStyle1(
+                  imagePath: 'assets/interface_icons/interface_icons/iCheck.png',
+                  onPressed: () { 
+                    setState(() {
+                      if (widget.root != null) {
+                        foundObjects = SeV4rs.objectsReturned(
+                          widget.root!, 
+                          SeV4rs.findAllUUIDsForWord(widget.root!.boards, SeV4rs.searchFor)
+                        );
+                        updateFoundObjects(foundObjects);
+                        SeV4rs.findAndPick.value = true;
+                      }
+                    });
+                  },
+                ),
+              ),
+              ),
+            ],
+          ),
+          ],
+        );
+      },
     );
   }
+
+  Widget pickButton(){
+    bool start = true;
+    bool end = false;
+
+    void next() {
+      setState(() {
+        if (searchIndex < foundObjects.length - 1) {
+          searchIndex++;
+        } 
+      });
+    }
+
+    void previous() {
+      setState(() {
+        if (searchIndex > 0) {
+          searchIndex = 0;
+        }
+      });
+    }
+
+    void move(){
+      setState((){
+        if (searchIndex == 0){
+          start = true;
+          end = false;
+        } else if (searchIndex == foundObjects.length - 1) {
+          end = true;
+          start = false;
+        }
+
+        if (start){
+          next();
+        } else if (end) {
+          previous();
+        }
+      });
+    }
+
+    return LayoutBuilder ( 
+       builder: (context, constraints) { 
+
+        var totalHeight = constraints.maxHeight;
+        var totalWidth = constraints.maxWidth;
+
+      return Column (
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+
+          //search box
+           Padding(padding: EdgeInsets.fromLTRB(0, 0, 0, 5),
+            child: 
+          Row( 
+           children: [
+              SizedBox(
+                height: totalHeight * 0.35,
+                width: totalWidth * 0.66,
+                child: (widget.root != null) 
+                 ? IndexedStack(
+                      index: searchIndex,
+                      children: indexedChildren,
+                    )
+                  : SizedBox(),
+                ),
+              SizedBox(
+                height: totalHeight * 0.35,
+                width: totalWidth * 0.33,
+                child:  Padding (
+                padding: const EdgeInsets.all(3.0),
+                child: ButtonStyle1(
+                  turn: 270,
+                  imagePath: 'assets/interface_icons/interface_icons/iArrow.png',
+                  onPressed: move,
+                ),
+                ),
+              ),
+            ],
+          ),
+          ),
+
+          //close and check 
+          Row( 
+            children: [
+              SizedBox(
+                height: totalHeight * 0.35,
+                width: totalWidth * 0.3,
+                child: Padding (
+                    padding: const EdgeInsets.all(3.0),
+                    child: ButtonStyle1(
+                      imagePath: 'assets/interface_icons/interface_icons/iClose.png',
+                      onPressed: () {
+                        setState(() {
+                          SeV4rs.openSearch.value = false;
+                          SeV4rs.findAndPick.value = false;
+                          SeV4rs.searchFor = '';
+                          V4rs.searchPathUUIDS.value = [];
+                        });
+                      },
+                    ),
+                    ),
+                    ),
+              SizedBox(
+                height: totalHeight * 0.35,
+                width: totalWidth * 0.3
+              ),
+              SizedBox(
+              height: totalHeight * 0.35,
+              width: totalWidth * 0.4,
+              child: Padding (
+                padding: const EdgeInsets.all(2.0),
+                child: ButtonStyle1(
+                  imagePath: 'assets/interface_icons/interface_icons/iCheck.png',
+                  onPressed: () { 
+                    setState(() {
+                      SeV4rs.findThis = foundObjects[searchIndex];
+                      if (widget.root != null && SeV4rs.findThis != null && V4rs.thisBoard != null){
+                        SeV4rs.startBoard.add(V4rs.thisBoard!);
+                        SeV4rs.startBoard.addAll(V4rs.thisBoard!.content);
+                        
+                        if (SeV4rs.startBoard.isNotEmpty) {
+                         V4rs.searchPathUUIDS.value = 
+                          SeV4rs.findWord(widget.root!, SeV4rs.findThis!.id, V4rs.thisBoard!.content).keys.toList();
+                         if (!V4rs.searchPathUUIDS.value.contains(SeV4rs.findThis!.id)){
+                          V4rs.searchPathUUIDS.value.add(SeV4rs.findThis!.id);
+                         }
+                        }
+                      }
+                    });
+                  },
+                ),
+              ),
+              ),
+            ],
+          ),
+          ],
+        );
+      },
+    );
+  }
+
 }
+
+
+
+

@@ -11,6 +11,7 @@ import 'package:flutterkeysaac/Models/json_model_nav_and_root.dart';
 import 'package:flutterkeysaac/Models/json_model_boards.dart';
 import 'package:flutterkeysaac/Models/json_model_grammer.dart';
 import 'package:flutterkeysaac/Variables/ui_shortcuts.dart';
+import 'package:flutterkeysaac/Widgets/save_indicator.dart';
 
 
 class Editor extends StatefulWidget {
@@ -229,7 +230,7 @@ void _updateSelection() {
           resizeToAvoidBottomInset: false,
           body: SafeArea(
             bottom: false,
-            child: 
+            child: Stack(children: [
               ValueListenableBuilder<bool>(
                 valueListenable: Ev4rs.isButtonExpanded, 
                 builder: (context, isButtonExpanded, _) {
@@ -268,7 +269,7 @@ void _updateSelection() {
                                     return const CircularProgressIndicator();
                                   } else {
                                   return SingleChildScrollView( 
-                                    child: BoardEditor(openBoard: _openBoard, root: _root!, goBack: _goBackBoard,)
+                                    child: BoardEditor(openBoard: _openBoard, primaryRoot: _root!, goBack: _goBackBoard,)
                                   );
                                   }
                                 }
@@ -540,7 +541,7 @@ void _updateSelection() {
 
                               if (Ev4rs.boardEditor.value == true){
                                   return SingleChildScrollView( 
-                                    child: BoardEditor(openBoard: _openBoard, root: _root!, goBack: _goBackBoard,)
+                                    child: BoardEditor(openBoard: _openBoard, primaryRoot: _root!, goBack: _goBackBoard,)
                                   );
                                 }
                               //button editor
@@ -603,6 +604,13 @@ void _updateSelection() {
                       }
                  
                     ),
+              Positioned(
+                top: 0,
+                left: 0,
+                right: 0,
+                child: const SaveIndicator(),
+              ),
+            ]),
           ),
         );
       },

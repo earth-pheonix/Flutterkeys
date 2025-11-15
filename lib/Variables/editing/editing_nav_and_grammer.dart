@@ -58,9 +58,10 @@ import 'dart:async';
         final isLandscape = screenSize.width > screenSize.height;
 
         return Stack( children: [
-          ValueListenableBuilder<bool>(valueListenable: Ev4rs.reloadJson, builder: (context, reload, _) {
+          ValueListenableBuilder<Root?>(valueListenable: Ev4rs.rootNotifier, builder: (context, inMemoryRoot, _) {
+            final futureRoot = rootFuture;
             return FutureBuilder<Root>(
-            future: rootFuture, 
+            future: futureRoot,
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.done && snapshot.hasData) {
                 root = snapshot.data!;
@@ -1342,9 +1343,10 @@ import 'dart:async';
         final isLandscape = screenSize.width > screenSize.height;
 
         return Stack( children: [
-          ValueListenableBuilder<bool>(valueListenable: Ev4rs.reloadJson, builder: (context, reload, _) {
+          ValueListenableBuilder<Root?>(valueListenable: Ev4rs.rootNotifier, builder: (context, inMemoryRoot, _) {
+            final futureRoot = rootFuture;
             return FutureBuilder<Root>(
-            future: rootFuture, 
+            future: futureRoot,
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.done && snapshot.hasData) {
                 root = snapshot.data!;
@@ -2701,9 +2703,10 @@ import 'dart:async';
         final isLandscape = screenSize.width > screenSize.height;
 
         return Stack( children: [
-          ValueListenableBuilder<bool>(valueListenable: Ev4rs.reloadJson, builder: (context, reload, _) {
+          ValueListenableBuilder<Root?>(valueListenable: Ev4rs.rootNotifier, builder: (context, inMemoryRoot, _) {
+            final futureRoot = rootFuture;
             return FutureBuilder<Root>(
-            future: rootFuture, 
+            future: futureRoot,
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.done && snapshot.hasData) {
                 root = snapshot.data!;
@@ -4174,9 +4177,10 @@ import 'dart:async';
         final isLandscape = screenSize.width > screenSize.height;
 
         return Stack( children: [
-          ValueListenableBuilder<bool>(valueListenable: Ev4rs.reloadJson, builder: (context, reload, _) {
+          ValueListenableBuilder<Root?>(valueListenable: Ev4rs.rootNotifier, builder: (context, inMemoryRoot, _) {
+            final futureRoot = rootFuture;
             return FutureBuilder<Root>(
-            future: rootFuture, 
+            future: futureRoot,
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.done && snapshot.hasData) {
                 root = snapshot.data!;

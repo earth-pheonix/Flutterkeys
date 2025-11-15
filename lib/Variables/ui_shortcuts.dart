@@ -9,12 +9,14 @@ import 'package:flutterkeysaac/Variables/more_font_variables.dart';
 import 'package:flutterkeysaac/Variables/tts/tts_interface.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutterkeysaac/Models/json_model_boards.dart';
+import 'package:flutterkeysaac/Models/json_model_nav_and_root.dart';
 import 'package:flutterkeysaac/Models/json_model_grammer.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'dart:async';
 import 'dart:io';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
+import 'dart:math' as math;
 
 class LoadImage {
   // Cache resolved file paths so they don’t flash back to placeholder
@@ -116,6 +118,7 @@ class ButtonStyle1 extends StatelessWidget {
   final VoidCallback onPressed;
   final bool glow;
   final bool specialImageColor;
+  final int turn;
 
   //constructs the button 
   const ButtonStyle1 ({
@@ -124,6 +127,7 @@ class ButtonStyle1 extends StatelessWidget {
     required this.onPressed,
     this.specialImageColor = false,
     this.glow = false,
+    this.turn = 0,
   });
 
   //defines the button 
@@ -154,7 +158,12 @@ class ButtonStyle1 extends StatelessWidget {
         child: ColorFiltered(
           colorFilter: ColorFilter.mode(specialImageColor ? Cv4rs.themeColor1 : Cv4rs.uiIconColor, BlendMode.srcIn
           ),
-          child: image,
+          child: (turn > 0) 
+          ? Transform.rotate(
+            angle: turn * math.pi / 180,
+            child: image
+          )
+          : image,
         ),
       ),
     );
@@ -3080,6 +3089,9 @@ class _BuildPocketFolderState extends State<BuildPocketFolder> {
             BoardObjects obj,
             TTSInterface synth,
             ) async {
+              setState(() {
+                V4rs.updateSearchPath(V4rs.searchPathUUIDS.value, obj.id);
+              });
             switch ((obj.matchSpeakOS ?? true) ? Bv4rs.pocketFolderSpeakOnSelect : obj.speakOS) {
             case 1:
               V4rs.changedMWfromButton = true;
@@ -3105,6 +3117,9 @@ class _BuildPocketFolderState extends State<BuildPocketFolder> {
             BoardObjects obj,
             TTSInterface synth,
             ) async {
+              setState(() {
+                V4rs.updateSearchPath(V4rs.searchPathUUIDS.value, obj.id);
+              });
             switch ((obj.matchSpeakOS ?? true) ? Bv4rs.pocketFolderSpeakOnSelect : obj.speakOS) {
             case 1:
               final board = findBoardById(linkTo, boards);
@@ -3195,7 +3210,9 @@ class _BuildPocketFolderState extends State<BuildPocketFolder> {
       style: ElevatedButton.styleFrom(
         padding: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
         elevation: 2,
-        backgroundColor: (obj.matchPOS ?? true)
+        backgroundColor: (V4rs.isSearchPath(V4rs.searchPathUUIDS.value, obj))
+          ? Cv4rs.posToBorderColor(obj.pos ?? 'Extra 2')
+          : (obj.matchPOS ?? true) 
             ? Cv4rs.posToColor(obj.pos ?? 'Extra 2')
             : obj.backgroundColor ?? Colors.blueGrey,
         shadowColor: Cv4rs.themeColor4,
@@ -3410,6 +3427,9 @@ class _BuildTypingKeyState extends State<BuildTypingKey> {
             BoardObjects obj,
             TTSInterface synth,
             ) async {
+              setState(() {
+                V4rs.updateSearchPath(V4rs.searchPathUUIDS.value, obj.id);
+              });
             switch ((obj.matchSpeakOS ?? true) ? Bv4rs.typingKeySpeakOnSelect : obj.speakOS) {
                   case 1:
                     V4rs.changedMWfromButton = true;
@@ -3435,6 +3455,9 @@ class _BuildTypingKeyState extends State<BuildTypingKey> {
             BoardObjects obj,
             TTSInterface synth,
             ) async {
+              setState(() {
+                V4rs.updateSearchPath(V4rs.searchPathUUIDS.value, obj.id);
+              });
             switch ((obj.matchSpeakOS ?? true) ? Bv4rs.typingKeySpeakOnSelect : obj.speakOS) {
                   case 1:
                     V4rs.changedMWfromButton = true;
@@ -3513,7 +3536,9 @@ class _BuildTypingKeyState extends State<BuildTypingKey> {
       style: ElevatedButton.styleFrom(
         padding: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
         elevation: 2,
-        backgroundColor: (obj.matchPOS ?? true)
+        backgroundColor: (V4rs.isSearchPath(V4rs.searchPathUUIDS.value, obj))
+          ? Cv4rs.posToBorderColor(obj.pos ?? 'Extra 2')
+          : (obj.matchPOS ?? true)
             ? Cv4rs.posToColor(obj.pos ?? 'Extra 2')
             : obj.backgroundColor ?? Colors.blueGrey,
         shadowColor: Cv4rs.themeColor4,
@@ -3748,6 +3773,9 @@ class _BuildAudioTileState extends State<BuildAudioTile> {
             BoardObjects obj,
             TTSInterface synth,
             ) async {
+              setState(() {
+                V4rs.updateSearchPath(V4rs.searchPathUUIDS.value, obj.id);
+              });
             switch ((obj.matchSpeakOS ?? true) ? Bv4rs.typingKeySpeakOnSelect : obj.speakOS) {
                   case 1:
                     await LoadAudio.fromAudio(obj.audioClip);
@@ -3767,6 +3795,9 @@ class _BuildAudioTileState extends State<BuildAudioTile> {
             BoardObjects obj,
             TTSInterface synth,
             ) async {
+              setState(() {
+                V4rs.updateSearchPath(V4rs.searchPathUUIDS.value, obj.id);
+              });
             switch ((obj.matchSpeakOS ?? true) ? Bv4rs.typingKeySpeakOnSelect : obj.speakOS) {
                   case 1:
                     V4rs.changedMWfromButton = true;
@@ -3845,7 +3876,9 @@ class _BuildAudioTileState extends State<BuildAudioTile> {
       style: ElevatedButton.styleFrom(
         padding: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
         elevation: 2,
-        backgroundColor: (obj.matchPOS ?? true)
+        backgroundColor: (V4rs.isSearchPath(V4rs.searchPathUUIDS.value, obj))
+          ? Cv4rs.posToBorderColor(obj.pos ?? 'Extra 2')
+          : (obj.matchPOS ?? true)
             ? Cv4rs.posToColor(obj.pos ?? 'Extra 2')
             : obj.backgroundColor ?? Colors.blueGrey,
         shadowColor: Cv4rs.themeColor4,
@@ -4062,9 +4095,11 @@ class BuildButtonGrammer extends StatelessWidget{
         style: ElevatedButton.styleFrom(
             padding: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
             elevation: 2,
-            backgroundColor: (obj.matchPOS ?? true) 
-              ? Cv4rs.posToColor(obj.pos ?? 'Extra 2') 
-              : obj.backgroundColor ?? Colors.blueGrey,
+            backgroundColor: (V4rs.isSearchPath(V4rs.searchPathUUIDS.value, obj))
+              ? Cv4rs.posToBorderColor(obj.pos ?? 'Extra 2')
+              : (obj.matchPOS ?? true) 
+                ? Cv4rs.posToColor(obj.pos ?? 'Extra 2') 
+                : obj.backgroundColor ?? Colors.blueGrey,
             shadowColor: Cv4rs.themeColor4, 
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
@@ -4084,18 +4119,21 @@ class BuildButtonGrammer extends StatelessWidget{
             V4rs.changedMWfromButton = true;
             Gv4rs.grammerFunctions(obj.function ?? '');
             V4rs.changedMWfromButton = false;
+            V4rs.updateSearchPath(V4rs.searchPathUUIDS.value, obj.id);
             break;
           case 2:
             V4rs.changedMWfromButton = true;
             Gv4rs.grammerFunctions(obj.function ?? '');
             await V4rs.speakOnSelect(obj.label ?? '', V4rs.selectedLanguage.value, synth);
             V4rs.changedMWfromButton = false;
+            V4rs.updateSearchPath(V4rs.searchPathUUIDS.value, obj.id);
             break;
           case 3:
             V4rs.changedMWfromButton = true;
             Gv4rs.grammerFunctions(obj.function ?? '');
             await V4rs.speakOnSelect(Gv4rs.lastWord, V4rs.selectedLanguage.value, synth);
             V4rs.changedMWfromButton = false;
+            V4rs.updateSearchPath(V4rs.searchPathUUIDS.value, obj.id);
             break;
           }
         },
@@ -4203,6 +4241,146 @@ class BuildButtonGrammer extends StatelessWidget{
     }
   }
 
+class PreveiwButton extends StatelessWidget{
+  
+  final BoardObjects obj;
+
+  const PreveiwButton({super.key, required this.obj});
+
+    @override
+    Widget build(BuildContext context) {
+
+    //font settings
+        TextStyle uniqueStyle =  
+        TextStyle(
+          color: obj.fontColor ?? Colors.black,
+          fontSize: obj.fontSize ?? 16,
+          fontFamily: Fontsy.fontToFamily[(obj.fontFamily ?? 'default')], 
+          fontWeight: FontWeight.values[(((obj.fontWeight ?? 400) ~/ 100) - 1 ).clamp(0, 8)],
+          fontStyle: (obj.fontItalics ?? false) ? FontStyle.italic : FontStyle.normal,
+          decoration: (obj.fontUnderline ?? false) ? TextDecoration.underline : TextDecoration.none,
+        );
+
+        TextStyle matchStyle =  
+        TextStyle(
+          color: Fv4rs.buttonFontColor,
+          fontSize: Fv4rs.buttonFontSize,
+          fontFamily: Fontsy.fontToFamily[Fv4rs.buttonFont], 
+          fontWeight: FontWeight.values[((Fv4rs.buttonFontWeight ~/ 100) - 1 ).clamp(0, 8)],
+          fontStyle: Fv4rs.buttonFontItalics ? FontStyle.italic : FontStyle.normal,
+          decoration: Fv4rs.buttonFontUnderline ? TextDecoration.underline : TextDecoration.none,
+        );
+
+      //label
+        Text theLabel = 
+        Text(obj.label ?? "", 
+          style: (obj.matchFont ?? true) ? matchStyle : uniqueStyle,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          );
+        Text theLabel2 = 
+        Text(obj.label ?? "", 
+          style: (obj.matchFont ?? true) ? matchStyle : uniqueStyle,
+          maxLines: 3,
+          overflow: TextOverflow.ellipsis,
+          );
+      
+      //image
+        Widget image = LoadImage.fromSymbol(obj.symbol);
+
+      //symbol
+        Widget theSymbol = 
+          ImageStyle1(
+            image: image, 
+            symbolSaturation: obj.symbolSaturation ?? 1.0, 
+            symbolContrast: obj.symbolContrast ?? 1.0, 
+            invertSymbolColors: obj.invertSymbol ?? false, 
+            matchOverlayColor: obj.matchOverlayColor ?? true, 
+            overlayColor: obj.overlayColor ?? Colors.white,
+            defaultSymbolColorOverlay: Bv4rs.buttonSymbolColorOverlay, 
+            matchSymbolContrast: obj.matchSymbolContrast ?? true, 
+            matchSymbolInvert: obj.matchInvertSymbol ?? true, 
+            matchSymbolSaturation: obj.matchSymbolSaturation ?? true, 
+            defaultSymbolInvert: Bv4rs.buttonSymbolInvert, 
+            defaultSymbolContrast: Bv4rs.buttonSymbolContrast, 
+            defaultSymbolSaturation: Bv4rs.buttonSymbolSaturation
+            );
+      //
+      //button
+      //
+      return Opacity(
+        opacity: (obj.show ?? true) ? 1.0 : 0.5, 
+        child: Container(
+          decoration: BoxDecoration(
+            color: (obj.matchPOS ?? true) 
+                ? Cv4rs.posToColor(obj.pos ?? 'Extra 2') 
+                : obj.backgroundColor ?? Colors.blueGrey,
+            border: Border.all(
+              color: (obj.matchBorder ?? true) 
+                ? Cv4rs.posToBorderColor(obj.pos ?? 'Extra 2') 
+                : obj.borderColor ?? Colors.white,
+              width: (obj.matchBorder ?? true) 
+                ? Bv4rs.buttonBorderWeight
+                : obj.borderWeight ?? 2.5
+            ),
+            borderRadius: BorderRadius.circular(10),
+            ),
+            child: () {
+          switch((obj.matchFormat ?? true) ? Bv4rs.buttonFormat : obj.format) {
+            case 1: 
+              return Row(children: [
+                Flexible(
+                  flex: 2,
+                  child: 
+                Padding(padding: EdgeInsets.fromLTRB(obj.padding ?? 2.0, (obj.padding ?? 2.0) + 2.0, obj.padding ?? 2.0, obj.padding ?? 2.0), 
+                child:
+                theSymbol,
+                ),
+                ),
+                Flexible(
+                  flex: 5, 
+                  child:
+                Padding(
+                padding: EdgeInsets.symmetric(horizontal: 5.0), child:
+                theLabel,
+                ),
+                ),
+              ],
+            );
+            case 2: 
+              return Row(children: [
+                Flexible( flex: 5, child:
+                Padding(
+                padding: EdgeInsets.symmetric(horizontal: 5.0), child:
+                theLabel,
+                ),
+                ),
+                Flexible(
+                  flex: 2,
+                  child: 
+                Padding(padding: EdgeInsets.fromLTRB(obj.padding ?? 2.0, obj.padding ?? 2.0, obj.padding ?? 2.0, (obj.padding ?? 2.0) + 2.0), 
+                child:
+                  theSymbol,
+                ),
+                ),
+            ],
+            );
+            case 3: 
+              return Padding(
+                padding: EdgeInsets.all(obj.padding ?? 2.0), child:
+                theSymbol,
+              );
+            case 4:
+              return Padding(
+                padding: EdgeInsets.symmetric(horizontal: 5.0), child:
+              theLabel2);
+          }
+        } (),
+          ),
+
+      );
+    }
+}
 
 class BuildFolder extends StatefulWidget{
 
@@ -4307,6 +4485,9 @@ class _BuildFolderState extends State<BuildFolder> {
             BoardObjects obj,
             TTSInterface synth,
             ) async { 
+              setState(() {
+                V4rs.updateSearchPath(V4rs.searchPathUUIDS.value, obj.id);
+              });
               switch ((obj.matchSpeakOS ?? true) ? Bv4rs.folderSpeakOnSelect : obj.speakOS) {
               case 1:
                 final board = findBoardById(linkTo, boards);
@@ -4346,6 +4527,9 @@ class _BuildFolderState extends State<BuildFolder> {
             BoardObjects obj,
             TTSInterface synth,
             ) async {
+             setState(() {
+                V4rs.updateSearchPath(V4rs.searchPathUUIDS.value, obj.id);
+              });
               switch ((obj.matchSpeakOS ?? true) ? Bv4rs.folderSpeakOnSelect : obj.speakOS) {
               case 1:
                 V4rs.changedMWfromButton = true;
@@ -4422,7 +4606,9 @@ class _BuildFolderState extends State<BuildFolder> {
       style: ElevatedButton.styleFrom(
         padding: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
         elevation: 2,
-        backgroundColor: (obj.matchPOS ?? true)
+        backgroundColor: (V4rs.isSearchPath(V4rs.searchPathUUIDS.value, obj))
+          ? Cv4rs.posToBorderColor(obj.pos ?? 'Extra 2')
+          : (obj.matchPOS ?? true)
             ? Cv4rs.posToColor(obj.pos ?? 'Extra 2')
             : obj.backgroundColor ?? Colors.blueGrey,
         shadowColor: Cv4rs.themeColor4,
@@ -4627,14 +4813,16 @@ class BuildButton extends StatelessWidget{
         maintainSize: true, 
         maintainAnimation: true,
         maintainState: true,
-        child:
-        ElevatedButton(
+        child: ValueListenableBuilder(valueListenable: V4rs.searchPathUUIDS, builder: (context, search, _) {
+        return ElevatedButton(
         style: ElevatedButton.styleFrom(
             padding: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
             elevation: 2,
-            backgroundColor: (obj.matchPOS ?? true) 
-              ? Cv4rs.posToColor(obj.pos ?? 'Extra 2') 
-              : obj.backgroundColor ?? Colors.blueGrey,
+            backgroundColor: (V4rs.isSearchPath(V4rs.searchPathUUIDS.value, obj))
+              ? Cv4rs.posToBorderColor(obj.pos ?? 'Extra 2')
+              : (obj.matchPOS ?? true) 
+                ? Cv4rs.posToColor(obj.pos ?? 'Extra 2') 
+                : obj.backgroundColor ?? Cv4rs.themeColor2,
             shadowColor: Cv4rs.themeColor4, 
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
@@ -4654,18 +4842,21 @@ class BuildButton extends StatelessWidget{
             V4rs.changedMWfromButton = true;
             V4rs.message.value = V4rs.message.value + (obj.message ?? '');
             V4rs.changedMWfromButton = false;
+            V4rs.updateSearchPath(V4rs.searchPathUUIDS.value, obj.id);
             break;
           case 2:
             V4rs.changedMWfromButton = true;
             V4rs.message.value = V4rs.message.value + (obj.message ?? '');
             await V4rs.speakOnSelect(obj.label ?? '', V4rs.selectedLanguage.value, synth);
             V4rs.changedMWfromButton = false;
+            V4rs.updateSearchPath(V4rs.searchPathUUIDS.value, obj.id);
             break;
           case 3:
             V4rs.changedMWfromButton = true;
             V4rs.message.value = V4rs.message.value + (obj.message ?? '');
             await V4rs.speakOnSelect(obj.message ?? '', V4rs.selectedLanguage.value, synth);
             V4rs.changedMWfromButton = false;
+            V4rs.updateSearchPath(V4rs.searchPathUUIDS.value, obj.id);
             break;
           }
         },
@@ -4710,6 +4901,8 @@ class BuildButton extends StatelessWidget{
               theLabel2);
           }
         } (),
+        );
+        }
         )
       );
     }
@@ -4807,9 +5000,11 @@ class BuildSubFolder extends StatelessWidget {
         style: ElevatedButton.styleFrom(
             padding: EdgeInsets.symmetric(horizontal: 5, vertical: 2),
             elevation: 2,
-            backgroundColor: (obj.matchPOS ?? true) 
-              ? Cv4rs.posToColor(obj.pos ?? 'Extra 2') 
-              : obj.backgroundColor ?? Colors.blueGrey,
+            backgroundColor: (V4rs.isSearchPath(V4rs.searchPathUUIDS.value, obj))
+              ? Cv4rs.posToBorderColor(obj.pos ?? 'Extra 2')
+              : (obj.matchPOS ?? true) 
+                ? Cv4rs.posToColor(obj.pos ?? 'Extra 2') 
+                : obj.backgroundColor ?? Cv4rs.themeColor2,
             shadowColor: Cv4rs.themeColor4, 
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
@@ -4900,9 +5095,11 @@ class BuildSubFolder extends StatelessWidget {
         style: ElevatedButton.styleFrom(
             padding: EdgeInsets.symmetric(horizontal: 5, vertical: 2),
             elevation: 2,
-            backgroundColor: (obj.matchPOS ?? true) 
-              ? Cv4rs.posToColor(obj.pos ?? 'Extra 2') 
-              : obj.backgroundColor ?? Colors.blueGrey,
+            backgroundColor: (V4rs.isSearchPath(V4rs.searchPathUUIDS.value, obj))
+              ? Cv4rs.posToBorderColor(obj.pos ?? 'Extra 2')
+              : (obj.matchPOS ?? true) 
+                  ? Cv4rs.posToColor(obj.pos ?? 'Extra 2') 
+                  : obj.backgroundColor ?? Colors.blueGrey,
             shadowColor: Cv4rs.themeColor4, 
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
@@ -4927,6 +5124,7 @@ class BuildSubFolder extends StatelessWidget {
                     openBoard(board);
                   }
               }
+              V4rs.updateSearchPath(V4rs.searchPathUUIDS.value, obj.id);
               break;
             case 2:
               final board = findBoardById(linkTo, boards);
@@ -4937,7 +5135,9 @@ class BuildSubFolder extends StatelessWidget {
                     openBoard(board);
                   }
               }
+
               await V4rs.speakOnSelect(obj.label ?? '', V4rs.selectedLanguage.value, synth);
+              V4rs.updateSearchPath(V4rs.searchPathUUIDS.value, obj.id);
               break;
             case 3:
               final board = findBoardById(linkTo, boards);
@@ -4949,6 +5149,7 @@ class BuildSubFolder extends StatelessWidget {
                   }
               }
               await V4rs.speakOnSelect(obj.alternateLabel ?? '', V4rs.selectedLanguage.value, synth);
+              V4rs.updateSearchPath(V4rs.searchPathUUIDS.value, obj.id);
               break;
             }},
           child: () {
@@ -5005,6 +5206,7 @@ class BuildSubFolder extends StatelessWidget {
 
 //nav row buttons 
 class NavButtonStyle extends StatelessWidget {
+  final NavObjects? me;
   final String label;
   final String symbol;
   final TTSInterface tts;
@@ -5069,6 +5271,7 @@ class NavButtonStyle extends StatelessWidget {
     required this.openBoard,
     required this.boards,
     required this.findBoardById,
+    required this.me,
     this.label = '',
     this.linkToLabel = '',
     this.linkToUUID = '',
@@ -5118,11 +5321,15 @@ class NavButtonStyle extends StatelessWidget {
       maintainSize: true,
       maintainAnimation: true,
       maintainState: true,
-      child:
-    ElevatedButton(
+      child: ValueListenableBuilder(valueListenable: V4rs.searchPathUUIDS, builder: (context, search, _) {
+      
+   return ElevatedButton(
         onPressed: () {
         switch (matchSpeakOS ? Bv4rs.navRowSpeakOnSelect : speakOS) {
           case 1:
+              if (me != null){
+                V4rs.updateSearchPath(V4rs.searchPathUUIDS.value, me!.linkToUUID ?? '');
+              }
               final board = findBoardById(linkToUUID, boards);
               if (board != null) {
                 openBoard(board);
@@ -5130,6 +5337,9 @@ class NavButtonStyle extends StatelessWidget {
               
             break;
           case 2:
+              if (me != null){
+                V4rs.updateSearchPath(V4rs.searchPathUUIDS.value, me!.linkToUUID ?? '');
+              }
             final board = findBoardById(linkToUUID, boards);
               if (board != null) {
                 openBoard(board);
@@ -5137,6 +5347,10 @@ class NavButtonStyle extends StatelessWidget {
             V4rs.speakOnSelect(label, V4rs.selectedLanguage.value, tts);
             break;
           case 3:
+            if (me != null){
+                V4rs.updateSearchPath(V4rs.searchPathUUIDS.value, me!.linkToUUID ?? '');
+              }
+
             final board = findBoardById(linkToUUID, boards);
               if (board != null) {
                 openBoard(board);
@@ -5146,7 +5360,11 @@ class NavButtonStyle extends StatelessWidget {
           }},
         style: ElevatedButton.styleFrom(
           padding: EdgeInsets.symmetric(horizontal: 5, vertical: 2),
-          backgroundColor: matchPOS ? Cv4rs.posToColor(pos) : backgroundColor, 
+          backgroundColor: (V4rs.isSearchPathNav(V4rs.searchPathUUIDS.value, me)) 
+          ? Cv4rs.posToBorderColor(pos)
+          : matchPOS
+            ? Cv4rs.posToColor(pos) 
+            : backgroundColor, 
           elevation: 2,
           shadowColor: Cv4rs.themeColor4, 
           shape: RoundedRectangleBorder(
@@ -5291,8 +5509,10 @@ class NavButtonStyle extends StatelessWidget {
                 );
         } 
   } (),
-    ),  
-      );
+    ); 
+  })
+  );
+      
   }
 }
 
@@ -5598,6 +5818,7 @@ class SpecialNavButtonStyle extends StatelessWidget {
   final String alternateLabel;
 
   final String note;
+  final NavObjects? me;
 
   TextStyle get labelStyle =>  
     TextStyle(
@@ -5614,6 +5835,7 @@ class SpecialNavButtonStyle extends StatelessWidget {
     required this.onPressed,
     this.symbol = 'assets/interface_icons/interface_icons/iPlaceholder.png',
     required this.tts,
+    required this.me,
     this.label = '',
     this.linkToLabel = '',
     this.linkToUUID = '',
@@ -5671,19 +5893,32 @@ class SpecialNavButtonStyle extends StatelessWidget {
         switch (matchSpeakOS ? Bv4rs.navRowSpeakOnSelect : speakOS) {
           case 1:
             //add navigation link to
+            if (me != null){
+              V4rs.updateSearchPath(V4rs.searchPathUUIDS.value, me!.linkToUUID ?? '');
+            }
             break;
           case 2:
             //add navigation link to
+            if (me != null){
+              V4rs.updateSearchPath(V4rs.searchPathUUIDS.value, me!.linkToUUID ?? '');
+            }
             V4rs.speakOnSelect(label, V4rs.selectedLanguage.value, tts);
             break;
           case 3:
             //add navigation link to
+            if (me != null){
+              V4rs.updateSearchPath(V4rs.searchPathUUIDS.value, me!.linkToUUID ?? '');
+            }
             V4rs.speakOnSelect(alternateLabel, V4rs.selectedLanguage.value, tts);
             break;
           }},
         style: ElevatedButton.styleFrom(
           padding: EdgeInsets.symmetric(horizontal: 5, vertical: 2),
-          backgroundColor: matchPOS ? Cv4rs.posToColor(pos) : backgroundColor, 
+          backgroundColor: (V4rs.isSearchPathNav(V4rs.searchPathUUIDS.value, me)) 
+            ? Cv4rs.posToBorderColor(pos)
+            : matchPOS 
+              ? Cv4rs.posToColor(pos) 
+              : backgroundColor, 
           elevation: 2,
           shadowColor: Cv4rs.themeColor4, 
           shape: RoundedRectangleBorder(

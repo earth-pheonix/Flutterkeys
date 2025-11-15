@@ -337,7 +337,7 @@ extension NavRowDisplay on NavObjects {
                 children : [
                 for (var item in row.sublist(0, (row.length / 2).ceil())) 
                   Expanded(child: Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 3), 
-                    child:  item.buildWidget(synth, toggleStorage, openBoard, boards, findBoardById,))),
+                    child:  item.buildWidget(synth, toggleStorage, openBoard, boards, findBoardById, item))),
                 for (var i = 0; i < (perRow / 2 ).ceil() - (row.length / 2).ceil(); i++)
                  Expanded(child: Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 3), child: SizedBox())),  // empty slot
               ])
@@ -361,7 +361,7 @@ extension NavRowDisplay on NavObjects {
                     flex: 11,
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 2),
-                      child: btn.buildWidget(synth, toggleStorage, openBoard, boards, findBoardById,),
+                      child: btn.buildWidget(synth, toggleStorage, openBoard, boards, findBoardById, btn),
                     ),
                   ),
                 // storageChest
@@ -372,7 +372,7 @@ extension NavRowDisplay on NavObjects {
                     child: Column(
                       children: [
                         for (var chest in storageChest)
-                          Expanded(child: chest.buildWidget(synth, toggleStorage, openBoard, boards, findBoardById,)),
+                          Expanded(child: chest.buildWidget(synth, toggleStorage, openBoard, boards, findBoardById, chest)),
                       ],
                     ),
                   ),
@@ -383,7 +383,7 @@ extension NavRowDisplay on NavObjects {
                     flex: 11,
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 2),
-                      child: btn.buildWidget(synth, toggleStorage, openBoard, boards, findBoardById,),
+                      child: btn.buildWidget(synth, toggleStorage, openBoard, boards, findBoardById, btn),
                     ),
                   ),
                   Spacer(flex: 1)
@@ -404,7 +404,7 @@ extension NavRowDisplay on NavObjects {
                 children : [
                 for (var item in row.sublist((row.length / 2).ceil(), row.length)) 
                   Expanded(child: Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 3), 
-                    child: item.buildWidget(synth, toggleStorage, openBoard, boards, findBoardById,))),
+                    child: item.buildWidget(synth, toggleStorage, openBoard, boards, findBoardById, item))),
                 for (var i = 0; i < (perRow / 2).floor() - (row.length / 2).floor(); i++)
                   Expanded(child: Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 3), child: SizedBox())),  // empty slot
               ]),
@@ -536,14 +536,14 @@ extension NavRowDisplay on NavObjects {
   }
 
 
-  Widget buildWidget(TTSInterface synth, VoidCallback toggleStorage, void Function(BoardObjects) openBoard, List<BoardObjects> boards, BoardObjects? Function(String uuid, List<BoardObjects> boards) findBoardById) {
+  Widget buildWidget(TTSInterface synth, VoidCallback toggleStorage, void Function(BoardObjects) openBoard, List<BoardObjects> boards, BoardObjects? Function(String uuid, List<BoardObjects> boards) findBoardById, NavObjects? obj,) {
     switch(type) {
       case 'row': 
         return _buildRow(synth, toggleStorage, openBoard, boards, findBoardById,);
       case 'navButton':
-        return _buildNavButton(synth, openBoard, boards, findBoardById,);
+        return _buildNavButton(synth, openBoard, boards, findBoardById, obj);
       case "specialNavButton":
-        return _buildSpecialNavButton(synth);
+        return _buildSpecialNavButton(synth, obj);
       case "storage":
         return _buildStorageChest(synth, toggleStorage);
       default:
@@ -559,7 +559,7 @@ extension NavRowDisplay on NavObjects {
       case 'navButton':
         return _buildEditableNavButton(synth, obj, openBoard, boards, findBoardById,);
       case "specialNavButton":
-        return _buildSpecialNavButton(synth);
+        return _buildSpecialNavButton(synth, obj);
       case "storage":
         return _buildStorageChest(synth, toggleStorage);
       default:
@@ -567,8 +567,11 @@ extension NavRowDisplay on NavObjects {
     }
   }
 
-  Widget _buildNavButton(TTSInterface synth, void Function(BoardObjects) openBoard, List<BoardObjects> boards, BoardObjects? Function(String uuid, List<BoardObjects> boards) findBoardById) {
+  Widget _buildNavButton(TTSInterface synth, void Function(BoardObjects) openBoard, List<BoardObjects> boards, BoardObjects? Function(String uuid, List<BoardObjects> boards) findBoardById, NavObjects? me,) {
+   return ValueListenableBuilder(valueListenable: V4rs.searchPathUUIDS, builder: (context, search, _) {
+      
    return NavButtonStyle(
+    me: me,
     tts: synth,
     openBoard: openBoard,
     boards: boards,
@@ -608,10 +611,13 @@ extension NavRowDisplay on NavObjects {
     speakOS: speakOS ?? 1,
     alternateLabel: alternateLabel ?? '',
    );
+    }
+   );
   }
   
-  Widget _buildSpecialNavButton(TTSInterface synth) {
+  Widget _buildSpecialNavButton(TTSInterface synth, NavObjects? me) {
     return (Bv4rs.showCenterButtons != 2) ? SpecialNavButtonStyle(
+      me: me,
       onPressed: () {}, 
       tts: synth,
       label: label ?? '',

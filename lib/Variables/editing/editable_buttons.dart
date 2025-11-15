@@ -2663,22 +2663,14 @@ class _EditableNavButton extends State<EditableNavButton> {
      @override
       void initState(){
         Ev4rs.rootReady = false;
-        super.initState();
-        rootFuture = V4rs.loadRootData();
-
-        Ev4rs.reloadJson.addListener(_handleReload);
+    super.initState();
+    // start with on-disk future; UI prefers in-memory Ev4rs.rootNotifier when available
+    rootFuture = V4rs.loadRootData();
       }
 
       @override
       void dispose(){
-        Ev4rs.reloadJson.removeListener(_handleReload);
         super.dispose();
-      }
-
-      void _handleReload() {
-        setState(() {
-          rootFuture = V4rs.loadRootData();
-        });
       }
 
 
@@ -2729,7 +2721,7 @@ class _EditableNavButton extends State<EditableNavButton> {
     Widget image = LoadImage.fromSymbol(obj.symbol);
 
   return FutureBuilder<Root>(
-            future: rootFuture, 
+            future: (Ev4rs.rootNotifier.value != null) ? Future.value(Ev4rs.rootNotifier.value) : rootFuture,
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.done && snapshot.hasData) {
                 root = snapshot.data!;

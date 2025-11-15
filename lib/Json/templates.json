@@ -58,7 +58,7 @@
                 },
                   {
                     "id": "null",
-                    "type1": "SubFolderButton",
+                    "type1": "subFolderButton",
                     "label": null,
                     "linkToLabel": null,
                     "linkToUUID": null,
@@ -103,7 +103,7 @@
                 },
                   {
                     "id": "null",
-                    "type1": "SubFolderButton",
+                    "type1": "subFolderButton",
                     "label": null,
                     "linkToLabel": null,
                     "linkToUUID": null,
@@ -148,7 +148,7 @@
                 },
                   {
                     "id": "null",
-                    "type1": "SubFolderButton",
+                    "type1": "subFolderButton",
                     "label": null,
                     "linkToLabel": null,
                     "linkToUUID": null,

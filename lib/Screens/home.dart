@@ -7,6 +7,7 @@ import 'package:flutterkeysaac/Variables/tts/tts_interface.dart';
 import 'package:flutterkeysaac/Models/json_model_nav_and_root.dart';
 import 'package:flutterkeysaac/Models/json_model_boards.dart';
 import 'package:flutterkeysaac/Models/json_model_grammer.dart';
+import 'package:flutterkeysaac/Widgets/save_indicator.dart';
 
 class Home extends StatefulWidget {
   final TTSInterface synth;
@@ -46,6 +47,7 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
         _boardHistory.add(_currentBoardIndex);
         _currentBoardIndex = idx;
         V4rs.syncIndex = _currentBoardIndex;
+        V4rs.thisBoard = board;
       });
     }
   }
@@ -57,23 +59,25 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
         _boardHistory.add(_currentBoardIndex);
         _currentBoardIndex = idx;
         V4rs.syncIndex = _currentBoardIndex;
+        V4rs.thisBoard = board;
       });
       //listener defined
       void listener() {
           //listener triggered- remove and return
           V4rs.message.removeListener(listener);
-          _goBackBoard();
+          _goBackBoard(board);
         }
       // listener attached
       V4rs.message.addListener(listener);
     }
   }
 
-  void _goBackBoard() {
+  void _goBackBoard(BoardObjects board) {
     if (_boardHistory.isNotEmpty) {
       setState(() {
         _currentBoardIndex = _boardHistory.removeLast();
         V4rs.syncIndex = _currentBoardIndex;
+        V4rs.thisBoard = board;
       });
     }
   }
@@ -147,118 +151,126 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
         }
 
         _root = snapshot.data!;
+          if (_root != null){
+            V4rs.thisBoard = _root!.boards[_currentBoardIndex];
+          }
 
-        return Scaffold(
-          resizeToAvoidBottomInset: false,
-          body: SafeArea(
-            bottom: false,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                // Message row
-                SizedBox(
-                  height: mwHeight,
-                  child: Container(
-                    color: Cv4rs.themeColor2,
-                    child: MessageRow(
-                      synth: widget.synth,
-                      highlightStart: widget.highlightStart,
-                      highlightLength: widget.highlightLength,
+        return Stack(children: [
+          Scaffold(
+            resizeToAvoidBottomInset: false,
+            body: SafeArea(
+              bottom: false,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  // Message row
+                  SizedBox(
+                    height: mwHeight,
+                    child: Container(
+                      color: Cv4rs.themeColor2,
+                      child: MessageRow(
+                        root: _root!,
+                        synth: widget.synth,
+                        highlightStart: widget.highlightStart,
+                        highlightLength: widget.highlightLength,
+                      ),
                     ),
                   ),
-                ),
 
-                // Navigation row
-                SizedBox(
-                  height: navHeight,
-                  child: Container(
-                    color: Cv4rs.themeColor3,
-                    child: (Bv4rs.showNavRow == 2) 
-                    ? SizedBox.expand() 
-                    : Row(
-                      children: [
-                        for (var navObj in _root!.navRow)
-                          Flexible(
-                            child: navObj.buildWidget(
-                              widget.synth,
-                              _toggleStorage,
-                              _openBoard,
-                              _root!.boards,
-                              _findBoardById,
+                  // Navigation row
+                  SizedBox(
+                    height: navHeight,
+                    child: Container(
+                      color: Cv4rs.themeColor3,
+                      child: (Bv4rs.showNavRow == 2) 
+                      ? SizedBox.expand() 
+                      : Row(
+                        children: [
+                          for (var navObj in _root!.navRow)
+                            Flexible(
+                              child: navObj.buildWidget(
+                                  widget.synth,
+                                  _toggleStorage,
+                                  _openBoard,
+                                  _root!.boards,
+                                  _findBoardById,
+                                  navObj,
+                                ),
                             ),
-                          ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
-                ),
 
-                // Grammar row
-                SizedBox(
-                  height: grammerHeight,
-                  child: Container(
-                    color: Cv4rs.themeColor4,
-                    child: (Bv4rs.showGrammerRow == 2) 
-                    ? SizedBox.expand() 
-                    : IndexedStack(
-                      index: _currentBoardIndex,
-                      children: [
+                  // Grammar row
+                  SizedBox(
+                    height: grammerHeight,
+                    child: Container(
+                      color: Cv4rs.themeColor4,
+                      child: (Bv4rs.showGrammerRow == 2) 
+                      ? SizedBox.expand() 
+                      : IndexedStack(
+                        index: _currentBoardIndex,
+                        children: [
                         for (var board in _root!.boards)
-                          Builder(
-                            builder: (context) {
-                              GrammerObjects? row;
-                                try {
-                                  row = _root!.grammerRow.firstWhere(
-                                    (row) => row.id == board.useGrammerRow,
-                                  );
-                                } catch (_) {
-                                  row = null;
+                            Builder(
+                              builder: (context) {
+                                GrammerObjects? row;
+                                  try {
+                                    row = _root!.grammerRow.firstWhere(
+                                      (row) => row.id == board.useGrammerRow,
+                                    );
+                                  } catch (_) {
+                                    row = null;
+                                  }
+
+                                if (row == null) {
+                                  return const SizedBox.shrink(); // nothing if missing
                                 }
 
-                              if (row == null) {
-                                return const SizedBox.shrink(); // nothing if missing
-                              }
+                                return row.buildWidget(
+                                  widget.synth,
+                                  _openBoard,
+                                  _root!.boards,
+                                  _findBoardById,
+                                );
+                              },
+                            ),
+                        ],
+                      )
+                    ),
+                  ), 
 
-                              return row.buildWidget(
+                  // Board row
+                  SizedBox(
+                    height: totalBoardHeight,
+                    child: Container(
+                      color: Cv4rs.themeColor4,
+                      child: Center( child:
+                      IndexedStack(
+                        index: _currentBoardIndex,
+                        children: [
+                          for (var board in _root!.boards)
+                              board.buildWidget(
+                                board,
                                 widget.synth,
+                                () => _goBackBoard(board),
                                 _openBoard,
+                                _openBoardWithReturn,
                                 _root!.boards,
                                 _findBoardById,
-                              );
-                            },
-                          ),
-                      ],
-                    )
-                  ),
-                ), 
-
-                // Board row
-                SizedBox(
-                  height: totalBoardHeight,
-                  child: Container(
-                    color: Cv4rs.themeColor4,
-                    child: Center( child:
-                    IndexedStack(
-                      index: _currentBoardIndex,
-                      children: [
-                        for (var board in _root!.boards)
-                          board.buildWidget(
-                            board,
-                            widget.synth,
-                            _goBackBoard,
-                            _openBoard,
-                            _openBoardWithReturn,
-                            _root!.boards,
-                            _findBoardById,
-                          ),
-                      ],
-                    ),
+                              ),
+                        ],
+                      ),
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
-        );
+          Positioned(top: 0, left: 0, right: 0, child: SaveIndicator()),
+        ]);
       },
     );
   }
