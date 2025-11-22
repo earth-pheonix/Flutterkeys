@@ -7,7 +7,7 @@ import 'package:flutterkeysaac/Variables/tts/tts_interface.dart';
 import 'package:flutterkeysaac/Models/json_model_nav_and_root.dart';
 import 'package:flutterkeysaac/Models/json_model_boards.dart';
 import 'package:flutterkeysaac/Models/json_model_grammer.dart';
-import 'package:flutterkeysaac/Widgets/save_indicator.dart';
+import 'package:flutterkeysaac/Variables/editing/save_indicator.dart';
 
 class Home extends StatefulWidget {
   final TTSInterface synth;
@@ -122,8 +122,8 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
     double availableFlex = safeScreenHeight - boardHeight;
     if (availableFlex < 0) availableFlex = 0;
 
-    final double flexForMW = 8;
-    final double flexNav = 6;
+    final double flexForMW = 10;
+    final double flexNav = 8;
     final double flexGrammer = 4;
     final double totalFlex = flexGrammer + flexNav + flexForMW;
 

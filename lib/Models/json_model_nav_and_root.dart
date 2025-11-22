@@ -336,10 +336,10 @@ extension NavRowDisplay on NavObjects {
               Row(
                 children : [
                 for (var item in row.sublist(0, (row.length / 2).ceil())) 
-                  Expanded(child: Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 3), 
+                  Expanded(child: Padding(padding: EdgeInsetsGeometry.all(3), 
                     child:  item.buildWidget(synth, toggleStorage, openBoard, boards, findBoardById, item))),
                 for (var i = 0; i < (perRow / 2 ).ceil() - (row.length / 2).ceil(); i++)
-                 Expanded(child: Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 3), child: SizedBox())),  // empty slot
+                 Expanded(child: Padding(padding: EdgeInsetsGeometry.all(3), child: SizedBox())),  // empty slot
               ])
               ),
               )
@@ -403,10 +403,10 @@ extension NavRowDisplay on NavObjects {
               Row(
                 children : [
                 for (var item in row.sublist((row.length / 2).ceil(), row.length)) 
-                  Expanded(child: Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 3), 
+                  Expanded(child: Padding(padding: EdgeInsetsGeometry.all(3), 
                     child: item.buildWidget(synth, toggleStorage, openBoard, boards, findBoardById, item))),
                 for (var i = 0; i < (perRow / 2).floor() - (row.length / 2).floor(); i++)
-                  Expanded(child: Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 3), child: SizedBox())),  // empty slot
+                  Expanded(child: Padding(padding: EdgeInsetsGeometry.all(3), child: SizedBox())),  // empty slot
               ]),
               ),
               )
@@ -417,6 +417,7 @@ extension NavRowDisplay on NavObjects {
     );
   }
   Widget _buildEditableRow(
+    Root root,
   TTSInterface synth, 
   VoidCallback toggleStorage, 
   void Function(BoardObjects) openBoard, 
@@ -454,10 +455,10 @@ extension NavRowDisplay on NavObjects {
               Row(
                 children : [
                 for (var item in row.sublist(0, (row.length / 2).ceil())) 
-                  Expanded(child: Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 3), 
-                    child:  item.buildEditableWidget(synth, item, toggleStorage, openBoard, boards, findBoardById,))),
+                  Expanded(child: Padding(padding: EdgeInsetsGeometry.all(3), 
+                    child:  item.buildEditableWidget(root, synth, item, toggleStorage, openBoard, boards, findBoardById,))),
                 for (var i = 0; i < (perRow / 2 ).ceil() - (row.length / 2).ceil(); i++)
-                 Expanded(child: Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 3), child: SizedBox())),  // empty slot
+                 Expanded(child: Padding(padding: EdgeInsetsGeometry.all(3), child: SizedBox())),  // empty slot
               ])
               ),
               )
@@ -479,7 +480,7 @@ extension NavRowDisplay on NavObjects {
                     flex: 11,
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 2),
-                      child: btn.buildEditableWidget(synth, btn, toggleStorage, openBoard, boards, findBoardById,),
+                      child: btn.buildEditableWidget(root, synth, btn, toggleStorage, openBoard, boards, findBoardById,),
                     ),
                   ),
                 // storageChest
@@ -490,7 +491,7 @@ extension NavRowDisplay on NavObjects {
                     child: Column(
                       children: [
                         for (var chest in storageChest)
-                          Expanded(child: chest.buildEditableWidget(synth, chest, toggleStorage, openBoard, boards, findBoardById,)),
+                          Expanded(child: chest.buildEditableWidget(root, synth, chest, toggleStorage, openBoard, boards, findBoardById,)),
                       ],
                     ),
                   ),
@@ -501,7 +502,7 @@ extension NavRowDisplay on NavObjects {
                     flex: 11,
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 2),
-                      child: btn.buildEditableWidget(synth, btn, toggleStorage, openBoard, boards, findBoardById,),
+                      child: btn.buildEditableWidget(root, synth, btn, toggleStorage, openBoard, boards, findBoardById,),
                     ),
                   ),
                   Spacer(flex: 1)
@@ -521,10 +522,10 @@ extension NavRowDisplay on NavObjects {
               Row(
                 children : [
                 for (var item in row.sublist((row.length / 2).ceil(), row.length)) 
-                  Expanded(child: Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 3), 
-                    child: item.buildEditableWidget(synth, item, toggleStorage, openBoard, boards, findBoardById,))),
+                  Expanded(child: Padding(padding: EdgeInsetsGeometry.all(3), 
+                    child: item.buildEditableWidget(root, synth, item, toggleStorage, openBoard, boards, findBoardById,))),
                 for (var i = 0; i < (perRow / 2).floor() - (row.length / 2).floor(); i++)
-                  Expanded(child: Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 3), child: SizedBox())),  // empty slot
+                  Expanded(child: Padding(padding: EdgeInsetsGeometry.all(3), child: SizedBox())),  // empty slot
               ]),
               ),
               )
@@ -552,12 +553,20 @@ extension NavRowDisplay on NavObjects {
   }
 
 
-  Widget buildEditableWidget(TTSInterface synth, NavObjects obj, VoidCallback toggleStorage, void Function(BoardObjects) openBoard, List<BoardObjects> boards, BoardObjects? Function(String uuid, List<BoardObjects> boards) findBoardById) {
+  Widget buildEditableWidget(
+    Root root,
+    TTSInterface synth, 
+    NavObjects obj, 
+    VoidCallback toggleStorage, 
+    void Function(BoardObjects) openBoard, 
+    List<BoardObjects> boards, 
+    BoardObjects? Function(String uuid, List<BoardObjects> boards) findBoardById
+    ) {
     switch(type) {
       case 'row': 
-        return _buildEditableRow(synth, toggleStorage, openBoard, boards, findBoardById,);
+        return _buildEditableRow(root, synth, toggleStorage, openBoard, boards, findBoardById,);
       case 'navButton':
-        return _buildEditableNavButton(synth, obj, openBoard, boards, findBoardById,);
+        return _buildEditableNavButton(root, synth, obj, openBoard, boards, findBoardById,);
       case "specialNavButton":
         return _buildSpecialNavButton(synth, obj);
       case "storage":
@@ -824,8 +833,9 @@ extension NavRowDisplay on NavObjects {
     }
   }
 
-  Widget _buildEditableNavButton(TTSInterface synth, NavObjects obj, void Function(BoardObjects) openBoard, List<BoardObjects> boards, BoardObjects? Function(String uuid, List<BoardObjects> boards) findBoardById) {
+  Widget _buildEditableNavButton(Root root, TTSInterface synth, NavObjects obj, void Function(BoardObjects) openBoard, List<BoardObjects> boards, BoardObjects? Function(String uuid, List<BoardObjects> boards) findBoardById) {
    return EditableNavButton(
+    root: root,
     tts: synth,
     obj: obj,
     openBoard: openBoard,

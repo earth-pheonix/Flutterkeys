@@ -19,7 +19,7 @@ import 'package:path_provider/path_provider.dart';
 import 'dart:math' as math;
 
 class LoadImage {
-  // Cache resolved file paths so they don’t flash back to placeholder
+  // Cache resolved file paths so no flash
   static final Map<String, String> _resolvedCache = {};
 
   static Widget fromSymbol(
@@ -3237,7 +3237,10 @@ class _BuildPocketFolderState extends State<BuildPocketFolder> {
         switch ((obj.matchFormat ?? true) ? Bv4rs.buttonFormat : obj.format) {
           case 1:
             return Stack(children: [
-              Column(children: [
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
                 Flexible(
                   child: Padding(
                     padding: EdgeInsets.fromLTRB(
@@ -3257,7 +3260,10 @@ class _BuildPocketFolderState extends State<BuildPocketFolder> {
             ]);
           case 2:
             return Stack(children: [
-              Column(children: [
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 5.0),
                   child: theLabel,
@@ -3564,7 +3570,10 @@ class _BuildTypingKeyState extends State<BuildTypingKey> {
           case 1:
             //text below
             return Stack(children: [
-              Column(children: [
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
                 Flexible(
                   child: Padding(
                     padding: EdgeInsets.fromLTRB(
@@ -3586,7 +3595,10 @@ class _BuildTypingKeyState extends State<BuildTypingKey> {
           //text above 
           case 2:
             return Stack(children: [
-              Column(children: [
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 5.0),
                   child: theLabel,
@@ -3904,7 +3916,10 @@ class _BuildAudioTileState extends State<BuildAudioTile> {
           case 1:
             //text below
             return Stack(children: [
-              Column(children: [
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
                 Flexible(
                   child: Padding(
                     padding: EdgeInsets.fromLTRB(
@@ -3926,7 +3941,10 @@ class _BuildAudioTileState extends State<BuildAudioTile> {
           //text above 
           case 2:
             return Stack(children: [
-              Column(children: [
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 5.0),
                   child: theLabel,
@@ -4140,7 +4158,10 @@ class BuildButtonGrammer extends StatelessWidget{
         child: () {
           switch((obj.matchFormat ?? true) ? Bv4rs.buttonFormat : obj.format) {
             case 1: 
-              return Column(children: [
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
                 Flexible(child: 
                 Padding(padding: EdgeInsets.fromLTRB(obj.padding ?? 2.0, (obj.padding ?? 2.0) + 2.0, obj.padding ?? 2.0, obj.padding ?? 2.0), 
                 child:
@@ -4154,7 +4175,10 @@ class BuildButtonGrammer extends StatelessWidget{
               ],
             );
             case 2: 
-              return Column(children: [
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
                 Padding(
                 padding: EdgeInsets.symmetric(horizontal: 5.0), child:
                 theLabel,
@@ -4634,7 +4658,10 @@ class _BuildFolderState extends State<BuildFolder> {
           case 1:
             //text below
             return Stack(children: [
-              Column(children: [
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
                 Flexible(
                   child: Padding(
                     padding: EdgeInsets.fromLTRB(
@@ -4656,7 +4683,10 @@ class _BuildFolderState extends State<BuildFolder> {
           //text above
           case 2:
             return Stack(children: [
-              Column(children: [
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 5.0),
                   child: theLabel,
@@ -4863,7 +4893,10 @@ class BuildButton extends StatelessWidget{
         child: () {
           switch((obj.matchFormat ?? true) ? Bv4rs.buttonFormat : obj.format) {
             case 1: 
-              return Column(children: [
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
                 Flexible(child: 
                 Padding(padding: EdgeInsets.fromLTRB(obj.padding ?? 2.0, (obj.padding ?? 2.0) + 2.0, obj.padding ?? 2.0, obj.padding ?? 2.0), 
                 child:
@@ -4877,7 +4910,10 @@ class BuildButton extends StatelessWidget{
               ],
             );
             case 2: 
-              return Column(children: [
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
                 Padding(
                 padding: EdgeInsets.symmetric(horizontal: 5.0), child:
                 theLabel,
@@ -5190,7 +5226,10 @@ class BuildSubFolder extends StatelessWidget {
                 theSymbol,
               );
             case 4:
-              return Column( children: [
+              return Column( 
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
                 Flexible(child: 
               Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 5.0), child:
               theLabel
@@ -5333,6 +5372,7 @@ class NavButtonStyle extends StatelessWidget {
               final board = findBoardById(linkToUUID, boards);
               if (board != null) {
                 openBoard(board);
+                FocusScope.of(context).unfocus();
               }
               
             break;
@@ -5343,6 +5383,7 @@ class NavButtonStyle extends StatelessWidget {
             final board = findBoardById(linkToUUID, boards);
               if (board != null) {
                 openBoard(board);
+                FocusScope.of(context).unfocus();
               }
             V4rs.speakOnSelect(label, V4rs.selectedLanguage.value, tts);
             break;
@@ -5354,6 +5395,7 @@ class NavButtonStyle extends StatelessWidget {
             final board = findBoardById(linkToUUID, boards);
               if (board != null) {
                 openBoard(board);
+                FocusScope.of(context).unfocus();
               }
             V4rs.speakOnSelect(alternateLabel, V4rs.selectedLanguage.value, tts);
             break;
@@ -5385,6 +5427,7 @@ class NavButtonStyle extends StatelessWidget {
           case 1: 
             return Column(
               mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
 
                 //image
@@ -5426,6 +5469,7 @@ class NavButtonStyle extends StatelessWidget {
           case 2: 
             return Column(
               mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
 
                 //label 
@@ -5653,6 +5697,7 @@ class StorageButtonStyle extends StatelessWidget {
           case 1: 
             return Column(
               mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
 
@@ -5696,6 +5741,7 @@ class StorageButtonStyle extends StatelessWidget {
             return Column(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
 
                 //label 
@@ -5893,12 +5939,14 @@ class SpecialNavButtonStyle extends StatelessWidget {
         switch (matchSpeakOS ? Bv4rs.navRowSpeakOnSelect : speakOS) {
           case 1:
             //add navigation link to
+            FocusScope.of(context).unfocus();
             if (me != null){
               V4rs.updateSearchPath(V4rs.searchPathUUIDS.value, me!.linkToUUID ?? '');
             }
             break;
           case 2:
             //add navigation link to
+            FocusScope.of(context).unfocus();
             if (me != null){
               V4rs.updateSearchPath(V4rs.searchPathUUIDS.value, me!.linkToUUID ?? '');
             }
@@ -5906,6 +5954,7 @@ class SpecialNavButtonStyle extends StatelessWidget {
             break;
           case 3:
             //add navigation link to
+            FocusScope.of(context).unfocus();
             if (me != null){
               V4rs.updateSearchPath(V4rs.searchPathUUIDS.value, me!.linkToUUID ?? '');
             }
@@ -5940,6 +5989,7 @@ class SpecialNavButtonStyle extends StatelessWidget {
             return Column(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
 
                 //image
@@ -5980,6 +6030,7 @@ class SpecialNavButtonStyle extends StatelessWidget {
             return Column(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
 
                 //label 
@@ -6216,7 +6267,10 @@ class BuildGrammerButton extends StatelessWidget{
                 theSymbol,
               ) : SizedBox.shrink();
             case 4:
-              return Column(children: [
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
                 Expanded(child: 
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 5.0), child:
@@ -6558,6 +6612,24 @@ class CombinedValueNotifier<A, B, C, D, E, F, G, H, I> extends ValueNotifier<(A,
     }
   }
 }
+
+class MiniCombinedValueNotifier<E, F, G, H, I> extends ValueNotifier<(E, F, G?, H?, I?)> {
+  MiniCombinedValueNotifier(ValueNotifier<E> e, ValueNotifier<F> f, ValueNotifier<G>? g, ValueNotifier<H>? h, ValueNotifier<I>? i,)
+      : super((e.value, f.value, g?.value, h?.value, i?.value)) {
+    e.addListener(() => value = (e.value, f.value, g?.value, h?.value, i?.value));
+    f.addListener(() => value = (e.value, f.value, g?.value, h?.value, i?.value));
+    if (g != null){
+    g.addListener(() => value = (e.value, f.value, g.value, h?.value, i?.value));
+    }
+    if (h != null){
+    h.addListener(() => value = (e.value, f.value, g?.value, h.value, i?.value));
+    }
+    if (i != null){
+    i.addListener(() => value = (e.value, f.value, g?.value, h?.value, i.value));
+    }
+  }
+}
+
 
 
 //bottom of file

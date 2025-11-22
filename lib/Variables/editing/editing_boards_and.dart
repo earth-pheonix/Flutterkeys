@@ -6,19 +6,20 @@ import 'package:flutterkeysaac/Models/json_model_nav_and_root.dart';
 import 'package:flutterkeysaac/Variables/Settings_variable.dart';
 import 'package:flutterkeysaac/Variables/color_variables.dart';
 import 'dart:async';
-import 'package:flutterkeysaac/Widgets/save_indicator.dart';
 import 'package:uuid/uuid.dart';
 import 'package:flutterkeysaac/Models/json_model_boards.dart';
 
 
    class BoardEditor extends StatefulWidget{
       final void Function(BoardObjects board) openBoard;
-      final Root primaryRoot;
       final void Function() goBack;
+      final void Function(Root root, String objUUID, String field, dynamic value) saveField;
+      final Root root;
 
       const BoardEditor({
         required this.openBoard,
-        required this.primaryRoot,
+        required this.saveField,
+        required this.root,
         required this.goBack,
         super.key,
       });
@@ -29,94 +30,107 @@ import 'package:flutterkeysaac/Models/json_model_boards.dart';
 
    class _BoardEditorState extends State<BoardEditor>{
       late Root root;
-      late Future<Root> rootFuture;
       late Root templateRoot;
       late Future<Root> loadedTemplates;
       
       final ValueNotifier<String> templateUUID = ValueNotifier<String>('');
       String newBoardTitle = '';
 
-     
+      void copyTemplateBoardToRoot({
+        required Root root, required Root templateRoot, 
+        required String templateId, required String newTitle}) async {
+        
+        //find selected template
+        final templateBoard = Ev4rs.findBoardById(templateRoot.boards, templateId);
+        if (templateBoard == null) {
+          throw Exception('Template board with id $templateId not found.');
+        }
+
+        //make copy
+        final copied = templateBoard.clone();
+
+        //replace id 
+        final uuid = const Uuid();
+        copied.id = uuid.v4();
+        copied.title = newTitle;
+
+        for (var button in copied.content) {
+          if (button.type1 != 'board'){
+            button.id = uuid.v4();
+          }
+        }
+
+        // add to main file & open
+        root.boards.add(copied);
+        
+        // create variables for wait
+        final wait = Ev4rs.reloadJson.value;
+        void listener() {
+          if (Ev4rs.reloadJson.value != wait) {
+            Ev4rs.reloadJson.removeListener(listener);
+
+            // Wait until next frame so Editor has rebuilt with the new root
+            WidgetsBinding.instance.addPostFrameCallback((_) async {
+              _handleReload();
+              nowOpen(copied.id);
+              Ev4rs.showAddBoard.value = false;
+            });
+          }
+        }
+
+        Ev4rs.reloadJson.addListener(listener);
+
+        Ev4rs.saveJson(root);
+        Ev4rs.reloadJson.value = !Ev4rs.reloadJson.value;
+      }
+
+      void nowOpen(String newUUID) {
+        var newBoard = Ev4rs.findBoardById(root.boards, newUUID);
+        var linkedGrammer = newBoard != null 
+          ? Ev4rs.findGrammerById(root.grammerRow, newBoard.useGrammerRow ?? '') 
+          : null;
+
+        Ev4rs.boardSelecting(newBoard, linkedGrammer, root.grammerRow);
+        if (newBoard != null) {
+          widget.openBoard(newBoard);
+        } 
+      }
+  
+
       @override
       void initState(){
         Ev4rs.rootReady = false;
         super.initState();
-        rootFuture = V4rs.loadRootData();
-        
-
+        root = widget.root;
         loadedTemplates = V4rs.loadJsonTemplates();
+
         loadedTemplates.then((value) {
           setState(() {
             templateRoot = value;
           });
         });
 
-        // listen to in-memory root changes instead of reloadJson
-        Ev4rs.rootNotifier.addListener(_handleRootChange);
+        Ev4rs.reloadJson.addListener(_handleReload);
       }
 
       @override
       void dispose(){
-        Ev4rs.rootNotifier.removeListener(_handleRootChange);
+        Ev4rs.reloadJson.removeListener(_handleReload);
         super.dispose();
       }
 
-      void _handleRootChange() {
-        final newRoot = Ev4rs.rootNotifier.value;
-        if (newRoot != null) {
-          setState(() {
-            root = newRoot;
-          });
-        }
+      void _handleReload() {
+        setState(() {
+          root = widget.root;
+        });
       }
 
+
+      
       @override
       Widget build(BuildContext context) {
 
-        
-        final screenSize = MediaQuery.of(context).size;
-        final isLandscape = screenSize.width > screenSize.height;
-
-        return Stack( 
-          children: [
-          // SaveIndicator (non-blocking)
-          const Positioned(top: 0, left: 0, right: 0, child: SaveIndicator()),
-          ValueListenableBuilder<Root?>(valueListenable: Ev4rs.rootNotifier, builder: (context, inMemoryRoot, _) {
-            if (inMemoryRoot != null) {
-              root = inMemoryRoot;
-              Ev4rs.rootReady = true;
-            }
-
-            return FutureBuilder<Root>(
-            future:  rootFuture,
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.done && snapshot.hasData) {
-                root = snapshot.data!;
-                Ev4rs.rootReady = true;
-            } else {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(child: CircularProgressIndicator());
-              } else if (snapshot.hasError) {
-                return Center(child: Text('Error: ${snapshot.error}'));
-              } else if (!snapshot.hasData) {
-                return Center(child: Text('No data found'));
-              }
-            }
-            var allGrammerRows= Ev4rs.getGrammerRows(root.grammerRow);
-
-            final mapOfGrammer = {
-              for (var row in allGrammerRows) 
-                if (row.title != null) 
-                  row.title!: row.id,
-            };
-
-            final mapOfUseSubfolders = {
-              1 : 'on',
-              2 : 'off',
-              3 : 'match default',
-            };
-
-            var allBoards = Ev4rs.getBoards(root.boards);
+        var allBoards = Ev4rs.getBoards(root.boards);
 
         final mapOfBoardNames = {
           for (var board in allBoards) 
@@ -135,6 +149,26 @@ import 'package:flutterkeysaac/Models/json_model_boards.dart';
           Ev4rs.setPlacholderValuesBoard(root.grammerRow, Ev4rs.selectedBoard.value!);
         }
 
+        final screenSize = MediaQuery.of(context).size;
+        final isLandscape = screenSize.width > screenSize.height;
+
+        return Stack( 
+          children: [
+          
+          ValueListenableBuilder<bool>(valueListenable: Ev4rs.reloadJson, builder: (context, reload, _) {
+            var allGrammerRows= Ev4rs.getGrammerRows(root.grammerRow);
+
+            final mapOfGrammer = {
+              for (var row in allGrammerRows) 
+                if (row.title != null) 
+                  row.title!: row.id,
+            };
+
+            final mapOfUseSubfolders = {
+              1 : 'on',
+              2 : 'off',
+              3 : 'match default',
+            };
               
               return ValueListenableBuilder<bool>(valueListenable: Ev4rs.showAddBoard, builder: (context, reload, _) {
                 return Row( 
@@ -195,20 +229,26 @@ import 'package:flutterkeysaac/Models/json_model_boards.dart';
                                             flex: 5, 
                                             child: Padding(
                                               padding: EdgeInsetsGeometry.symmetric(horizontal: 10, vertical: 0), 
-                                              child: TextField(
+                                              child: ValueListenableBuilder(valueListenable: Ev4rs.notes, builder: (context, value, _) {
+                                                final titleController = TextEditingController(text: value)
+                                                  ..selection = TextSelection.collapsed(offset: value.length);
+
+                                              return TextField(
+                                                controller: titleController,
                                                 textAlign: TextAlign.center,
                                                 style: Sv4rs.settingslabelStyle,
                                                 onChanged: (value){
-                                                  Ev4rs.title = value;
+                                                  Ev4rs.title.value = value;
                                                 },
                                                 decoration: InputDecoration(
                                                 hintStyle: Sv4rs.settingslabelStyle.copyWith(
                                                   fontSize: 14,
                                                   color: Cv4rs.themeColor2,
                                                 ),
-                                                hintText: Ev4rs.title,
+                                                hintText: Ev4rs.title.value,
                                                 ),
-                                              ),
+                                              );
+                                              }),
                                             ),
                                           ),
                                           Flexible(
@@ -218,9 +258,9 @@ import 'package:flutterkeysaac/Models/json_model_boards.dart';
                                               padding: EdgeInsetsGeometry.symmetric(vertical: 5), 
                                               child: ButtonStyle4(
                                                 imagePath: 'assets/interface_icons/interface_icons/iCheck.png', 
-                                                onPressed: (){
-                                                  if (compareToMap(Ev4rs.title)){
-                                                    Ev4rs.updateBoardField(root, Ev4rs.selectedBoardUUID.value, 'title', Ev4rs.title);
+                                                onPressed: (){setState(() {
+                                                  if (compareToMap(Ev4rs.title.value)){
+                                                    widget.saveField(root, Ev4rs.selectedBoardUUID.value, 'title', Ev4rs.title.value);
                                                     Ev4rs.saveJson(root);
                                                   } else {
                                                     ScaffoldMessenger.of(context).showSnackBar(
@@ -230,6 +270,7 @@ import 'package:flutterkeysaac/Models/json_model_boards.dart';
                                                       ),
                                                     );
                                                   }
+                                                  });
                                                  }, 
                                                 label: 'Save'
                                               ),
@@ -317,9 +358,11 @@ import 'package:flutterkeysaac/Models/json_model_boards.dart';
                                                 padding: EdgeInsetsGeometry.symmetric(vertical: 5), 
                                                 child: ButtonStyle4(
                                                   imagePath: 'assets/interface_icons/interface_icons/iCheck.png', 
-                                                  onPressed: (){
-                                                      Ev4rs.updateBoardField(root, Ev4rs.selectedBoardUUID.value, 'useGrammerRow', Ev4rs.usedGrammerRowUUID.value);
+                                                  onPressed: (){setState(() {
+                                                      widget.saveField(root, Ev4rs.selectedBoardUUID.value, 'useGrammerRow', Ev4rs.usedGrammerRowUUID.value);
                                                       Ev4rs.saveJson(root);
+                                                      Ev4rs.reloadJson.value = !Ev4rs.reloadJson.value;
+                                                      });
                                                     }, 
                                                   label: 'Save'
                                                 ),
@@ -392,9 +435,10 @@ import 'package:flutterkeysaac/Models/json_model_boards.dart';
                                               padding: EdgeInsetsGeometry.symmetric(vertical: 5),  
                                               child: ButtonStyle4(
                                                 imagePath: 'assets/interface_icons/interface_icons/iCheck.png', 
-                                                onPressed: (){
-                                                    Ev4rs.updateBoardField(root, Ev4rs.selectedBoardUUID.value, 'useSubFolders', Ev4rs.useSubFolders.value);
+                                                onPressed: (){setState(() {
+                                                    widget.saveField(root, Ev4rs.selectedBoardUUID.value, 'useSubFolders', Ev4rs.useSubFolders.value);
                                                     Ev4rs.saveJson(root);
+                                                    });
                                                   }, 
                                                 label: 'Save'
                                               ),
@@ -450,8 +494,8 @@ import 'package:flutterkeysaac/Models/json_model_boards.dart';
                                         }
                                         final button = Ev4rs.findBoardByLinked(root.boards, Ev4rs.selectedBoardUUID.value);
                                         if (button != null){
-                                          Ev4rs.updateBoardField(root, button.id, "linkToUUID", '');
-                                          Ev4rs.updateBoardField(root, button.id, "linkToLabel", '');
+                                          widget.saveField(root, button.id, "linkToUUID", '');
+                                          widget.saveField(root, button.id, "linkToLabel", '');
                                         }
                                         final grammer = Ev4rs.findGrammerByLinked(root.grammerRow, Ev4rs.selectedBoardUUID.value);
                                         if (grammer != null){
@@ -687,8 +731,6 @@ import 'package:flutterkeysaac/Models/json_model_boards.dart';
               }
             );
            }
-            );
-      }
           ),
         //here
         Positioned(
@@ -816,58 +858,6 @@ import 'package:flutterkeysaac/Models/json_model_boards.dart';
               return Center(child: Text('Error: ${snapshot.error}'));
             }
             if (snapshot.hasData) {
-
-            void nowOpen(String newUUID) {
-              var newBoard = Ev4rs.findBoardById(widget.primaryRoot.boards, newUUID);
-              var linkedGrammer = newBoard != null 
-                ? Ev4rs.findGrammerById(widget.primaryRoot.grammerRow, newBoard.useGrammerRow ?? '') 
-                : null;
-
-              Ev4rs.boardSelecting(newBoard, linkedGrammer);
-              if (newBoard != null) {
-                widget.openBoard(newBoard);
-              } 
-            }
-
-            void copyTemplateBoardToRoot({
-              required Root root, required Root templateRoot, 
-              required String templateId, required String newTitle}) async {
-              
-              //find selected template
-              final templateBoard = Ev4rs.findBoardById(templateRoot.boards, templateId);
-              if (templateBoard == null) {
-                throw Exception('Template board with id $templateId not found.');
-              }
-
-              //make copy
-              final copied = templateBoard.clone();
-
-              //replace id 
-              final uuid = const Uuid();
-              copied.id = uuid.v4();
-              copied.title = newTitle;
-
-              for (var button in copied.content) {
-                if (button.type1 != 'board'){
-                  button.id = uuid.v4();
-                }
-              }
-
-              // add to main file & open (update in-memory root immediately)
-              widget.primaryRoot.boards.add(copied);
-
-              // persist to disk and then open when write completes
-              await Ev4rs.saveJson(widget.primaryRoot);
-              Ev4rs.reloadJson.value = !Ev4rs.reloadJson.value;
-
-              // After successful save, open the new board and close the add UI
-              WidgetsBinding.instance.addPostFrameCallback((_) {
-                nowOpen(copied.id);
-                Ev4rs.showAddBoard.value = false;
-              });
-            }
-
-           
 
         var allTemplates = Ev4rs.getBoards(templateRoot.boards);
 
@@ -1003,7 +993,6 @@ import 'package:flutterkeysaac/Models/json_model_boards.dart';
                             }
                           );
                         },
-                        
                         decoration: InputDecoration(
                         hintStyle: Sv4rs.settingslabelStyle.copyWith(
                           color: Cv4rs.themeColor2,

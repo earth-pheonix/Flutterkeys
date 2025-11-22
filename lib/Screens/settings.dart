@@ -50,11 +50,19 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
   List<Map<String, dynamic>> allVoices = [];
 
   for (String lang in Sv4rs.myLanguages) {
-    await widget.synth.setLanguage(lang); // Ensure TTS fetches voices for this language
+    await widget.synth.setLanguage(lang);
     final voiceList = await widget.synth.getVoices();
-    allVoices.addAll(
-      voiceList.map((v) => Map<String, dynamic>.from(v as Map))
-    );
+
+    for (var v in voiceList) {
+      final vm = Map<String, dynamic>.from(v as Map);
+
+      allVoices.add({
+        "name": vm["name"] ?? "",
+        "identifier": vm["identifier"] ?? vm["voiceIdentifier"] ?? vm["name"],
+        "language": vm["language"] ?? vm["locale"] ?? vm["lang"] ?? "",
+        "locale": vm["locale"] ?? vm["language"] ?? vm["lang"] ?? "",
+      });
+    }
   }
 
   setState(() {
@@ -248,7 +256,7 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
                         Expanded(
                         child: Padding( 
                         padding: EdgeInsets.fromLTRB(20, 0, 0, 15),
-                        child: Text('Multilingual users should not rely on deafult voices- please manually select a voice for each language.', 
+                        child: Text('Multilingual users should not rely on default voices- please manually select a voice for each language.', 
                           style: Sv4rs.settingsSecondaryLabelStyle)
                            ),
                       ),

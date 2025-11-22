@@ -11,7 +11,7 @@ import 'package:flutterkeysaac/Models/json_model_nav_and_root.dart';
 import 'package:flutterkeysaac/Models/json_model_boards.dart';
 import 'package:flutterkeysaac/Models/json_model_grammer.dart';
 import 'package:flutterkeysaac/Variables/ui_shortcuts.dart';
-import 'package:flutterkeysaac/Widgets/save_indicator.dart';
+import 'package:flutterkeysaac/Variables/editing/save_indicator.dart';
 
 
 class Editor extends StatefulWidget {
@@ -36,76 +36,115 @@ class _Editor extends State<Editor> with WidgetsBindingObserver {
   Offset? _dragStart;
 
   bool listsAreEqual(List<String> a, List<String> b) {
-  if (a.length != b.length) return false;
-  for (int i = 0; i < a.length; i++) {
-    if (a[i] != b[i]) return false;
-  }
-  return true;
-}
-
-final GlobalKey _gestureDetectorKey = GlobalKey();
-
-void _updateSelection() {
-  final rect = _selectionRect;
-  if (rect == null) return;
-
-  final gestureBox = _gestureDetectorKey.currentContext?.findRenderObject() as RenderBox?;
-  if (gestureBox == null) {
-    return;
+    if (a.length != b.length) return false;
+    for (int i = 0; i < a.length; i++) {
+      if (a[i] != b[i]) return false;
+    }
+    return true;
   }
 
-  // Convert local rect → global rect
-  final topLeft = gestureBox.localToGlobal(rect.topLeft);
-  final bottomRight = gestureBox.localToGlobal(rect.bottomRight);
-  final globalRect = Rect.fromPoints(topLeft, bottomRight);
+  final GlobalKey _gestureDetectorKey = GlobalKey();
 
-  final newSelection = <String>[];
+  void _updateSelection() {
+    final rect = _selectionRect;
+    if (rect == null) return;
 
-  // copy to avoid concurrent modification
-  final entries = Map<String, GlobalKey>.from(Ev4rs.buttonKeys);
-
-  //only look at buttons on visible board
-  final currentBoard = _root!.boards[ V4rs.syncIndex];
-  final currentUuids = currentBoard.content.map((obj) => obj.id).toSet();
-
-  
-  for (final entry in entries.entries) {
-    final uuid = entry.key;
-    if (!currentUuids.contains(uuid)) continue; //skip UUIDS not on visible buttons
-
-    final key = entry.value;
-
-    final context = key.currentContext;
-    if (context == null) {
-      Ev4rs.buttonKeys.remove(uuid);
-      continue;
+    final gestureBox = _gestureDetectorKey.currentContext?.findRenderObject() as RenderBox?;
+    if (gestureBox == null) {
+      return;
     }
 
-    final renderBox = context.findRenderObject() as RenderBox?;
-    if (renderBox == null || !renderBox.attached) {
-      continue;
-    }
-    final pos = renderBox.localToGlobal(Offset.zero);
-    final size = renderBox.size;
-    final buttonRect = Rect.fromLTWH(pos.dx, pos.dy, size.width, size.height);
+    // Convert local rect → global rect
+    final topLeft = gestureBox.localToGlobal(rect.topLeft);
+    final bottomRight = gestureBox.localToGlobal(rect.bottomRight);
+    final globalRect = Rect.fromPoints(topLeft, bottomRight);
+
+    final newSelection = <String>[];
+
+    // copy to avoid concurrent modification
+    final entries = Map<String, GlobalKey>.from(Ev4rs.buttonKeys);
+
+    //only look at buttons on visible board
+    final currentBoard = _root!.boards[ V4rs.syncIndex];
+    final currentUuids = currentBoard.content.map((obj) => obj.id).toSet();
+
+    
+    for (final entry in entries.entries) {
+      final uuid = entry.key;
+      if (!currentUuids.contains(uuid)) continue; //skip UUIDS not on visible buttons
+
+      final key = entry.value;
+
+      final context = key.currentContext;
+      if (context == null) {
+        Ev4rs.buttonKeys.remove(uuid);
+        continue;
+      }
+
+      final renderBox = context.findRenderObject() as RenderBox?;
+      if (renderBox == null || !renderBox.attached) {
+        continue;
+      }
+      final pos = renderBox.localToGlobal(Offset.zero);
+      final size = renderBox.size;
+      final buttonRect = Rect.fromLTWH(pos.dx, pos.dy, size.width, size.height);
 
 
-    if (globalRect.overlaps(buttonRect)) {
-      newSelection.add(uuid);
+      if (globalRect.overlaps(buttonRect)) {
+        newSelection.add(uuid);
+      }
     }
+
+    final oldSelection = Ev4rs.selectedUUIDs.value;
+    if (!listsAreEqual(newSelection, oldSelection)) {
+      Ev4rs.selectedUUIDs.value = newSelection;
+      Ev4rs.selectedUUID = newSelection.first;
+    } 
   }
-
-  final oldSelection = Ev4rs.selectedUUIDs.value;
-  if (!listsAreEqual(newSelection, oldSelection)) {
-    Ev4rs.selectedUUIDs.value = newSelection;
-    Ev4rs.selectedUUID = newSelection.first;
-  } 
-}
 
   late Future<Root> rootFuture;
   Root? _root;
 
   final List<int> _boardHistory = [];
+
+
+  void saveField(Root root, String objUUID, String field, dynamic value) {
+    if (_root == null) return;
+    Ev4rs.updateBoardField(root, objUUID, field, value);
+    setState(() {});
+  }
+  void saveNavField(Root root, String objUUID, String field, dynamic value) {
+    if (_root == null) return;
+    Ev4rs.updateNavField(root, objUUID, field, value);
+    setState(() {});
+  }
+  void saveGrammerField(Root root, String objUUID, String field, dynamic value) {
+    if (_root == null) return;
+    Ev4rs.updateGrammerField(root, objUUID, field, value);
+    setState(() {});
+  }
+
+
+
+  void multiSaveField(Root root, List<String> objUUIDs, String field, dynamic value) {
+    if (_root == null) return;
+    Ev4rs.updateMultiBoardField(root, objUUIDs, field, value);
+    setState(() {});
+  }
+
+  void multiSaveNavField(Root root, List<String> objUUIDs, String field, dynamic value) {
+    if (_root == null) return;
+    Ev4rs.updateMultiNavField(root, objUUIDs, field, value);
+    setState(() {});
+  }
+
+  void multiSaveGrammerField(Root root, List<String> objUUIDs, String field, dynamic value) {
+    if (_root == null) return;
+    Ev4rs.updateMultiGrammerField(root, objUUIDs, field, value);
+    setState(() {});
+  }
+
+
 
   @override
   void initState() {
@@ -175,8 +214,28 @@ void _updateSelection() {
     });
   }
 
+
   @override
   Widget build(BuildContext context) {
+
+    Widget navListener(Widget returning) {
+      return ValueListenableBuilder(
+        valueListenable: CombinedValueNotifier(
+          Ev4rs.navSelectedUUIDs,
+          Ev4rs.firstNavSelectedUUID,
+          Ev4rs.secondNavSelectedUUID,
+          Ev4rs.selectedUUIDs,
+          Ev4rs.grammerSelectedUUIDs,
+          Ev4rs.firstGrammerSelectedUUID,
+          Ev4rs.secondGrammerSelectedUUID,
+          Ev4rs.selectedBoardUUID,
+          null,
+        ),
+        builder: (context, values, _) {
+          return returning;
+        },
+      );
+    }
     
     final media = MediaQuery.of(context);
     final screenSize = MediaQuery.of(context).size;
@@ -191,8 +250,8 @@ void _updateSelection() {
     double availableFlex = safeScreenHeight - boardHeight;
     if (availableFlex < 0) availableFlex = 0;
 
-    final double flexForMW = 8;
-    final double flexNav = 6;
+    final double flexForMW = 10;
+    final double flexNav = 8;
     final double flexGrammer = 4;
     final double totalFlex = flexGrammer + flexNav + flexForMW;
 
@@ -225,12 +284,71 @@ void _updateSelection() {
           }
         }
 
+        Widget lastEditor = BaseEditor(root: _root!,);
+
+        Widget buildEditor(){
+          Widget editor;
+
+          //board editor
+          if (Ev4rs.boardEditor.value == true){
+            editor = SingleChildScrollView( 
+              child: BoardEditor(saveField: saveField, openBoard: _openBoard, root: _root!, goBack: _goBackBoard,)
+            );
+            
+          }
+
+          //edit a button
+          else if (Ev4rs.editAButton.value == true && Ev4rs.selectedButton.value != null){
+            editor = SingleChildScrollView(child: 
+              (Ev4rs.selectedUUIDs.value.isNotEmpty) 
+              ? MultiButtonEditor(saveField: multiSaveField,root: _root!, obj: Ev4rs.selectedButton.value!) 
+              : ButtonEditor(saveField: saveField, root: _root!, obj: Ev4rs.selectedButton.value!)
+            );
+          } 
+
+          //edit a sub folder
+          else if (Ev4rs.editASubFolder.value == true && Ev4rs.subFolderSelectedButton.value != null){ 
+            editor = SingleChildScrollView( 
+              child: (Ev4rs.subFolderSelectedUUIDs.value.isNotEmpty) 
+              ? MultiSubFolderEditor(saveField: multiSaveField, root: _root!, obj: Ev4rs.subFolderSelectedButton.value!) 
+              : SubFolderEditor(saveField: saveField, root: _root!, obj: Ev4rs.subFolderSelectedButton.value!)
+            );
+          } 
+
+          //edit a grammer button
+          else if (Ev4rs.editAGrammerButton.value == true && Ev4rs.grammerSelectedButton.value != null){ 
+            editor = SingleChildScrollView( 
+              child: (Ev4rs.grammerSelectedUUIDs.value.isNotEmpty) 
+              ? MultiGrammerEditor(saveField: multiSaveGrammerField, root: _root!, obj: Ev4rs.grammerSelectedButton.value!) 
+              : GrammerEditor(saveField: saveGrammerField, root: _root!, obj: Ev4rs.grammerSelectedButton.value!)
+            );
+          } 
+
+          //edit a nav button
+          else if (Ev4rs.editANavButton.value == true && Ev4rs.navSelectedButton.value != null){
+            editor = SingleChildScrollView( 
+              child: (Ev4rs.navSelectedUUIDs.value.isNotEmpty) 
+              ? MultiNavButtonEditor(saveField: multiSaveNavField, root: _root!, obj: Ev4rs.navSelectedButton.value!) 
+              : NavButtonEditor(saveField: saveNavField, root: _root!, obj: Ev4rs.navSelectedButton.value!)
+            );
+          } 
+          
+          //show previous (last editor is initialized as base so if no last will be base)
+          else {
+            editor = lastEditor;
+          }
+
+          lastEditor = editor;
+
+          return editor;
+        }
+
 
         return Scaffold(
           resizeToAvoidBottomInset: false,
           body: SafeArea(
             bottom: false,
-            child: Stack(children: [
+            child: 
               ValueListenableBuilder<bool>(
                 valueListenable: Ev4rs.isButtonExpanded, 
                 builder: (context, isButtonExpanded, _) {
@@ -242,117 +360,72 @@ void _updateSelection() {
                       // 
                       //editor window row
                       //
-                        SizedBox(
-                          height: mwHeight,
-                          child: Container(
-                            color: Cv4rs.themeColor2,
-                            child: ValueListenableBuilder(
-                            valueListenable: CombinedValueNotifier(
-                                Ev4rs.editAButton, Ev4rs.editASubFolder, Ev4rs.subFolderSelectedUUIDs, 
-                                Ev4rs.selectedUUIDs, Ev4rs.selectedButton, Ev4rs.subFolderSelectedButton, 
-                                Ev4rs.invertSelections, Ev4rs.boardEditor, Ev4rs.navSelectedButton
-                              ), 
-                              builder: (context, values, _) {
+                        Stack(
+                          children: [
+                            SizedBox(
+                              height: mwHeight,
+                              child: Container(
+                                color: Cv4rs.themeColor2,
+                                child: ValueListenableBuilder(
+                                valueListenable: CombinedValueNotifier(
+                                    Ev4rs.editAButton, Ev4rs.editASubFolder, Ev4rs.subFolderSelectedUUIDs, 
+                                    Ev4rs.selectedUUIDs, Ev4rs.selectedButton, Ev4rs.subFolderSelectedButton, 
+                                    Ev4rs.invertSelections, Ev4rs.boardEditor, Ev4rs.navSelectedButton
+                                  ), 
+                                  builder: (context, values, _) {
 
-                            return ValueListenableBuilder(
-                            valueListenable: CombinedValueNotifier(
-                                Ev4rs.editAGrammerButton, Ev4rs.grammerSelectedUUIDs, Ev4rs.grammerSelectedButton, 
+                                return ValueListenableBuilder(
+                                valueListenable: CombinedValueNotifier(
+                                    Ev4rs.editAGrammerButton, Ev4rs.grammerSelectedUUIDs, Ev4rs.grammerSelectedButton, 
 
-                                Ev4rs.selectedUUIDs, Ev4rs.selectedButton, Ev4rs.subFolderSelectedButton, 
-                                Ev4rs.invertSelections, null, null
-                              ), 
-                              builder: (context, values, _) {
-
-                                //board editor
-                                if (Ev4rs.boardEditor.value == true){
-                                  if (_root == null) {
-                                    return const CircularProgressIndicator();
-                                  } else {
-                                  return SingleChildScrollView( 
-                                    child: BoardEditor(openBoard: _openBoard, primaryRoot: _root!, goBack: _goBackBoard,)
-                                  );
-                                  }
-                                }
-                                //edit a button
-                                else if (Ev4rs.editAButton.value == true && Ev4rs.selectedButton.value != null){
-                                  return SingleChildScrollView(child: 
-                                    (Ev4rs.selectedUUIDs.value.isNotEmpty) 
-                                    ? MultiButtonEditor(obj: Ev4rs.selectedButton.value!) 
-                                    : ButtonEditor(obj: Ev4rs.selectedButton.value!)
-                                  );
-                                } 
-                                //edit a sub folder
-                                else if (Ev4rs.editASubFolder.value == true && Ev4rs.subFolderSelectedButton.value != null){ 
-                                  return SingleChildScrollView( 
-                                    child: (Ev4rs.subFolderSelectedUUIDs.value.isNotEmpty) 
-                                    ? MultiSubFolderEditor(obj: Ev4rs.subFolderSelectedButton.value!) 
-                                    : SubFolderEditor(obj: Ev4rs.subFolderSelectedButton.value!)
-                                  );
-                                } 
-                                //edit a grammer button
-                                else if (Ev4rs.editAGrammerButton.value == true && Ev4rs.grammerSelectedButton.value != null){ 
-                                  return SingleChildScrollView( 
-                                    child: (Ev4rs.grammerSelectedUUIDs.value.isNotEmpty) 
-                                    ? MultiGrammerEditor(obj: Ev4rs.grammerSelectedButton.value!) 
-                                    : GrammerEditor(obj: Ev4rs.grammerSelectedButton.value!)
-                                  );
-                                } 
-                                //edit a nav button
-                                else if (Ev4rs.editANavButton.value == true && Ev4rs.navSelectedButton.value != null){
-                                  return SingleChildScrollView( 
-                                    child: (Ev4rs.navSelectedUUIDs.value.isNotEmpty) 
-                                    ? MultiNavButtonEditor(obj: Ev4rs.navSelectedButton.value!) 
-                                    : NavButtonEditor(obj: Ev4rs.navSelectedButton.value!)
-                                  );
-                                } 
-                                
-                                //show base
-                                else {
-                                  return BaseEditor();
-                                }
-                              },
-                            );
-                            },
+                                    Ev4rs.selectedUUIDs, Ev4rs.selectedButton, Ev4rs.subFolderSelectedButton, 
+                                    Ev4rs.invertSelections, null, null
+                                  ), 
+                                  builder: (context, values, _) {
+                                    return buildEditor();
+                                  },
+                                );
+                                },
+                                ),
+                              ),
                             ),
-                          ),
+                            SaveIndicator(),
+                          ]
                         ),
-                        
                         // Navigation row
-                        ValueListenableBuilder(
-                                        valueListenable:
-                                      CombinedValueNotifier(
-                                        Ev4rs.navSelectedUUIDs, Ev4rs.firstNavSelectedUUID, 
-                                        Ev4rs.secondNavSelectedUUID, Ev4rs.selectedUUIDs, 
-                                        
-                                        Ev4rs.grammerSelectedUUIDs, Ev4rs.firstGrammerSelectedUUID, 
-                                        Ev4rs.secondGrammerSelectedUUID, Ev4rs.selectedBoardUUID, null ),
-                                        builder: (context, values, _) {
-                        return SizedBox(
-                          height: navHeight,
-                          child: Container(
-                            color: Cv4rs.themeColor3,
-                            child: (Bv4rs.showNavRow == 2) 
-                            ? SizedBox.expand() 
-                            : Row(
-                              children: [
-                                for (var navObj in _root!.navRow)
-                                  Flexible(
-                                    child: navObj.buildEditableWidget(
-                                      widget.synth,
-                                      navObj,
-                                      _toggleStorage,
-                                      _openBoard,
-                                      _root!.boards,
-                                      _findBoardById,
-                                    ),
+                        SizedBox(
+                              height: navHeight,
+                              child: Container(
+                                color: Cv4rs.themeColor3,
+                                child: (Bv4rs.showNavRow == 2) 
+                                ? SizedBox.expand() 
+                                : IndexedStack(index: 0, children: [
+                                  ValueListenableBuilder(
+                                    valueListenable: Ev4rs.navSelectedUUIDs,
+                                    builder: (context, values, _) {
+                                    return Row(
+                                    children: [
+                                      for (var navObj in _root!.navRow)
+                                        Flexible(
+                                          child: navListener(
+                                            navObj.buildEditableWidget(
+                                              _root!,
+                                              widget.synth,
+                                              navObj,
+                                              _toggleStorage,
+                                              _openBoard,
+                                              _root!.boards,
+                                              _findBoardById,
+                                            ),
+                                          ),
+                                        ),
+                                    ],
+                                  );
+                                    }
                                   ),
-                              ],
+                                ]),
+                              ),
                             ),
-                          ),
-                        );
-                        }
-                        ),
-
                         // Grammar row
                         ValueListenableBuilder(
                                         valueListenable:
@@ -404,110 +477,106 @@ void _updateSelection() {
                                         ),
                         // Board row
                         ValueListenableBuilder(
-                valueListenable: CombinedValueNotifier(
-                    Ev4rs.selectedUUIDs, Ev4rs.subFolderSelectedUUIDs, Ev4rs.firstSubFolderSelectedUUID, 
-                    Ev4rs.secondSubFolderSelectedUUID, Ev4rs.firstSelectedUUID, Ev4rs.secondSelectedUUID, 
-                    Ev4rs.dragSelectMultiple, currentIndex, null
-                  ), 
-                builder: (context, values, _) {
-                 return ValueListenableBuilder(
-                valueListenable: CombinedValueNotifier(
-                    Ev4rs.grammerSelectedUUIDs, Ev4rs.firstGrammerSelectedUUID, Ev4rs.secondGrammerSelectedUUID, 
+                        valueListenable: CombinedValueNotifier(
+                            Ev4rs.selectedUUIDs, Ev4rs.subFolderSelectedUUIDs, Ev4rs.firstSubFolderSelectedUUID, 
+                            Ev4rs.secondSubFolderSelectedUUID, Ev4rs.firstSelectedUUID, Ev4rs.secondSelectedUUID, 
+                            Ev4rs.dragSelectMultiple, currentIndex, 
+                            CombinedValueNotifier(
+                              Ev4rs.grammerSelectedUUIDs, Ev4rs.firstGrammerSelectedUUID, Ev4rs.secondGrammerSelectedUUID, 
 
-                    Ev4rs.secondSubFolderSelectedUUID, Ev4rs.firstSelectedUUID, Ev4rs.secondSelectedUUID, 
-                    Ev4rs.dragSelectMultiple, null, null
-                  ), 
-                builder: (context, values, _) {
-                        return (!Ev4rs.dragSelectMultiple.value) ?
-                        SizedBox(
-                          height: totalBoardHeight,
-                          child: Container(
-                            color: Cv4rs.themeColor4,
-                              child: Stack(
-                                children: [
-                                  Center(
-                                    child: IndexedStack(
-                                      index:  V4rs.syncIndex,
-                                      children: [
-                                        for (var board in _root!.boards)
-                                          board.buildEditWidget(
-                                            board,
-                                            widget.synth,
-                                            _root!,
-                                            _goBackBoard,
-                                            _openBoard,
-                                            _openBoard,
-                                            _root!.boards,
-                                            _findBoardById,
-                                          ),
-                                      ],
-                                    ),
-                                  ),
-                                  if (_selectionRect != null)
-                                    Positioned.fromRect(
-                                      rect: _selectionRect!,
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                          color: Colors.blue.withValues(alpha: 0.2),
-                                          border: Border.all(color: Colors.blue, width: 2),
+                              Ev4rs.secondSubFolderSelectedUUID, Ev4rs.firstSelectedUUID, Ev4rs.secondSelectedUUID, 
+                              Ev4rs.dragSelectMultiple, null, null
+                            ),
+                          ), 
+                        builder: (context, values, _) {
+                          return (!Ev4rs.dragSelectMultiple.value) ?
+                            SizedBox(
+                              height: totalBoardHeight,
+                              child: Container(
+                                color: Cv4rs.themeColor4,
+                                  child: Stack(
+                                    children: [
+                                      Center(
+                                        child: IndexedStack(
+                                          index:  V4rs.syncIndex,
+                                          children: [
+                                            for (var board in _root!.boards)
+                                              board.buildEditWidget(
+                                                board,
+                                                widget.synth,
+                                                _root!,
+                                                _goBackBoard,
+                                                _openBoard,
+                                                _openBoard,
+                                                _root!.boards,
+                                                _findBoardById,
+                                              ),
+                                          ],
                                         ),
                                       ),
-                                    ),
-                                ],
-                              ),
-                          ),
-                        )
-                        : SizedBox(
-                          height: totalBoardHeight,
-                          child: Container(
-                            color: Cv4rs.themeColor4,
-                            child: GestureDetector(
-                              key: _gestureDetectorKey,
-                              
-                              onPanStart: (details) {
-                                setState(() {
-                                  _dragStart = details.localPosition;
-                                  _selectionRect = null;
-                                });
-                              },
-                              onPanUpdate: (details) {
-                                setState(() {
-                                  _selectionRect = Rect.fromPoints(_dragStart!, details.localPosition);
-                                  _updateSelection();
-                                  Ev4rs.selectedUUID = Ev4rs.selectedUUIDs.value.first;
-                                });
-                              },
-                              onPanEnd: (_) {
-                                setState(() {
-                                  _dragStart = null;
-                                  _selectionRect = null;
-                                });
-                              },
-                              child: 
-                                  Center(
-                                    child: IndexedStack(
-                                      index:  V4rs.syncIndex,
-                                      children: [
-                                        for (var board in _root!.boards)
-                                          board.buildEditWidget(
-                                            board,
-                                            widget.synth,
-                                            _root!,
-                                            _goBackBoard,
-                                            _openBoard,
-                                            _openBoard,
-                                            _root!.boards,
-                                            _findBoardById,
+                                      if (_selectionRect != null)
+                                        Positioned.fromRect(
+                                          rect: _selectionRect!,
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              color: Colors.blue.withValues(alpha: 0.2),
+                                              border: Border.all(color: Colors.blue, width: 2),
+                                            ),
                                           ),
-                                      ],
-                                    ),
+                                        ),
+                                    ],
                                   ),
-                            ),
-                          ),
-                        );
-                              }
+                              ),
+                            )
+                            : SizedBox(
+                              height: totalBoardHeight,
+                              child: Container(
+                                color: Cv4rs.themeColor4,
+                                child: GestureDetector(
+                                  key: _gestureDetectorKey,
+                                  
+                                  onPanStart: (details) {
+                                    setState(() {
+                                      _dragStart = details.localPosition;
+                                      _selectionRect = null;
+                                    });
+                                  },
+                                  onPanUpdate: (details) {
+                                    setState(() {
+                                      _selectionRect = Rect.fromPoints(_dragStart!, details.localPosition);
+                                      _updateSelection();
+                                      Ev4rs.selectedUUID = Ev4rs.selectedUUIDs.value.first;
+                                    });
+                                  },
+                                  onPanEnd: (_) {
+                                    setState(() {
+                                      _dragStart = null;
+                                      _selectionRect = null;
+                                    });
+                                  },
+                                  child: 
+                                      Center(
+                                        child: IndexedStack(
+                                          index:  V4rs.syncIndex,
+                                          children: [
+                                            for (var board in _root!.boards)
+                                              board.buildEditWidget(
+                                                board,
+                                                widget.synth,
+                                                _root!,
+                                                _goBackBoard,
+                                                _openBoard,
+                                                _openBoard,
+                                                _root!.boards,
+                                                _findBoardById,
+                                              ),
+                                          ],
+                                        ),
+                                      ),
+                                ),
+                              ),
                             );
-                            }
+                                  }
                             )
                       ],
                     );
@@ -538,83 +607,31 @@ void _updateSelection() {
                         return ValueListenableBuilder<bool>(
                             valueListenable: Ev4rs.editAGrammerButton,
                             builder: (context, isEditingSubFolder, _) {
-
-                              if (Ev4rs.boardEditor.value == true){
-                                  return SingleChildScrollView( 
-                                    child: BoardEditor(openBoard: _openBoard, primaryRoot: _root!, goBack: _goBackBoard,)
-                                  );
-                                }
-                              //button editor
-                              else if (isEditing && Ev4rs.selectedButton.value != null) {
-                                return
-                                  SingleChildScrollView(child: 
-                                  (Ev4rs.selectedUUIDs.value.isNotEmpty) 
-                                  ? MultiButtonEditor(obj: Ev4rs.selectedButton.value!) 
-                                  : ButtonEditor(obj: Ev4rs.selectedButton.value!),);
-                              } 
-                              //sub folder editor
-                                else if (Ev4rs.editASubFolder.value == true){
-                                  return ValueListenableBuilder<BoardObjects?>(
+                              
+                              return ValueListenableBuilder<BoardObjects?>(
                                     valueListenable: Ev4rs.subFolderSelectedButton,
                                     builder: (context, whatIsSelected, _) {
-                                      if (isEditingSubFolder && Ev4rs.subFolderSelectedButton.value != null) {
-                                        return SingleChildScrollView( 
-                                          child: (Ev4rs.subFolderSelectedUUIDs.value.isNotEmpty) 
-                                          ? MultiSubFolderEditor(obj: Ev4rs.subFolderSelectedButton.value!) 
-                                          : SubFolderEditor(obj: Ev4rs.subFolderSelectedButton.value!)
-                                        );
-                                      }
-                                      return const SizedBox();
-                                    }
-                                  );     
-                                } 
-                              //grammer editor
-                                else if (Ev4rs.editAGrammerButton.value == true){
-                                  if (Ev4rs.grammerSelectedButton.value != null) {
-                                    return SingleChildScrollView( 
-                                      child: (Ev4rs.grammerSelectedUUIDs.value.isNotEmpty) 
-                                      ? MultiGrammerEditor(obj: Ev4rs.grammerSelectedButton.value!) 
-                                      : GrammerEditor(obj: Ev4rs.grammerSelectedButton.value!)
-                                    );
-                                  }
-                                  return const SizedBox();
-                                } 
-                                //edit a nav button
-                                else if (Ev4rs.editANavButton.value == true && Ev4rs.navSelectedButton.value != null){
-                                  return SingleChildScrollView( 
-                                    child: (Ev4rs.navSelectedUUIDs.value.isNotEmpty) 
-                                    ? MultiNavButtonEditor(obj: Ev4rs.navSelectedButton.value!) 
-                                    : NavButtonEditor(obj: Ev4rs.navSelectedButton.value!)
-                                  );
-                                } 
-                                //show base
-                                else {
-                                  return BaseEditor();
-                                }
-                                }
-                               );
+                                      return buildEditor();
                                }
                                );
+                            }
+                        );
                               },
                              );
                             }
-                           )
-                          ); //
+                           );
+                            }
+                          )
+                          );//
                         }
                       }
                  
                     ),
-              Positioned(
-                top: 0,
-                left: 0,
-                right: 0,
-                child: const SaveIndicator(),
-              ),
-            ]),
           ),
         );
       },
     );
+  
   }
-}
 
+}

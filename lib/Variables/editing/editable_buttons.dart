@@ -1204,11 +1204,6 @@ import 'dart:async';
                 BoardObjects obj,
                 TTSInterface synth,
                 ) async { 
-                  if (Ev4rs.selectingAction1(obj)) {
-                    setState(() {
-                      Ev4rs.selectingAction1(obj);
-                    });
-                  } else {
                   switch ((obj.matchSpeakOS ?? true) ? Bv4rs.folderSpeakOnSelect : obj.speakOS) {
                   case 1:
                   Ev4rs.selectingAction2(obj, widget.root);
@@ -1221,7 +1216,6 @@ import 'dart:async';
                   Ev4rs.selectingAction2(obj, widget.root);
                     await V4rs.speakOnSelect(obj.message ?? '', V4rs.selectedLanguage.value, synth);
                     break;
-                  }
                 }
                 }
               Future<void> doSecondaryTap(
@@ -1895,7 +1889,10 @@ import 'dart:async';
                   ]
                   );
                 case 4:
-                  return Row(children: [
+                  return Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
                   Flexible(child: 
                   Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 5.0), child:
                   theLabel,
@@ -2550,7 +2547,7 @@ import 'dart:async';
 //
 
 class EditableNavButton extends StatefulWidget {
-
+  final Root root;
   final NavObjects obj;
   final String label;
   final String symbol;
@@ -2611,6 +2608,7 @@ class EditableNavButton extends StatefulWidget {
   //constructs the button 
   const EditableNavButton ({
     super.key,
+    required this.root,
     required this.obj,
     this.symbol = 'assets/interface_icons/interface_icons/iPlaceholder.png',
     required this.tts,
@@ -2657,21 +2655,7 @@ class EditableNavButton extends StatefulWidget {
 }
 
 class _EditableNavButton extends State<EditableNavButton> {
-  late Future<Root> rootFuture;
-    late Root root;
-
-     @override
-      void initState(){
-        Ev4rs.rootReady = false;
-    super.initState();
-    // start with on-disk future; UI prefers in-memory Ev4rs.rootNotifier when available
-    rootFuture = V4rs.loadRootData();
-      }
-
-      @override
-      void dispose(){
-        super.dispose();
-      }
+  
 
 
   //defines the button 
@@ -2720,22 +2704,7 @@ class _EditableNavButton extends State<EditableNavButton> {
     
     Widget image = LoadImage.fromSymbol(obj.symbol);
 
-  return FutureBuilder<Root>(
-            future: (Ev4rs.rootNotifier.value != null) ? Future.value(Ev4rs.rootNotifier.value) : rootFuture,
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.done && snapshot.hasData) {
-                root = snapshot.data!;
-                Ev4rs.rootReady = true;
-            } else {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(child: CircularProgressIndicator());
-              } else if (snapshot.hasError) {
-                return Center(child: Text('Error: ${snapshot.error}'));
-              } else if (!snapshot.hasData) {
-                return Center(child: Text('No data found'));
-              }
-            }
-    return Visibility (
+  return Visibility (
       visible: (Bv4rs.showNavRow == 2) ? false : true,
       maintainSize: true,
       maintainAnimation: true,
@@ -2743,10 +2712,10 @@ class _EditableNavButton extends State<EditableNavButton> {
       child:
       Opacity(opacity: show ? 1 : 0.4, child:
     ElevatedButton(
-        onPressed: () {
+        onPressed: () {setState(() {
         switch (matchSpeakOS ? Bv4rs.navRowSpeakOnSelect : speakOS) {
           case 1:
-              Ev4rs.navSelectingAction2(obj, root);
+              Ev4rs.navSelectingAction2(obj, widget.root);
               final board = findBoardById(linkToUUID, boards);
               if (board != null) {
                 openBoard(board);
@@ -2754,7 +2723,7 @@ class _EditableNavButton extends State<EditableNavButton> {
               
             break;
           case 2:
-              Ev4rs.navSelectingAction2(obj, root);
+              Ev4rs.navSelectingAction2(obj, widget.root);
              final board = findBoardById(linkToUUID, boards);
               if (board != null) {
                 openBoard(board);
@@ -2763,14 +2732,17 @@ class _EditableNavButton extends State<EditableNavButton> {
             V4rs.speakOnSelect(label, V4rs.selectedLanguage.value, tts);
             break;
           case 3:
-           Ev4rs.navSelectingAction2(obj, root);
+           Ev4rs.navSelectingAction2(obj, widget.root);
            final board = findBoardById(linkToUUID, boards);
               if (board != null) {
                 openBoard(board);
               }
             V4rs.speakOnSelect(alternateLabel, V4rs.selectedLanguage.value, tts);
             break;
-          }},
+          }
+        });
+        },
+        
         style: ElevatedButton.styleFrom(
           padding: EdgeInsets.symmetric(horizontal: 5, vertical: 2),
           backgroundColor: (Ev4rs.firstNavSelectedUUID.value == obj.id 
@@ -2927,12 +2899,4 @@ class _EditableNavButton extends State<EditableNavButton> {
       ),
       );
             }
-            );
-  }
 }
-
-
-
-
-
-

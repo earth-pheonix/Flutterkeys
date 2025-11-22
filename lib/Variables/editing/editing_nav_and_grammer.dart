@@ -7,17 +7,19 @@ import 'package:flutterkeysaac/Variables/boardset_settings_variables.dart';
 import 'package:flutterkeysaac/Variables/Settings_variable.dart';
 import 'package:flutterkeysaac/Variables/Grammer_variables.dart';
 import 'package:flutterkeysaac/Variables/color_variables.dart';
-import 'package:flutterkeysaac/Variables/variables.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutterkeysaac/Models/json_model_nav_and_root.dart';
-import 'dart:async';
   
   
   //===: grammer button editor
    class GrammerEditor extends StatefulWidget{
+      final void Function(Root root, String objUUID, String field, dynamic value) saveField;
+      final Root root;
       final GrammerObjects obj;
       const GrammerEditor({
         super.key,
+        required this.saveField,
+        required this.root,
         required this.obj,
       });
 
@@ -26,57 +28,16 @@ import 'dart:async';
     }
 
     class _GrammerEditorState extends State<GrammerEditor>{
-      late Future<Root> rootFuture;
       final ImagePicker _picker = ImagePicker();
-      late Root root;
       var everyImage = <String>[];
 
       @override
-      void initState(){
-        Ev4rs.rootReady = false;
-        super.initState();
-        rootFuture = V4rs.loadRootData();
-
-        Ev4rs.reloadJson.addListener(_handleReload);
-      }
-
-      @override
-      void dispose(){
-        Ev4rs.reloadJson.removeListener(_handleReload);
-        super.dispose();
-      }
-
-      void _handleReload() {
-        setState(() {
-          rootFuture = V4rs.loadRootData();
-        });
-      }
-
-      @override
       Widget build(BuildContext context) {
+        Root root = widget.root;
         final screenSize = MediaQuery.of(context).size;
         final isLandscape = screenSize.width > screenSize.height;
 
-        return Stack( children: [
-          ValueListenableBuilder<Root?>(valueListenable: Ev4rs.rootNotifier, builder: (context, inMemoryRoot, _) {
-            final futureRoot = rootFuture;
-            return FutureBuilder<Root>(
-            future: futureRoot,
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.done && snapshot.hasData) {
-                root = snapshot.data!;
-                Ev4rs.rootReady = true;
-            } else {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(child: CircularProgressIndicator());
-              } else if (snapshot.hasError) {
-                return Center(child: Text('Error: ${snapshot.error}'));
-              } else if (!snapshot.hasData) {
-                return Center(child: Text('No data found'));
-              }
-            }
-              
-            everyImage = Ev4rs.getAllImages(root);
+        everyImage = Ev4rs.getAllImages(root);
           
 
             final obj_ = Ev4rs.findGrammerById(root.grammerRow, Ev4rs.grammerSelectedUUID);
@@ -96,7 +57,11 @@ import 'dart:async';
 
             Widget image = LoadImage.fromSymbol(obj_.symbol);
 
-            return Row( 
+
+        return Stack( children: [
+              
+            
+            Row( 
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
               //
@@ -171,8 +136,8 @@ import 'dart:async';
                                           child: ButtonStyle3(
                                             imagePath: 'assets/interface_icons/interface_icons/iPlaceholder.png', 
                                             onPressed: () async {
-                                              Ev4rs.grammerPickImage(root, _picker);
-                                              if (Ev4rs.rootReady && everyImage.isNotEmpty) {
+                                              Ev4rs.grammerPickImage(widget.saveField, root, _picker);
+                                              if (everyImage.isNotEmpty) {
                                               await Ev4rs.cleanupUnusedImages(everyImage);
                                               } 
                                             }, 
@@ -191,8 +156,8 @@ import 'dart:async';
                                       child: ButtonStyle3(
                                       imagePath: 'assets/interface_icons/interface_icons/iPlaceholder.png', 
                                       onPressed: () async {
-                                        Ev4rs.grammerPickImage(root, _picker);
-                                          if (Ev4rs.rootReady && everyImage.isNotEmpty) {
+                                        Ev4rs.grammerPickImage(widget.saveField, root, _picker);
+                                          if (everyImage.isNotEmpty) {
                                             await Ev4rs.cleanupUnusedImages(everyImage);
                                           } 
                                       }, 
@@ -246,11 +211,10 @@ import 'dart:async';
                         ),
                         ButtonStyle2(
                         imagePath: 'assets/interface_icons/interface_icons/iCheck.png', 
-                          onPressed: (){
-                            if (Ev4rs.rootReady) {
-                              Ev4rs.updateGrammerField(root, Ev4rs.grammerSelectedUUID, 'padding', Ev4rs.padding.value);
+                          onPressed: (){setState(() {
+                              widget.saveField(root, Ev4rs.grammerSelectedUUID, 'padding', Ev4rs.padding.value);
                               Ev4rs.saveJson(root);
-                            }
+                              });
                           }, 
                           label: 'Save Padding'
                           ),
@@ -270,17 +234,18 @@ import 'dart:async';
                     widgety: 
                     ButtonStyle2(
                         imagePath: 'assets/interface_icons/interface_icons/iCheck.png', 
-                          onPressed: (){
-                              Ev4rs.updateGrammerField(root, Ev4rs.grammerSelectedUUID, 'matchOverlayColor', Ev4rs.matchOverlay.value);
-                              Ev4rs.updateGrammerField(root, Ev4rs.grammerSelectedUUID, 'overlayColor', Ev4rs.overlay.value);
-                              Ev4rs.updateGrammerField(root, Ev4rs.grammerSelectedUUID, 'matchSymbolSaturation', Ev4rs.matchSaturation.value);
-                              Ev4rs.updateGrammerField(root, Ev4rs.grammerSelectedUUID, 'symbolSaturation', Ev4rs.saturation.value);
-                              Ev4rs.updateGrammerField(root, Ev4rs.grammerSelectedUUID, 'matchSymbolContrast', Ev4rs.matchContrast.value);
-                              Ev4rs.updateGrammerField(root, Ev4rs.grammerSelectedUUID, 'symbolContrast', Ev4rs.contrast.value);
-                              Ev4rs.updateGrammerField(root, Ev4rs.grammerSelectedUUID, 'matchInvertSymbol', Ev4rs.matchInvert.value);
-                              Ev4rs.updateGrammerField(root, Ev4rs.grammerSelectedUUID, 'invertSymbol', Ev4rs.invert.value);
+                          onPressed: (){setState(() {
+                              widget.saveField(root, Ev4rs.grammerSelectedUUID, 'matchOverlayColor', Ev4rs.matchOverlay.value);
+                              widget.saveField(root, Ev4rs.grammerSelectedUUID, 'overlayColor', Ev4rs.overlay.value);
+                              widget.saveField(root, Ev4rs.grammerSelectedUUID, 'matchSymbolSaturation', Ev4rs.matchSaturation.value);
+                              widget.saveField(root, Ev4rs.grammerSelectedUUID, 'symbolSaturation', Ev4rs.saturation.value);
+                              widget.saveField(root, Ev4rs.grammerSelectedUUID, 'matchSymbolContrast', Ev4rs.matchContrast.value);
+                              widget.saveField(root, Ev4rs.grammerSelectedUUID, 'symbolContrast', Ev4rs.contrast.value);
+                              widget.saveField(root, Ev4rs.grammerSelectedUUID, 'matchInvertSymbol', Ev4rs.matchInvert.value);
+                              widget.saveField(root, Ev4rs.grammerSelectedUUID, 'invertSymbol', Ev4rs.invert.value);
                               
                               Ev4rs.saveJson(root);
+                              });
                           }, 
                           label: 'Save Adjustments'
                           ),
@@ -347,25 +312,33 @@ import 'dart:async';
                         Row(children: [ 
                           Expanded(flex: 5, child: 
                             Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 10, vertical: 0), child: 
-                              TextField(
+                              ValueListenableBuilder(valueListenable: Ev4rs.notes, builder: (context, value, _) {
+                          final labelController = TextEditingController(text: value)
+                          ..selection = TextSelection.collapsed(offset: value.length);
+
+                          return 
+                        TextField(
+                          controller: labelController,
                                 style: Ev4rs.labelStyle,
                                 onChanged: (value){
-                                  Ev4rs.label = value;
+                                  Ev4rs.label.value = value;
                                 },
                                 decoration: InputDecoration(
                                 hintStyle: Ev4rs.hintLabelStyle,
                                 hintText: '${obj_.label}',
                                 ),
-                              ),
+                              );
+                              }),
                             ),
                           ),
                           Flexible(flex: 2, child: 
                           Padding(padding: EdgeInsetsGeometry.symmetric(vertical: 5), child: 
                           ButtonStyle4(
                           imagePath: 'assets/interface_icons/interface_icons/iCheck.png', 
-                            onPressed: (){
-                              Ev4rs.updateGrammerField(root, Ev4rs.grammerSelectedUUID, 'label', Ev4rs.label);
+                            onPressed: (){setState(() {
+                              widget.saveField(root, Ev4rs.grammerSelectedUUID, 'label', Ev4rs.label.value);
                               Ev4rs.saveJson(root);
+                              });
                             }, 
                             label: 'Save'
                             ),
@@ -467,12 +440,11 @@ import 'dart:async';
                                 ),
                                 ButtonStyle2(
                                   imagePath: 'assets/interface_icons/interface_icons/iCheck.png', 
-                                  onPressed: (){
-                                    if (Ev4rs.rootReady) {
-                                      Ev4rs.updateGrammerField(root, Ev4rs.grammerSelectedUUID, 'matchSpeakOS', Ev4rs.matchSpeakOnSelect.value);
-                                      Ev4rs.updateGrammerField(root, Ev4rs.grammerSelectedUUID, 'speakOS', Ev4rs.speakOnSelect.value);
+                                  onPressed: (){setState(() {
+                                      widget.saveField(root, Ev4rs.grammerSelectedUUID, 'matchSpeakOS', Ev4rs.matchSpeakOnSelect.value);
+                                      widget.saveField(root, Ev4rs.grammerSelectedUUID, 'speakOS', Ev4rs.speakOnSelect.value);
                                       Ev4rs.saveJson(root);
-                                    }
+                                      });
                                   }, 
                                   label: 'Save'
                                 ),
@@ -492,15 +464,16 @@ import 'dart:async';
                       child: FontPicker2(
                         widgety:  ButtonStyle2(
                           imagePath: 'assets/interface_icons/interface_icons/iCheck.png', 
-                            onPressed: (){
-                                Ev4rs.updateGrammerField(root, Ev4rs.grammerSelectedUUID, 'matchFont', Ev4rs.matchFont.value);
-                                Ev4rs.updateGrammerField(root, Ev4rs.grammerSelectedUUID, 'fontSize', Ev4rs.fontSize.value);
-                                Ev4rs.updateGrammerField(root, Ev4rs.grammerSelectedUUID, 'fontItalics', Ev4rs.fontItalics.value);
-                                Ev4rs.updateGrammerField(root, Ev4rs.grammerSelectedUUID, 'fontUnderline', Ev4rs.fontUnderline.value);
-                                Ev4rs.updateGrammerField(root, Ev4rs.grammerSelectedUUID, 'fontWeight', Ev4rs.fontWeight.value);
-                                Ev4rs.updateGrammerField(root, Ev4rs.grammerSelectedUUID, 'fontFamily', Ev4rs.fontFamily.value);
-                                Ev4rs.updateGrammerField(root, Ev4rs.grammerSelectedUUID, 'fontColor', Ev4rs.fontColor.value);
+                            onPressed: (){setState(() {
+                                widget.saveField(root, Ev4rs.grammerSelectedUUID, 'matchFont', Ev4rs.matchFont.value);
+                                widget.saveField(root, Ev4rs.grammerSelectedUUID, 'fontSize', Ev4rs.fontSize.value);
+                                widget.saveField(root, Ev4rs.grammerSelectedUUID, 'fontItalics', Ev4rs.fontItalics.value);
+                                widget.saveField(root, Ev4rs.grammerSelectedUUID, 'fontUnderline', Ev4rs.fontUnderline.value);
+                                widget.saveField(root, Ev4rs.grammerSelectedUUID, 'fontWeight', Ev4rs.fontWeight.value);
+                                widget.saveField(root, Ev4rs.grammerSelectedUUID, 'fontFamily', Ev4rs.fontFamily.value);
+                                widget.saveField(root, Ev4rs.grammerSelectedUUID, 'fontColor', Ev4rs.fontColor.value);
                                 Ev4rs.saveJson(root);
+                                });
                             }, 
                             label: 'Save Button Font'
                             ),
@@ -636,12 +609,11 @@ import 'dart:async';
                         ),
                         ButtonStyle2(
                           imagePath: 'assets/interface_icons/interface_icons/iCheck.png', 
-                          onPressed: (){
-                            if (Ev4rs.rootReady) {
-                              Ev4rs.updateGrammerField(root, Ev4rs.grammerSelectedUUID, 'matchFormat', Ev4rs.matchFormat.value);
-                              Ev4rs.updateGrammerField(root, Ev4rs.grammerSelectedUUID, 'format', Ev4rs.format.value);
+                          onPressed: (){setState(() {
+                              widget.saveField(root, Ev4rs.grammerSelectedUUID, 'matchFormat', Ev4rs.matchFormat.value);
+                              widget.saveField(root, Ev4rs.grammerSelectedUUID, 'format', Ev4rs.format.value);
                               Ev4rs.saveJson(root);
-                            }
+                              });
                           }, 
                           label: 'Save'
                         ),
@@ -778,12 +750,11 @@ import 'dart:async';
                         //save 
                         ButtonStyle2(
                           imagePath: 'assets/interface_icons/interface_icons/iCheck.png', 
-                          onPressed: (){
-                            if (Ev4rs.rootReady) {
-                              Ev4rs.updateGrammerField(root, Ev4rs.grammerSelectedUUID, 'matchPOS', Ev4rs.matchBackground.value);
-                              Ev4rs.updateGrammerField(root, Ev4rs.grammerSelectedUUID, 'backgroundColor', Ev4rs.backgroundColor.value);
+                          onPressed: (){setState(() {
+                              widget.saveField(root, Ev4rs.grammerSelectedUUID, 'matchPOS', Ev4rs.matchBackground.value);
+                              widget.saveField(root, Ev4rs.grammerSelectedUUID, 'backgroundColor', Ev4rs.backgroundColor.value);
                               Ev4rs.saveJson(root);
-                            }
+                              });
                           }, 
                           label: 'Save'
                         ),
@@ -864,11 +835,10 @@ import 'dart:async';
                         //save 
                         ButtonStyle2(
                           imagePath: 'assets/interface_icons/interface_icons/iCheck.png', 
-                          onPressed: (){
-                            if (Ev4rs.rootReady) {
-                              Ev4rs.updateGrammerField(root, Ev4rs.grammerSelectedUUID, 'type', Ev4rs.grammerType.value);
+                          onPressed: (){setState(() {
+                              widget.saveField(root, Ev4rs.grammerSelectedUUID, 'type', Ev4rs.grammerType.value);
                               Ev4rs.saveJson(root);
-                            }
+                              });
                           }, 
                           label: 'Save'
                         ),
@@ -927,11 +897,10 @@ import 'dart:async';
                         //save 
                         ButtonStyle2(
                           imagePath: 'assets/interface_icons/interface_icons/iCheck.png', 
-                          onPressed: (){
-                            if (Ev4rs.rootReady) {
-                              Ev4rs.updateNavField(root, Ev4rs.grammerSelectedUUID, 'function', Ev4rs.grammerFunction.value);
+                          onPressed: (){setState(() {
+                              widget.saveField(root, Ev4rs.grammerSelectedUUID, 'function', Ev4rs.grammerFunction.value);
                               Ev4rs.saveJson(root);
-                            }
+                              });
                           }, 
                           label: 'Save'
                         ),
@@ -997,11 +966,10 @@ import 'dart:async';
                             //save 
                             ButtonStyle2(
                               imagePath: 'assets/interface_icons/interface_icons/iCheck.png', 
-                              onPressed: (){
-                                if (Ev4rs.rootReady) {
-                                  Ev4rs.updateGrammerField(root, Ev4rs.grammerSelectedUUID, 'openUUID', Ev4rs.link.value);
+                              onPressed: (){setState(() {
+                                  widget.saveField(root, Ev4rs.grammerSelectedUUID, 'openUUID', Ev4rs.link.value);
                                   Ev4rs.saveJson(root);
-                                }
+                                  });
                               }, 
                               label: 'Save'
                             ),
@@ -1022,7 +990,13 @@ import 'dart:async';
                         Row(children: [ 
                           Expanded(flex: 5, child: 
                             Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 10, vertical: 10), child: 
-                              TextField(
+                              ValueListenableBuilder(valueListenable: Ev4rs.notes, builder: (context, value, _) {
+                          final notesController = TextEditingController(text: value)
+                          ..selection = TextSelection.collapsed(offset: value.length);
+
+                          return 
+                        TextField(
+                          controller: notesController,
                                 minLines: 1,
                                 maxLines: 5,
                                 style: Sv4rs.settingslabelStyle,
@@ -1033,16 +1007,18 @@ import 'dart:async';
                                 hintStyle: Sv4rs.settingslabelStyle,
                                 hintText: 'Notes... ${Ev4rs.notes.value}',
                                 ),
-                              ),
+                              );
+                              }),
                             ),
                           ),
                           Flexible(flex: 2, child: 
                           Padding(padding: EdgeInsetsGeometry.symmetric(vertical: 5), child: 
                           ButtonStyle4(
                           imagePath: 'assets/interface_icons/interface_icons/iCheck.png', 
-                            onPressed: (){
-                              Ev4rs.updateGrammerField(root, Ev4rs.grammerSelectedUUID, 'note', Ev4rs.notes.value);
+                            onPressed: (){setState(() {
+                              widget.saveField(root, Ev4rs.grammerSelectedUUID, 'note', Ev4rs.notes.value);
                                 Ev4rs.saveJson(root);
+                                });
                             }, 
                             label: 'Save'
                             ),
@@ -1195,11 +1171,8 @@ import 'dart:async';
               ]
               )
             ]
-            );
-                }
-              );
-            }
-          ),
+            ),
+              
         //here
         Positioned(
           top: (isLandscape) ? MediaQuery.of(context).size.height * 0.08 : MediaQuery.of(context).size.height * 0.04,
@@ -1301,8 +1274,12 @@ import 'dart:async';
 
     class MultiGrammerEditor extends StatefulWidget{
           final GrammerObjects obj;
+          final void Function(Root root, List<String> objUUID, String field, dynamic value) saveField;
+          final Root root;
           const MultiGrammerEditor({
             super.key,
+            required this.root,
+            required this.saveField,
             required this.obj,
           });
 
@@ -1311,56 +1288,16 @@ import 'dart:async';
         }
 
     class _MultiGrammerEditor extends State<MultiGrammerEditor>{
-      late Future<Root> rootFuture;
       final ImagePicker _picker = ImagePicker();
-      late Root root;
       var everyImage = <String>[];
 
       @override
-      void initState(){
-        Ev4rs.rootReady = false;
-        super.initState();
-        rootFuture = V4rs.loadRootData();
-
-        Ev4rs.reloadJson.addListener(_handleReload);
-      }
-
-      @override
-      void dispose(){
-        Ev4rs.reloadJson.removeListener(_handleReload);
-        super.dispose();
-      }
-
-      void _handleReload() {
-        setState(() {
-          rootFuture = V4rs.loadRootData();
-        });
-      }
-
-      @override
       Widget build(BuildContext context) {
+        Root root = widget.root;
         final screenSize = MediaQuery.of(context).size;
         final isLandscape = screenSize.width > screenSize.height;
 
-        return Stack( children: [
-          ValueListenableBuilder<Root?>(valueListenable: Ev4rs.rootNotifier, builder: (context, inMemoryRoot, _) {
-            final futureRoot = rootFuture;
-            return FutureBuilder<Root>(
-            future: futureRoot,
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.done && snapshot.hasData) {
-                root = snapshot.data!;
-                Ev4rs.rootReady = true;
-            } else {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(child: CircularProgressIndicator());
-              } else if (snapshot.hasError) {
-                return Center(child: Text('Error: ${snapshot.error}'));
-              } else if (!snapshot.hasData) {
-                return Center(child: Text('No data found'));
-              }
-            }
-              
+         
             everyImage = Ev4rs.getAllImages(root);
           
 
@@ -1382,7 +1319,10 @@ import 'dart:async';
             Widget image = LoadImage.fromSymbol('assets/interface_icons/interface_icons/iPlaceholder.png');
             Widget image2 = LoadImage.fromSymbol(obj_.symbol);
 
-            return Row( 
+
+        return Stack( children: [
+             
+            Row( 
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
               //
@@ -1495,8 +1435,8 @@ import 'dart:async';
                                           child: ButtonStyle3(
                                             imagePath: 'assets/interface_icons/interface_icons/iPlaceholder.png', 
                                             onPressed: () async {
-                                              Ev4rs.multiPickImage(root, _picker);
-                                              if (Ev4rs.rootReady && everyImage.isNotEmpty) {
+                                              Ev4rs.multiPickImage(widget.saveField, root, _picker);
+                                              if (everyImage.isNotEmpty) {
                                               await Ev4rs.cleanupUnusedImages(everyImage);
                                               } 
                                             }, 
@@ -1515,8 +1455,8 @@ import 'dart:async';
                                       child: ButtonStyle3(
                                       imagePath: 'assets/interface_icons/interface_icons/iPlaceholder.png', 
                                       onPressed: () async {
-                                        Ev4rs.multiPickImage(root, _picker);
-                                          if (Ev4rs.rootReady && everyImage.isNotEmpty) {
+                                        Ev4rs.multiPickImage(widget.saveField, root, _picker);
+                                          if (everyImage.isNotEmpty) {
                                             await Ev4rs.cleanupUnusedImages(everyImage);
                                           } 
                                       }, 
@@ -1572,11 +1512,10 @@ import 'dart:async';
                         ),
                         ButtonStyle2(
                         imagePath: 'assets/interface_icons/interface_icons/iCheck.png', 
-                          onPressed: (){
-                            if (Ev4rs.rootReady) {
-                              Ev4rs.updateMultiGrammerField(root, Ev4rs.grammerSelectedUUIDs.value, 'padding', Ev4rs.padding.value);
+                          onPressed: (){setState(() {
+                              widget.saveField(root, Ev4rs.grammerSelectedUUIDs.value, 'padding', Ev4rs.padding.value);
                               Ev4rs.saveJson(root);
-                            }
+                              });
                           }, 
                           label: 'Save Padding'
                           ),
@@ -1608,17 +1547,18 @@ import 'dart:async';
                     widgety: 
                     ButtonStyle2(
                         imagePath: 'assets/interface_icons/interface_icons/iCheck.png', 
-                          onPressed: (){
-                              Ev4rs.updateMultiGrammerField(root, Ev4rs.grammerSelectedUUIDs.value, 'matchOverlayColor', Ev4rs.matchOverlay.value);
-                              Ev4rs.updateMultiGrammerField(root, Ev4rs.grammerSelectedUUIDs.value, 'overlayColor', Ev4rs.overlay.value);
-                              Ev4rs.updateMultiGrammerField(root, Ev4rs.grammerSelectedUUIDs.value, 'matchSymbolSaturation', Ev4rs.matchSaturation.value);
-                              Ev4rs.updateMultiGrammerField(root, Ev4rs.grammerSelectedUUIDs.value, 'symbolSaturation', Ev4rs.saturation.value);
-                              Ev4rs.updateMultiGrammerField(root, Ev4rs.grammerSelectedUUIDs.value, 'matchSymbolContrast', Ev4rs.matchContrast.value);
-                              Ev4rs.updateMultiGrammerField(root, Ev4rs.grammerSelectedUUIDs.value, 'symbolContrast', Ev4rs.contrast.value);
-                              Ev4rs.updateMultiGrammerField(root, Ev4rs.grammerSelectedUUIDs.value, 'matchInvertSymbol', Ev4rs.matchInvert.value);
-                              Ev4rs.updateMultiGrammerField(root, Ev4rs.grammerSelectedUUIDs.value, 'invertSymbol', Ev4rs.invert.value);
+                          onPressed: (){setState(() {
+                              widget.saveField(root, Ev4rs.grammerSelectedUUIDs.value, 'matchOverlayColor', Ev4rs.matchOverlay.value);
+                              widget.saveField(root, Ev4rs.grammerSelectedUUIDs.value, 'overlayColor', Ev4rs.overlay.value);
+                              widget.saveField(root, Ev4rs.grammerSelectedUUIDs.value, 'matchSymbolSaturation', Ev4rs.matchSaturation.value);
+                              widget.saveField(root, Ev4rs.grammerSelectedUUIDs.value, 'symbolSaturation', Ev4rs.saturation.value);
+                              widget.saveField(root, Ev4rs.grammerSelectedUUIDs.value, 'matchSymbolContrast', Ev4rs.matchContrast.value);
+                              widget.saveField(root, Ev4rs.grammerSelectedUUIDs.value, 'symbolContrast', Ev4rs.contrast.value);
+                              widget.saveField(root, Ev4rs.grammerSelectedUUIDs.value, 'matchInvertSymbol', Ev4rs.matchInvert.value);
+                              widget.saveField(root, Ev4rs.grammerSelectedUUIDs.value, 'invertSymbol', Ev4rs.invert.value);
                               
                               Ev4rs.saveJson(root);
+                              });
                           }, 
                           label: 'Save Adjustments'
                           ),
@@ -1702,26 +1642,34 @@ import 'dart:async';
                         Row(children: [ 
                           Expanded(flex: 5, child: 
                             Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 10, vertical: 0), child: 
-                              TextField(
+                              ValueListenableBuilder(valueListenable: Ev4rs.notes, builder: (context, value, _) {
+                          final labelController = TextEditingController(text: value)
+                          ..selection = TextSelection.collapsed(offset: value.length);
+
+                          return 
+                        TextField(
+                          controller: labelController,
                                 style: Ev4rs.labelStyle,
                                 onChanged: (value){
-                                  Ev4rs.label = value;
+                                  Ev4rs.label.value = value;
                                 },
                                 decoration: InputDecoration(
                                 hintStyle: Ev4rs.hintLabelStyle,
                                 hintText: (Ev4rs.compareGrammerObjFields(root.grammerRow, (b) => (b).label)) ? '${obj_.label}' : '--Not All Match--',
                                 ),
-                              ),
+                              );
+                              }),
                             ),
                           ),
                           Flexible(flex: 2, child: 
                           Padding(padding: EdgeInsetsGeometry.symmetric(vertical: 5), child: 
                           ButtonStyle4(
                           imagePath: 'assets/interface_icons/interface_icons/iCheck.png', 
-                            onPressed: (){
-                              Ev4rs.updateMultiGrammerField(root, Ev4rs.grammerSelectedUUIDs.value, 'label', Ev4rs.label);
+                            onPressed: (){setState(() {
+                              widget.saveField(root, Ev4rs.grammerSelectedUUIDs.value, 'label', Ev4rs.label.value);
                                 
                                 Ev4rs.saveJson(root);
+                                });
                             }, 
                             label: 'Save'
                             ),
@@ -1830,12 +1778,11 @@ import 'dart:async';
                                 ),
                                 ButtonStyle2(
                                   imagePath: 'assets/interface_icons/interface_icons/iCheck.png', 
-                                  onPressed: (){
-                                    if (Ev4rs.rootReady) {
-                                      Ev4rs.updateMultiGrammerField(root, Ev4rs.grammerSelectedUUIDs.value, 'matchSpeakOS', Ev4rs.matchSpeakOnSelect.value);
-                                      Ev4rs.updateMultiGrammerField(root, Ev4rs.grammerSelectedUUIDs.value, 'speakOS', Ev4rs.speakOnSelect.value);
+                                  onPressed: (){setState(() {
+                                      widget.saveField(root, Ev4rs.grammerSelectedUUIDs.value, 'matchSpeakOS', Ev4rs.matchSpeakOnSelect.value);
+                                      widget.saveField(root, Ev4rs.grammerSelectedUUIDs.value, 'speakOS', Ev4rs.speakOnSelect.value);
                                       Ev4rs.saveJson(root);
-                                    }
+                                      });
                                   }, 
                                   label: 'Save'
                                 ),
@@ -1855,15 +1802,16 @@ import 'dart:async';
                       child: FontPicker2(
                         widgety:  ButtonStyle2(
                           imagePath: 'assets/interface_icons/interface_icons/iCheck.png', 
-                            onPressed: (){
-                                Ev4rs.updateMultiGrammerField(root, Ev4rs.grammerSelectedUUIDs.value, 'matchFont', Ev4rs.matchFont.value);
-                                Ev4rs.updateMultiGrammerField(root, Ev4rs.grammerSelectedUUIDs.value, 'fontSize', Ev4rs.fontSize.value);
-                                Ev4rs.updateMultiGrammerField(root, Ev4rs.grammerSelectedUUIDs.value, 'fontItalics', Ev4rs.fontItalics.value);
-                                Ev4rs.updateMultiGrammerField(root, Ev4rs.grammerSelectedUUIDs.value, 'fontUnderline', Ev4rs.fontUnderline.value);
-                                Ev4rs.updateMultiGrammerField(root, Ev4rs.grammerSelectedUUIDs.value, 'fontWeight', Ev4rs.fontWeight.value);
-                                Ev4rs.updateMultiGrammerField(root, Ev4rs.grammerSelectedUUIDs.value, 'fontFamily', Ev4rs.fontFamily.value);
-                                Ev4rs.updateMultiGrammerField(root, Ev4rs.grammerSelectedUUIDs.value, 'fontColor', Ev4rs.fontColor.value);
+                            onPressed: (){setState(() {
+                                widget.saveField(root, Ev4rs.grammerSelectedUUIDs.value, 'matchFont', Ev4rs.matchFont.value);
+                                widget.saveField(root, Ev4rs.grammerSelectedUUIDs.value, 'fontSize', Ev4rs.fontSize.value);
+                                widget.saveField(root, Ev4rs.grammerSelectedUUIDs.value, 'fontItalics', Ev4rs.fontItalics.value);
+                                widget.saveField(root, Ev4rs.grammerSelectedUUIDs.value, 'fontUnderline', Ev4rs.fontUnderline.value);
+                                widget.saveField(root, Ev4rs.grammerSelectedUUIDs.value, 'fontWeight', Ev4rs.fontWeight.value);
+                                widget.saveField(root, Ev4rs.grammerSelectedUUIDs.value, 'fontFamily', Ev4rs.fontFamily.value);
+                                widget.saveField(root, Ev4rs.grammerSelectedUUIDs.value, 'fontColor', Ev4rs.fontColor.value);
                                 Ev4rs.saveJson(root);
+                                });
                             }, 
                             label: 'Save Button Font'
                             ),
@@ -2012,12 +1960,11 @@ import 'dart:async';
                         ),
                         ButtonStyle2(
                           imagePath: 'assets/interface_icons/interface_icons/iCheck.png', 
-                          onPressed: (){
-                            if (Ev4rs.rootReady) {
-                              Ev4rs.updateMultiGrammerField(root, Ev4rs.grammerSelectedUUIDs.value, 'matchFormat', Ev4rs.matchFormat.value);
-                              Ev4rs.updateMultiGrammerField(root, Ev4rs.grammerSelectedUUIDs.value, 'format', Ev4rs.format.value);
+                          onPressed: (){setState(() {
+                              widget.saveField(root, Ev4rs.grammerSelectedUUIDs.value, 'matchFormat', Ev4rs.matchFormat.value);
+                              widget.saveField(root, Ev4rs.grammerSelectedUUIDs.value, 'format', Ev4rs.format.value);
                               Ev4rs.saveJson(root);
-                            }
+                              });
                           }, 
                           label: 'Save'
                         ),
@@ -2127,11 +2074,10 @@ import 'dart:async';
                         //save 
                         ButtonStyle2(
                           imagePath: 'assets/interface_icons/interface_icons/iCheck.png', 
-                          onPressed: (){
-                            if (Ev4rs.rootReady) {
-                              Ev4rs.updateMultiGrammerField(root, Ev4rs.grammerSelectedUUIDs.value, 'backgroundColor', Ev4rs.backgroundColor.value);
+                          onPressed: (){setState(() {
+                              widget.saveField(root, Ev4rs.grammerSelectedUUIDs.value, 'backgroundColor', Ev4rs.backgroundColor.value);
                               Ev4rs.saveJson(root);
-                            }
+                              });
                           }, 
                           label: 'Save'
                         ),
@@ -2214,11 +2160,10 @@ import 'dart:async';
                         //save 
                         ButtonStyle2(
                           imagePath: 'assets/interface_icons/interface_icons/iCheck.png', 
-                          onPressed: (){
-                            if (Ev4rs.rootReady) {
-                              Ev4rs.updateMultiGrammerField(root, Ev4rs.grammerSelectedUUIDs.value, 'type', Ev4rs.grammerType.value);
+                          onPressed: (){setState(() {
+                              widget.saveField(root, Ev4rs.grammerSelectedUUIDs.value, 'type', Ev4rs.grammerType.value);
                               Ev4rs.saveJson(root);
-                            }
+                              });
                           }, 
                           label: 'Save'
                         ),
@@ -2279,11 +2224,10 @@ import 'dart:async';
                         //save 
                         ButtonStyle2(
                           imagePath: 'assets/interface_icons/interface_icons/iCheck.png', 
-                          onPressed: (){
-                            if (Ev4rs.rootReady) {
-                              Ev4rs.updateMultiGrammerField(root, Ev4rs.grammerSelectedUUIDs.value, 'function', Ev4rs.grammerFunction.value);
+                          onPressed: (){setState(() {
+                              widget.saveField(root, Ev4rs.grammerSelectedUUIDs.value, 'function', Ev4rs.grammerFunction.value);
                               Ev4rs.saveJson(root);
-                            }
+                              });
                           }, 
                           label: 'Save'
                         ),
@@ -2351,11 +2295,11 @@ import 'dart:async';
                             //save 
                             ButtonStyle2(
                               imagePath: 'assets/interface_icons/interface_icons/iCheck.png', 
-                              onPressed: (){
-                                if (Ev4rs.rootReady) {
-                                 Ev4rs.updateMultiGrammerField(root, Ev4rs.grammerSelectedUUIDs.value, 'type', Ev4rs.grammerType.value);
+                              onPressed: (){setState(() {
+                                 widget.saveField(root, Ev4rs.grammerSelectedUUIDs.value, 'type', Ev4rs.grammerType.value);
                                  Ev4rs.saveJson(root);
-                                }
+                                 });
+                                
                               }, 
                               label: 'Save'
                             ),
@@ -2376,7 +2320,13 @@ import 'dart:async';
                         Row(children: [ 
                           Expanded(flex: 5, child: 
                             Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 10, vertical: 10), child: 
-                              TextField(
+                              ValueListenableBuilder(valueListenable: Ev4rs.notes, builder: (context, value, _) {
+                          final notesController = TextEditingController(text: value)
+                          ..selection = TextSelection.collapsed(offset: value.length);
+
+                          return 
+                        TextField(
+                          controller: notesController,
                                 minLines: 1,
                                 maxLines: 5,
                                 style: Sv4rs.settingslabelStyle,
@@ -2389,16 +2339,18 @@ import 'dart:async';
                                   ? 'Notes... ${Ev4rs.notes.value}'
                                   : 'Notes... --Not All Match--',
                                 ),
-                              ),
+                              );
+                              }),
                             ),
                           ),
                           Flexible(flex: 2, child: 
                           Padding(padding: EdgeInsetsGeometry.symmetric(vertical: 5), child: 
                           ButtonStyle4(
                           imagePath: 'assets/interface_icons/interface_icons/iCheck.png', 
-                            onPressed: (){
-                              Ev4rs.updateMultiGrammerField(root, Ev4rs.grammerSelectedUUIDs.value, 'note', Ev4rs.notes.value);
+                            onPressed: (){setState(() {
+                              widget.saveField(root, Ev4rs.grammerSelectedUUIDs.value, 'note', Ev4rs.notes.value);
                                 Ev4rs.saveJson(root);
+                                });
                             }, 
                             label: 'Save'
                             ),
@@ -2550,11 +2502,7 @@ import 'dart:async';
               ]
               )
             ]
-            );
-                }
-              );
-            }
-          ),
+            ),
         //here
         Positioned(
           top: (isLandscape) ? MediaQuery.of(context).size.height * 0.08 : MediaQuery.of(context).size.height * 0.04,
@@ -2661,9 +2609,13 @@ import 'dart:async';
 
   //===: nav button editor 
     class NavButtonEditor extends StatefulWidget{
+      final void Function(Root root, String objUUID, String field, dynamic value) saveField;
+      final Root root;
       final NavObjects obj;
       const NavButtonEditor({
         super.key,
+        required this.saveField,
+        required this.root,
         required this.obj,
       });
 
@@ -2672,55 +2624,17 @@ import 'dart:async';
     }
 
     class _NavButtonEditorState extends State<NavButtonEditor>{
-      late Future<Root> rootFuture;
       final ImagePicker _picker = ImagePicker();
-      late Root root;
       var everyImage = <String>[];
 
-      @override
-      void initState(){
-        Ev4rs.rootReady = false;
-        super.initState();
-        rootFuture = V4rs.loadRootData();
-        Ev4rs.reloadJson.addListener(_handleReload);
-      }
-
-      @override
-      void dispose(){
-        Ev4rs.reloadJson.removeListener(_handleReload);
-        super.dispose();
-      }
-
-      void _handleReload() {
-        setState(() {
-          rootFuture = V4rs.loadRootData();
-        });
-      }
 
       @override
       Widget build(BuildContext context) {
+        Root root = widget.root;
         final screenSize = MediaQuery.of(context).size;
         final isLandscape = screenSize.width > screenSize.height;
 
-        return Stack( children: [
-          ValueListenableBuilder<Root?>(valueListenable: Ev4rs.rootNotifier, builder: (context, inMemoryRoot, _) {
-            final futureRoot = rootFuture;
-            return FutureBuilder<Root>(
-            future: futureRoot,
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.done && snapshot.hasData) {
-                root = snapshot.data!;
-                Ev4rs.rootReady = true;
-            } else {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(child: CircularProgressIndicator());
-              } else if (snapshot.hasError) {
-                return Center(child: Text('Error: ${snapshot.error}'));
-              } else if (!snapshot.hasData) {
-                return Center(child: Text('No data found'));
-              }
-            }
-              
+
             everyImage = Ev4rs.getAllImages(root);
           
 
@@ -2741,7 +2655,10 @@ import 'dart:async';
 
             Widget image = LoadImage.fromSymbol(obj_.symbol);
 
-            return Row( 
+
+        return Stack( children: [
+              
+            Row( 
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
               //
@@ -2816,8 +2733,8 @@ import 'dart:async';
                                           child: ButtonStyle3(
                                             imagePath: 'assets/interface_icons/interface_icons/iPlaceholder.png', 
                                             onPressed: () async {
-                                              Ev4rs.navPickImage(root, _picker);
-                                              if (Ev4rs.rootReady && everyImage.isNotEmpty) {
+                                              Ev4rs.navPickImage(widget.saveField, root, _picker);
+                                              if (everyImage.isNotEmpty) {
                                               await Ev4rs.cleanupUnusedImages(everyImage);
                                               } 
                                             }, 
@@ -2836,8 +2753,8 @@ import 'dart:async';
                                       child: ButtonStyle3(
                                       imagePath: 'assets/interface_icons/interface_icons/iPlaceholder.png', 
                                       onPressed: () async {
-                                        Ev4rs.navPickImage(root, _picker);
-                                        if (Ev4rs.rootReady && everyImage.isNotEmpty) {
+                                        Ev4rs.navPickImage(widget.saveField, root, _picker);
+                                        if (everyImage.isNotEmpty) {
                                           await Ev4rs.cleanupUnusedImages(everyImage);
                                         } 
                                       }, 
@@ -2891,11 +2808,10 @@ import 'dart:async';
                         ),
                         ButtonStyle2(
                         imagePath: 'assets/interface_icons/interface_icons/iCheck.png', 
-                          onPressed: (){
-                            if (Ev4rs.rootReady) {
-                              Ev4rs.updateNavField(root, Ev4rs.navSelectedUUID, 'padding', Ev4rs.padding.value);
+                          onPressed: (){setState(() {
+                              widget.saveField(root, Ev4rs.navSelectedUUID, 'padding', Ev4rs.padding.value);
                               Ev4rs.saveJson(root);
-                            }
+                              });
                           }, 
                           label: 'Save Padding'
                           ),
@@ -2915,17 +2831,18 @@ import 'dart:async';
                     widgety: 
                     ButtonStyle2(
                         imagePath: 'assets/interface_icons/interface_icons/iCheck.png', 
-                          onPressed: (){
-                              Ev4rs.updateNavField(root, Ev4rs.navSelectedUUID, 'matchOverlayColor', Ev4rs.matchOverlay.value);
-                              Ev4rs.updateNavField(root, Ev4rs.navSelectedUUID, 'overlayColor', Ev4rs.overlay.value);
-                              Ev4rs.updateNavField(root, Ev4rs.navSelectedUUID, 'matchSymbolSaturation', Ev4rs.matchSaturation.value);
-                              Ev4rs.updateNavField(root, Ev4rs.navSelectedUUID, 'symbolSaturation', Ev4rs.saturation.value);
-                              Ev4rs.updateNavField(root, Ev4rs.navSelectedUUID, 'matchSymbolContrast', Ev4rs.matchContrast.value);
-                              Ev4rs.updateNavField(root, Ev4rs.navSelectedUUID, 'symbolContrast', Ev4rs.contrast.value);
-                              Ev4rs.updateNavField(root, Ev4rs.navSelectedUUID, 'matchInvertSymbol', Ev4rs.matchInvert.value);
-                              Ev4rs.updateNavField(root, Ev4rs.navSelectedUUID, 'invertSymbol', Ev4rs.invert.value);
+                          onPressed: (){setState(() {
+                              widget.saveField(root, Ev4rs.navSelectedUUID, 'matchOverlayColor', Ev4rs.matchOverlay.value);
+                              widget.saveField(root, Ev4rs.navSelectedUUID, 'overlayColor', Ev4rs.overlay.value);
+                              widget.saveField(root, Ev4rs.navSelectedUUID, 'matchSymbolSaturation', Ev4rs.matchSaturation.value);
+                              widget.saveField(root, Ev4rs.navSelectedUUID, 'symbolSaturation', Ev4rs.saturation.value);
+                              widget.saveField(root, Ev4rs.navSelectedUUID, 'matchSymbolContrast', Ev4rs.matchContrast.value);
+                              widget.saveField(root, Ev4rs.navSelectedUUID, 'symbolContrast', Ev4rs.contrast.value);
+                              widget.saveField(root, Ev4rs.navSelectedUUID, 'matchInvertSymbol', Ev4rs.matchInvert.value);
+                              widget.saveField(root, Ev4rs.navSelectedUUID, 'invertSymbol', Ev4rs.invert.value);
                               
                               Ev4rs.saveJson(root);
+                              });
                           }, 
                           label: 'Save Adjustments'
                           ),
@@ -2993,25 +2910,33 @@ import 'dart:async';
                         Row(children: [ 
                           Expanded(flex: 5, child: 
                             Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 10, vertical: 0), child: 
-                              TextField(
+                                 ValueListenableBuilder(valueListenable: Ev4rs.notes, builder: (context, value, _) {
+                          final labelController = TextEditingController(text: value)
+                          ..selection = TextSelection.collapsed(offset: value.length);
+
+                          return 
+                        TextField(
+                          controller: labelController,
                                 style: Ev4rs.labelStyle,
                                 onChanged: (value){
-                                  Ev4rs.label = value;
+                                  Ev4rs.label.value = value;
                                 },
                                 decoration: InputDecoration(
                                 hintStyle: Ev4rs.hintLabelStyle,
                                 hintText: '${obj_.label}',
                                 ),
-                              ),
+                              );
+                                 }),
                             ),
                           ),
                           Flexible(flex: 2, child: 
                           Padding(padding: EdgeInsetsGeometry.symmetric(vertical: 5), child: 
                           ButtonStyle4(
                           imagePath: 'assets/interface_icons/interface_icons/iCheck.png', 
-                            onPressed: (){
-                              Ev4rs.updateNavField(root, Ev4rs.navSelectedUUID, 'label', Ev4rs.label);
+                            onPressed: (){setState(() {
+                              widget.saveField(root, Ev4rs.navSelectedUUID, 'label', Ev4rs.label.value);
                               Ev4rs.saveJson(root);
+                              });
                             }, 
                             label: 'Save'
                             ),
@@ -3025,16 +2950,23 @@ import 'dart:async';
                             flex: 5,
                             child: 
                             Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 10, vertical: 0), child: 
-                              TextField(
+                              ValueListenableBuilder(valueListenable: Ev4rs.notes, builder: (context, value, _) {
+                          final alternateController = TextEditingController(text: value)
+                          ..selection = TextSelection.collapsed(offset: value.length);
+
+                          return 
+                        TextField(
+                          controller: alternateController,
                                 style: Ev4rs.labelStyle,
                                 onChanged: (value){
-                                  Ev4rs.alternateLabel = value;
+                                  Ev4rs.alternateLabel.value = value;
                                 },
                                 decoration: InputDecoration(
                                 hintStyle: Ev4rs.hintLabelStyle,
                                 hintText: '${obj_.alternateLabel}',
                                 ),
-                              ),
+                              );
+                              }),
                             ),
                           ),
                         Flexible(
@@ -3043,9 +2975,10 @@ import 'dart:async';
                           Padding(padding: EdgeInsetsGeometry.symmetric(vertical: 5), child: 
                         ButtonStyle4(
                         imagePath: 'assets/interface_icons/interface_icons/iCheck.png', 
-                          onPressed: (){
-                              Ev4rs.updateNavField(root, Ev4rs.navSelectedUUID, 'alternateLabel', Ev4rs.alternateLabel);
+                          onPressed: (){setState(() {
+                              widget.saveField(root, Ev4rs.navSelectedUUID, 'alternateLabel', Ev4rs.alternateLabel.value);
                               Ev4rs.saveJson(root);
+                              });
                           }, 
                           label: 'Save'
                           ),
@@ -3150,12 +3083,11 @@ import 'dart:async';
                                 ),
                                 ButtonStyle2(
                                   imagePath: 'assets/interface_icons/interface_icons/iCheck.png', 
-                                  onPressed: (){
-                                    if (Ev4rs.rootReady) {
-                                      Ev4rs.updateNavField(root, Ev4rs.navSelectedUUID, 'matchSpeakOS', Ev4rs.matchSpeakOnSelect.value);
-                                      Ev4rs.updateNavField(root, Ev4rs.navSelectedUUID, 'speakOS', Ev4rs.speakOnSelect.value);
+                                  onPressed: (){setState(() {
+                                      widget.saveField(root, Ev4rs.navSelectedUUID, 'matchSpeakOS', Ev4rs.matchSpeakOnSelect.value);
+                                      widget.saveField(root, Ev4rs.navSelectedUUID, 'speakOS', Ev4rs.speakOnSelect.value);
                                       Ev4rs.saveJson(root);
-                                    }
+                                      });
                                   }, 
                                   label: 'Save'
                                 ),
@@ -3175,15 +3107,16 @@ import 'dart:async';
                       child: FontPicker2(
                         widgety:  ButtonStyle2(
                           imagePath: 'assets/interface_icons/interface_icons/iCheck.png', 
-                            onPressed: (){
-                                Ev4rs.updateNavField(root, Ev4rs.navSelectedUUID, 'matchFont', Ev4rs.matchFont.value);
-                                Ev4rs.updateNavField(root, Ev4rs.navSelectedUUID, 'fontSize', Ev4rs.fontSize.value);
-                                Ev4rs.updateNavField(root, Ev4rs.navSelectedUUID, 'fontItalics', Ev4rs.fontItalics.value);
-                                Ev4rs.updateNavField(root, Ev4rs.navSelectedUUID, 'fontUnderline', Ev4rs.fontUnderline.value);
-                                Ev4rs.updateNavField(root, Ev4rs.navSelectedUUID, 'fontWeight', Ev4rs.fontWeight.value.toInt(),);
-                                Ev4rs.updateNavField(root, Ev4rs.navSelectedUUID, 'fontFamily', Ev4rs.fontFamily.value);
-                                Ev4rs.updateNavField(root, Ev4rs.navSelectedUUID, 'fontColor', Ev4rs.fontColor.value);
+                            onPressed: (){setState(() {
+                                widget.saveField(root, Ev4rs.navSelectedUUID, 'matchFont', Ev4rs.matchFont.value);
+                                widget.saveField(root, Ev4rs.navSelectedUUID, 'fontSize', Ev4rs.fontSize.value);
+                                widget.saveField(root, Ev4rs.navSelectedUUID, 'fontItalics', Ev4rs.fontItalics.value);
+                                widget.saveField(root, Ev4rs.navSelectedUUID, 'fontUnderline', Ev4rs.fontUnderline.value);
+                                widget.saveField(root, Ev4rs.navSelectedUUID, 'fontWeight', Ev4rs.fontWeight.value.toInt(),);
+                                widget.saveField(root, Ev4rs.navSelectedUUID, 'fontFamily', Ev4rs.fontFamily.value);
+                                widget.saveField(root, Ev4rs.navSelectedUUID, 'fontColor', Ev4rs.fontColor.value);
                                 Ev4rs.saveJson(root);
+                                });
                             }, 
                             label: 'Save Button Font'
                             ),
@@ -3275,11 +3208,10 @@ import 'dart:async';
                         ),
                         ButtonStyle2(
                           imagePath: 'assets/interface_icons/interface_icons/iCheck.png', 
-                          onPressed: (){
-                            if (Ev4rs.rootReady) {
-                              Ev4rs.updateNavField(root, Ev4rs.navSelectedUUID, 'show', Ev4rs.show.value);
+                          onPressed: (){setState(() {
+                              widget.saveField(root, Ev4rs.navSelectedUUID, 'show', Ev4rs.show.value);
                               Ev4rs.saveJson(root);
-                            }
+                              });
                           }, 
                           label: 'Save'
                         ),
@@ -3374,12 +3306,11 @@ import 'dart:async';
                         ),
                         ButtonStyle2(
                           imagePath: 'assets/interface_icons/interface_icons/iCheck.png', 
-                          onPressed: (){
-                            if (Ev4rs.rootReady) {
-                              Ev4rs.updateNavField(root, Ev4rs.navSelectedUUID, 'matchFormat', Ev4rs.matchFormat.value);
-                              Ev4rs.updateNavField(root, Ev4rs.navSelectedUUID, 'format', Ev4rs.format.value);
+                          onPressed: (){setState(() {
+                              widget.saveField(root, Ev4rs.navSelectedUUID, 'matchFormat', Ev4rs.matchFormat.value);
+                              widget.saveField(root, Ev4rs.navSelectedUUID, 'format', Ev4rs.format.value);
                               Ev4rs.saveJson(root);
-                            }
+                              });
                           }, 
                           label: 'Save'
                         ),
@@ -3542,13 +3473,12 @@ import 'dart:async';
                         //save 
                         ButtonStyle2(
                           imagePath: 'assets/interface_icons/interface_icons/iCheck.png', 
-                          onPressed: (){
-                            if (Ev4rs.rootReady) {
-                              Ev4rs.updateNavField(root, Ev4rs.navSelectedUUID, 'borderWeight', Ev4rs.borderWeight.value);
-                              Ev4rs.updateNavField(root, Ev4rs.navSelectedUUID, 'matchBorder', Ev4rs.matchBorder.value);
-                              Ev4rs.updateNavField(root, Ev4rs.navSelectedUUID, 'borderColor', Ev4rs.borderColor.value);
+                          onPressed: (){setState(() {
+                              widget.saveField(root, Ev4rs.navSelectedUUID, 'borderWeight', Ev4rs.borderWeight.value);
+                              widget.saveField(root, Ev4rs.navSelectedUUID, 'matchBorder', Ev4rs.matchBorder.value);
+                              widget.saveField(root, Ev4rs.navSelectedUUID, 'borderColor', Ev4rs.borderColor.value);
                               Ev4rs.saveJson(root);
-                            }
+                              });
                           }, 
                           label: 'Save'
                         ),
@@ -3685,12 +3615,11 @@ import 'dart:async';
                         //save 
                         ButtonStyle2(
                           imagePath: 'assets/interface_icons/interface_icons/iCheck.png', 
-                          onPressed: (){
-                            if (Ev4rs.rootReady) {
-                              Ev4rs.updateNavField(root, Ev4rs.navSelectedUUID, 'matchPOS', Ev4rs.matchBackground.value);
-                              Ev4rs.updateNavField(root, Ev4rs.navSelectedUUID, 'backgroundColor', Ev4rs.backgroundColor.value);
+                          onPressed: (){setState(() {
+                              widget.saveField(root, Ev4rs.navSelectedUUID, 'matchPOS', Ev4rs.matchBackground.value);
+                              widget.saveField(root, Ev4rs.navSelectedUUID, 'backgroundColor', Ev4rs.backgroundColor.value);
                               Ev4rs.saveJson(root);
-                            }
+                              });
                           }, 
                           label: 'Save'
                         ),
@@ -3760,11 +3689,10 @@ import 'dart:async';
                         //save 
                         ButtonStyle2(
                           imagePath: 'assets/interface_icons/interface_icons/iCheck.png', 
-                          onPressed: (){
-                            if (Ev4rs.rootReady) {
-                              Ev4rs.updateNavField(root, Ev4rs.navSelectedUUID, 'pos', Ev4rs.pos.value);
+                          onPressed: (){setState(() {
+                              widget.saveField(root, Ev4rs.navSelectedUUID, 'pos', Ev4rs.pos.value);
                               Ev4rs.saveJson(root);
-                            }
+                              });
                           }, 
                           label: 'Save'
                         ),
@@ -3830,12 +3758,11 @@ import 'dart:async';
                             //save 
                             ButtonStyle2(
                               imagePath: 'assets/interface_icons/interface_icons/iCheck.png', 
-                              onPressed: (){
-                                if (Ev4rs.rootReady) {
-                                  Ev4rs.updateNavField(root, Ev4rs.navSelectedUUID, 'linkToUUID', Ev4rs.link.value);
-                                  Ev4rs.updateNavField(root, Ev4rs.navSelectedUUID, 'linkToLabel', Ev4rs.linkLabel.value);
+                              onPressed: (){setState(() {
+                                  widget.saveField(root, Ev4rs.navSelectedUUID, 'linkToUUID', Ev4rs.link.value);
+                                  widget.saveField(root, Ev4rs.navSelectedUUID, 'linkToLabel', Ev4rs.linkLabel.value);
                                   Ev4rs.saveJson(root);
-                                }
+                                  });
                               }, 
                               label: 'Save'
                             ),
@@ -3856,7 +3783,13 @@ import 'dart:async';
                         Row(children: [ 
                           Expanded(flex: 5, child: 
                             Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 10, vertical: 10), child: 
-                              TextField(
+                              ValueListenableBuilder(valueListenable: Ev4rs.notes, builder: (context, value, _) {
+                          final notesController = TextEditingController(text: value)
+                          ..selection = TextSelection.collapsed(offset: value.length);
+
+                          return 
+                        TextField(
+                          controller: notesController,
                                 minLines: 1,
                                 maxLines: 5,
                                 style: Sv4rs.settingslabelStyle,
@@ -3867,16 +3800,18 @@ import 'dart:async';
                                 hintStyle: Sv4rs.settingslabelStyle,
                                 hintText: 'Notes... ${Ev4rs.notes.value}',
                                 ),
-                              ),
+                              );
+                              }),
                             ),
                           ),
                           Flexible(flex: 2, child: 
                           Padding(padding: EdgeInsetsGeometry.symmetric(vertical: 5), child: 
                           ButtonStyle4(
                           imagePath: 'assets/interface_icons/interface_icons/iCheck.png', 
-                            onPressed: (){
-                              Ev4rs.updateNavField(root, Ev4rs.navSelectedUUID, 'note', Ev4rs.notes.value);
+                            onPressed: (){setState(() {
+                              widget.saveField(root, Ev4rs.navSelectedUUID, 'note', Ev4rs.notes.value);
                                 Ev4rs.saveJson(root);
+                                });
                             }, 
                             label: 'Save'
                             ),
@@ -4029,11 +3964,7 @@ import 'dart:async';
               ]
               )
             ]
-            );
-                }
-              );
-            }
-          ),
+            ),
         //here
         Positioned(
           top: (isLandscape) ? MediaQuery.of(context).size.height * 0.08 : MediaQuery.of(context).size.height * 0.04,
@@ -4134,9 +4065,13 @@ import 'dart:async';
     }
 
     class MultiNavButtonEditor extends StatefulWidget{
+      final void Function(Root root, List<String> objUUID, String field, dynamic value) saveField;
       final NavObjects obj;
+      final Root root;
       const MultiNavButtonEditor({
         super.key,
+        required this.root,
+        required this.saveField,
         required this.obj,
       });
 
@@ -4145,56 +4080,16 @@ import 'dart:async';
     }
 
     class _MultiNavButtonEditor extends State<MultiNavButtonEditor>{
-      late Future<Root> rootFuture;
       final ImagePicker _picker = ImagePicker();
-      late Root root;
       var everyImage = <String>[];
 
       @override
-      void initState(){
-        Ev4rs.rootReady = false;
-        super.initState();
-        rootFuture = V4rs.loadRootData();
-
-        Ev4rs.reloadJson.addListener(_handleReload);
-      }
-
-      @override
-      void dispose(){
-        Ev4rs.reloadJson.removeListener(_handleReload);
-        super.dispose();
-      }
-
-      void _handleReload() {
-        setState(() {
-          rootFuture = V4rs.loadRootData();
-        });
-      }
-
-      @override
       Widget build(BuildContext context) {
+        Root root = widget.root;
         final screenSize = MediaQuery.of(context).size;
         final isLandscape = screenSize.width > screenSize.height;
 
-        return Stack( children: [
-          ValueListenableBuilder<Root?>(valueListenable: Ev4rs.rootNotifier, builder: (context, inMemoryRoot, _) {
-            final futureRoot = rootFuture;
-            return FutureBuilder<Root>(
-            future: futureRoot,
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.done && snapshot.hasData) {
-                root = snapshot.data!;
-                Ev4rs.rootReady = true;
-            } else {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(child: CircularProgressIndicator());
-              } else if (snapshot.hasError) {
-                return Center(child: Text('Error: ${snapshot.error}'));
-              } else if (!snapshot.hasData) {
-                return Center(child: Text('No data found'));
-              }
-            }
-              
+
             everyImage = Ev4rs.getAllImages(root);
           
 
@@ -4216,7 +4111,10 @@ import 'dart:async';
             Widget image = LoadImage.fromSymbol('assets/interface_icons/interface_icons/iPlaceholder.png');
             Widget image2 = LoadImage.fromSymbol(obj_.symbol);
 
-            return Row( 
+        return Stack( children: [
+              
+
+            Row( 
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
               //
@@ -4329,8 +4227,8 @@ import 'dart:async';
                                           child: ButtonStyle3(
                                             imagePath: 'assets/interface_icons/interface_icons/iPlaceholder.png', 
                                             onPressed: () async {
-                                              Ev4rs.multiNavPickImage(root, _picker);
-                                              if (Ev4rs.rootReady && everyImage.isNotEmpty) {
+                                              Ev4rs.multiNavPickImage(widget.saveField, root, _picker);
+                                              if (everyImage.isNotEmpty) {
                                               await Ev4rs.cleanupUnusedImages(everyImage);
                                               } 
                                             }, 
@@ -4349,8 +4247,8 @@ import 'dart:async';
                                       child: ButtonStyle3(
                                       imagePath: 'assets/interface_icons/interface_icons/iPlaceholder.png', 
                                       onPressed: () async {
-                                        Ev4rs.multiNavPickImage(root, _picker);
-                                          if (Ev4rs.rootReady && everyImage.isNotEmpty) {
+                                        Ev4rs.multiNavPickImage(widget.saveField, root, _picker);
+                                          if (everyImage.isNotEmpty) {
                                             await Ev4rs.cleanupUnusedImages(everyImage);
                                           } 
                                       }, 
@@ -4406,11 +4304,10 @@ import 'dart:async';
                         ),
                         ButtonStyle2(
                         imagePath: 'assets/interface_icons/interface_icons/iCheck.png', 
-                          onPressed: (){
-                            if (Ev4rs.rootReady) {
-                              Ev4rs.updateMultiNavField(root, Ev4rs.navSelectedUUIDs.value, 'padding', Ev4rs.padding.value);
+                          onPressed: (){setState(() {
+                              widget.saveField(root, Ev4rs.navSelectedUUIDs.value, 'padding', Ev4rs.padding.value);
                               Ev4rs.saveJson(root);
-                            }
+                              });
                           }, 
                           label: 'Save Padding'
                           ),
@@ -4442,17 +4339,18 @@ import 'dart:async';
                     widgety: 
                     ButtonStyle2(
                         imagePath: 'assets/interface_icons/interface_icons/iCheck.png', 
-                          onPressed: (){
-                              Ev4rs.updateMultiNavField(root, Ev4rs.navSelectedUUIDs.value, 'matchOverlayColor', Ev4rs.matchOverlay.value);
-                              Ev4rs.updateMultiNavField(root, Ev4rs.navSelectedUUIDs.value, 'overlayColor', Ev4rs.overlay.value);
-                              Ev4rs.updateMultiNavField(root, Ev4rs.navSelectedUUIDs.value, 'matchSymbolSaturation', Ev4rs.matchSaturation.value);
-                              Ev4rs.updateMultiNavField(root, Ev4rs.navSelectedUUIDs.value, 'symbolSaturation', Ev4rs.saturation.value);
-                              Ev4rs.updateMultiNavField(root, Ev4rs.navSelectedUUIDs.value, 'matchSymbolContrast', Ev4rs.matchContrast.value);
-                              Ev4rs.updateMultiNavField(root, Ev4rs.navSelectedUUIDs.value, 'symbolContrast', Ev4rs.contrast.value);
-                              Ev4rs.updateMultiNavField(root, Ev4rs.navSelectedUUIDs.value, 'matchInvertSymbol', Ev4rs.matchInvert.value);
-                              Ev4rs.updateMultiNavField(root, Ev4rs.navSelectedUUIDs.value, 'invertSymbol', Ev4rs.invert.value);
+                          onPressed: (){setState(() {
+                              widget.saveField(root, Ev4rs.navSelectedUUIDs.value, 'matchOverlayColor', Ev4rs.matchOverlay.value);
+                              widget.saveField(root, Ev4rs.navSelectedUUIDs.value, 'overlayColor', Ev4rs.overlay.value);
+                              widget.saveField(root, Ev4rs.navSelectedUUIDs.value, 'matchSymbolSaturation', Ev4rs.matchSaturation.value);
+                              widget.saveField(root, Ev4rs.navSelectedUUIDs.value, 'symbolSaturation', Ev4rs.saturation.value);
+                              widget.saveField(root, Ev4rs.navSelectedUUIDs.value, 'matchSymbolContrast', Ev4rs.matchContrast.value);
+                              widget.saveField(root, Ev4rs.navSelectedUUIDs.value, 'symbolContrast', Ev4rs.contrast.value);
+                              widget.saveField(root, Ev4rs.navSelectedUUIDs.value, 'matchInvertSymbol', Ev4rs.matchInvert.value);
+                              widget.saveField(root, Ev4rs.navSelectedUUIDs.value, 'invertSymbol', Ev4rs.invert.value);
                               
                               Ev4rs.saveJson(root);
+                              });
                           }, 
                           label: 'Save Adjustments'
                           ),
@@ -4536,25 +4434,33 @@ import 'dart:async';
                         Row(children: [ 
                           Expanded(flex: 5, child: 
                             Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 10, vertical: 0), child: 
-                              TextField(
+                                 ValueListenableBuilder(valueListenable: Ev4rs.notes, builder: (context, value, _) {
+                          final labelController = TextEditingController(text: value)
+                          ..selection = TextSelection.collapsed(offset: value.length);
+
+                          return 
+                        TextField(
+                          controller: labelController,
                                 style: Ev4rs.labelStyle,
                                 onChanged: (value){
-                                  Ev4rs.label = value;
+                                  Ev4rs.label.value = value;
                                 },
                                 decoration: InputDecoration(
                                 hintStyle: Ev4rs.hintLabelStyle,
                                 hintText: (Ev4rs.compareNavObjFields(root.navRow, (b) => (b).label)) ? '${obj_.label}' : '--Not All Match--',
                                 ),
-                              ),
+                              );
+                                 }),
                             ),
                           ),
                           Flexible(flex: 2, child: 
                           Padding(padding: EdgeInsetsGeometry.symmetric(vertical: 5), child: 
                           ButtonStyle4(
                           imagePath: 'assets/interface_icons/interface_icons/iCheck.png', 
-                            onPressed: (){
-                              Ev4rs.updateMultiNavField(root, Ev4rs.navSelectedUUIDs.value, 'label', Ev4rs.label);
+                            onPressed: (){setState(() {
+                              widget.saveField(root, Ev4rs.navSelectedUUIDs.value, 'label', Ev4rs.label.value);
                               Ev4rs.saveJson(root);
+                              });
                             }, 
                             label: 'Save'
                             ),
@@ -4567,16 +4473,23 @@ import 'dart:async';
                           flex: 5,
                           child: 
                         Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 10, vertical: 0), child: 
-                          TextField(
+                             ValueListenableBuilder(valueListenable: Ev4rs.notes, builder: (context, value, _) {
+                          final alternateController = TextEditingController(text: value)
+                          ..selection = TextSelection.collapsed(offset: value.length);
+
+                          return 
+                        TextField(
+                          controller: alternateController,
                             style: Ev4rs.labelStyle,
                             onChanged: (value){
-                              Ev4rs.alternateLabel = value;
+                              Ev4rs.alternateLabel.value = value;
                             },
                             decoration: InputDecoration(
                             hintStyle: Ev4rs.hintLabelStyle,
                             hintText: (Ev4rs.compareNavObjFields(root.navRow, (b) => (b).alternateLabel)) ? '${obj_.alternateLabel}' : '--Not All Match--',
                             ),
-                          ),
+                          );
+                             }),
                         ),
                         ),
                         Flexible(
@@ -4585,10 +4498,11 @@ import 'dart:async';
                           Padding(padding: EdgeInsetsGeometry.symmetric(vertical: 5), child: 
                         ButtonStyle4(
                         imagePath: 'assets/interface_icons/interface_icons/iCheck.png', 
-                          onPressed: (){
-                              Ev4rs.message = '${Ev4rs.message.trim()} ';
-                              Ev4rs.updateMultiNavField(root, Ev4rs.navSelectedUUIDs.value, 'alternateLabel', Ev4rs.alternateLabel);
+                          onPressed: (){setState(() {
+                              Ev4rs.message.value = '${Ev4rs.message.value.trim()} ';
+                              widget.saveField(root, Ev4rs.navSelectedUUIDs.value, 'alternateLabel', Ev4rs.alternateLabel.value);
                               Ev4rs.saveJson(root);
+                              });
                           }, 
                           label: 'Save'
                           ),
@@ -4697,12 +4611,11 @@ import 'dart:async';
                                 ),
                                 ButtonStyle2(
                                   imagePath: 'assets/interface_icons/interface_icons/iCheck.png', 
-                                  onPressed: (){
-                                    if (Ev4rs.rootReady) {
-                                      Ev4rs.updateMultiNavField(root, Ev4rs.navSelectedUUIDs.value, 'matchSpeakOS', Ev4rs.matchSpeakOnSelect.value);
-                                      Ev4rs.updateMultiNavField(root, Ev4rs.navSelectedUUIDs.value, 'speakOS', Ev4rs.speakOnSelect.value);
+                                  onPressed: (){setState(() {
+                                      widget.saveField(root, Ev4rs.navSelectedUUIDs.value, 'matchSpeakOS', Ev4rs.matchSpeakOnSelect.value);
+                                      widget.saveField(root, Ev4rs.navSelectedUUIDs.value, 'speakOS', Ev4rs.speakOnSelect.value);
                                       Ev4rs.saveJson(root);
-                                    }
+                                      });
                                   }, 
                                   label: 'Save'
                                 ),
@@ -4722,15 +4635,16 @@ import 'dart:async';
                       child: FontPicker2(
                         widgety:  ButtonStyle2(
                           imagePath: 'assets/interface_icons/interface_icons/iCheck.png', 
-                            onPressed: (){
-                                Ev4rs.updateMultiNavField(root, Ev4rs.navSelectedUUIDs.value, 'matchFont', Ev4rs.matchFont.value);
-                                Ev4rs.updateMultiNavField(root, Ev4rs.navSelectedUUIDs.value, 'fontSize', Ev4rs.fontSize.value);
-                                Ev4rs.updateMultiNavField(root, Ev4rs.navSelectedUUIDs.value, 'fontItalics', Ev4rs.fontItalics.value);
-                                Ev4rs.updateMultiNavField(root, Ev4rs.navSelectedUUIDs.value, 'fontUnderline', Ev4rs.fontUnderline.value);
-                                Ev4rs.updateMultiNavField(root, Ev4rs.navSelectedUUIDs.value, 'fontWeight', Ev4rs.fontWeight.value.toInt(),);
-                                Ev4rs.updateMultiNavField(root, Ev4rs.navSelectedUUIDs.value, 'fontFamily', Ev4rs.fontFamily.value);
-                                Ev4rs.updateMultiNavField(root, Ev4rs.navSelectedUUIDs.value, 'fontColor', Ev4rs.fontColor.value);
+                            onPressed: (){setState(() {
+                                widget.saveField(root, Ev4rs.navSelectedUUIDs.value, 'matchFont', Ev4rs.matchFont.value);
+                                widget.saveField(root, Ev4rs.navSelectedUUIDs.value, 'fontSize', Ev4rs.fontSize.value);
+                                widget.saveField(root, Ev4rs.navSelectedUUIDs.value, 'fontItalics', Ev4rs.fontItalics.value);
+                                widget.saveField(root, Ev4rs.navSelectedUUIDs.value, 'fontUnderline', Ev4rs.fontUnderline.value);
+                                widget.saveField(root, Ev4rs.navSelectedUUIDs.value, 'fontWeight', Ev4rs.fontWeight.value.toInt(),);
+                                widget.saveField(root, Ev4rs.navSelectedUUIDs.value, 'fontFamily', Ev4rs.fontFamily.value);
+                                widget.saveField(root, Ev4rs.navSelectedUUIDs.value, 'fontColor', Ev4rs.fontColor.value);
                                 Ev4rs.saveJson(root);
+                                });
                             }, 
                             label: 'Save Button Font'
                             ),
@@ -4834,11 +4748,10 @@ import 'dart:async';
                         ),
                         ButtonStyle2(
                           imagePath: 'assets/interface_icons/interface_icons/iCheck.png', 
-                          onPressed: (){
-                            if (Ev4rs.rootReady) {
-                              Ev4rs.updateMultiNavField(root, Ev4rs.navSelectedUUIDs.value, 'show', Ev4rs.show.value);
+                          onPressed: (){setState(() {
+                              widget.saveField(root, Ev4rs.navSelectedUUIDs.value, 'show', Ev4rs.show.value);
                               Ev4rs.saveJson(root);
-                            }
+                              });
                           }, 
                           label: 'Save'
                         ),
@@ -4936,12 +4849,11 @@ import 'dart:async';
                         ),
                         ButtonStyle2(
                           imagePath: 'assets/interface_icons/interface_icons/iCheck.png', 
-                          onPressed: (){
-                            if (Ev4rs.rootReady) {
-                              Ev4rs.updateMultiNavField(root, Ev4rs.navSelectedUUIDs.value, 'matchFormat', Ev4rs.matchFormat.value);
-                              Ev4rs.updateMultiNavField(root, Ev4rs.navSelectedUUIDs.value, 'format', Ev4rs.format.value);
+                          onPressed: (){setState(() {
+                              widget.saveField(root, Ev4rs.navSelectedUUIDs.value, 'matchFormat', Ev4rs.matchFormat.value);
+                              widget.saveField(root, Ev4rs.navSelectedUUIDs.value, 'format', Ev4rs.format.value);
                               Ev4rs.saveJson(root);
-                            }
+                              });
                           }, 
                           label: 'Save'
                         ),
@@ -5116,13 +5028,12 @@ import 'dart:async';
                         //save 
                         ButtonStyle2(
                           imagePath: 'assets/interface_icons/interface_icons/iCheck.png', 
-                          onPressed: (){
-                            if (Ev4rs.rootReady) {
-                              Ev4rs.updateMultiNavField(root, Ev4rs.navSelectedUUIDs.value, 'borderWeight', Ev4rs.borderWeight.value);
-                              Ev4rs.updateMultiNavField(root, Ev4rs.navSelectedUUIDs.value, 'matchBorder', Ev4rs.matchBorder.value);
-                              Ev4rs.updateMultiNavField(root, Ev4rs.navSelectedUUIDs.value, 'borderColor', Ev4rs.borderColor.value);
+                          onPressed: (){setState(() {
+                              widget.saveField(root, Ev4rs.navSelectedUUIDs.value, 'borderWeight', Ev4rs.borderWeight.value);
+                              widget.saveField(root, Ev4rs.navSelectedUUIDs.value, 'matchBorder', Ev4rs.matchBorder.value);
+                              widget.saveField(root, Ev4rs.navSelectedUUIDs.value, 'borderColor', Ev4rs.borderColor.value);
                               Ev4rs.saveJson(root);
-                            }
+                              });
                           }, 
                           label: 'Save'
                         ),
@@ -5263,12 +5174,11 @@ import 'dart:async';
                         //save 
                         ButtonStyle2(
                           imagePath: 'assets/interface_icons/interface_icons/iCheck.png', 
-                          onPressed: (){
-                            if (Ev4rs.rootReady) {
-                              Ev4rs.updateMultiNavField(root, Ev4rs.navSelectedUUIDs.value, 'matchPOS', Ev4rs.matchBackground.value);
-                              Ev4rs.updateMultiNavField(root, Ev4rs.navSelectedUUIDs.value, 'backgroundColor', Ev4rs.backgroundColor.value);
+                          onPressed: (){setState(() {
+                              widget.saveField(root, Ev4rs.navSelectedUUIDs.value, 'matchPOS', Ev4rs.matchBackground.value);
+                              widget.saveField(root, Ev4rs.navSelectedUUIDs.value, 'backgroundColor', Ev4rs.backgroundColor.value);
                               Ev4rs.saveJson(root);
-                            }
+                              });
                           }, 
                           label: 'Save'
                         ),
@@ -5339,11 +5249,10 @@ import 'dart:async';
                         //save 
                         ButtonStyle2(
                           imagePath: 'assets/interface_icons/interface_icons/iCheck.png', 
-                          onPressed: (){
-                            if (Ev4rs.rootReady) {
-                              Ev4rs.updateMultiNavField(root, Ev4rs.navSelectedUUIDs.value, 'pos', Ev4rs.pos.value);
+                          onPressed: (){setState(() {
+                              widget.saveField(root, Ev4rs.navSelectedUUIDs.value, 'pos', Ev4rs.pos.value);
                               Ev4rs.saveJson(root);
-                            }
+                              });
                           }, 
                           label: 'Save'
                         ),
@@ -5410,12 +5319,11 @@ import 'dart:async';
                             //save 
                             ButtonStyle2(
                               imagePath: 'assets/interface_icons/interface_icons/iCheck.png', 
-                              onPressed: (){
-                                if (Ev4rs.rootReady) {
-                                  Ev4rs.updateMultiNavField(root, Ev4rs.navSelectedUUIDs.value, 'linkToUUID', Ev4rs.link.value);
-                                  Ev4rs.updateMultiNavField(root, Ev4rs.navSelectedUUIDs.value, 'linkToLabel', Ev4rs.linkLabel.value);
+                              onPressed: (){ setState(() {
+                                  widget.saveField(root, Ev4rs.navSelectedUUIDs.value, 'linkToUUID', Ev4rs.link.value);
+                                  widget.saveField(root, Ev4rs.navSelectedUUIDs.value, 'linkToLabel', Ev4rs.linkLabel.value);
                                   Ev4rs.saveJson(root);
-                                }
+                                  });
                               }, 
                               label: 'Save'
                             ),
@@ -5436,7 +5344,13 @@ import 'dart:async';
                         Row(children: [ 
                           Expanded(flex: 5, child: 
                             Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 10, vertical: 10), child: 
-                              TextField(
+                              ValueListenableBuilder(valueListenable: Ev4rs.notes, builder: (context, value, _) {
+                          final notesController = TextEditingController(text: value)
+                          ..selection = TextSelection.collapsed(offset: value.length);
+
+                          return 
+                        TextField(
+                          controller: notesController,
                                 minLines: 1,
                                 maxLines: 5,
                                 style: Sv4rs.settingslabelStyle,
@@ -5449,16 +5363,18 @@ import 'dart:async';
                                   ? 'Notes... ${Ev4rs.notes.value}'
                                   : 'Notes... --Not All Match--',
                                 ),
-                              ),
+                              );
+                              }),
                             ),
                           ),
                           Flexible(flex: 2, child: 
                           Padding(padding: EdgeInsetsGeometry.symmetric(vertical: 5), child: 
                           ButtonStyle4(
                           imagePath: 'assets/interface_icons/interface_icons/iCheck.png', 
-                            onPressed: (){
-                              Ev4rs.updateMultiNavField(root, Ev4rs.navSelectedUUIDs.value, 'note', Ev4rs.notes.value);
+                            onPressed: (){setState(() {
+                              widget.saveField(root, Ev4rs.navSelectedUUIDs.value, 'note', Ev4rs.notes.value);
                                 Ev4rs.saveJson(root);
+                                });
                             }, 
                             label: 'Save'
                             ),
@@ -5612,11 +5528,7 @@ import 'dart:async';
               ]
               )
             ]
-            );
-                }
-              );
-            }
-          ),
+            ),
         //here
         Positioned(
           top: (isLandscape) ? MediaQuery.of(context).size.height * 0.08 : MediaQuery.of(context).size.height * 0.04,
@@ -5719,4 +5631,3 @@ import 'dart:async';
         );
       }
     }
-

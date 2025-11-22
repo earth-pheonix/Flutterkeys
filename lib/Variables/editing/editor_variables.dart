@@ -11,19 +11,16 @@ import 'package:flutterkeysaac/Variables/fonts.dart';
 import 'package:flutterkeysaac/Models/json_model_nav_and_root.dart';
 import 'package:file_picker/file_picker.dart';
 import 'dart:convert';
-import 'dart:async';
-import 'package:flutter/foundation.dart';
-
-//display contols, holding/ placeholder & selecting, 
-//back, undo redo, tap expander, pickers, json interfacing
 
 class Ev4rs {
-  
+
   //
   //display controls
   //
 
     static ValueNotifier<bool> showEditor = ValueNotifier(false);
+
+    static ValueNotifier<bool> isSaving = ValueNotifier(false);
 
     static ValueNotifier<bool> isButtonExpanded = ValueNotifier(false);
 
@@ -50,7 +47,7 @@ class Ev4rs {
     static ValueNotifier<bool> showAddBoard = ValueNotifier<bool>(false); //create board
 
     //sync label and message 
-    static bool matchLabel = true;
+    static ValueNotifier<bool> matchLabel = ValueNotifier<bool>(true);
 
   //
   //holding 
@@ -74,6 +71,7 @@ class Ev4rs {
     static ValueNotifier<String> secondSelectedUUID = ValueNotifier('');
 
     static bool selectingAction1(BoardObjects obj) {
+      Ev4rs.setPlacholderValues(obj);
       editAButton.value = true;
       if (tapAndSwap) {
         //clear other button type selections
@@ -83,9 +81,6 @@ class Ev4rs {
         secondGrammerSelectedUUID.value = '';
         firstNavSelectedUUID.value = '';
         secondNavSelectedUUID.value = '';
-
-
-        reloadJson.value = !reloadJson.value;
 
         //remove if already selected
         if (firstSelectedUUID.value == obj.id) {
@@ -130,14 +125,14 @@ class Ev4rs {
         selectedButton.value = obj;
         selectedUUID = obj.id; 
 
-        if (obj.type == 3 || obj.type == 2){
+        if (obj.type == 3 || obj.type == 2 && tapAndSwap == false){
           var linkedBoard = findBoardById(root.boards, obj.linkToUUID ?? '');
           var linkedGrammer = linkedBoard != null 
               ? findGrammerById(root.grammerRow, linkedBoard.useGrammerRow ?? '') 
               : null;
 
           if (Ev4rs.boardEditor.value){
-            boardSelecting(linkedBoard, linkedGrammer);
+            boardSelecting(linkedBoard, linkedGrammer, root.grammerRow);
           }
         }
     }
@@ -154,6 +149,8 @@ class Ev4rs {
     static ValueNotifier<String> secondSubFolderSelectedUUID = ValueNotifier('');
 
     static bool subFolderSelectingAction1(BoardObjects obj) {
+      setSubFolderPlacholderValues(obj);
+
       //tap and swap
       if (tapAndSwap) {
 
@@ -218,7 +215,7 @@ class Ev4rs {
           : null;
 
       if (boardEditor.value){
-        boardSelecting(linkedBoard, linkedGrammer);
+        boardSelecting(linkedBoard, linkedGrammer, root.grammerRow);
       }
     }
 
@@ -233,6 +230,8 @@ class Ev4rs {
     static ValueNotifier<String> secondGrammerSelectedUUID = ValueNotifier('');
 
     static bool grammerSelectingAction1(GrammerObjects obj) {
+      setPlacholderValuesGrammerRow(obj);
+
       //tap and swap
       if (tapAndSwap) {
 
@@ -325,6 +324,8 @@ class Ev4rs {
     static ValueNotifier<String> secondNavSelectedUUID = ValueNotifier('');
 
     static bool navSelectingAction1(NavObjects obj) {
+      setNavPlacholderValues(obj);
+
       //tap and swap
       if (tapAndSwap) {
 
@@ -392,12 +393,16 @@ class Ev4rs {
         var linkedGrammer = findGrammerById(root.grammerRow, linkedBoard.useGrammerRow ?? '');
 
         if (Ev4rs.boardEditor.value){
-          boardSelecting(linkedBoard, linkedGrammer);
+          boardSelecting(linkedBoard, linkedGrammer, root.grammerRow);
         }
       }
     }
 
-    static void boardSelecting(BoardObjects? boardObj, GrammerObjects? grammerObj){
+    static void boardSelecting(BoardObjects? boardObj, GrammerObjects? grammerObj, List<GrammerObjects> grammerRows){
+      if (boardObj != null && grammerObj!= null) {
+        setPlacholderValuesBoard(grammerRows, boardObj);
+      }
+
       editAButton.value = false;
       editAGrammerButton.value = false;
       editASubFolder.value = false;
@@ -471,9 +476,9 @@ class Ev4rs {
       static ValueNotifier<bool> matchSaturation = ValueNotifier(true);
 
       //===: colummn 2
-      static String message = '';
-      static String label = '';
-      static String alternateLabel = '';
+      static ValueNotifier<String> message = ValueNotifier('');
+      static ValueNotifier<String> label = ValueNotifier('');
+      static ValueNotifier<String> alternateLabel = ValueNotifier('');
 
       static ValueNotifier<bool> matchSpeakOnSelect = ValueNotifier(true);
       static ValueNotifier<int> speakOnSelect = ValueNotifier(1);
@@ -546,13 +551,13 @@ class Ev4rs {
           matchOverlay.value = obj_.matchOverlayColor ?? true;
           
         // column 2
-          label = obj_.label ?? '';
-          message = obj_.message ?? '';
+          label.value = obj_.label ?? '';
+          message.value = obj_.message ?? '';
           //sets match/symc label and message
-          if (label.trim() == message.trim()){
-            matchLabel = true;
+          if (label.value.trim() == message.value.trim()){
+            matchLabel.value = true;
           } else{
-            matchLabel = false;
+            matchLabel.value = false;
           }
           matchSpeakOnSelect.value = obj_.matchSpeakOS ?? true;
           speakOnSelect.value = obj_.speakOS ?? 1;
@@ -598,8 +603,8 @@ class Ev4rs {
           matchOverlay.value = obj_.matchOverlayColor ?? true;
           
         // column 2
-          label = obj_.label ?? '';
-          alternateLabel = obj_.alternateLabel ?? '';
+          label.value = obj_.label ?? '';
+          alternateLabel.value = obj_.alternateLabel ?? '';
           matchSpeakOnSelect.value = obj_.matchSpeakOS ?? true;
           speakOnSelect.value = obj_.speakOS ?? 1;
           matchFont.value = obj_.matchFont ?? true;
@@ -643,7 +648,7 @@ class Ev4rs {
           matchOverlay.value = obj_.matchOverlayColor ?? true;
           
         // column 2
-          label = obj_.label ?? '';
+          label.value = obj_.label ?? '';
           matchSpeakOnSelect.value = obj_.matchSpeakOS ?? true;
           speakOnSelect.value = obj_.speakOS ?? 1;
           matchFont.value = obj_.matchFont ?? true;
@@ -680,8 +685,8 @@ class Ev4rs {
           matchOverlay.value = obj_.matchOverlayColor ?? true;
           
         // column 2
-          label = obj_.label ?? '';
-          alternateLabel = obj_.alternateLabel ?? '';
+          label.value = obj_.label ?? '';
+          alternateLabel.value = obj_.alternateLabel ?? '';
           matchSpeakOnSelect.value = obj_.matchSpeakOS ?? true;
           speakOnSelect.value = obj_.speakOS ?? 1;
           matchFont.value = obj_.matchFont ?? true;
@@ -713,21 +718,21 @@ class Ev4rs {
 
   
     //===: board editor + 
-      static String title = "";
+      static ValueNotifier<String> title = ValueNotifier("");
       static ValueNotifier<String> usedGrammerRowUUID = ValueNotifier("");
        static ValueNotifier<String> useGrammerRowTitle = ValueNotifier("");
       static ValueNotifier<int> useSubFolders = ValueNotifier(1);
       static String languageOfOverlay = "";
 
       static void setPlacholderValuesBoard(List<GrammerObjects> grammar, BoardObjects obj_){
-        title = obj_.title ?? '';
+        title.value = obj_.title ?? '';
         usedGrammerRowUUID.value = obj_.useGrammerRow ?? '';
         useGrammerRowTitle.value = findGrammerTitleById(grammar, usedGrammerRowUUID.value) ?? '';
         useSubFolders.value = obj_.useSubFolders ?? 1;
       }
 
       static void setPlacholderValuesGrammerRow(GrammerObjects obj_){
-        title = obj_.title ?? '';
+        title.value = obj_.title ?? '';
       }
 
 
@@ -803,7 +808,6 @@ class Ev4rs {
       if (restored != null) {
           root = restored;
           undoSave(restored);
-          reloadJson.value = !reloadJson.value;
       } 
       Future.delayed(const Duration(milliseconds: 300), () {
         isUndoing.value = false;
@@ -827,7 +831,6 @@ class Ev4rs {
       if (restored != null) {
           root = restored;
           undoSave(restored);
-          reloadJson.value = !reloadJson.value;
       }
       Future.delayed(const Duration(milliseconds: 300), () {
         isRedoing.value = false;
@@ -1061,6 +1064,7 @@ class Ev4rs {
           selectedUUIDs.value = [];
           grammerSelectedUUIDs.value = [];
           navSelectedUUIDs.value = [];
+          subFolderSelectedUUIDs.value = [];
 
         //when drag select multiple is true
         } else if (dragSelectMultiple.value == true){ 
@@ -1340,6 +1344,7 @@ class Ev4rs {
             }
 
             await saveJson(root);
+            reloadJson.value = !reloadJson.value;
             sortSelectAZ.value = false;
           });
 
@@ -1360,74 +1365,98 @@ class Ev4rs {
 
     //====: image picker
 
-      static Future<void> pickImage(Root root, ImagePicker picker) async {
+      static Future<void> pickImage(final void Function(Root root, String objUUID, String field, dynamic value) saveField, Root root, ImagePicker picker) async {
+        final XFile? chosenImage = await picker.pickImage(source: ImageSource.gallery);
+
+        if (chosenImage != null) {
+          final savedPath = await saveImageToAppDir(chosenImage);
+    
+          everyImage = getAllImages(root) + [savedPath];
+          saveField(root, selectedUUID, "symbol", savedPath);        
+          await saveJson(root);
+          }
+      }
+
+      static Future<void> multiPickImage(final void Function(Root root, List<String> objUUIDs, String field, dynamic value) saveField, Root root, ImagePicker picker) async {
       final XFile? chosenImage = await picker.pickImage(source: ImageSource.gallery);
 
-      if (chosenImage != null && rootReady) {
+      if (chosenImage != null) {
         final savedPath = await saveImageToAppDir(chosenImage);
 
         everyImage = getAllImages(root) + [savedPath];
-        updateBoardField(root, selectedUUID, "symbol", savedPath);        
+        saveField(root, selectedUUIDs.value, "symbol", savedPath);        
         await saveJson(root);
         }
       }
 
-      static Future<void> multiPickImage(Root root, ImagePicker picker) async {
+      static Future<void> pickSubFolderImage(final void Function(Root root, String objUUID, String field, dynamic value) saveField, Root root, ImagePicker picker) async {
+        final XFile? chosenImage = await picker.pickImage(source: ImageSource.gallery);
+
+        if (chosenImage != null) {
+          final savedPath = await saveImageToAppDir(chosenImage);
+    
+          everyImage = getAllImages(root) + [savedPath];
+          saveField(root, subFolderSelectedUUID, "symbol", savedPath);        
+          await saveJson(root);
+          }
+      }
+
+      static Future<void> multiSubFolderPickImage(final void Function(Root root, List<String> objUUIDs, String field, dynamic value) saveField, Root root, ImagePicker picker) async {
       final XFile? chosenImage = await picker.pickImage(source: ImageSource.gallery);
 
-      if (chosenImage != null && rootReady) {
+      if (chosenImage != null) {
         final savedPath = await saveImageToAppDir(chosenImage);
 
         everyImage = getAllImages(root) + [savedPath];
-        updateMultiBoardField(root, selectedUUIDs.value, "symbol", savedPath);        
+        saveField(root, subFolderSelectedUUIDs.value, "symbol", savedPath);        
         await saveJson(root);
         }
       }
 
-      static Future<void> grammerPickImage(Root root, ImagePicker picker) async {
+      static Future<void> grammerPickImage(final void Function(Root root, String objUUID, String field, dynamic value) saveField, Root root, ImagePicker picker) async {
       final XFile? chosenImage = await picker.pickImage(source: ImageSource.gallery);
 
-      if (chosenImage != null && rootReady) {
+      if (chosenImage != null) {
         final savedPath = await saveImageToAppDir(chosenImage);
 
         everyImage = getAllImages(root) + [savedPath];
-        updateGrammerField(root, grammerSelectedUUID, "symbol", savedPath);        
+        saveField(root, grammerSelectedUUID, "symbol", savedPath);        
         await saveJson(root);
         }
       }
 
-      static Future<void> navPickImage(Root root, ImagePicker picker) async {
+      static Future<void> navPickImage(final void Function(Root root, String objUUID, String field, dynamic value) saveField, Root root, ImagePicker picker) async {
       final XFile? chosenImage = await picker.pickImage(source: ImageSource.gallery);
 
-      if (chosenImage != null && rootReady) {
+      if (chosenImage != null) {
         final savedPath = await saveImageToAppDir(chosenImage);
 
         everyImage = getAllImages(root) + [savedPath];
-        Ev4rs.updateNavField(root, navSelectedUUID, "symbol", savedPath);        
+        saveField(root, navSelectedUUID, "symbol", savedPath);        
         await saveJson(root);
         }
       }
 
-      static Future<void> multiGrammerPickImage(Root root, ImagePicker picker) async {
+      static Future<void> multiGrammerPickImage(final void Function(Root root, List<String> objUUIDs, String field, dynamic value) saveField, Root root, ImagePicker picker) async {
       final XFile? chosenImage = await picker.pickImage(source: ImageSource.gallery);
 
-      if (chosenImage != null && rootReady) {
+      if (chosenImage != null) {
         final savedPath = await saveImageToAppDir(chosenImage);
 
         everyImage = getAllImages(root) + [savedPath];
-        updateMultiGrammerField(root, grammerSelectedUUIDs.value, "symbol", savedPath);      
+        saveField(root, grammerSelectedUUIDs.value, "symbol", savedPath);      
         await saveJson(root);
         }
       }
 
-      static Future<void> multiNavPickImage(Root root, ImagePicker picker) async {
+      static Future<void> multiNavPickImage(final void Function(Root root, List<String> objUUIDs, String field, dynamic value) saveField, Root root, ImagePicker picker) async {
       final XFile? chosenImage = await picker.pickImage(source: ImageSource.gallery);
 
-      if (chosenImage != null && rootReady) {
+      if (chosenImage != null) {
         final savedPath = await saveImageToAppDir(chosenImage);
 
         everyImage = getAllImages(root) + [savedPath];
-        updateMultiNavField(root, navSelectedUUIDs.value, "symbol", savedPath);        
+        saveField(root, navSelectedUUIDs.value, "symbol", savedPath);        
         await saveJson(root);
         }
       }
@@ -1468,7 +1497,6 @@ class Ev4rs {
       
       //get a list of the images for cleanup
       static List<String> getAllImages(Root root) {
-          if (!rootReady) return [];
 
           List<String> images = [];
 
@@ -1556,7 +1584,7 @@ class Ev4rs {
         allowedExtensions: ['mp3'],
       );
 
-      if (result != null && result.files.single.path != null && rootReady) {
+      if (result != null && result.files.single.path != null) {
         final chosenMP3 = File(result.files.single.path!);
 
         final savedPath = await saveMP3ToAppDir(chosenMP3);
@@ -1574,7 +1602,7 @@ class Ev4rs {
         allowedExtensions: ['mp3'],
       );
 
-      if (result != null && result.files.single.path != null && rootReady) {
+      if (result != null && result.files.single.path != null) {
         final chosenMP3 = File(result.files.single.path!);
 
         final savedPath = await saveMP3ToAppDir(chosenMP3);
@@ -1622,7 +1650,6 @@ class Ev4rs {
       
       //list of audio files for cleanup
       static List<String> getAllMp3(Root root) {
-          if (!rootReady) return [];
 
           List<String> sound = [];
 
@@ -1685,15 +1712,7 @@ class Ev4rs {
   //
 
     static bool rootReady = false;
-    // in-memory root for editors to observe (reduces disk reloads)
-    static ValueNotifier<Root?> rootNotifier = ValueNotifier<Root?>(null);
     static ValueNotifier<bool> reloadJson = ValueNotifier(false);
-  static ValueNotifier<bool> isSaving = ValueNotifier<bool>(false);
-
-    static void setInMemoryRoot(Root root) {
-      rootNotifier.value = root;
-      rootReady = true;
-    }
 
     //find object via uuid
     static BoardObjects? findBoardById(List<BoardObjects> boards, String uuid) {
@@ -2841,120 +2860,42 @@ class Ev4rs {
           return true;
         }
 
-      // Debounced/background save to reduce frequent disk writes and rebuilds.
-      // Calls to saveJson while a save is pending will be batched into a single
-      // write. The returned Future completes when the write has finished.
-      static Timer? _saveTimer;
-      static Completer<void>? _pendingSaveCompleter;
-      static Map<String, dynamic>? _pendingSaveMap;
-      static const int _saveDebounceMs = 400;
-
-      // helper for compute(): encodes a Map to JSON string on a background isolate
-      static String _encodeMapToString(Map<String, dynamic> map) {
-        return jsonEncode(map);
-      }
-
-      static Future<void> saveJson(Root root) async {
-        // indicate save pending
-        isSaving.value = true;
-        // capture the latest map to write
-        _pendingSaveMap = root.toJson();
-
-        // Record history immediately so undo/redo granularity is preserved
-        // even though disk writes are debounced.
-        updateJsonHistory(root);
-
-        // if there's already a pending completer, reuse it so multiple callers
-        // await the same pending write
-        if (_pendingSaveCompleter != null && !_pendingSaveCompleter!.isCompleted) {
-          // reset the timer to delay the write (extend debounce)
-          _saveTimer?.cancel();
-          _saveTimer = Timer(Duration(milliseconds: _saveDebounceMs), () async {
-            try {
-              final mapToWrite = _pendingSaveMap ?? {};
-              final dir = await getApplicationDocumentsDirectory();
-              final file = File('${dir.path}/magma_vocab.json');
-              // offload encoding to background isolate
-              final jsonString = await compute(_encodeMapToString, mapToWrite);
-              await file.writeAsString(jsonString);
-              updateJsonHistory(root);
-              // toggle once per grouped write
-              reloadJson.value = !reloadJson.value;
-              _pendingSaveCompleter?.complete();
-            } catch (e, st) {
-              _pendingSaveCompleter?.completeError(e, st);
-            } finally {
-              _pendingSaveCompleter = null;
-              _saveTimer = null;
-              _pendingSaveMap = null;
-              // write finished
-              isSaving.value = false;
-            }
-          });
-          return _pendingSaveCompleter!.future;
-        }
-
-  // no pending save: create one and schedule the write
-  _pendingSaveCompleter = Completer<void>();
-        _saveTimer?.cancel();
-        _saveTimer = Timer(Duration(milliseconds: _saveDebounceMs), () async {
-          try {
-            final mapToWrite = _pendingSaveMap ?? root.toJson();
-            final dir = await getApplicationDocumentsDirectory();
-            final file = File('${dir.path}/magma_vocab.json');
-            final jsonString = await compute(_encodeMapToString, mapToWrite);
-            await file.writeAsString(jsonString);
-            updateJsonHistory(root);
-            reloadJson.value = !reloadJson.value;
-            _pendingSaveCompleter?.complete();
-          } catch (e, st) {
-            _pendingSaveCompleter?.completeError(e, st);
-          } finally {
-            _pendingSaveCompleter = null;
-            _saveTimer = null;
-            _pendingSaveMap = null;
-            // write finished
-            isSaving.value = false;
-          }
-        });
-
-  return _pendingSaveCompleter!.future;
-      }
-
-      // immediate, blocking save used by undo/redo to ensure disk state matches
-      // restored JSON immediately.
-        static Future<void> undoSave(Root root) async {
-          // cancel any pending debounced save and run an immediate write
-          _saveTimer?.cancel();
-          _saveTimer = null;
-
-          // capture any pending completer to complete after the immediate write
-          final pending = _pendingSaveCompleter;
-          // clear pending map to avoid stale writes
-          _pendingSaveMap = null;
-          _pendingSaveCompleter = null;
-
+      //save json
+        static Future<void> saveJson(Root root) async {
+          isSaving.value = true;
           final dir = await getApplicationDocumentsDirectory();
           final file = File('${dir.path}/magma_vocab.json');
-          final jsonString = await compute(_encodeMapToString, root.toJson());
+          final jsonString = jsonEncode(root.toJson());
           await file.writeAsString(jsonString);
+          updateJsonHistory(root);
+          Future.delayed(const Duration(milliseconds: 500), () {
+            isSaving.value = false;
+          });
+        }
 
-          // ensure any callers awaiting the batched save are completed
-          try {
-            pending?.complete();
-          } catch (_) {}
-
+      //undo save (used for redo and undo)
+        static Future<void> undoSave(Root root) async {
+          isSaving.value = true;
+          final dir = await getApplicationDocumentsDirectory();
+          final file = File('${dir.path}/magma_vocab.json');
+          final jsonString = jsonEncode(root.toJson());
+          await file.writeAsString(jsonString);
           reloadJson.value = !reloadJson.value;
-          // immediate write done
-          isSaving.value = false;
+          Future.delayed(const Duration(milliseconds: 500), () {
+            isSaving.value = false;
+          });
         }
 
       //delete a board
         static bool deleteBoard(Root root, String uuid) {
+          isSaving.value = true;
           final boardIndex = root.boards.indexWhere((b) => b.id == uuid);
           if (boardIndex == -1) return false;
-
           root.boards.removeAt(boardIndex);
+          reloadJson.value = !reloadJson.value;
+          Future.delayed(const Duration(milliseconds: 500), () {
+            isSaving.value = false;
+          });
           return true;
         }
 

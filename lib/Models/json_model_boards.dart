@@ -258,29 +258,29 @@ extension BoardsDisplay on BoardObjects {
             Flexible(
               flex: 34,
               child: 
-            Column( children: [
-             Spacer(flex: 2),
-             Expanded(
-              flex: 26,
-              child: Row(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Spacer(flex: 1),
-                Expanded(flex: 24, child: BuildSubFolder(obj: content[index++], synth: synth, goBack: goBack, openBoard: openBoard, openBoardWithReturn: openBoardWithReturn, boards: boards, findBoardById: findBoardById,)),
-                Spacer(flex: 2), // Special 1
-                Expanded(flex: 36, child: BuildSubFolder(obj: content[index++], synth: synth, goBack: goBack, openBoard: openBoard, openBoardWithReturn: openBoardWithReturn, boards: boards, findBoardById: findBoardById,)),
-                Spacer(flex: 2), // Subfolder
-                Expanded(flex: 36, child: BuildSubFolder(obj: content[index++], synth: synth, goBack: goBack, openBoard: openBoard, openBoardWithReturn: openBoardWithReturn, boards: boards, findBoardById: findBoardById,)),
-                Spacer(flex: 2),
-                Expanded(flex: 36, child: BuildSubFolder(obj: content[index++], synth: synth, goBack: goBack, openBoard: openBoard, openBoardWithReturn: openBoardWithReturn, boards: boards, findBoardById: findBoardById,)),
-                Spacer(flex: 2),
-                Expanded(flex: 24, child: BuildSubFolder(obj: content[index++], synth: synth, goBack: goBack, openBoard: openBoard, openBoardWithReturn: openBoardWithReturn, boards: boards, findBoardById: findBoardById,)),
-                Spacer(flex: 1), // Special 2
-              ],
-            ),
-             ),
-             Spacer(flex: 6),
-            ]),
+              Column( children: [
+              Spacer(flex: 3),
+              Expanded(
+                flex: 27,
+                child: Row(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Spacer(flex: 1),
+                  Expanded(flex: 24, child: BuildSubFolder(obj: content[index++], synth: synth, goBack: goBack, openBoard: openBoard, openBoardWithReturn: openBoardWithReturn, boards: boards, findBoardById: findBoardById,)),
+                  Spacer(flex: 2), // Special 1
+                  Expanded(flex: 36, child: BuildSubFolder(obj: content[index++], synth: synth, goBack: goBack, openBoard: openBoard, openBoardWithReturn: openBoardWithReturn, boards: boards, findBoardById: findBoardById,)),
+                  Spacer(flex: 2), // Subfolder
+                  Expanded(flex: 36, child: BuildSubFolder(obj: content[index++], synth: synth, goBack: goBack, openBoard: openBoard, openBoardWithReturn: openBoardWithReturn, boards: boards, findBoardById: findBoardById,)),
+                  Spacer(flex: 2),
+                  Expanded(flex: 36, child: BuildSubFolder(obj: content[index++], synth: synth, goBack: goBack, openBoard: openBoard, openBoardWithReturn: openBoardWithReturn, boards: boards, findBoardById: findBoardById,)),
+                  Spacer(flex: 2),
+                  Expanded(flex: 24, child: BuildSubFolder(obj: content[index++], synth: synth, goBack: goBack, openBoard: openBoard, openBoardWithReturn: openBoardWithReturn, boards: boards, findBoardById: findBoardById,)),
+                  Spacer(flex: 1), // Special 2
+                ],
+              ),
+              ),
+              Spacer(flex: 7),
+              ]),
             ),
             
 
@@ -443,9 +443,9 @@ extension BoardsDisplay on BoardObjects {
               flex: 34,
               child: 
             Column( children: [
-             Spacer(flex: 2),
+             Spacer(flex: 3),
              Expanded(
-              flex: 26,
+              flex: 27,
               child: Row(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -463,7 +463,7 @@ extension BoardsDisplay on BoardObjects {
               ],
             ),
              ),
-            Spacer(flex: 6),
+            Spacer(flex: 7),
           ]),
              ),
 
