@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutterkeysaac/Variables/ui_shortcuts.dart';
+import 'package:flutterkeysaac/Variables/ui_boards.dart';
 import 'package:flutterkeysaac/Variables/editing/editable_buttons.dart';
 import 'package:flutterkeysaac/Variables/tts/tts_interface.dart';
 import 'package:flutterkeysaac/Variables/variables.dart';

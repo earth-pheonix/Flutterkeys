@@ -33,7 +33,6 @@ abstract class TTSInterface {
   void notifyDone() {
     if (!_doneController.isClosed) {
       _doneController.add(null);
-      print('notify done');
     }
     isSpeaking.value = false;
   }

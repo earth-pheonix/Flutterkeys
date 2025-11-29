@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutterkeysaac/Variables/ui_shortcuts.dart';
 import 'package:flutterkeysaac/Variables/variables.dart';
-import 'package:flutterkeysaac/Variables/color_variables.dart';
+import 'package:flutterkeysaac/Variables/colors/color_variables.dart';
 import 'package:flutter/services.dart';
-import 'package:flutterkeysaac/Variables/more_font_variables.dart';
+import 'package:flutterkeysaac/Variables/fonts/font_variables.dart';
 import 'package:flutterkeysaac/Variables/tts/tts_interface.dart';
 import 'package:flutterkeysaac/Variables/tts/tts_factory.dart';
-import 'package:flutterkeysaac/Variables/settings_variable.dart';
+import 'package:flutterkeysaac/Variables/settings/settings_variables.dart';
 
 
 

@@ -4,7 +4,7 @@ import 'package:flutterkeysaac/Variables/editing/editing_board_buttons.dart';
 import 'package:flutterkeysaac/Variables/editing/editing_boards_and.dart';
 import 'package:flutterkeysaac/Variables/editing/editing_nav_and_grammer.dart';
 import 'package:flutterkeysaac/Variables/variables.dart';
-import 'package:flutterkeysaac/Variables/color_variables.dart';
+import 'package:flutterkeysaac/Variables/colors/color_variables.dart';
 import 'package:flutterkeysaac/Variables/editing/editor_variables.dart';
 import 'package:flutterkeysaac/Variables/tts/tts_interface.dart';
 import 'package:flutterkeysaac/Models/json_model_nav_and_root.dart';

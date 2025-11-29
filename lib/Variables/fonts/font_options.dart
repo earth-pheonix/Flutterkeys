@@ -1,10 +1,11 @@
 
 import 'package:flutterkeysaac/Variables/variables.dart';
+import 'package:flutterkeysaac/Variables/fonts/font_variables.dart';
 
 class Fontsy {
 
     static var fonts = getFontsForWritSystem(writingSystemNumber);
-    static var includeCurrentFont = !fonts.contains(V4rs.interfaceFont) && V4rs.interfaceFont != 'Default';
+    static var includeCurrentFont = !fonts.contains(Fv4rs.interfaceFont) && Fv4rs.interfaceFont != 'Default';
 
     static int writingSystemNumber = languageToWritSysNumber(V4rs.interfaceLanguage);
 

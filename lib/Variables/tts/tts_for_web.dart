@@ -19,27 +19,22 @@ class TTSWeb implements TTSInterface {
   TTSWeb() {
     _tts.setStartHandler(() {
       notifyStart();
-      print("Web: Speech started");
     });
 
     _tts.setCompletionHandler(() {
       notifyDone();
-      print("Web: Speech completed");
     });
 
     _tts.setCancelHandler(() {
       notifyDone();
-      print("Web: Speech cancelled");
     });
 
     _tts.setPauseHandler(() {
       isSpeaking.value = false;
-      print("Web: Speech paused");
     });
 
     _tts.setContinueHandler(() {
       isSpeaking.value = true;
-      print("Web: Speech resumed");
     });
   }
 
@@ -62,7 +57,6 @@ class TTSWeb implements TTSInterface {
       notifyStart();
       await _tts.speak(text);
     } catch (e) {
-      print("Error speaking on Web: $e");
       notifyDone();
     }
   }
@@ -82,14 +76,13 @@ class TTSWeb implements TTSInterface {
       await _tts.pause();
       isSpeaking.value = false;
     } catch (e) {
-      print("Pause not supported on Web: $e");
+      await _tts.stop();
     }
   }
 
   @override
   Future<void> resume() async {
-    // Not actually supported on Web
-    print("Resume not supported on Web — must re-speak text");
+    // Not supported on Web
   }
 
   @override

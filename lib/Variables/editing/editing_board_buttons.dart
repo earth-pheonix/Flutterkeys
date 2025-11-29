@@ -5,12 +5,14 @@ import 'package:flutterkeysaac/Models/json_model_nav_and_root.dart';
 import 'package:flutterkeysaac/Variables/ui_shortcuts.dart';
 import 'package:flutterkeysaac/Variables/editing/editor_variables.dart';
 import 'package:flutterkeysaac/Variables/boardset_settings_variables.dart';
-import 'package:flutterkeysaac/Variables/Settings_variable.dart';
-import 'package:flutterkeysaac/Variables/color_variables.dart';
+import 'package:flutterkeysaac/Variables/settings/settings_variables.dart';
+import 'package:flutterkeysaac/Variables/colors/color_variables.dart';
 import 'package:flutterkeysaac/Variables/variables.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutterkeysaac/Variables/grammer_variables.dart';
 import 'package:audioplayers/audioplayers.dart';
+import 'package:flutterkeysaac/Variables/fonts/font_pickers.dart';
+import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
 import 'dart:async';
 
 //

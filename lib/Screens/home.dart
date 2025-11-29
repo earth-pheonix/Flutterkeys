@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutterkeysaac/Variables/boardset_settings_variables.dart';
 import 'package:flutterkeysaac/Variables/variables.dart';
-import 'package:flutterkeysaac/Variables/color_variables.dart';
-import 'package:flutterkeysaac/Screens/rows/message_row.dart';
+import 'package:flutterkeysaac/Variables/colors/color_variables.dart';
+import 'package:flutterkeysaac/Screens/message_row.dart';
 import 'package:flutterkeysaac/Variables/tts/tts_interface.dart';
 import 'package:flutterkeysaac/Models/json_model_nav_and_root.dart';
 import 'package:flutterkeysaac/Models/json_model_boards.dart';
 import 'package:flutterkeysaac/Models/json_model_grammer.dart';
 import 'package:flutterkeysaac/Variables/editing/save_indicator.dart';
 import 'package:flutterkeysaac/Variables/export_variables.dart';
-import 'package:flutterkeysaac/Variables/more_font_variables.dart';
+import 'package:flutterkeysaac/Variables/fonts/font_variables.dart';
 import 'package:flutterkeysaac/Screens/settings.dart';
 import 'dart:async';
 import 'dart:typed_data';
@@ -620,7 +620,6 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
         ExV4rs.loadingPrint.value = false;
         return byteData?.buffer.asUint8List();
       } catch (e) {
-        print("Error capturing print layout: $e");
         return null;
       }
     }

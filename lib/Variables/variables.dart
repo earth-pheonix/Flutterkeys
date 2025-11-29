@@ -1,11 +1,11 @@
 
-import 'package:flutterkeysaac/Variables/color_variables.dart';
+import 'package:flutterkeysaac/Variables/colors/color_variables.dart';
 import 'package:flutterkeysaac/Variables/tts/tts_interface.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:flutterkeysaac/Variables/settings_variable.dart';
+import 'package:flutterkeysaac/Variables/settings/settings_variables.dart';
 import 'package:flutterkeysaac/Variables/search_variables.dart';
 import 'package:flutterkeysaac/Variables/boardset_settings_variables.dart';
-import 'package:flutterkeysaac/Variables/more_font_variables.dart';
+import 'package:flutterkeysaac/Variables/fonts/font_variables.dart';
 import 'package:flutterkeysaac/Variables/export_variables.dart';
 import 'package:path/path.dart';
 import 'package:flutter/services.dart';
@@ -172,55 +172,6 @@ static Future<void> saveMyBoardsets (List<File> myBoardsets) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString(_storedMessage, storedMessage);
   }
-
-//
-//interface font settings 
-//
-  static TextStyle get interfacelabelStyle =>  TextStyle(color: V4rs.interfaceFontColor, fontSize: 16, fontFamily: '');
-
-  //font family
-  static String interfaceFont = 'Default';
-  static final String _interfaceFont = "interfaceFont";
-
-   static Future<void> saveInterfaceFont (String interfaceFont) async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString(_interfaceFont, interfaceFont);
-  } 
-
-  //interfaceFontSize
-  static double interfaceFontSize = 16;
-  static final String _interfaceFontSize = "interfaceFontSize";
-
-   static Future<void> saveInterfaceFontSize (double interfaceFontSize) async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setDouble(_interfaceFontSize, interfaceFontSize);
-  } 
-  //interfaceFontWeight
-  static int interfaceFontWeight = 400;
-  static final String _interfaceFontWeight = "interfaceFontweight";
-
-   static Future<void> saveInterfaceFontWeight (int interfaceFontWeight) async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setInt(_interfaceFontWeight, interfaceFontWeight);
-  } 
-
-  //interfaceFontItalics
-  static bool interfaceFontItalics = false;
-  static final String _interfaceFontItalics = "interfaceFontItalics";
-
-   static Future<void> saveInterfaceFontItalics (bool interfaceFontItalics) async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setBool(_interfaceFontItalics, interfaceFontItalics);
-  } 
-
-   //interfaceFontColor
-  static Color interfaceFontColor = Cv4rs.themeColor1;
-  static final String _interfaceFontColor = "interfaceFontColor";
-
-   static Future<void> saveInterfaceFontColor (Color interfaceFontColor) async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setInt(_interfaceFontColor, interfaceFontColor.toARGB32());
-  } 
 
 //
 //language stuff (more in settings variables)
@@ -632,11 +583,6 @@ static Future<Root> loadRootData() async {
 
     final jsonString = await file!.readAsString();
     final jsonMap = jsonDecode(jsonString);
-
-    print(myBoardsets);
-    print(currentFile);
-    print(ExV4rs.fileToExport);
-    print('currentFile != null');
     
     return Root.fromJson(jsonMap);
 
@@ -658,7 +604,6 @@ static Future<Root> loadRootData() async {
       saveMyBoardsets(myBoardsets);
     }
 
-    print(myBoardsets);
     return Root.fromJson(jsonMap);
   } else {
     // load from bundled asset if it doesnt
@@ -676,7 +621,6 @@ static Future<Root> loadRootData() async {
       saveMyBoardsets(myBoardsets);
     }
 
-    print(myBoardsets);
     return Root.fromJson(jsonMap);
   }
 }
@@ -806,11 +750,7 @@ static Future<File> resolveImageFile(String relativePath) async {
     interfaceLanguage = prefs.getString(_interfaceLanguage) ?? 'English';
     selectedLanguage.value = prefs.getString(_selectedLanguage) ?? interfaceLanguage;
 
-    interfaceFont = prefs.getString(_interfaceFont) ?? 'Default';
-    interfaceFontSize = prefs.getDouble(_interfaceFontSize) ?? interfaceFontSize;
-    interfaceFontWeight = prefs.getInt(_interfaceFontWeight) ?? interfaceFontWeight;
-    interfaceFontItalics = prefs.getBool(_interfaceFontItalics) ?? interfaceFontItalics;
-    interfaceFontColor = Color(prefs.getInt(_interfaceFontColor) ?? 0xFF000000);
+    
 
     Sv4rs.alertCount = prefs.getInt(Sv4rs.alertCount_) ?? 3;
     Sv4rs.firstAlert = prefs.getString(Sv4rs.firstAlert_) ?? '.en. I have something to say .en.';

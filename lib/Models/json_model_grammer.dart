@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutterkeysaac/Variables/editing/editable_buttons.dart';
-import 'package:flutterkeysaac/Variables/ui_shortcuts.dart';
+import 'package:flutterkeysaac/Variables/ui_boards.dart';
 import 'package:flutterkeysaac/Variables/tts/tts_interface.dart';
 import 'package:flutterkeysaac/Models/json_model_boards.dart';
-import 'package:flutterkeysaac/Variables/color_variables.dart';
+import 'package:flutterkeysaac/Variables/colors/color_variables.dart';
 import 'package:flutterkeysaac/Models/json_model_nav_and_root.dart';
 
 class GrammerObjects {

@@ -1,8 +1,10 @@
+
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutterkeysaac/Variables/variables.dart';
-import 'package:flutterkeysaac/Variables/color_variables.dart';
+import 'package:flutterkeysaac/Variables/colors/color_variables.dart';
 import 'package:flutter/material.dart';
-import 'package:flutterkeysaac/Variables/fonts.dart';
+import 'package:flutterkeysaac/Variables/fonts/font_options.dart';
+import 'package:flutterkeysaac/Variables/fonts/font_variables.dart';
 
 
 class Sv4rs {
@@ -10,18 +12,18 @@ class Sv4rs {
 //label style 
  static TextStyle get settingslabelStyle =>  
  TextStyle(
-  color: V4rs.interfaceFontColor,
-  fontSize: V4rs.interfaceFontSize, 
-  fontFamily: Fontsy.fontToFamily[V4rs.interfaceFont], 
-  fontWeight: FontWeight.values[((V4rs.interfaceFontWeight ~/ 100) - 1 ).clamp(0, 8)],
-  fontStyle: V4rs.interfaceFontItalics ? FontStyle.italic : FontStyle.normal
+  color: Fv4rs.interfaceFontColor,
+  fontSize: Fv4rs.interfaceFontSize, 
+  fontFamily: Fontsy.fontToFamily[Fv4rs.interfaceFont], 
+  fontWeight: FontWeight.values[((Fv4rs.interfaceFontWeight ~/ 100) - 1 ).clamp(0, 8)],
+  fontStyle: Fv4rs.interfaceFontItalics ? FontStyle.italic : FontStyle.normal
   );
 
  static TextStyle get settingsSecondaryLabelStyle =>  
  TextStyle(
   color: Cv4rs.themeColor2, 
-  fontSize: V4rs.interfaceFontSize, 
-  fontFamily: Fontsy.fontToFamily[V4rs.interfaceFont], 
+  fontSize: Fv4rs.interfaceFontSize, 
+  fontFamily: Fontsy.fontToFamily[Fv4rs.interfaceFont], 
   fontWeight: FontWeight.w500,
   );
 

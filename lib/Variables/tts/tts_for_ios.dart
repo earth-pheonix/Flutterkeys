@@ -30,23 +30,18 @@ class TTSiOS implements TTSInterface {
       switch (call.method) {
         case 'onStart':
           notifyStart();
-          print("iOS: Speech started");
           break;
         case 'onComplete':
           notifyDone();
-          print("iOS: Speech completed");
           break;
         case 'onCancel':
           notifyDone();
-          print("iOS: Speech cancelled");
           break;
         case 'onPause':
           isSpeaking.value = false;
-          print("iOS: Speech paused");
           break;
         case 'onResume':
           isSpeaking.value = true;
-          print("iOS: Speech resumed");
           break;
       }
     });
@@ -67,7 +62,7 @@ class TTSiOS implements TTSInterface {
 
   @override
   Future<void> speak(String text) async {
-    notifyStart(); // optimistic start; native will also send onStart
+    notifyStart();
 
     final normalizedText = _normalizeText(text);
 
@@ -78,21 +73,19 @@ class TTSiOS implements TTSInterface {
         'rate': _currentRate,
         'voice': _currentVoiceIdentifier,
       });
-      // Do NOT call notifyDone() here. Wait for native `onComplete`/`onCancel`.
     } catch (e) {
-      notifyDone(); // fail-safe
+      notifyDone(); 
     }
   }
 
   String _normalizeText(String text) {
   text = text.trim();
-  // Fix standalone "I" (or lowercase if needed)
+  // Fix independent "I"
   if (text == 'I ') {
-    return 'eye '; // Adding space often fixes TTS mispronunciation
+    return 'eye '; 
   }
 
-  // Add more special cases here if needed
-  // e.g., if (text == 'A') return 'A ';
+  // Add more overrides here
 
   return text;
   }
@@ -104,7 +97,6 @@ class TTSiOS implements TTSInterface {
       // Native will send didCancel; we also mark done as fail-safe:
       notifyDone();
     } catch (e) {
-      print("Error stopping TTS: $e");
       notifyDone();
     }
   }
@@ -115,7 +107,7 @@ class TTSiOS implements TTSInterface {
       await _methodChannel.invokeMethod('pause');
       // Native delegate will send onPause -> isSpeaking=false
     } catch (e) {
-      print("Error pausing TTS: $e");
+      await stop();
     }
   }
 
@@ -178,7 +170,6 @@ class TtsHighlighter {
 
   Stream<Map<String, dynamic>> get wordStream {
     return _eventChannel.receiveBroadcastStream().map((event) {
-      print('TTS Highlighter event received');
       return Map<String, dynamic>.from(event);
     });
   }

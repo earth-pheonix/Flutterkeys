@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:flutterkeysaac/Variables/settings_variable.dart';
+import 'package:flutterkeysaac/Variables/settings/settings_variables.dart';
 import 'package:flutterkeysaac/Variables/tts/tts_interface.dart';
+import 'package:flutterkeysaac/Variables/settings/ui_settings.dart';
 import 'package:flutterkeysaac/Variables/ui_shortcuts.dart';
 import 'package:flutterkeysaac/Variables/variables.dart';
-import 'package:flutterkeysaac/Variables/editing/editor_variables.dart';
-import 'package:flutterkeysaac/Variables/color_variables.dart';
+import 'package:flutterkeysaac/Variables/colors/color_variables.dart';
 import 'package:flutterkeysaac/Variables/export_variables.dart';
-import 'package:flutterkeysaac/Variables/more_font_variables.dart';
+import 'package:flutterkeysaac/Variables/fonts/font_variables.dart';
 import 'package:flutterkeysaac/Variables/boardset_settings_variables.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutterkeysaac/Models/json_model_nav_and_root.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutterkeysaac/Variables/editing/save_indicator.dart';
+import 'package:flutterkeysaac/Variables/ui_pops.dart';
+import 'package:flutterkeysaac/Variables/fonts/font_pickers.dart';
+import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
 import 'package:share_plus/share_plus.dart'; 
 import 'dart:io';
 
@@ -76,8 +79,6 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
 
  @override
   Widget build(BuildContext context) {
-
-
     return FutureBuilder<Root>(
       future: rootFuture,
       builder: (context, snapshot) {
@@ -106,60 +107,9 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
           padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 0),
           child: Column(
           children: [
-            //back & edit
-            Row(
-              children: [
-                Padding(
-                  padding: EdgeInsets.fromLTRB(0, 10, 10, 20),
-                  child: SizedBox(
-                    height: 50,
-                    width: 75,
-                    child: ButtonStyle1(
-                      imagePath: 'assets/interface_icons/interface_icons/iBack.png',
-                      onPressed: () {
-                          if (Sv4rs.speakInterfaceButtonsOnSelect) {
-                          V4rs.speakOnSelect('back', V4rs.selectedLanguage.value, widget.synth);
-                          }
-                        V4rs.showSettings.value = false;
-                      },
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.fromLTRB(5, 10, 5, 20),
-                  child: SizedBox(
-                    height: 50,
-                    width: 60,
-                    child: ButtonStyle1(
-                      imagePath: 'assets/interface_icons/interface_icons/iEdit.png',
-                      onPressed: () {
-                          if (Sv4rs.speakInterfaceButtonsOnSelect) {
-                          V4rs.speakOnSelect('edit', V4rs.selectedLanguage.value, widget.synth);
-                          }
-                          if (_root != null) {
-                            Ev4rs.updateJsonHistory(_root!);
-                          }
-                        V4rs.showSettings.value = false;
-                        Ev4rs.showEditor.value = true;
-                      },
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.fromLTRB(5, 10, 5, 20),
-                  child: SizedBox(
-                    height: 50,
-                    width: 100,
-                    child: ElevatedButton(onPressed: (){ setState(() {
-                       V4rs.deleteLocalCopy();
-                    });
-                    }, 
-                    child: Text('Reset JSON'))
-                  ),
-                ),
-              ],
-            ),
-          
+            if (_root != null)
+            TopRowForSettings(synth: widget.synth, root: _root!),
+            
           //
           //SETTINGS 
           //  
@@ -912,40 +862,40 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
                 FontPicker1(
                   useUnderline: false,
                   onUnderlineChanged: (value) async {},
-                  size: V4rs.interfaceFontSize, 
-                  weight: V4rs.interfaceFontWeight, 
-                  italics: V4rs.interfaceFontItalics, 
-                  font: V4rs.interfaceFont, 
+                  size: Fv4rs.interfaceFontSize, 
+                  weight: Fv4rs.interfaceFontWeight, 
+                  italics: Fv4rs.interfaceFontItalics, 
+                  font: Fv4rs.interfaceFont, 
                   label: 'Interface Font Settings:', 
-                  color: V4rs.interfaceFontColor,
+                  color: Fv4rs.interfaceFontColor,
                   onColorChanged: (value) async {
                                 setState(() {
-                                   V4rs.interfaceFontColor = value.toColor() ?? V4rs.interfaceFontColor;
-                                   V4rs.saveInterfaceFontColor(value.toColor() ?? V4rs.interfaceFontColor);
+                                   Fv4rs.interfaceFontColor = value.toColor() ?? Fv4rs.interfaceFontColor;
+                                   Fv4rs.saveInterfaceFontColor(value.toColor() ?? Fv4rs.interfaceFontColor);
                                 });
                               }, 
                   onSizeChanged: (value) async {
                                 setState(() {
-                                   V4rs.interfaceFontSize = value;
-                                   V4rs.saveInterfaceFontSize(value);
+                                   Fv4rs.interfaceFontSize = value;
+                                   Fv4rs.saveInterfaceFontSize(value);
                                 });
                               }, 
                   onWeightChanged: (value) async {
                                 setState(() {
-                                   V4rs.interfaceFontWeight = value;
-                                   V4rs.saveInterfaceFontWeight(value);
+                                   Fv4rs.interfaceFontWeight = value;
+                                   Fv4rs.saveInterfaceFontWeight(value);
                                 });
                               },
                   onItalicsChanged: (value) async {
                                 setState(() {
-                                   V4rs.interfaceFontItalics= value;
-                                   V4rs.saveInterfaceFontItalics(value);
+                                   Fv4rs.interfaceFontItalics= value;
+                                   Fv4rs.saveInterfaceFontItalics(value);
                                 });
                               },
                   onFontChanged: (value) async {
                                 setState(() {
-                                   V4rs.interfaceFont = value;
-                                   V4rs.saveInterfaceFont(value);
+                                   Fv4rs.interfaceFont = value;
+                                   Fv4rs.saveInterfaceFont(value);
                                 });
                               },
                   tts: widget.synth,
@@ -3432,6 +3382,7 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
                 //
                 //special gestures
                 //
+
                 ExpansionTile(
                   title: Text('Special Gestures:', style: Sv4rs.settingslabelStyle,),
                   collapsedBackgroundColor: Cv4rs.themeColor4,
@@ -3520,40 +3471,13 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
                     ]
                 ),
 
-
-
                 SizedBox(height: 25,),
 
                 //open welcome screen
                 Divider(),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Expanded(
-                      child: Container(
-                        color: Cv4rs.themeColor4,
-                        child: TextButton(
-                          style: TextButton.styleFrom(
-                            alignment: Alignment.centerLeft
-                          ),
-                          child: Text('Open welcome screen', style: Sv4rs.settingslabelStyle),
-                          onPressed: ()  {
-                             if (Sv4rs.speakInterfaceButtonsOnSelect) {
-                                      V4rs.speakOnSelect('open welcome screen', V4rs.selectedLanguage.value, widget.synth);
-                                    }
-                            setState(() {
-                              V4rs.doOnboarding.value = true;
-                              V4rs.setOnboardingCompleteStatus(true);
-                            });
-                          }, 
-                         ),
-                      ),
-                    ),
-                  ]
-                ),   
+                OpenWelcomeScreen(synth: widget.synth),
 
                 SizedBox(height: 250,),
-
               ]
             )
           ),
@@ -3567,6 +3491,7 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
   }
   );
   }
+  
   String _cleanVoiceLabel(Map voice) {
     final name = voice['name'] ?? 'Unknown';
     final locale = voice['locale'] ?? '';

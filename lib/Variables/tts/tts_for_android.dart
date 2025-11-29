@@ -24,27 +24,22 @@ class TTSAndroid implements TTSInterface {
 
     _tts.setStartHandler(() {
       notifyStart();
-      print("Android: Speech started");
     });
 
     _tts.setCompletionHandler(() {
       notifyDone();
-      print("Android: Speech completed");
     });
 
     _tts.setCancelHandler(() {
       notifyDone();
-      print("Android: Speech cancelled");
     });
 
     _tts.setPauseHandler(() {
       isSpeaking.value = false;
-      print("Android: Speech paused");
     });
 
     _tts.setContinueHandler(() {
       isSpeaking.value = true;
-      print("Android: Speech resumed");
     });
   }
 
@@ -66,7 +61,6 @@ class TTSAndroid implements TTSInterface {
     try {
       await _tts.speak(text);
     } catch (e) {
-      print("Error speaking on Android: $e");
       notifyDone();
     }
   }
@@ -77,7 +71,6 @@ class TTSAndroid implements TTSInterface {
       await _tts.stop();
       notifyDone();
     } catch (e) {
-      print("Error stopping TTS on Android: $e");
       notifyDone();
     }
   }
@@ -87,14 +80,13 @@ class TTSAndroid implements TTSInterface {
     try {
       await _tts.pause();
     } catch (e) {
-      print("Pause not supported on this Android version: $e");
+      stop();
     }
   }
 
   @override
   Future<void> resume() async {
-    // flutter_tts does not support proper resume on Android
-    print("Resume not supported on Android; must re-speak text");
+    // flutter_tts does not support resume on Android
   }
 
   @override

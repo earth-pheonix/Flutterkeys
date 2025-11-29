@@ -1,10 +1,59 @@
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:flutterkeysaac/Variables/color_variables.dart';
-import 'package:flutterkeysaac/Variables/fonts.dart';
+import 'package:flutterkeysaac/Variables/colors/color_variables.dart';
+import 'package:flutterkeysaac/Variables/fonts/font_options.dart';
 import 'package:flutter/material.dart';
 
 
 class Fv4rs {
+
+//
+//interface font settings 
+//
+  static TextStyle get interfacelabelStyle =>  TextStyle(color: interfaceFontColor, fontSize: 16, fontFamily: '');
+
+  //font family
+  static String interfaceFont = 'Default';
+  static final String _interfaceFont = "interfaceFont";
+
+   static Future<void> saveInterfaceFont (String interfaceFont) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(_interfaceFont, interfaceFont);
+  } 
+
+  //interfaceFontSize
+  static double interfaceFontSize = 16;
+  static final String _interfaceFontSize = "interfaceFontSize";
+
+   static Future<void> saveInterfaceFontSize (double interfaceFontSize) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setDouble(_interfaceFontSize, interfaceFontSize);
+  } 
+  //interfaceFontWeight
+  static int interfaceFontWeight = 400;
+  static final String _interfaceFontWeight = "interfaceFontweight";
+
+   static Future<void> saveInterfaceFontWeight (int interfaceFontWeight) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setInt(_interfaceFontWeight, interfaceFontWeight);
+  } 
+
+  //interfaceFontItalics
+  static bool interfaceFontItalics = false;
+  static final String _interfaceFontItalics = "interfaceFontItalics";
+
+   static Future<void> saveInterfaceFontItalics (bool interfaceFontItalics) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool(_interfaceFontItalics, interfaceFontItalics);
+  } 
+
+   //interfaceFontColor
+  static Color interfaceFontColor = Cv4rs.themeColor1;
+  static final String _interfaceFontColor = "interfaceFontColor";
+
+   static Future<void> saveInterfaceFontColor (Color interfaceFontColor) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setInt(_interfaceFontColor, interfaceFontColor.toARGB32());
+  } 
 
  //
  //EXPAND PAGE FONT SETTINGS
@@ -502,6 +551,12 @@ class Fv4rs {
   //load values from shared prefs
   static Future<void> loadSavedFontValues() async {
     final prefs = await SharedPreferences.getInstance();
+
+    interfaceFont = prefs.getString(_interfaceFont) ?? 'Default';
+    interfaceFontSize = prefs.getDouble(_interfaceFontSize) ?? interfaceFontSize;
+    interfaceFontWeight = prefs.getInt(_interfaceFontWeight) ?? interfaceFontWeight;
+    interfaceFontItalics = prefs.getBool(_interfaceFontItalics) ?? interfaceFontItalics;
+    interfaceFontColor = Color(prefs.getInt(_interfaceFontColor) ?? 0xFF000000);
 
     expandedFont = prefs.getString(_expandedFont) ?? 'Default';
     expandedFontSize = prefs.getDouble(_expandedFontSize) ?? expandedFontSize;
