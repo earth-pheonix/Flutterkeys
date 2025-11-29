@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutterkeysaac/Variables/ui_shortcuts.dart';
+import 'package:flutterkeysaac/Variables/assorted_ui/ui_shortcuts.dart';
 import 'package:flutterkeysaac/Variables/variables.dart';
 import 'package:flutterkeysaac/Variables/colors/color_variables.dart';
 import 'package:flutter/services.dart';

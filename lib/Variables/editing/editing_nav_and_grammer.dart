@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutterkeysaac/Models/json_model_grammer.dart';
-import 'package:flutterkeysaac/Variables/ui_shortcuts.dart';
+import 'package:flutterkeysaac/Variables/assorted_ui/ui_shortcuts.dart';
 import 'package:flutterkeysaac/Variables/editing/editor_variables.dart';
-import 'package:flutterkeysaac/Variables/boardset_settings_variables.dart';
+import 'package:flutterkeysaac/Variables/settings/boardset_settings_variables.dart';
 import 'package:flutterkeysaac/Variables/settings/settings_variables.dart';
 import 'package:flutterkeysaac/Variables/Grammer_variables.dart';
 import 'package:flutterkeysaac/Variables/colors/color_variables.dart';

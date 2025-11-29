@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutterkeysaac/Variables/boardset_settings_variables.dart';
+import 'package:flutterkeysaac/Variables/settings/boardset_settings_variables.dart';
 import 'package:flutterkeysaac/Variables/editing/editing_board_buttons.dart';
 import 'package:flutterkeysaac/Variables/editing/editing_boards_and.dart';
 import 'package:flutterkeysaac/Variables/editing/editing_nav_and_grammer.dart';
@@ -10,7 +10,7 @@ import 'package:flutterkeysaac/Variables/tts/tts_interface.dart';
 import 'package:flutterkeysaac/Models/json_model_nav_and_root.dart';
 import 'package:flutterkeysaac/Models/json_model_boards.dart';
 import 'package:flutterkeysaac/Models/json_model_grammer.dart';
-import 'package:flutterkeysaac/Variables/ui_shortcuts.dart';
+import 'package:flutterkeysaac/Variables/assorted_ui/ui_shortcuts.dart';
 import 'package:flutterkeysaac/Variables/editing/save_indicator.dart';
 
 

@@ -4,7 +4,7 @@ import 'package:flutterkeysaac/Variables/tts/tts_interface.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutterkeysaac/Variables/settings/settings_variables.dart';
 import 'package:flutterkeysaac/Variables/search_variables.dart';
-import 'package:flutterkeysaac/Variables/boardset_settings_variables.dart';
+import 'package:flutterkeysaac/Variables/settings/boardset_settings_variables.dart';
 import 'package:flutterkeysaac/Variables/fonts/font_variables.dart';
 import 'package:flutterkeysaac/Variables/export_variables.dart';
 import 'package:path/path.dart';
