@@ -123,10 +123,10 @@ class Sv4rs {
 
   // Test phrases
   static const testPhrases = {
-    'English': 'Hello, this is a test.',
-    'Chinese': '你好，这是一个测试。',
-    'Spanish': 'Hola, esto es una prueba.',
-    'French': 'Bonjour, ceci est un test.',
+    'English': 'Hello, this is a test phrase.',
+    'Chinese': '你好，这是一句测试短语。',
+    'Spanish': 'Hola, esta es una frase de prueba.',
+    'French': 'Bonjour, ceci est une phrase de test.',
     // add more here
   };
 

@@ -1,10 +1,10 @@
-//Start of READ_ME.txt 
+//Start of README.txt
 //
 //
 
------
+---
 DO NOT seperate images from this file. 
------
+---
 
 //
 // Symbol Attributions: 
@@ -212,4 +212,4 @@ DO NOT seperate images from this file.
 
 //
 //
-//End of READ_ME.txt
+//End of README.txt

@@ -1,4 +1,4 @@
-//Start of READ_ME.txt 
+//Start of README.txt 
 //
 //
 
@@ -20,5 +20,5 @@ DO NOT seperate MP3's from this file.
 
 //
 //
-//End of READ_ME.txt
+//End of README.txt
 
