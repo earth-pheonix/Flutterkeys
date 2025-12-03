@@ -1,8 +1,10 @@
 ---
+
 This code is Licensed under GPL 3.0
+
 ---
 
-### Welcome to Flutterkeys! 
+# Welcome to Flutterkeys! 
 
 This is an AAC [augmentive alternative communication] app that was created by a nonspeaking AAC user named Pheonix.
 
@@ -14,6 +16,6 @@ Pheonix would like to partner with a nonprofit when the app is ready for beta te
 
 To contact Pheonix, email them at: [Pheonix@michaeljohnclark.com] 
 
-# Disclaimer: 
+### Disclaimer: 
 
 I (Pheonix) have entireley learned to code working on Flutterkeys. I started this project (and therefore coding) less than 2 years ago (it is currently December 2025). I started in Swift UI, I learned the absolute bare minimum in playgrounds before starting on Flutterkeys. I moved to Flutter several months ago, and did no "how to use flutter" prep. I have learned Flutter ONLY through this project. My learning curve is visible, and while I have built this entire code base (and I am very proud of myself for that!) I don't know much of the technical language behind what I have done, and don't know how to do anything that isn't in this project. I also do not consider myself a computer person, and don't understand GitHub very well. 
