@@ -4,41 +4,65 @@ Flutterkeys is licensed under GPL 3.0
 
 ---
 
+## SUMMARY:
 
-## PLAIN TEXT EXPLINATION: 
+**Can do:** 
+- use however you want, even commercially (to make money)
+
+**Cannot do:**
+- patent
+- add restrictions *(tell people they cannot do things)*
+- block modification *(stop people from being able to change it)*
+- create a new version without saying it is a different version 
+
+**Must do:**
+- license your project under GLP 3.0 *(give the same rules)*
+- include a copy of the license 
+- share the code in a place thats easy to find 
+
+---
+
+## FULL PLAIN TEXT EXPLINATION: 
 
  GPL 3.0 is a copyleft license.
  A copyleft license is a license that 
  protects peoples ability to freely use, change, and share a work under that license. 
  The code that creates Flutterkeys is under the GPL 3.0 license. 
- This means that you can use this code for any purpose. 
- You can copy it, modify it, make money from it, or do whatever you want to do! 
+ This means that you can use this code for **any purpose**. 
+
+ Any purpose **includes:**
+ - copying it
+ - modifying it
+ - making money from it
+ - or whatever else you want to do.
  
- But if you share something that uses any amount of this code in a project, 
- you have to share all your code in that project under the GPL 3.0 license. 
- That means if you use any code from FlutterKeys, 
- you have to give people the same opportunity to use your code. 
- You also have to include a copy of the GPL 3.0 license with it 
- so people can eaily find the terms your project is under. 
- You also have to share the code in a place thats easy for people to get to. 
+ **But** if you share something that uses any amount of this code in a project, 
+ your code in **that project has to be shared under GPL 3.0** as well.
+ That means if you use any code from Flutterkeys, 
+ you have to give people the *same opportunity to use your code.* 
+
+ You also have to **include a copy of the GPL 3.0** license with it 
+ so people can easily find the terms your project is under. 
+ You also have to **share the code** in a place thats **easy for people find**. 
  
- Additionally, if you modify, or make a new version of the FlutterKeys code, 
- you have to say that it is a changed version of FlutterKeys. 
- This helps people know that this version of FlutterKeys, 
+ Additionally, if you modify, or make a new version of the Flutterkeys code, 
+ you have to **say that it is a changed version** of Flutterkeys. 
+ This helps people know that this version of Flutterkeys, 
  may not behave the same way, or have the same features, 
  as your version of the code. 
  
- There is also no warranty on FlutterKeys code, 
+ There is also **no warranty**, 
  this means that if something breaks or goes wrong, 
  no one is legally responsible 
- and there is no promise that contributors to FlutterKeys will fix it. 
+ and there is no promise that contributors to Flutterkeys will fix it. 
  
- You cannot patent GPL code, 
- or use software in a way that blocks people from modifying it, 
- and you cannot add restrictions that are not in this license. 
+ You **cannot patent** GPL code, 
+ or **use software in a way that blocks people from modifying** it, 
+ and you **cannot add restrictions** that are not in this license. 
 
+---
 
-## OFFICIAL LICENSE: 
+# OFFICIAL LICENSE: 
 
                      GNU GENERAL PUBLIC LICENSE
                        Version 3, 29 June 2007

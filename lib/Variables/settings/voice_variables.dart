@@ -661,7 +661,7 @@ class Vv4rs{
   }
 
   static Future<List<ManifestModel>> fetchVoiceManifest() async {
-    const url = "https://raw.githubusercontent.com/earth-pheonix/FlutterKeys/main/assets/voices/manifest.json";
+    const url = "https://raw.githubusercontent.com/earth-pheonix/Flutterkeys/main/assets/voices/manifest.json";
 
     try {
       // Try online first

@@ -858,8 +858,3 @@ static Future<File> resolveImageFile(String relativePath) async {
   }
 
 }
-
-extension SpeakFuncs on V4rs {
-  
-
-}
