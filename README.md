@@ -15,7 +15,7 @@ The goal of this project is to provide a hybrid of symbol and typing based AAC. 
 
 ## How will FlutterKeys accomplish these goals?
 
-**Symbol and Typing Hybrid:**
+### Symbol + Typing Hybrid:
 - Symbol supported boardsets & system keyboard accsess.
 - Keygaurd compatable with the iOS system keyboard (QWERTY).
 - Message window is a regular text feild.
@@ -26,7 +26,8 @@ The goal of this project is to provide a hybrid of symbol and typing based AAC. 
 - Keyboard does not cover the grammer, message, or navigation rows & their functions remain accssessible.
 - Navigation buttons automatically hide the keyboard. 
 
-**Robust:**
+
+### Robust:
 - Planned pre built vocabulary of over 4,000 words.
 - Full array of features.
     - speak on select, buttons that override speak on select settings, 
@@ -35,7 +36,8 @@ The goal of this project is to provide a hybrid of symbol and typing based AAC. 
     - search button,
     - and more!
 
-**Customizable:**
+
+### Customizable:
 - App color scheme
 - Fonts
 - Buttons (color, label, message, symbol, boarder, border color, font, speak on select, ect)
@@ -45,7 +47,8 @@ The goal of this project is to provide a hybrid of symbol and typing based AAC. 
     - voices are limited by what is on the device, and what the app is allowed to use
     - prebuild boardsets + grammer buttons are english only (But- I would accsept & appreciate help in changing that)
 
-**Accsess and Openess:**
+
+### Accsess and Openess:
 - 100% free
 - Open Source voice options (*because companies shouldn't get to own our voices*)
 - Import and export voices (must be in compatible format)
@@ -60,8 +63,12 @@ The goal of this project is to provide a hybrid of symbol and typing based AAC. 
     - per language voice setings
 
 
+---
+
 ## Get in touch: 
 
 Pheonix regularly shares progress in the Flutterkeys Discord Server: [https://discord.gg/MxGFgqsSQS]
 
 To contact or collaborate with Pheonix, email them at: [Pheonix@michaeljohnclark.com] 
+
+---
