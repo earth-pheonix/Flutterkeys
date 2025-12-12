@@ -4,12 +4,23 @@ import 'package:flutterkeysaac/Variables/variables.dart';
 import 'package:flutterkeysaac/Variables/colors/color_variables.dart';
 import 'package:flutter/services.dart';
 import 'package:flutterkeysaac/Variables/fonts/font_variables.dart';
-import 'package:flutterkeysaac/Variables/tts/tts_interface.dart';
-import 'package:flutterkeysaac/Variables/tts/tts_factory.dart';
+import 'package:flutterkeysaac/Variables/system_tts/tts_interface.dart';
+import 'package:flutterkeysaac/Variables/system_tts/tts_factory.dart';
 import 'package:flutterkeysaac/Variables/settings/settings_variables.dart';
+import 'package:audioplayers/audioplayers.dart';
+import 'package:sherpa_onnx/sherpa_onnx.dart' as sherpa_onnx;
 
 class ExpandPage extends StatefulWidget {
-  const ExpandPage({super.key});
+  final sherpa_onnx.OfflineTts? speakSelectSherpaOnnxSynth;
+  final Future<void> Function() initForSS;
+  final AudioPlayer playerForSS;
+
+  const ExpandPage({
+    super.key,
+    required this.speakSelectSherpaOnnxSynth,
+    required this.initForSS,
+    required this.playerForSS,
+  });
 
   @override
   State<ExpandPage> createState() => _ExpandPage();
@@ -112,7 +123,14 @@ class _ExpandPage extends State<ExpandPage> with WidgetsBindingObserver {
                                 imagePath: 'assets/interface_icons/interface_icons/iClear.png',
                                 onPressed: () {
                                    if (Sv4rs.speakInterfaceButtonsOnSelect) {
-                                    V4rs.speakOnSelect('clear', V4rs.selectedLanguage.value, synth!);
+                                    V4rs.speakOnSelect(
+                                      'clear', 
+                                      V4rs.selectedLanguage.value, 
+                                      synth!,
+                                      widget.speakSelectSherpaOnnxSynth,
+                                      widget.initForSS,
+                                      widget.playerForSS,
+                                      );
                                     }
                                   _controller.clear();
                                 },
@@ -139,7 +157,13 @@ class _ExpandPage extends State<ExpandPage> with WidgetsBindingObserver {
                             imagePath: 'assets/interface_icons/interface_icons/iBack.png',
                             onPressed: () {
                               if (Sv4rs.speakInterfaceButtonsOnSelect) {
-                                    V4rs.speakOnSelect('back', V4rs.selectedLanguage.value, synth!);
+                                    V4rs.speakOnSelect(
+                                      'back', V4rs.selectedLanguage.value, 
+                                      synth!,
+                                      widget.speakSelectSherpaOnnxSynth,
+                                      widget.initForSS,
+                                      widget.playerForSS,
+                                      );
                                     }
                               V4rs.showExpandPage.value = false;
                             },
@@ -162,7 +186,14 @@ class _ExpandPage extends State<ExpandPage> with WidgetsBindingObserver {
                           label: 'Font Size: ${Fv4rs.expandedFontSize.round()}',
                           onChangeEnd: (value) {
                              if (Sv4rs.speakInterfaceButtonsOnSelect) {
-                              V4rs.speakOnSelect('font size ${Fv4rs.expandedFontSize.round()}', V4rs.selectedLanguage.value, synth!);
+                              V4rs.speakOnSelect(
+                                'font size ${Fv4rs.expandedFontSize.round()}', 
+                                V4rs.selectedLanguage.value, 
+                                synth!,
+                                widget.speakSelectSherpaOnnxSynth,
+                                widget.initForSS,
+                                widget.playerForSS,
+                              );
                             }
                           },
                           onChanged: (value)  {
@@ -183,7 +214,14 @@ class _ExpandPage extends State<ExpandPage> with WidgetsBindingObserver {
                             imagePath: 'assets/interface_icons/interface_icons/iCopy.png',
                             onPressed: () {
                               if (Sv4rs.speakInterfaceButtonsOnSelect) {
-                                    V4rs.speakOnSelect('copy', V4rs.selectedLanguage.value, synth!);
+                                    V4rs.speakOnSelect(
+                                      'copy', 
+                                      V4rs.selectedLanguage.value, 
+                                      synth!,
+                                      widget.speakSelectSherpaOnnxSynth,
+                                      widget.initForSS,
+                                      widget.playerForSS,
+                                      );
                                     }
                               Clipboard.setData(ClipboardData(text: _controller.text));
                               ScaffoldMessenger.of(context).showSnackBar(
@@ -207,7 +245,14 @@ class _ExpandPage extends State<ExpandPage> with WidgetsBindingObserver {
                             onPressed: () {
                               setState(() {
                                 if (Sv4rs.speakInterfaceButtonsOnSelect) {
-                                    V4rs.speakOnSelect('flip', V4rs.selectedLanguage.value, synth!);
+                                    V4rs.speakOnSelect(
+                                      'flip', 
+                                      V4rs.selectedLanguage.value, 
+                                      synth!,
+                                      widget.speakSelectSherpaOnnxSynth,
+                                      widget.initForSS,
+                                      widget.playerForSS,
+                                      );
                                     }
                                 _isFlipped = !_isFlipped;
                               });

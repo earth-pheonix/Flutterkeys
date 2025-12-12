@@ -343,12 +343,12 @@ class Bv4rs {
 
     navRowSymbolInvert = prefs.getBool(_navRowSymbolInvert) ?? false;
     navRowSymbolColorOverlay = Color(prefs.getInt(_navRowSymbolColorOverlay) ?? 0x00000000);
-    navRowSymbolSaturation = prefs.getDouble(_navRowSymbolSaturation) ?? 0.5;
-    navRowSymbolContrast = prefs.getDouble(_navRowSymbolContrast) ?? 0.5;
+    navRowSymbolSaturation = prefs.getDouble(_navRowSymbolSaturation) ?? 1.0;
+    navRowSymbolContrast = prefs.getDouble(_navRowSymbolContrast) ?? 1.0;
 
     navButtonFormat = prefs.getInt(_navButtonFormat) ?? 1;
     showCenterButtons = prefs.getInt(_showCenterButtons) ?? 1;
-    centerButtonFormat = prefs.getInt(_centerButtonFormat) ?? 1;
+    centerButtonFormat = prefs.getInt(_centerButtonFormat) ?? 3;
 
     buttonFormat = prefs.getInt(_buttonFormat) ?? 1;
     subFolderFormat = prefs.getInt(_subFolderFormat) ?? 1;
@@ -359,17 +359,16 @@ class Bv4rs {
 
     subFolderSymbolInvert = prefs.getBool(_subFolderSymbolInvert) ?? false;
     subFolderSymbolColorOverlay = Color(prefs.getInt(_subFolderSymbolColorOverlay) ?? 0x00000000);
-    subFolderSymbolSaturation = prefs.getDouble(_subFolderSymbolSaturation) ?? 0.5;
-    subFolderSymbolContrast = prefs.getDouble(_subFolderSymbolContrast) ?? 0.5;
+    subFolderSymbolSaturation = prefs.getDouble(_subFolderSymbolSaturation) ?? 1.0;
+    subFolderSymbolContrast = prefs.getDouble(_subFolderSymbolContrast) ?? 1.0;
     buttonSymbolInvert = prefs.getBool(_buttonSymbolInvert) ?? false;
     buttonSymbolColorOverlay = Color(prefs.getInt(_buttonSymbolColorOverlay) ?? 0x00000000);
-    buttonSymbolSaturation = prefs.getDouble(_buttonSymbolSaturation) ?? 0.5;
-    buttonSymbolContrast = prefs.getDouble(_buttonSymbolContrast) ?? 0.5;
-
+    buttonSymbolSaturation = prefs.getDouble(_buttonSymbolSaturation) ?? 1.0;
+    buttonSymbolContrast = prefs.getDouble(_buttonSymbolContrast) ?? 1.0;
     grammerRowSymbolInvert = prefs.getBool(_grammerRowSymbolInvert) ?? false;
     grammerRowSymbolColorOverlay = Color(prefs.getInt(_grammerRowSymbolColorOverlay) ?? 0x00000000);
-    grammerRowSymbolSaturation = prefs.getDouble(_grammerRowSymbolSaturation) ?? 0.5;
-    grammerRowSymbolContrast = prefs.getDouble(_grammerRowSymbolContrast) ?? 0.5;
+    grammerRowSymbolSaturation = prefs.getDouble(_grammerRowSymbolSaturation) ?? 1.0;
+    grammerRowSymbolContrast = prefs.getDouble(_grammerRowSymbolContrast) ?? 1.0;
 
     grammerRowFormat = prefs.getInt(_grammerRowFormat) ?? 1;
     grammerRowSpeakOnSelect = prefs.getInt(_grammerRowSpeakOnSelect) ?? 1;

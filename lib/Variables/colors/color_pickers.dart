@@ -3,8 +3,10 @@ import 'package:flutterkeysaac/Variables/colors/color_variables.dart';
 import 'package:flutterkeysaac/Variables/settings/settings_variables.dart';
 import 'package:flutterkeysaac/Variables/variables.dart';
 import 'package:flutterkeysaac/Variables/assorted_ui/ui_shortcuts.dart';
-import 'package:flutterkeysaac/Variables/tts/tts_interface.dart';
+import 'package:flutterkeysaac/Variables/system_tts/tts_interface.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
+import 'package:audioplayers/audioplayers.dart';
+import 'package:sherpa_onnx/sherpa_onnx.dart' as sherpa_onnx;
 
 
 class ColorPickerWithHex extends StatefulWidget {
@@ -243,6 +245,9 @@ class SymbolColorCustomizer extends StatefulWidget {
   final ValueChanged<double> onSaturationChanged;
   final ValueChanged<double> onContrastChanged;
   final TTSInterface tts;
+  final sherpa_onnx.OfflineTts? speakSelectSherpaOnnxSynth;
+  final Future<void> Function() initForSS;
+  final AudioPlayer playerForSS;
 
   const SymbolColorCustomizer({
     super.key,
@@ -255,6 +260,9 @@ class SymbolColorCustomizer extends StatefulWidget {
     required this.onOverlayChanged,
     required this.onSaturationChanged,
     required this.tts,
+    required this.speakSelectSherpaOnnxSynth,
+    required this.initForSS,
+    required this.playerForSS,
   });
 
   @override
@@ -327,7 +335,14 @@ class _SymbolColorCustomizer extends State<SymbolColorCustomizer> {
       childrenPadding: EdgeInsets.symmetric(horizontal: 20),
       onExpansionChanged: (bool expanded) {  
         if (Sv4rs.speakInterfaceButtonsOnSelect) {
-            V4rs.speakOnSelect('symbol colors', V4rs.selectedLanguage.value, _tts);
+            V4rs.speakOnSelect(
+              'symbol colors', 
+              V4rs.selectedLanguage.value, 
+              _tts,
+              widget.speakSelectSherpaOnnxSynth,
+              widget.initForSS,
+              widget.playerForSS,
+            );
           }},
       children: [
 

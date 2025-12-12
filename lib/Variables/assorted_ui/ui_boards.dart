@@ -6,12 +6,13 @@ import 'package:flutterkeysaac/Variables/settings/boardset_settings_variables.da
 import 'package:flutterkeysaac/Variables/variables.dart';
 import 'package:flutterkeysaac/Variables/fonts/font_options.dart';
 import 'package:flutterkeysaac/Variables/fonts/font_variables.dart';
-import 'package:flutterkeysaac/Variables/tts/tts_interface.dart';
+import 'package:flutterkeysaac/Variables/system_tts/tts_interface.dart';
 import 'package:flutterkeysaac/Models/json_model_boards.dart';
 import 'package:flutterkeysaac/Models/json_model_nav_and_root.dart';
 import 'package:flutterkeysaac/Models/json_model_grammer.dart';
 import 'package:flutterkeysaac/Variables/assorted_ui/ui_shortcuts.dart';
 import 'package:audioplayers/audioplayers.dart';
+import 'package:sherpa_onnx/sherpa_onnx.dart' as sherpa_onnx;
 import 'dart:async';
 import 'dart:io';
 
@@ -25,6 +26,9 @@ class BuildPocketFolder extends StatefulWidget{
     final void Function(BoardObjects board) openBoardWithReturn;
     final List<BoardObjects> boards;
     final BoardObjects? Function(String uuid, List<BoardObjects> boards) findBoardById;
+    final sherpa_onnx.OfflineTts? speakSelectSherpaOnnxSynth;
+    final Future<void> Function() initForSS;
+    final AudioPlayer playerForSS;
 
     const BuildPocketFolder({
       super.key, 
@@ -33,7 +37,10 @@ class BuildPocketFolder extends StatefulWidget{
       required this.openBoard, 
       required this.openBoardWithReturn, 
       required this.boards,
-      required this.findBoardById
+      required this.findBoardById,
+      required this.speakSelectSherpaOnnxSynth,
+      required this.initForSS,
+      required this.playerForSS,
       });
     
     @override
@@ -133,13 +140,27 @@ class _BuildPocketFolderState extends State<BuildPocketFolder> {
             case 2:
               V4rs.changedMWfromButton = true;
               V4rs.message.value = V4rs.message.value + (obj.message ?? '');
-              await V4rs.speakOnSelect(obj.label ?? '', V4rs.selectedLanguage.value, synth);
+              await V4rs.speakOnSelect(
+                obj.label ?? '', 
+                V4rs.selectedLanguage.value, 
+                synth,
+                widget.speakSelectSherpaOnnxSynth,
+                widget.initForSS,
+                widget.playerForSS,
+              );
               V4rs.changedMWfromButton = false;
               break;
             case 3:
               V4rs.changedMWfromButton = true;
               V4rs.message.value = V4rs.message.value + (obj.message ?? '');
-              await V4rs.speakOnSelect(obj.message ?? '', V4rs.selectedLanguage.value, synth);
+              await V4rs.speakOnSelect(
+                obj.message ?? '', 
+                V4rs.selectedLanguage.value, 
+                synth,
+                widget.speakSelectSherpaOnnxSynth,
+                widget.initForSS,
+                widget.playerForSS,
+              );
               V4rs.changedMWfromButton = false;
               break;
             }
@@ -172,7 +193,14 @@ class _BuildPocketFolderState extends State<BuildPocketFolder> {
                     openBoard(board);
                   }
                 }
-              await V4rs.speakOnSelect(obj.label ?? '', V4rs.selectedLanguage.value, synth);
+              await V4rs.speakOnSelect(
+                obj.label ?? '', 
+                V4rs.selectedLanguage.value, 
+                synth, 
+                widget.speakSelectSherpaOnnxSynth,
+                widget.initForSS,
+                widget.playerForSS,
+              );
               break;
             case 3:
               final board = findBoardById(linkTo, boards);
@@ -183,7 +211,14 @@ class _BuildPocketFolderState extends State<BuildPocketFolder> {
                     openBoard(board);
                   }
                 }
-              await V4rs.speakOnSelect(obj.message ?? '', V4rs.selectedLanguage.value, synth);
+              await V4rs.speakOnSelect(
+                obj.message ?? '', 
+                V4rs.selectedLanguage.value, 
+                synth,
+                widget.speakSelectSherpaOnnxSynth,
+                widget.initForSS,
+                widget.playerForSS,
+              );
               break;
             }
           }
@@ -380,10 +415,17 @@ class BuildTypingKey extends StatefulWidget{
     final BoardObjects obj;
     final TTSInterface synth;
 
+    final sherpa_onnx.OfflineTts? speakSelectSherpaOnnxSynth;
+    final Future<void> Function() initForSS;
+    final AudioPlayer playerForSS;
+
     const BuildTypingKey({
       super.key, 
       required this.obj, 
       required this.synth,
+      required this.speakSelectSherpaOnnxSynth,
+      required this.initForSS,
+      required this.playerForSS,
       });
     
     @override
@@ -477,13 +519,27 @@ class _BuildTypingKeyState extends State<BuildTypingKey> {
                   case 2:
                     V4rs.changedMWfromButton = true;
                     V4rs.message.value = V4rs.message.value.trim() + (obj.message ?? '');
-                    await V4rs.speakOnSelect(obj.label ?? '', V4rs.selectedLanguage.value, synth);
+                    await V4rs.speakOnSelect(
+                      obj.label ?? '', 
+                      V4rs.selectedLanguage.value, 
+                      synth,
+                      widget.speakSelectSherpaOnnxSynth,
+                      widget.initForSS,
+                      widget.playerForSS,
+                    );
                     V4rs.changedMWfromButton = false;
                     break;
                   case 3:
                     V4rs.changedMWfromButton = true;
                     V4rs.message.value = V4rs.message.value.trim() + (obj.message ?? '');
-                    await V4rs.speakOnSelect(obj.message ?? '', V4rs.selectedLanguage.value, synth);
+                    await V4rs.speakOnSelect(
+                      obj.message ?? '', 
+                      V4rs.selectedLanguage.value, 
+                      synth,
+                      widget.speakSelectSherpaOnnxSynth,
+                      widget.initForSS,
+                      widget.playerForSS,
+                    );
                     V4rs.changedMWfromButton = false;
                     break;
                   }
@@ -505,13 +561,27 @@ class _BuildTypingKeyState extends State<BuildTypingKey> {
                   case 2:
                     V4rs.changedMWfromButton = true;
                     V4rs.message.value = V4rs.message.value + (obj.message ?? '');
-                    await V4rs.speakOnSelect(obj.label ?? '', V4rs.selectedLanguage.value, synth);
+                    await V4rs.speakOnSelect(
+                      obj.label ?? '', 
+                      V4rs.selectedLanguage.value, 
+                      synth,
+                      widget.speakSelectSherpaOnnxSynth,
+                      widget.initForSS,
+                      widget.playerForSS,
+                    );
                     V4rs.changedMWfromButton = false;
                     break;
                   case 3:
                     V4rs.changedMWfromButton = true;
                     V4rs.message.value = V4rs.message.value + (obj.message ?? '');
-                    await V4rs.speakOnSelect(obj.message ?? '', V4rs.selectedLanguage.value, synth);
+                    await V4rs.speakOnSelect(
+                      obj.message ?? '', 
+                      V4rs.selectedLanguage.value, 
+                      synth,
+                      widget.speakSelectSherpaOnnxSynth,
+                      widget.initForSS,
+                      widget.playerForSS,
+                    );
                     V4rs.changedMWfromButton = false;
                     break;
                   }
@@ -719,10 +789,18 @@ class BuildAudioTile extends StatefulWidget{
     final BoardObjects obj;
     final TTSInterface synth;
 
+  final sherpa_onnx.OfflineTts? speakSelectSherpaOnnxSynth;
+  final Future<void> Function() initForSS;
+  final AudioPlayer playerForSS;
+
     const BuildAudioTile({
       super.key, 
       required this.obj, 
       required this.synth,
+
+        required this.speakSelectSherpaOnnxSynth,
+        required this.initForSS,
+        required this.playerForSS,
       });
     
     @override
@@ -825,11 +903,24 @@ class _BuildAudioTileState extends State<BuildAudioTile> {
                     await LoadAudio.fromAudio(obj.audioClip);
                     break;
                   case 2:
-                    await V4rs.speakOnSelect(obj.label ?? '', V4rs.selectedLanguage.value, synth);
+                    await V4rs.speakOnSelect(
+                      obj.label ?? '', 
+                      V4rs.selectedLanguage.value, synth,
+                      widget.speakSelectSherpaOnnxSynth,
+                      widget.initForSS,
+                      widget.playerForSS,
+                    );
                     await LoadAudio.fromAudio(obj.audioClip);
                     break;
                   case 3:
-                    await V4rs.speakOnSelect(obj.message ?? '', V4rs.selectedLanguage.value, synth);
+                    await V4rs.speakOnSelect(
+                      obj.message ?? '', 
+                      V4rs.selectedLanguage.value, 
+                      synth,
+                      widget.speakSelectSherpaOnnxSynth,
+                      widget.initForSS,
+                      widget.playerForSS,
+                    );
                     await LoadAudio.fromAudio(obj.audioClip);
                     break;
                   }
@@ -851,13 +942,27 @@ class _BuildAudioTileState extends State<BuildAudioTile> {
                   case 2:
                     V4rs.changedMWfromButton = true;
                     V4rs.message.value = V4rs.message.value + (obj.message ?? '');
-                    await V4rs.speakOnSelect(obj.label ?? '', V4rs.selectedLanguage.value, synth);
+                    await V4rs.speakOnSelect(
+                      obj.label ?? '', 
+                      V4rs.selectedLanguage.value, 
+                      synth,
+                      widget.speakSelectSherpaOnnxSynth,
+                      widget.initForSS,
+                      widget.playerForSS,
+                    );
                     V4rs.changedMWfromButton = false;
                     break;
                   case 3:
                     V4rs.changedMWfromButton = true;
                     V4rs.message.value = V4rs.message.value + (obj.message ?? '');
-                    await V4rs.speakOnSelect(obj.message ?? '', V4rs.selectedLanguage.value, synth);
+                    await V4rs.speakOnSelect(
+                      obj.message ?? '', 
+                      V4rs.selectedLanguage.value, 
+                      synth,
+                      widget.speakSelectSherpaOnnxSynth,
+                      widget.initForSS,
+                      widget.playerForSS,
+                    );
                     V4rs.changedMWfromButton = false;
                     break;
                   }
@@ -1065,7 +1170,18 @@ class BuildButtonGrammer extends StatelessWidget{
     final BoardObjects obj;
     final TTSInterface synth;
 
-    const BuildButtonGrammer({super.key, required this.obj, required this.synth});
+  final sherpa_onnx.OfflineTts? speakSelectSherpaOnnxSynth;
+  final Future<void> Function() initForSS;
+  final AudioPlayer playerForSS;
+
+    const BuildButtonGrammer({
+      super.key, 
+      required this.obj, 
+      required this.synth,
+      required this.speakSelectSherpaOnnxSynth,
+      required this.initForSS,
+      required this.playerForSS,
+    });
 
      @override
     Widget build(BuildContext context) {
@@ -1174,14 +1290,28 @@ class BuildButtonGrammer extends StatelessWidget{
           case 2:
             V4rs.changedMWfromButton = true;
             Gv4rs.grammerFunctions(obj.function ?? '');
-            await V4rs.speakOnSelect(obj.label ?? '', V4rs.selectedLanguage.value, synth);
+            await V4rs.speakOnSelect(
+              obj.label ?? '', 
+              V4rs.selectedLanguage.value, 
+              synth,
+              speakSelectSherpaOnnxSynth,
+              initForSS,
+              playerForSS,
+            );
             V4rs.changedMWfromButton = false;
             V4rs.updateSearchPath(V4rs.searchPathUUIDS.value, obj.id);
             break;
           case 3:
             V4rs.changedMWfromButton = true;
             Gv4rs.grammerFunctions(obj.function ?? '');
-            await V4rs.speakOnSelect(Gv4rs.lastWord, V4rs.selectedLanguage.value, synth);
+            await V4rs.speakOnSelect(
+              Gv4rs.lastWord, 
+              V4rs.selectedLanguage.value, 
+              synth,
+              speakSelectSherpaOnnxSynth,
+              initForSS,
+              playerForSS,
+            );
             V4rs.changedMWfromButton = false;
             V4rs.updateSearchPath(V4rs.searchPathUUIDS.value, obj.id);
             break;
@@ -1263,13 +1393,27 @@ class BuildButtonGrammer extends StatelessWidget{
                       case 2:
                         V4rs.changedMWfromButton = true;
                         Gv4rs.grammerFunctions(obj.function ?? '');
-                        await V4rs.speakOnSelect(obj.label ?? '', V4rs.selectedLanguage.value, synth);
+                        V4rs.speakOnSelect(
+                          obj.label ?? '', 
+                          V4rs.selectedLanguage.value, 
+                          synth,
+                          speakSelectSherpaOnnxSynth,
+                          initForSS,
+                          playerForSS,
+                        );
                         V4rs.changedMWfromButton = false;
                         break;
                       case 3:
                         V4rs.changedMWfromButton = true;
                         Gv4rs.grammerFunctions(obj.function ?? '');
-                        await V4rs.speakOnSelect(Gv4rs.lastWord, V4rs.selectedLanguage.value, synth);
+                        await V4rs.speakOnSelect(
+                          Gv4rs.lastWord, 
+                          V4rs.selectedLanguage.value, 
+                          synth,
+                          speakSelectSherpaOnnxSynth,
+                          initForSS,
+                          playerForSS,
+                          );
                         V4rs.changedMWfromButton = false;
                         break;
                       }
@@ -1447,6 +1591,10 @@ class BuildFolder extends StatefulWidget{
     final List<BoardObjects> boards;
     final BoardObjects? Function(String uuid, List<BoardObjects> boards) findBoardById;
 
+  final sherpa_onnx.OfflineTts? speakSelectSherpaOnnxSynth;
+  final Future<void> Function() initForSS;
+  final AudioPlayer playerForSS;
+
     const BuildFolder({
       super.key, 
       required this.obj, 
@@ -1454,7 +1602,11 @@ class BuildFolder extends StatefulWidget{
       required this.openBoard, 
       required this.openBoardWithReturn, 
       required this.boards,
-      required this.findBoardById
+      required this.findBoardById,
+
+        required this.speakSelectSherpaOnnxSynth,
+        required this.initForSS,
+        required this.playerForSS,
       });
     
     @override
@@ -1564,7 +1716,14 @@ class _BuildFolderState extends State<BuildFolder> {
                     openBoard(board);
                   }
                 }
-                await V4rs.speakOnSelect(obj.label ?? '', V4rs.selectedLanguage.value, synth);
+                await V4rs.speakOnSelect(
+                  obj.label ?? '', 
+                  V4rs.selectedLanguage.value, 
+                  synth,
+                  widget.speakSelectSherpaOnnxSynth,
+                  widget.initForSS,
+                  widget.playerForSS,
+                );
                 break;
               case 3:
                 final board = findBoardById(linkTo, boards);
@@ -1575,7 +1734,14 @@ class _BuildFolderState extends State<BuildFolder> {
                     openBoard(board);
                   }
                 }
-                await V4rs.speakOnSelect(obj.message ?? '', V4rs.selectedLanguage.value, synth);
+                await V4rs.speakOnSelect(
+                  obj.message ?? '', 
+                  V4rs.selectedLanguage.value, 
+                  synth,
+                  widget.speakSelectSherpaOnnxSynth,
+                  widget.initForSS,
+                  widget.playerForSS,
+                );
                 break;
               }
             }
@@ -1595,13 +1761,27 @@ class _BuildFolderState extends State<BuildFolder> {
               case 2:
                 V4rs.changedMWfromButton = true;
                 V4rs.message.value = V4rs.message.value + (obj.message ?? '');
-                await V4rs.speakOnSelect(obj.label ?? '', V4rs.selectedLanguage.value, synth);
+                await V4rs.speakOnSelect(
+                  obj.label ?? '', 
+                  V4rs.selectedLanguage.value, 
+                  synth,
+                  widget.speakSelectSherpaOnnxSynth,
+                  widget.initForSS,
+                  widget.playerForSS,
+                );
                 V4rs.changedMWfromButton = false;
                 break;
               case 3:
                 V4rs.changedMWfromButton = true;
                 V4rs.message.value = V4rs.message.value + (obj.message ?? '');
-                await V4rs.speakOnSelect(obj.message ?? '', V4rs.selectedLanguage.value, synth);
+                await V4rs.speakOnSelect(
+                  obj.message ?? '', 
+                  V4rs.selectedLanguage.value, 
+                  synth,
+                  widget.speakSelectSherpaOnnxSynth,
+                  widget.initForSS,
+                  widget.playerForSS,
+                );
                 V4rs.changedMWfromButton = false;
                 break;
               }
@@ -1807,7 +1987,18 @@ class BuildButton extends StatelessWidget{
     final BoardObjects obj;
     final TTSInterface synth;
 
-    const BuildButton({super.key, required this.obj, required this.synth});
+      final sherpa_onnx.OfflineTts? speakSelectSherpaOnnxSynth;
+      final Future<void> Function() initForSS;
+      final AudioPlayer playerForSS;
+
+    const BuildButton({
+      super.key, 
+      required this.obj, 
+      required this.synth,
+        required this.speakSelectSherpaOnnxSynth,
+        required this.initForSS,
+        required this.playerForSS,
+    });
 
      @override
     Widget build(BuildContext context) {
@@ -1909,14 +2100,28 @@ class BuildButton extends StatelessWidget{
           case 2:
             V4rs.changedMWfromButton = true;
             V4rs.message.value = V4rs.message.value + (obj.message ?? '');
-            await V4rs.speakOnSelect(obj.label ?? '', V4rs.selectedLanguage.value, synth);
+            await V4rs.speakOnSelect(
+                  obj.label ?? '', 
+                  V4rs.selectedLanguage.value, 
+                  synth,
+                  speakSelectSherpaOnnxSynth,
+                  initForSS,
+                  playerForSS,
+                );
             V4rs.changedMWfromButton = false;
             V4rs.updateSearchPath(V4rs.searchPathUUIDS.value, obj.id);
             break;
           case 3:
             V4rs.changedMWfromButton = true;
             V4rs.message.value = V4rs.message.value + (obj.message ?? '');
-            await V4rs.speakOnSelect(obj.message ?? '', V4rs.selectedLanguage.value, synth);
+            await V4rs.speakOnSelect(
+                  obj.message ?? '', 
+                  V4rs.selectedLanguage.value, 
+                  synth,
+                  speakSelectSherpaOnnxSynth,
+                  initForSS,
+                  playerForSS,
+                );
             V4rs.changedMWfromButton = false;
             V4rs.updateSearchPath(V4rs.searchPathUUIDS.value, obj.id);
             break;
@@ -1987,6 +2192,10 @@ class BuildSubFolder extends StatelessWidget {
     final List<BoardObjects> boards;
     final BoardObjects? Function(String uuid, List<BoardObjects> boards) findBoardById;
 
+  final sherpa_onnx.OfflineTts? speakSelectSherpaOnnxSynth;
+  final Future<void> Function() initForSS;
+  final AudioPlayer playerForSS;
+
     const BuildSubFolder({
       super.key, 
       required this.obj, 
@@ -1995,7 +2204,11 @@ class BuildSubFolder extends StatelessWidget {
       required this.openBoard, 
       required this.openBoardWithReturn, 
       required this.boards,
-      required this.findBoardById
+      required this.findBoardById,
+
+        required this.speakSelectSherpaOnnxSynth,
+        required this.initForSS,
+        required this.playerForSS,
       });
 
     @override
@@ -2093,11 +2306,25 @@ class BuildSubFolder extends StatelessWidget {
             break;
           case 2:
             goBack();
-            await V4rs.speakOnSelect(obj.label ?? '', V4rs.selectedLanguage.value, synth);
+            await V4rs.speakOnSelect(
+                  obj.label ?? '', 
+                  V4rs.selectedLanguage.value, 
+                  synth,
+                  speakSelectSherpaOnnxSynth,
+                  initForSS,
+                  playerForSS,
+                );
             break;
           case 3:
             goBack();
-            await V4rs.speakOnSelect(obj.alternateLabel ?? '', V4rs.selectedLanguage.value, synth);
+            await V4rs.speakOnSelect(
+                obj.alternateLabel ?? '', 
+                V4rs.selectedLanguage.value, 
+                synth,
+                speakSelectSherpaOnnxSynth,
+                initForSS,
+                playerForSS,
+              );
             break;
           }
         },
@@ -2204,7 +2431,14 @@ class BuildSubFolder extends StatelessWidget {
                   }
               }
 
-              await V4rs.speakOnSelect(obj.label ?? '', V4rs.selectedLanguage.value, synth);
+              await V4rs.speakOnSelect(
+                  obj.label ?? '', 
+                  V4rs.selectedLanguage.value, 
+                  synth,
+                  speakSelectSherpaOnnxSynth,
+                  initForSS,
+                  playerForSS,
+                );
               V4rs.updateSearchPath(V4rs.searchPathUUIDS.value, obj.id);
               break;
             case 3:
@@ -2216,7 +2450,14 @@ class BuildSubFolder extends StatelessWidget {
                     openBoard(board);
                   }
               }
-              await V4rs.speakOnSelect(obj.alternateLabel ?? '', V4rs.selectedLanguage.value, synth);
+              await V4rs.speakOnSelect(
+                obj.alternateLabel ?? '', 
+                V4rs.selectedLanguage.value, 
+                synth,
+                speakSelectSherpaOnnxSynth,
+                initForSS,
+                playerForSS,
+              );
               V4rs.updateSearchPath(V4rs.searchPathUUIDS.value, obj.id);
               break;
             }},
@@ -2322,6 +2563,10 @@ class NavButtonStyle extends StatelessWidget {
   final int speakOS;
   final String alternateLabel;
 
+  final sherpa_onnx.OfflineTts? speakSelectSherpaOnnxSynth;
+  final Future<void> Function() initForSS;
+  final AudioPlayer playerForSS;
+
   final String note;
 
   TextStyle get labelStyle =>  
@@ -2375,6 +2620,9 @@ class NavButtonStyle extends StatelessWidget {
     this.matchSymbolContrast = true,
     this.matchSymbolSaturation = true,
     this.matchSymbolInvert = true,
+    required this.speakSelectSherpaOnnxSynth,
+    required this.initForSS,
+    required this.playerForSS,
   });
 
 
@@ -2417,7 +2665,14 @@ class NavButtonStyle extends StatelessWidget {
                 openBoard(board);
                 FocusScope.of(context).unfocus();
               }
-            V4rs.speakOnSelect(label, V4rs.selectedLanguage.value, tts);
+            V4rs.speakOnSelect(
+              label, 
+              V4rs.selectedLanguage.value, 
+              tts,
+              speakSelectSherpaOnnxSynth,
+              initForSS,
+              playerForSS,
+              );
             break;
           case 3:
             if (me != null){
@@ -2429,7 +2684,14 @@ class NavButtonStyle extends StatelessWidget {
                 openBoard(board);
                 FocusScope.of(context).unfocus();
               }
-            V4rs.speakOnSelect(alternateLabel, V4rs.selectedLanguage.value, tts);
+            V4rs.speakOnSelect(
+              alternateLabel, 
+              V4rs.selectedLanguage.value, 
+              tts,
+              speakSelectSherpaOnnxSynth,
+              initForSS,
+              playerForSS,
+              );
             break;
           }},
         style: ElevatedButton.styleFrom(
@@ -2853,6 +3115,9 @@ class StorageButtonStyle extends StatelessWidget {
 }
 
 class SpecialNavButtonStyle extends StatelessWidget {
+  final sherpa_onnx.OfflineTts? speakSelectSherpaOnnxSynth;
+  final Future<void> Function() initForSS;
+  final AudioPlayer playerForSS;
   final VoidCallback onPressed; 
   final String label;
   final String symbol;
@@ -2946,6 +3211,9 @@ class SpecialNavButtonStyle extends StatelessWidget {
     this.matchSymbolContrast = true,
     this.matchSymbolSaturation = true,
     this.matchSymbolInvert = true,
+    required this.speakSelectSherpaOnnxSynth,
+    required this.initForSS,
+    required this.playerForSS,
   });
 
   @override
@@ -2982,7 +3250,14 @@ class SpecialNavButtonStyle extends StatelessWidget {
             if (me != null){
               V4rs.updateSearchPath(V4rs.searchPathUUIDS.value, me!.linkToUUID ?? '');
             }
-            V4rs.speakOnSelect(label, V4rs.selectedLanguage.value, tts);
+            V4rs.speakOnSelect(
+              label, 
+              V4rs.selectedLanguage.value, 
+              tts,
+              speakSelectSherpaOnnxSynth,
+              initForSS,
+              playerForSS,
+            );
             break;
           case 3:
             //add navigation link to
@@ -2990,7 +3265,14 @@ class SpecialNavButtonStyle extends StatelessWidget {
             if (me != null){
               V4rs.updateSearchPath(V4rs.searchPathUUIDS.value, me!.linkToUUID ?? '');
             }
-            V4rs.speakOnSelect(alternateLabel, V4rs.selectedLanguage.value, tts);
+            V4rs.speakOnSelect(
+              alternateLabel, 
+              V4rs.selectedLanguage.value, 
+              tts,
+              speakSelectSherpaOnnxSynth,
+              initForSS,
+              playerForSS,
+            );
             break;
           }},
         style: ElevatedButton.styleFrom(
@@ -3152,8 +3434,18 @@ class BuildGrammerButton extends StatelessWidget{
 
     final GrammerObjects obj;
     final TTSInterface synth;
+  final sherpa_onnx.OfflineTts? speakSelectSherpaOnnxSynth;
+  final Future<void> Function() initForSS;
+  final AudioPlayer playerForSS;
 
-    const BuildGrammerButton({super.key, required this.obj, required this.synth});
+    const BuildGrammerButton({
+      super.key, 
+      required this.obj, 
+      required this.synth,
+      required this.speakSelectSherpaOnnxSynth,
+      required this.initForSS,
+      required this.playerForSS,
+    });
 
      @override
     Widget build(BuildContext context) {
@@ -3239,13 +3531,27 @@ class BuildGrammerButton extends StatelessWidget{
           case 2:
             V4rs.changedMWfromButton = true;
             Gv4rs.grammerFunctions(obj.function ?? '');
-            await V4rs.speakOnSelect(obj.label ?? '', V4rs.selectedLanguage.value, synth);
+            await V4rs.speakOnSelect(
+                  obj.label ?? '', 
+                  V4rs.selectedLanguage.value, 
+                  synth,
+                  speakSelectSherpaOnnxSynth,
+                  initForSS,
+                  playerForSS,
+                );
             V4rs.changedMWfromButton = false;
             break;
           case 3:
             V4rs.changedMWfromButton = true;
             Gv4rs.grammerFunctions(obj.function ?? '');
-            await V4rs.speakOnSelect(Gv4rs.lastWord, V4rs.selectedLanguage.value, synth);
+            await V4rs.speakOnSelect(
+              Gv4rs.lastWord, 
+              V4rs.selectedLanguage.value, 
+              synth,
+              speakSelectSherpaOnnxSynth,
+              initForSS,
+              playerForSS,
+              );
             V4rs.changedMWfromButton = false;
             break;
           }
@@ -3325,6 +3631,9 @@ class BuildGrammerFolder extends StatelessWidget{
     final void Function(BoardObjects board) openBoard;
     final List<BoardObjects> boards;
     final BoardObjects? Function(String uuid, List<BoardObjects> boards) findBoardById;
+    final sherpa_onnx.OfflineTts? speakSelectSherpaOnnxSynth;
+    final Future<void> Function() initForSS;
+    final AudioPlayer playerForSS;
 
     const BuildGrammerFolder({
       super.key, 
@@ -3332,7 +3641,10 @@ class BuildGrammerFolder extends StatelessWidget{
       required this.synth,
       required this.openBoard, 
       required this.boards,
-      required this.findBoardById
+      required this.findBoardById,
+      required this.speakSelectSherpaOnnxSynth,
+      required this.initForSS,
+      required this.playerForSS,
     });
 
      @override
@@ -3420,7 +3732,14 @@ class BuildGrammerFolder extends StatelessWidget{
               if (board != null) {
                 openBoard(board);
               }
-            await V4rs.speakOnSelect(obj.label ?? '', V4rs.selectedLanguage.value, synth);
+            await V4rs.speakOnSelect(
+                  obj.label ?? '', 
+                  V4rs.selectedLanguage.value, 
+                  synth,
+                  speakSelectSherpaOnnxSynth,
+                  initForSS,
+                  playerForSS,
+                );
             break;
           case 3:
              final board = findBoardById(obj.openUUID ?? '', boards);
@@ -3428,7 +3747,14 @@ class BuildGrammerFolder extends StatelessWidget{
                 openBoard(board);
               }
             if (Bv4rs.folderSpeakOnSelect != 1) {
-            await V4rs.speakOnSelect(obj.label ?? '', V4rs.selectedLanguage.value, synth);
+            await V4rs.speakOnSelect(
+                  obj.label ?? '', 
+                  V4rs.selectedLanguage.value, 
+                  synth,
+                  speakSelectSherpaOnnxSynth,
+                  initForSS,
+                  playerForSS,
+                );
             }
             break;
           }
@@ -3499,8 +3825,18 @@ class BuildGrammerPlacholder extends StatelessWidget{
 
     final GrammerObjects obj;
     final TTSInterface synth;
+    final sherpa_onnx.OfflineTts? speakSelectSherpaOnnxSynth;
+    final Future<void> Function() initForSS;
+    final AudioPlayer playerForSS;
 
-    const BuildGrammerPlacholder({super.key, required this.obj, required this.synth});
+    const BuildGrammerPlacholder({
+      super.key, 
+      required this.obj, 
+      required this.synth,
+      required this.speakSelectSherpaOnnxSynth,
+      required this.initForSS,
+      required this.playerForSS,
+      });
 
     @override
     Widget build(BuildContext context) {
@@ -3527,13 +3863,27 @@ class BuildGrammerPlacholder extends StatelessWidget{
           case 2:
             V4rs.changedMWfromButton = true;
             Gv4rs.grammerFunctions(obj.function ?? '');
-            await V4rs.speakOnSelect(obj.label ?? '', V4rs.selectedLanguage.value, synth);
+            await V4rs.speakOnSelect(
+                  obj.label ?? '', 
+                  V4rs.selectedLanguage.value, 
+                  synth,
+                  speakSelectSherpaOnnxSynth,
+                  initForSS,
+                  playerForSS,
+                );
             V4rs.changedMWfromButton = false;
             break;
           case 3:
             V4rs.changedMWfromButton = true;
             Gv4rs.grammerFunctions(obj.function ?? '');
-            await V4rs.speakOnSelect(Gv4rs.lastWord, V4rs.selectedLanguage.value, synth);
+            await V4rs.speakOnSelect(
+              Gv4rs.lastWord, 
+              V4rs.selectedLanguage.value, 
+              synth,
+              speakSelectSherpaOnnxSynth,
+              initForSS,
+              playerForSS,
+              );
             V4rs.changedMWfromButton = false;
             break;
           }

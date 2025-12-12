@@ -453,7 +453,7 @@ class _MessageWindowTextFieldState extends State<MessageWindowTextField> {
       child: Column(children: [
       TextField(
         controller: widget.controller,
-        minLines: 3,
+        minLines: 1,
         maxLines: null,
         textAlign: TextAlign.left,
         style: Fv4rs.mwLabelStyle,

@@ -4,9 +4,11 @@ import 'package:flutterkeysaac/Variables/fonts/font_variables.dart';
 import 'package:flutterkeysaac/Variables/settings/settings_variables.dart';
 import 'package:flutterkeysaac/Variables/variables.dart';
 import 'package:flutterkeysaac/Variables/fonts/font_options.dart';
-import 'package:flutterkeysaac/Variables/tts/tts_interface.dart';
+import 'package:flutterkeysaac/Variables/system_tts/tts_interface.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
+import 'package:audioplayers/audioplayers.dart';
+import 'package:sherpa_onnx/sherpa_onnx.dart' as sherpa_onnx;
 
 
 class FontPicker1 extends StatefulWidget {
@@ -27,6 +29,9 @@ class FontPicker1 extends StatefulWidget {
   final TTSInterface tts;
   final int sizeMin;
   final int sizeMax;
+  final sherpa_onnx.OfflineTts? speakSelectSherpaOnnxSynth;
+  final Future<void> Function() initForSS;
+  final AudioPlayer playerForSS;
 
   const FontPicker1({
     super.key,
@@ -47,6 +52,9 @@ class FontPicker1 extends StatefulWidget {
     required this.tts,
     this.sizeMin = 5,
     this.sizeMax = 50,
+    required this.speakSelectSherpaOnnxSynth,
+    required this.initForSS,
+    required this.playerForSS,
   });
 
   @override
@@ -97,7 +105,13 @@ class _FontPickerState1 extends State<FontPicker1> {
       childrenPadding: EdgeInsets.symmetric(horizontal: 20),
       onExpansionChanged: (bool expanded) {  
         if (Sv4rs.speakInterfaceButtonsOnSelect) {
-            V4rs.speakOnSelect(widget.label, V4rs.selectedLanguage.value, _tts);
+            V4rs.speakOnSelect(
+              widget.label, V4rs.selectedLanguage.value, 
+              _tts,
+              widget.speakSelectSherpaOnnxSynth,
+              widget.initForSS,
+              widget.playerForSS,
+            );
           }},
       children: [
         // Sample text
@@ -199,7 +213,13 @@ class _FontPickerState1 extends State<FontPicker1> {
         ),
 
         //font picker
-        FontFamilyPicker(font: _font, onFontChanged: widget.onFontChanged, tts: _tts, label: 'Font Family: ${Fontsy.familyToFont[_font]}'),
+        FontFamilyPicker(
+          font: _font, onFontChanged: widget.onFontChanged, 
+          tts: _tts, label: 'Font Family: ${Fontsy.familyToFont[_font]}',
+          speakSelectSherpaOnnxSynth: widget.speakSelectSherpaOnnxSynth,
+          initForSS: widget.initForSS,
+          playerForSS: widget.playerForSS,
+        ),
 
         //color font 
         ExpansionTile(
@@ -476,7 +496,11 @@ class _FontPickerState2 extends State<FontPicker2> {
         ),
         ),
         //font picker
-        FontFamilyPicker(font: _font, onFontChanged: widget.onFontChanged, label: 'Font Family:'),
+        FontFamilyPicker(
+          font: _font, 
+          onFontChanged: widget.onFontChanged, 
+          label: 'Font Family:'
+        ),
         
         //color font 
         ExpansionTile(
@@ -566,6 +590,9 @@ class FontFamilyPicker extends StatefulWidget {
   final ValueChanged<String> onFontChanged;
   final TTSInterface? tts;
   final String label;
+  final sherpa_onnx.OfflineTts? speakSelectSherpaOnnxSynth;
+  final Future<void> Function()? initForSS;
+  final AudioPlayer? playerForSS;
 
   const FontFamilyPicker({
     super.key,
@@ -573,6 +600,9 @@ class FontFamilyPicker extends StatefulWidget {
     required this.onFontChanged,
     required this.label,
     this.tts,
+    this.speakSelectSherpaOnnxSynth,
+    this.initForSS,
+    this.playerForSS,
   });
 
   @override
@@ -607,8 +637,19 @@ class _FontFamilyPicker extends State<FontFamilyPicker> {
       backgroundColor: Cv4rs.themeColor4,
       childrenPadding: EdgeInsets.symmetric(horizontal: 20),
       onExpansionChanged: (bool expanded) {  
-        if (Sv4rs.speakInterfaceButtonsOnSelect && widget.tts != null) {
-            V4rs.speakOnSelect(widget.label, V4rs.selectedLanguage.value, widget.tts!);
+        if (Sv4rs.speakInterfaceButtonsOnSelect 
+          && widget.tts != null
+          && widget.initForSS != null
+          && widget.playerForSS != null
+        ) {
+            V4rs.speakOnSelect(
+              widget.label, 
+              V4rs.selectedLanguage.value, 
+              widget.tts!,
+              widget.speakSelectSherpaOnnxSynth,
+              widget.initForSS!,
+              widget.playerForSS!,
+            );
           }},
       children: [
         // Sample text

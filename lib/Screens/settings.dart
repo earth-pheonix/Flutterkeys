@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutterkeysaac/Variables/settings/settings_variables.dart';
-import 'package:flutterkeysaac/Variables/tts/tts_interface.dart';
+import 'package:flutterkeysaac/Variables/system_tts/tts_interface.dart';
 import 'package:flutterkeysaac/Variables/settings/ui_settings.dart';
 import 'package:flutterkeysaac/Variables/settings/voice_variables.dart';
 import 'package:flutterkeysaac/Variables/variables.dart';
@@ -17,17 +17,29 @@ import 'package:flutterkeysaac/Variables/fonts/font_pickers.dart';
 import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
 import 'package:flutterkeysaac/Variables/fonts/font_options.dart';
 import 'package:share_plus/share_plus.dart'; 
+import 'package:audioplayers/audioplayers.dart';
+import 'package:sherpa_onnx/sherpa_onnx.dart' as sherpa_onnx;
 import 'dart:io';
 
 
 class Settings extends StatefulWidget {
   final TTSInterface synth;
   final Future<List<Uint8List?>> Function() captureAllForPrint;
+  
+  final sherpa_onnx.OfflineTts? speakSelectSherpaOnnxSynth;
+  final Future<void> Function() initForSS;
+  final AudioPlayer playerForSS;
+
+  final Future<void> Function() reloadSherpaOnnx;
 
   const Settings({
     super.key, 
     required this.synth,
     required this.captureAllForPrint,
+    required this.speakSelectSherpaOnnxSynth,
+    required this.initForSS,
+    required this.playerForSS,
+    required this.reloadSherpaOnnx,
     });
 
   @override
@@ -46,7 +58,7 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
-    Vv4rs.loadVoices(widget.synth);
+    Vv4rs.loadSystemVoices(widget.synth);
     rootFuture = V4rs.loadRootData();
   }
 
@@ -82,7 +94,13 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
           child: Column(
           children: [
             if (_root != null)
-            TopRowForSettings(synth: widget.synth, root: _root!),
+            TopRowForSettings(
+              synth: widget.synth, 
+              root: _root!,
+              speakSelectSherpaOnnxSynth: widget.speakSelectSherpaOnnxSynth,
+              initForSS: widget.initForSS,
+              playerForSS: widget.playerForSS,
+            ),
             
           //
           //SETTINGS 
@@ -103,7 +121,14 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
                   childrenPadding: EdgeInsets.symmetric(horizontal: 20),
                   onExpansionChanged: (bool expanded) {  
                     if (Sv4rs.speakInterfaceButtonsOnSelect) {
-                        V4rs.speakOnSelect('language', V4rs.selectedLanguage.value, widget.synth);
+                        V4rs.speakOnSelect(
+                          'language', 
+                          V4rs.selectedLanguage.value, 
+                          widget.synth,
+                          widget.speakSelectSherpaOnnxSynth,
+                          widget.initForSS,
+                          widget.playerForSS,
+                          );
                       }},
                   children: [
                     Padding(
@@ -149,12 +174,12 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
                             setState(() {
                               if (selected == true) {
                                   Sv4rs.myLanguages.add(language);
-                                  Vv4rs.loadVoices(widget.synth);
+                                  Vv4rs.loadSystemVoices(widget.synth);
                                   Sv4rs.setMyLanguages(Sv4rs.myLanguages);
                               } else {
                                 if (Sv4rs.myLanguages.length > 1) {
                                 Sv4rs.myLanguages.remove(language);
-                                Vv4rs.loadVoices(widget.synth);
+                                Vv4rs.loadSystemVoices(widget.synth);
                                 Sv4rs.setMyLanguages(Sv4rs.myLanguages);
                                 } else {
                                   ScaffoldMessenger.of(context).showSnackBar(
@@ -178,7 +203,15 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
                 //voice settings
                 //
 
-                VoicePicker(synth: widget.synth, totalWidth: totalWidth), //I live in the ui_settings file
+                VoicePicker( //I live in the ui_settings file
+                  synth: widget.synth, 
+                  totalWidth: totalWidth,
+                  speakSelectSherpaOnnxSynth: widget.speakSelectSherpaOnnxSynth,
+                  initForSS: widget.initForSS,
+                  playerForSS: widget.playerForSS,
+                  reloadSherpaOnnx: widget.reloadSherpaOnnx,
+                  
+                ), 
 
                 //
                 //interfece settings
@@ -191,7 +224,14 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
                   childrenPadding: EdgeInsets.symmetric(horizontal: 20),
                   onExpansionChanged: (bool expanded) {  
                     if (Sv4rs.speakInterfaceButtonsOnSelect) {
-                        V4rs.speakOnSelect('Interface Settings', V4rs.selectedLanguage.value, widget.synth);
+                        V4rs.speakOnSelect(
+                          'Interface Settings', 
+                          V4rs.selectedLanguage.value, 
+                          widget.synth,
+                          widget.speakSelectSherpaOnnxSynth,
+                          widget.initForSS,
+                          widget.playerForSS,
+                        );
                       }},
                   children: [
                     
@@ -512,6 +552,9 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
                                 });
                               },
                   tts: widget.synth,
+                  speakSelectSherpaOnnxSynth: widget.speakSelectSherpaOnnxSynth,
+                  initForSS: widget.initForSS,
+                  playerForSS: widget.playerForSS,
                 ),
                 //font picker
               FontFamilyPicker(
@@ -555,8 +598,15 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
                                 Sv4rs.saveSpeakInterfaceButtonsOnSelect(value);
                               });
                               if (Sv4rs.speakInterfaceButtonsOnSelect) {
-                                      V4rs.speakOnSelect('Interface speak on select $value', V4rs.selectedLanguage.value, widget.synth);
-                                    }
+                                V4rs.speakOnSelect(
+                                  'Interface speak on select $value', 
+                                  V4rs.selectedLanguage.value, 
+                                  widget.synth,
+                                  widget.speakSelectSherpaOnnxSynth,
+                                  widget.initForSS,
+                                  widget.playerForSS,
+                                );
+                              }
                            })
                         ]
                       ),
@@ -578,7 +628,14 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
                   childrenPadding: EdgeInsets.symmetric(horizontal: 20),
                   onExpansionChanged: (bool expanded) {  
                     if (Sv4rs.speakInterfaceButtonsOnSelect) {
-                        V4rs.speakOnSelect('alerts', V4rs.selectedLanguage.value, widget.synth);
+                        V4rs.speakOnSelect(
+                          'alerts', 
+                          V4rs.selectedLanguage.value, 
+                          widget.synth,
+                          widget.speakSelectSherpaOnnxSynth,
+                          widget.initForSS,
+                          widget.playerForSS,
+                        );
                       }},
                   children: [
                     //alert count 
@@ -695,7 +752,14 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
                   childrenPadding: EdgeInsets.symmetric(horizontal: 20),
                   onExpansionChanged: (bool expanded) {  
                     if (Sv4rs.speakInterfaceButtonsOnSelect) {
-                        V4rs.speakOnSelect('Expand page settings', V4rs.selectedLanguage.value, widget.synth);
+                        V4rs.speakOnSelect(
+                          'Expand page settings', 
+                          V4rs.selectedLanguage.value, 
+                          widget.synth,
+                          widget.speakSelectSherpaOnnxSynth,
+                          widget.initForSS,
+                          widget.playerForSS,
+                        );
                       }},
                   children: [
                     ExpansionTile(
@@ -1015,7 +1079,10 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
                                    Fv4rs.saveExpandedFontColor(value.toColor() ?? Fv4rs.expandedFontColor);
                                 });
                               }, 
-                      tts: widget.synth
+                      tts: widget.synth,
+                      speakSelectSherpaOnnxSynth: widget.speakSelectSherpaOnnxSynth,
+                      initForSS: widget.initForSS,
+                      playerForSS: widget.playerForSS,
                       )
                   ],
                     ),
@@ -1031,7 +1098,14 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
                   childrenPadding: EdgeInsets.symmetric(horizontal: 20),
                   onExpansionChanged: (bool expanded) {  
                     if (Sv4rs.speakInterfaceButtonsOnSelect) {
-                        V4rs.speakOnSelect('Message Window Settings', V4rs.selectedLanguage.value, widget.synth);
+                        V4rs.speakOnSelect(
+                          'Message Window Settings', 
+                          V4rs.selectedLanguage.value, 
+                          widget.synth,
+                          widget.speakSelectSherpaOnnxSynth,
+                          widget.initForSS,
+                          widget.playerForSS,
+                        );
                       }},
                   children: [
                     Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 15), child: 
@@ -1411,7 +1485,10 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
                                    Fv4rs.savemwFontColor(value.toColor() ?? Fv4rs.mwFontColor);
                                 });
                               }, 
-                      tts: widget.synth
+                      tts: widget.synth,
+                      speakSelectSherpaOnnxSynth: widget.speakSelectSherpaOnnxSynth,
+                      initForSS: widget.initForSS,
+                      playerForSS: widget.playerForSS,
                       )
                   
                   ],
@@ -1429,7 +1506,14 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
                   childrenPadding: EdgeInsets.symmetric(horizontal: 20),
                   onExpansionChanged: (bool expanded) {  
                     if (Sv4rs.speakInterfaceButtonsOnSelect) {
-                        V4rs.speakOnSelect('Boardset Settings', V4rs.selectedLanguage.value, widget.synth);
+                        V4rs.speakOnSelect(
+                          'Boardset Settings', 
+                          V4rs.selectedLanguage.value, 
+                          widget.synth,
+                          widget.speakSelectSherpaOnnxSynth,
+                          widget.initForSS,
+                          widget.playerForSS,
+                          );
                       }},
                   children: [
                     //share boardset
@@ -2096,7 +2180,10 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
                           Bv4rs.saveNavRowSymbolContrast(val);
                           });
                         },
-                        tts: widget.synth
+                        tts: widget.synth,
+                        speakSelectSherpaOnnxSynth: widget.speakSelectSherpaOnnxSynth,
+                        initForSS: widget.initForSS,
+                        playerForSS: widget.playerForSS,
                       ),
                       
                       //font picker
@@ -2140,7 +2227,10 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
                                   Fv4rs.savenavRowFontColor(value.toColor() ?? Fv4rs.navRowFontColor);
                               });
                             }, 
-                        tts: widget.synth
+                        tts: widget.synth,
+                        speakSelectSherpaOnnxSynth: widget.speakSelectSherpaOnnxSynth,
+                        initForSS: widget.initForSS,
+                        playerForSS: widget.playerForSS,
                         ),
 
 
@@ -2316,7 +2406,11 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
                             Bv4rs.savegrammerRowSymbolSaturation(val);
                             });
                           }, 
-                          tts: widget.synth),
+                          tts: widget.synth,
+                          speakSelectSherpaOnnxSynth: widget.speakSelectSherpaOnnxSynth,
+                          initForSS: widget.initForSS,
+                          playerForSS: widget.playerForSS,
+                        ),
                       //font
                         FontPicker1(
                           size: Fv4rs.grammerFontSize, 
@@ -2362,7 +2456,11 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
                               Fv4rs.savegrammerFontUnderline(value);
                             });
                           }, 
-                          tts: widget.synth)
+                          tts: widget.synth,
+                          speakSelectSherpaOnnxSynth: widget.speakSelectSherpaOnnxSynth,
+                          initForSS: widget.initForSS,
+                          playerForSS: widget.playerForSS,
+                        )
 
                       ]
                       ),
@@ -2540,6 +2638,9 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
                           });
                         },
                         tts: widget.synth,
+                        speakSelectSherpaOnnxSynth: widget.speakSelectSherpaOnnxSynth,
+                        initForSS: widget.initForSS,
+                        playerForSS: widget.playerForSS,
                         ),
                        //font
                        FontPicker1(
@@ -2587,7 +2688,10 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
                             Fv4rs.savesubFolderFontUnderline(value);
                           });
                         }, 
-                        tts: widget.synth
+                        tts: widget.synth,
+                        speakSelectSherpaOnnxSynth: widget.speakSelectSherpaOnnxSynth,
+                        initForSS: widget.initForSS,
+                        playerForSS: widget.playerForSS,
                         ),
               
                     ]
@@ -2946,6 +3050,9 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
                           });
                         },
                         tts: widget.synth,
+                        speakSelectSherpaOnnxSynth: widget.speakSelectSherpaOnnxSynth,
+                        initForSS: widget.initForSS,
+                        playerForSS: widget.playerForSS,
                         ),
                       //corner tab color
                       ColorPickerWithHex(
@@ -3004,7 +3111,10 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
                             Fv4rs.savebuttonFontUnderline(value);
                           });
                         }, 
-                        tts: widget.synth
+                        tts: widget.synth,
+                        speakSelectSherpaOnnxSynth: widget.speakSelectSherpaOnnxSynth,
+                        initForSS: widget.initForSS,
+                        playerForSS: widget.playerForSS,
                         ),
                       
                     ]
@@ -3026,7 +3136,14 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
                   childrenPadding: EdgeInsets.symmetric(horizontal: 40),
                   onExpansionChanged: (bool expanded) {  
                     if (Sv4rs.speakInterfaceButtonsOnSelect) {
-                        V4rs.speakOnSelect('Special Gestures:', V4rs.selectedLanguage.value, widget.synth);
+                        V4rs.speakOnSelect(
+                          'Special Gestures:', 
+                          V4rs.selectedLanguage.value, 
+                          widget.synth,
+                          widget.speakSelectSherpaOnnxSynth,
+                          widget.initForSS,
+                          widget.playerForSS,
+                        );
                       }},
                   children: [
                     Row(
@@ -3111,7 +3228,12 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
 
                 //open welcome screen
                 Divider(),
-                OpenWelcomeScreen(synth: widget.synth),
+                OpenWelcomeScreen(
+                  synth: widget.synth,
+                  speakSelectSherpaOnnxSynth: widget.speakSelectSherpaOnnxSynth,
+                  initForSS: widget.initForSS,
+                  playerForSS: widget.playerForSS,
+                ),
 
                 SizedBox(height: 250,),
               ]

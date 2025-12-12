@@ -7,12 +7,14 @@ import 'package:flutterkeysaac/Variables/assorted_ui/ui_shortcuts.dart';
 import 'package:flutterkeysaac/Variables/editing/editor_variables.dart';
 import 'package:flutterkeysaac/Variables/fonts/font_options.dart';
 import 'package:flutterkeysaac/Variables/fonts/font_variables.dart';
-import 'package:flutterkeysaac/Variables/tts/tts_interface.dart';
+import 'package:flutterkeysaac/Variables/system_tts/tts_interface.dart';
 import 'package:flutterkeysaac/Variables/settings/boardset_settings_variables.dart';
 import 'package:flutterkeysaac/Variables/settings/settings_variables.dart';
 import 'package:flutterkeysaac/Variables/colors/color_variables.dart';
 import 'package:flutterkeysaac/Variables/variables.dart';
 import 'package:flutterkeysaac/Variables/grammer_variables.dart';
+import 'package:audioplayers/audioplayers.dart';
+import 'package:sherpa_onnx/sherpa_onnx.dart' as sherpa_onnx;
 import 'dart:async';
 
 //
@@ -193,6 +195,9 @@ import 'dart:async';
         final void Function(BoardObjects board) openBoard;
         final List<BoardObjects> boards;
         final BoardObjects? Function(String uuid, List<BoardObjects> boards) findBoardById;
+        final sherpa_onnx.OfflineTts? speakSelectSherpaOnnxSynth;
+        final Future<void> Function() initForSS;
+        final AudioPlayer playerForSS;
 
         const BuildEditablePocketFolder({
           super.key, 
@@ -202,6 +207,9 @@ import 'dart:async';
           required this.boards,
           required this.findBoardById,
           required this.root,
+          required this.speakSelectSherpaOnnxSynth,
+          required this.initForSS,
+          required this.playerForSS,
           });
         
         @override
@@ -305,14 +313,28 @@ import 'dart:async';
                     if (board != null) {
                       openBoard(board);
                     }
-                  await V4rs.speakOnSelect(obj.label ?? '', V4rs.selectedLanguage.value, synth);
+                  await V4rs.speakOnSelect(
+                    obj.label ?? '', 
+                    V4rs.selectedLanguage.value, 
+                    synth,
+                    widget.speakSelectSherpaOnnxSynth,
+                    widget.initForSS,
+                    widget.playerForSS,
+                  );
                   break;
                 case 3:
                   final board = findBoardById(linkTo, boards);
                     if (board != null) {
                       openBoard(board);
                     }
-                  await V4rs.speakOnSelect(obj.message ?? '', V4rs.selectedLanguage.value, synth);
+                  await V4rs.speakOnSelect(
+                    obj.message ?? '', 
+                    V4rs.selectedLanguage.value, 
+                    synth,
+                    widget.speakSelectSherpaOnnxSynth,
+                    widget.initForSS,
+                    widget.playerForSS,
+                  );
                   break;
                 }
               }
@@ -501,12 +523,18 @@ import 'dart:async';
         final Root root;
         final BoardObjects obj;
         final TTSInterface synth;
+        final sherpa_onnx.OfflineTts? speakSelectSherpaOnnxSynth;
+        final Future<void> Function() initForSS;
+        final AudioPlayer playerForSS;
 
         const BuildEditableTypingKey({
           super.key, 
           required this.obj, 
           required this.synth,
           required this.root,
+          required this.speakSelectSherpaOnnxSynth,
+          required this.initForSS,
+          required this.playerForSS,
           });
         
         @override
@@ -606,13 +634,27 @@ import 'dart:async';
                       case 2:
                         V4rs.changedMWfromButton = true;
                         V4rs.message.value = V4rs.message.value + (obj.message ?? '');
-                        await V4rs.speakOnSelect(obj.label ?? '', V4rs.selectedLanguage.value, synth);
+                        await V4rs.speakOnSelect(
+                          obj.label ?? '', 
+                          V4rs.selectedLanguage.value, 
+                          synth,
+                          widget.speakSelectSherpaOnnxSynth,
+                          widget.initForSS,
+                          widget.playerForSS,
+                        );
                         V4rs.changedMWfromButton = false;
                         break;
                       case 3:
                         V4rs.changedMWfromButton = true;
                         V4rs.message.value = V4rs.message.value + (obj.message ?? '');
-                        await V4rs.speakOnSelect(obj.message ?? '', V4rs.selectedLanguage.value, synth);
+                        await V4rs.speakOnSelect(
+                          obj.message ?? '', 
+                          V4rs.selectedLanguage.value, 
+                          synth,
+                          widget.speakSelectSherpaOnnxSynth,
+                          widget.initForSS,
+                          widget.playerForSS,
+                        );
                         V4rs.changedMWfromButton = false;
                         break;
                       }
@@ -1110,6 +1152,10 @@ import 'dart:async';
         final void Function(BoardObjects board) openBoard;
         final List<BoardObjects> boards;
         final BoardObjects? Function(String uuid, List<BoardObjects> boards) findBoardById;
+        final sherpa_onnx.OfflineTts? speakSelectSherpaOnnxSynth;
+        final Future<void> Function() initForSS;
+        final AudioPlayer playerForSS;
+
 
         const BuildEditableFolder({
           super.key, 
@@ -1119,6 +1165,9 @@ import 'dart:async';
           required this.boards,
           required this.findBoardById,
           required this.root,
+          required this.speakSelectSherpaOnnxSynth,
+          required this.initForSS,
+          required this.playerForSS,
           });
         
         @override
@@ -1210,11 +1259,25 @@ import 'dart:async';
                     break;
                   case 2:
                   Ev4rs.selectingAction2(obj, widget.root);
-                    await V4rs.speakOnSelect(obj.label ?? '', V4rs.selectedLanguage.value, synth);
+                    await V4rs.speakOnSelect(
+                      obj.label ?? '', 
+                      V4rs.selectedLanguage.value, 
+                      synth,
+                      widget.speakSelectSherpaOnnxSynth,
+                      widget.initForSS,
+                      widget.playerForSS,
+                    );
                     break;
                   case 3:
                   Ev4rs.selectingAction2(obj, widget.root);
-                    await V4rs.speakOnSelect(obj.message ?? '', V4rs.selectedLanguage.value, synth);
+                    await V4rs.speakOnSelect(
+                      obj.message ?? '', 
+                      V4rs.selectedLanguage.value, 
+                      synth,
+                      widget.speakSelectSherpaOnnxSynth,
+                      widget.initForSS,
+                      widget.playerForSS,
+                    );
                     break;
                 }
                 }
@@ -1424,12 +1487,18 @@ import 'dart:async';
       final BoardObjects obj;
         final TTSInterface synth;
         final Root root;
+        final sherpa_onnx.OfflineTts? speakSelectSherpaOnnxSynth;
+        final Future<void> Function() initForSS;
+        final AudioPlayer playerForSS;
 
         const BuildEditableButtonGrammer({
           super.key, 
           required this.obj, 
           required this.synth,
           required this.root,
+          required this.speakSelectSherpaOnnxSynth,
+          required this.initForSS,
+          required this.playerForSS,
           });
         
         @override
@@ -1543,11 +1612,25 @@ import 'dart:async';
                 break;
               case 2:
                 Ev4rs.selectingAction2(obj, widget.root);
-                await V4rs.speakOnSelect(obj.label ?? '', V4rs.selectedLanguage.value, synth);
+                await V4rs.speakOnSelect(
+                  obj.label ?? '', 
+                  V4rs.selectedLanguage.value, 
+                  synth,
+                  widget.speakSelectSherpaOnnxSynth,
+                  widget.initForSS,
+                  widget.playerForSS,
+                  );
                 break;
               case 3:
                 Ev4rs.selectingAction2(obj, widget.root);
-                await V4rs.speakOnSelect(Gv4rs.lastWord, V4rs.selectedLanguage.value, synth);
+                await V4rs.speakOnSelect(
+                  Gv4rs.lastWord, 
+                  V4rs.selectedLanguage.value, 
+                  synth,
+                  widget.speakSelectSherpaOnnxSynth,
+                  widget.initForSS,
+                  widget.playerForSS,
+                );
                 break;
               }
               });
@@ -1622,13 +1705,27 @@ import 'dart:async';
                           case 2:
                             V4rs.changedMWfromButton = true;
                             Gv4rs.grammerFunctions(obj.function ?? '');
-                            await V4rs.speakOnSelect(obj.label ?? '', V4rs.selectedLanguage.value, synth);
+                            await V4rs.speakOnSelect(
+                              obj.label ?? '', 
+                              V4rs.selectedLanguage.value, 
+                              synth,
+                              widget.speakSelectSherpaOnnxSynth,
+                              widget.initForSS,
+                              widget.playerForSS,
+                            );
                             V4rs.changedMWfromButton = false;
                             break;
                           case 3:
                             V4rs.changedMWfromButton = true;
                             Gv4rs.grammerFunctions(obj.function ?? '');
-                            await V4rs.speakOnSelect(Gv4rs.lastWord, V4rs.selectedLanguage.value, synth);
+                            await V4rs.speakOnSelect(
+                              Gv4rs.lastWord, 
+                              V4rs.selectedLanguage.value, 
+                              synth,
+                              widget.speakSelectSherpaOnnxSynth,
+                              widget.initForSS,
+                              widget.playerForSS,
+                            );
                             V4rs.changedMWfromButton = false;
                             break;
                           }
@@ -1668,6 +1765,9 @@ import 'dart:async';
         final void Function() goBack;
         final List<BoardObjects> boards;
         final BoardObjects? Function(String uuid, List<BoardObjects> boards) findBoardById;
+        final sherpa_onnx.OfflineTts? speakSelectSherpaOnnxSynth;
+        final Future<void> Function() initForSS;
+        final AudioPlayer playerForSS;
 
         const BuildEditableSubFolder({
           super.key, 
@@ -1677,7 +1777,10 @@ import 'dart:async';
           required this.goBack,
           required this.openBoard, 
           required this.boards,
-          required this.findBoardById
+          required this.findBoardById,
+          required this.speakSelectSherpaOnnxSynth,
+          required this.initForSS,
+          required this.playerForSS,
           });
         
         @override
@@ -1792,11 +1895,25 @@ import 'dart:async';
                 break;
               case 2:
                 goBack();
-                await V4rs.speakOnSelect(obj.label ?? '', V4rs.selectedLanguage.value, synth);
+                await V4rs.speakOnSelect(
+                  obj.label ?? '', 
+                  V4rs.selectedLanguage.value, 
+                  synth,
+                  widget.speakSelectSherpaOnnxSynth,
+                  widget.initForSS,
+                  widget.playerForSS,
+                );
                 break;
               case 3:
               goBack();
-                await V4rs.speakOnSelect(obj.alternateLabel ?? '', V4rs.selectedLanguage.value, synth);
+                await V4rs.speakOnSelect(
+                  obj.alternateLabel ?? '', 
+                  V4rs.selectedLanguage.value, 
+                  synth,
+                  widget.speakSelectSherpaOnnxSynth,
+                  widget.initForSS,
+                  widget.playerForSS,
+                );
                 break;
               }
               }
@@ -1977,7 +2094,14 @@ import 'dart:async';
                         openBoard(board);
                       }
                   }
-                  await V4rs.speakOnSelect(obj.label ?? '', V4rs.selectedLanguage.value, synth);
+                  await V4rs.speakOnSelect(
+                    obj.label ?? '', 
+                    V4rs.selectedLanguage.value, 
+                    synth,
+                    widget.speakSelectSherpaOnnxSynth,
+                    widget.initForSS,
+                    widget.playerForSS,
+                  );
                   break;
                 case 3:
                   final board = findBoardById(linkTo, boards);
@@ -1988,7 +2112,14 @@ import 'dart:async';
                         openBoard(board);
                       }
                   }
-                  await V4rs.speakOnSelect(obj.alternateLabel ?? '', V4rs.selectedLanguage.value, synth);
+                  await V4rs.speakOnSelect(
+                    obj.alternateLabel ?? '', 
+                    V4rs.selectedLanguage.value, 
+                    synth,
+                    widget.speakSelectSherpaOnnxSynth,
+                    widget.initForSS,
+                    widget.playerForSS,
+                  );
                   break;
                 }
                 }
@@ -2120,8 +2251,19 @@ import 'dart:async';
       final Root root;
       final GrammerObjects obj;
       final TTSInterface synth;
+      final sherpa_onnx.OfflineTts? speakSelectSherpaOnnxSynth;
+      final Future<void> Function() initForSS;
+      final AudioPlayer playerForSS;
 
-      const BuildEditableGrammerButton({super.key, required this.obj, required this.synth, required this.root});
+      const BuildEditableGrammerButton({
+        super.key, 
+        required this.obj, 
+        required this.synth, 
+        required this.root,
+        required this.speakSelectSherpaOnnxSynth,
+        required this.initForSS,
+        required this.playerForSS,
+      });
 
       @override
       Widget build(BuildContext context) {
@@ -2208,7 +2350,14 @@ import 'dart:async';
               break;
             case 2:
               Ev4rs.grammerSelectingAction2(obj, root);
-              await V4rs.speakOnSelect(obj.label ?? '', V4rs.selectedLanguage.value, synth);
+              await V4rs.speakOnSelect(
+                obj.label ?? '', 
+                V4rs.selectedLanguage.value, 
+                synth,
+                speakSelectSherpaOnnxSynth,
+                initForSS,
+                playerForSS,
+              );
               break;
             case 3:
               Ev4rs.grammerSelectingAction2(obj, root);
@@ -2288,6 +2437,9 @@ import 'dart:async';
       final void Function(BoardObjects board) openBoard;
       final List<BoardObjects> boards;
       final BoardObjects? Function(String uuid, List<BoardObjects> boards) findBoardById;
+      final sherpa_onnx.OfflineTts? speakSelectSherpaOnnxSynth;
+      final Future<void> Function() initForSS;
+      final AudioPlayer playerForSS;
 
     
 
@@ -2298,7 +2450,10 @@ import 'dart:async';
         required this.openBoard, 
         required this.boards,
         required this.findBoardById,
-        required this.root
+        required this.root,
+        required this.speakSelectSherpaOnnxSynth,
+        required this.initForSS,
+        required this.playerForSS,
       });
 
       @override
@@ -2413,7 +2568,14 @@ import 'dart:async';
                 }
                 Ev4rs.grammerSelectingAction2(obj, root);
               });
-              await V4rs.speakOnSelect(obj.label ?? '', V4rs.selectedLanguage.value, synth);
+              await V4rs.speakOnSelect(
+                obj.label ?? '', 
+                V4rs.selectedLanguage.value, 
+                synth,
+                widget.speakSelectSherpaOnnxSynth,
+                widget.initForSS,
+                widget.playerForSS,
+              );
               break;
             case 3:
                setState(() {
@@ -2424,7 +2586,14 @@ import 'dart:async';
                 Ev4rs.grammerSelectingAction2(obj, root);
               });
                 if (Bv4rs.folderSpeakOnSelect != 1) {
-                await V4rs.speakOnSelect(obj.label ?? '', V4rs.selectedLanguage.value, synth);
+                await V4rs.speakOnSelect(
+                  obj.label ?? '', 
+                  V4rs.selectedLanguage.value, 
+                  synth,
+                  widget.speakSelectSherpaOnnxSynth,
+                  widget.initForSS,
+                  widget.playerForSS,
+                );
               }
               break;
             }
@@ -2495,8 +2664,19 @@ import 'dart:async';
       final Root root;
       final GrammerObjects obj;
       final TTSInterface synth;
+      final sherpa_onnx.OfflineTts? speakSelectSherpaOnnxSynth;
+      final Future<void> Function() initForSS;
+      final AudioPlayer playerForSS;
 
-      const BuildEditableGrammerPlacholder({super.key, required this.obj, required this.synth, required this.root});
+      const BuildEditableGrammerPlacholder({
+        super.key, 
+        required this.obj, 
+        required this.synth, 
+        required this.root,
+        required this.speakSelectSherpaOnnxSynth,
+        required this.initForSS,
+        required this.playerForSS,
+      });
 
       @override
       Widget build(BuildContext context) {
@@ -2523,7 +2703,14 @@ import 'dart:async';
               break;
             case 2:
               Ev4rs.grammerSelectingAction2(obj, root);
-              await V4rs.speakOnSelect(obj.label ?? '', V4rs.selectedLanguage.value, synth);
+              await V4rs.speakOnSelect(
+                obj.label ?? '', 
+                V4rs.selectedLanguage.value, 
+                synth,
+                speakSelectSherpaOnnxSynth,
+                initForSS,
+                playerForSS,
+              );
               break;
             case 3:
               Ev4rs.grammerSelectingAction2(obj, root);
@@ -2555,6 +2742,9 @@ class EditableNavButton extends StatefulWidget {
   final void Function(BoardObjects board) openBoard;
   final List<BoardObjects> boards;
   final BoardObjects? Function(String uuid, List<BoardObjects> boards) findBoardById;
+  final sherpa_onnx.OfflineTts? speakSelectSherpaOnnxSynth;
+  final Future<void> Function() initForSS;
+  final AudioPlayer playerForSS;
 
   final String linkToLabel;
   final String linkToUUID;
@@ -2647,6 +2837,9 @@ class EditableNavButton extends StatefulWidget {
     this.matchSymbolContrast = true,
     this.matchSymbolSaturation = true,
     this.matchSymbolInvert = true,
+    required this.speakSelectSherpaOnnxSynth,
+    required this.initForSS,
+    required this.playerForSS,
 
   });
 
@@ -2729,7 +2922,14 @@ class _EditableNavButton extends State<EditableNavButton> {
                 openBoard(board);
               }
             
-            V4rs.speakOnSelect(label, V4rs.selectedLanguage.value, tts);
+            V4rs.speakOnSelect(
+              label, 
+              V4rs.selectedLanguage.value, 
+              tts,
+              widget.speakSelectSherpaOnnxSynth,
+              widget.initForSS,
+              widget.playerForSS,
+            );
             break;
           case 3:
            Ev4rs.navSelectingAction2(obj, widget.root);
@@ -2737,7 +2937,14 @@ class _EditableNavButton extends State<EditableNavButton> {
               if (board != null) {
                 openBoard(board);
               }
-            V4rs.speakOnSelect(alternateLabel, V4rs.selectedLanguage.value, tts);
+            V4rs.speakOnSelect(
+              alternateLabel, 
+              V4rs.selectedLanguage.value, 
+              tts,
+              widget.speakSelectSherpaOnnxSynth,
+              widget.initForSS,
+              widget.playerForSS,
+            );
             break;
           }
         });

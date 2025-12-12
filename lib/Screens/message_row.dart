@@ -4,7 +4,7 @@ import 'package:flutterkeysaac/Variables/colors/color_variables.dart';
 import 'package:flutterkeysaac/Variables/variables.dart';
 import 'package:flutterkeysaac/Variables/assorted_ui/ui_shortcuts.dart';
 import 'package:flutter/services.dart';
-import 'package:flutterkeysaac/Variables/tts/tts_interface.dart';
+import 'package:flutterkeysaac/Variables/system_tts/tts_interface.dart';
 import 'package:flutterkeysaac/Variables/fonts/font_variables.dart';
 import 'package:flutterkeysaac/Variables/settings/settings_variables.dart';
 import 'package:flutterkeysaac/Variables/search_variables.dart';
@@ -12,12 +12,20 @@ import 'package:flutterkeysaac/Models/json_model_nav_and_root.dart';
 import 'package:flutterkeysaac/Variables/assorted_ui/ui_boards.dart';
 import 'package:flutterkeysaac/Models/json_model_boards.dart';
 import 'dart:async';
+import 'package:audioplayers/audioplayers.dart';
+import 'package:sherpa_onnx/sherpa_onnx.dart' as sherpa_onnx;
 
 class MessageRow extends StatefulWidget {
   final TTSInterface synth;
   final int? highlightStart;
   final int? highlightLength;
   final Root? root;
+  final sherpa_onnx.OfflineTts? sherpaOnnxSynth;
+  final Future<void> Function() init;
+  final AudioPlayer player;
+  final sherpa_onnx.OfflineTts? speakSelectSherpaOnnxSynth;
+  final Future<void> Function() initForSS;
+  final AudioPlayer playerForSS;
 
   const MessageRow({
     super.key, 
@@ -25,7 +33,13 @@ class MessageRow extends StatefulWidget {
     required this.root,
     this.highlightStart,
     this.highlightLength,
-    });
+    required this.sherpaOnnxSynth,
+    required this.init,
+    required this.player,
+    required this.speakSelectSherpaOnnxSynth,
+    required this.initForSS,
+    required this.playerForSS,
+  });
 
   @override
   State<MessageRow> createState() => _MessageRowState();
@@ -108,7 +122,11 @@ class _MessageRowState extends State<MessageRow> {
                 padding: EdgeInsets.symmetric(vertical: 5.0),
                 child: LeftOfMessageWindow(
                   controller: _controller,
-                  synth: widget.synth, )
+                  synth: widget.synth, 
+                  speakSelectSherpaOnnxSynth: widget.speakSelectSherpaOnnxSynth,
+                  initForSS: widget.initForSS,
+                  playerForSS: widget.playerForSS,
+                )
               ),
             ),
             Expanded(
@@ -125,7 +143,13 @@ class _MessageRowState extends State<MessageRow> {
                     synth: widget.synth,
                     highlightLength: widget.highlightLength,
                     highlightStart: widget.highlightStart,
-                    ),
+                    sherpaOnnxSynth: widget.sherpaOnnxSynth,
+                    init: widget.init,
+                    player: widget.player,
+                    speakSelectSherpaOnnxSynth: widget.speakSelectSherpaOnnxSynth,
+                    initForSS: widget.initForSS,
+                    playerForSS: widget.playerForSS,
+                  ),
               ),
               ),
             ),
@@ -141,6 +165,12 @@ class _MessageRowState extends State<MessageRow> {
                       onUndo: _undo,
                       onRedo: _redo,
                       synth: widget.synth,
+                      sherpaOnnxSynth: widget.sherpaOnnxSynth,
+                      init: widget.init,
+                      player: widget.player,
+                      speakSelectSherpaOnnxSynth: widget.speakSelectSherpaOnnxSynth,
+                      initForSS: widget.initForSS,
+                      playerForSS: widget.playerForSS,
                     );
                 }
             )
@@ -156,7 +186,18 @@ class _MessageRowState extends State<MessageRow> {
 class LeftOfMessageWindow extends StatefulWidget {
   final TextEditingController controller;
   final TTSInterface synth;
-  const LeftOfMessageWindow({super.key, required this.controller, required this.synth});
+  final sherpa_onnx.OfflineTts? speakSelectSherpaOnnxSynth;
+  final Future<void> Function() initForSS;
+  final AudioPlayer playerForSS;
+
+  const LeftOfMessageWindow({
+    super.key, 
+    required this.controller, 
+    required this.synth,
+    required this.speakSelectSherpaOnnxSynth,
+    required this.initForSS,
+    required this.playerForSS,
+  });
 
   @override
   State<LeftOfMessageWindow> createState() => _LeftOfMessageWindow();
@@ -187,7 +228,14 @@ class _LeftOfMessageWindow extends State<LeftOfMessageWindow> {
                   imagePath: 'assets/interface_icons/interface_icons/iSettings.png',
                   onPressed: () {
                     if (Sv4rs.speakInterfaceButtonsOnSelect) {
-                          V4rs.speakOnSelect('settings', V4rs.selectedLanguage.value, widget.synth);
+                          V4rs.speakOnSelect(
+                            'settings', 
+                            V4rs.selectedLanguage.value, 
+                            widget.synth,
+                            widget.speakSelectSherpaOnnxSynth,
+                            widget.initForSS,
+                            widget.playerForSS,
+                            );
                           }
                     V4rs.showSettings.value = true;
                   },
@@ -203,8 +251,15 @@ class _LeftOfMessageWindow extends State<LeftOfMessageWindow> {
                   imagePath: 'assets/interface_icons/interface_icons/iExpand.png',
                   onPressed: () {
                     if (Sv4rs.speakInterfaceButtonsOnSelect) {
-                          V4rs.speakOnSelect('expand page', V4rs.selectedLanguage.value, widget.synth);
-                          }
+                          V4rs.speakOnSelect(
+                            'expand page', 
+                            V4rs.selectedLanguage.value, 
+                            widget.synth,
+                            widget.speakSelectSherpaOnnxSynth,
+                            widget.initForSS,
+                            widget.playerForSS,
+                        );
+                      }
                     V4rs.showExpandPage.value = true;
                   },
                 ),
@@ -224,8 +279,15 @@ class _LeftOfMessageWindow extends State<LeftOfMessageWindow> {
                 imagePath: 'assets/interface_icons/interface_icons/iCopy.png',
                 onPressed: () {
                   if (Sv4rs.speakInterfaceButtonsOnSelect) {
-                        V4rs.speakOnSelect('copy', V4rs.selectedLanguage.value, widget.synth);
-                        }
+                        V4rs.speakOnSelect(
+                          'copy', 
+                          V4rs.selectedLanguage.value, 
+                          widget.synth,
+                          widget.speakSelectSherpaOnnxSynth,
+                          widget.initForSS,
+                          widget.playerForSS,
+                        );
+                      }
                     Clipboard.setData(ClipboardData(text: widget.controller.text));
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
@@ -246,7 +308,14 @@ class _LeftOfMessageWindow extends State<LeftOfMessageWindow> {
                 imagePath: 'assets/interface_icons/interface_icons/iBookmark.png',
                 onPressed: () {
                   if (Sv4rs.speakInterfaceButtonsOnSelect) {
-                        V4rs.speakOnSelect('bookmark', V4rs.selectedLanguage.value, widget.synth);
+                        V4rs.speakOnSelect(
+                          'bookmark', 
+                          V4rs.selectedLanguage.value, 
+                          widget.synth,
+                          widget.speakSelectSherpaOnnxSynth,
+                          widget.initForSS,
+                          widget.playerForSS,
+                          );
                         }
                   // put action here
                 },
@@ -265,8 +334,15 @@ class _LeftOfMessageWindow extends State<LeftOfMessageWindow> {
                 imagePath: 'assets/interface_icons/interface_icons/iBoardset.png',
                 onPressed: () {
                   if (Sv4rs.speakInterfaceButtonsOnSelect) {
-                        V4rs.speakOnSelect('quick swap', V4rs.selectedLanguage.value, widget.synth);
-                        }
+                    V4rs.speakOnSelect(
+                      'quick swap', 
+                      V4rs.selectedLanguage.value, 
+                      widget.synth,
+                      widget.speakSelectSherpaOnnxSynth,
+                      widget.initForSS,
+                      widget.playerForSS,
+                    );
+                  }
                   // put action here
                 },
               ),
@@ -284,6 +360,12 @@ class MessageWindow extends StatefulWidget {
   final TTSInterface synth;
   final int? highlightStart;
   final int? highlightLength;
+  final sherpa_onnx.OfflineTts? sherpaOnnxSynth;
+  final Future<void> Function() init;
+  final AudioPlayer player;
+  final sherpa_onnx.OfflineTts? speakSelectSherpaOnnxSynth;
+  final Future<void> Function() initForSS;
+  final AudioPlayer playerForSS;
       
   const MessageWindow({
     super.key, 
@@ -291,7 +373,13 @@ class MessageWindow extends StatefulWidget {
     required this.synth,
     this.highlightLength,
     this.highlightStart,
-    });
+    required this.sherpaOnnxSynth,
+    required this.init,
+    required this.player,
+    required this.speakSelectSherpaOnnxSynth,
+    required this.initForSS,
+    required this.playerForSS,
+  });
 
   @override
   State<MessageWindow> createState() => _MessageWindowState();
@@ -390,7 +478,7 @@ class _MessageWindowState extends State<MessageWindow> {
 
   void _scrollToBottom() {
   _scrollController.animateTo(
-    _scrollController.position.maxScrollExtent - 1,
+    _scrollController.position.maxScrollExtent,
     duration: Duration(milliseconds: 300), 
     curve: Curves.easeOut,
   );
@@ -544,6 +632,12 @@ class _MessageWindowState extends State<MessageWindow> {
               flex: 1,
               child: Alerts(
                 tts: widget.synth,
+                sherpaOnnxSynth: widget.sherpaOnnxSynth,
+                init: widget.init,
+                player: widget.player,
+                speakSelectSherpaOnnxSynth: widget.speakSelectSherpaOnnxSynth,
+                initForSS: widget.initForSS,
+                playerForSS: widget.playerForSS,
               ),
             ),
           ],
@@ -583,7 +677,14 @@ class _MessageWindowState extends State<MessageWindow> {
                currentLanguageIndex = value.round();
                 final currentLanguage = languages[currentLanguageIndex];
                 if (Sv4rs.speakInterfaceButtonsOnSelect) {
-                  V4rs.speakOnSelect('selected language set to ${V4rs.languageToLocalePrefix_(currentLanguage).toUpperCase()}', V4rs.selectedLanguage.value, widget.synth);
+                  V4rs.speakOnSelect(
+                    'selected language set to ${V4rs.languageToLocalePrefix_(currentLanguage).toUpperCase()}', 
+                    V4rs.selectedLanguage.value, 
+                    widget.synth,
+                    widget.speakSelectSherpaOnnxSynth,
+                    widget.initForSS,
+                    widget.playerForSS,
+                    );
                   }
               setState(() {
                 V4rs.selectedLanguage.value = currentLanguage;
@@ -680,9 +781,23 @@ Widget _highlightedTextWidget() {
 
 class Alerts extends StatelessWidget {
   final TTSInterface tts;
+  final sherpa_onnx.OfflineTts? sherpaOnnxSynth;
+  final Future<void> Function() init;
+  final AudioPlayer player;
+  final sherpa_onnx.OfflineTts? speakSelectSherpaOnnxSynth;
+  final Future<void> Function() initForSS;
+  final AudioPlayer playerForSS;
   
-
- const Alerts ({super.key, required this.tts});
+  const Alerts ({
+    super.key, 
+    required this.tts,
+    required this.sherpaOnnxSynth,
+    required this.init,
+    required this.player,
+    required this.speakSelectSherpaOnnxSynth,
+    required this.initForSS,
+    required this.playerForSS,
+  });
   
   @override
   Widget build(BuildContext context) {
@@ -700,11 +815,31 @@ class Alerts extends StatelessWidget {
                   onPressed: () async {
                     if (Sv4rs.speakInterfaceButtonsOnSelect) {
                       await Future.delayed(const Duration(milliseconds: 100));
-                      await V4rs.speakOnSelect('first alert', V4rs.selectedLanguage.value, tts);
+                      await V4rs.speakOnSelect(
+                        'first alert', 
+                        V4rs.selectedLanguage.value, 
+                        tts,
+                        speakSelectSherpaOnnxSynth,
+                        initForSS,
+                        playerForSS,
+                        );
                       await Future.delayed(const Duration(milliseconds: 100));
-                      await V4rs.universalSpeakWithSSRestore(Sv4rs.firstAlert, V4rs.selectedLanguage.toString(), tts);
+                      await V4rs.alertSpeakWithSSRestore(
+                        Sv4rs.firstAlert, V4rs.selectedLanguage.toString(), 
+                        tts,
+                        sherpaOnnxSynth,
+                        init,
+                        player
+                      );
                       } else {
-                      await V4rs.universalSpeak(Sv4rs.firstAlert, V4rs.selectedLanguage.toString(), tts);
+                      await V4rs.alertSpeak(
+                        Sv4rs.firstAlert, 
+                        V4rs.selectedLanguage.toString(), 
+                        tts,
+                        sherpaOnnxSynth,
+                        init,
+                        player
+                        );
                       }
                   },
                 ),
@@ -716,11 +851,32 @@ class Alerts extends StatelessWidget {
                   invertColors: true,
                   onPressed: () async {
                     if (Sv4rs.speakInterfaceButtonsOnSelect) {
-                      await V4rs.speakOnSelect('second alert', V4rs.selectedLanguage.value, tts);
-                      await V4rs.universalSpeakWithSSRestore(Sv4rs.secondAlert, V4rs.selectedLanguage.toString(), tts);
+                      await V4rs.speakOnSelect(
+                        'second alert', 
+                        V4rs.selectedLanguage.value, 
+                        tts,
+                        speakSelectSherpaOnnxSynth,
+                        initForSS,
+                        playerForSS,
+                      );
+                      await V4rs.alertSpeakWithSSRestore(
+                        Sv4rs.secondAlert, 
+                        V4rs.selectedLanguage.toString(), 
+                        tts,
+                        sherpaOnnxSynth,
+                        init,
+                        player
+                        );
                       } else {
-                    await V4rs.universalSpeak(Sv4rs.secondAlert, V4rs.selectedLanguage.toString(), tts);
-                      }
+                    await V4rs.alertSpeak(
+                      Sv4rs.secondAlert, 
+                      V4rs.selectedLanguage.toString(), 
+                      tts,
+                      sherpaOnnxSynth,
+                      init,
+                      player
+                     );
+                    }
                   },
                 ),
           ),
@@ -731,11 +887,32 @@ class Alerts extends StatelessWidget {
                   invertColors: true,
                   onPressed: () async {
                     if (Sv4rs.speakInterfaceButtonsOnSelect) {
-                        await V4rs.speakOnSelect('third alert', V4rs.selectedLanguage.value, tts);
-                        await V4rs.universalSpeakWithSSRestore(Sv4rs.thirdAlert, V4rs.selectedLanguage.toString(), tts);
+                        await V4rs.speakOnSelect(
+                          'third alert', 
+                          V4rs.selectedLanguage.value, 
+                          tts,
+                          speakSelectSherpaOnnxSynth,
+                          initForSS,
+                          playerForSS,
+                        );
+                        await V4rs.alertSpeakWithSSRestore(
+                          Sv4rs.thirdAlert, 
+                          V4rs.selectedLanguage.toString(), 
+                          tts,
+                          sherpaOnnxSynth,
+                          init,
+                          player
+                        );
                       } else {
-                     await V4rs.universalSpeak(Sv4rs.thirdAlert, V4rs.selectedLanguage.toString(), tts);
-                      }
+                     await V4rs.alertSpeak(
+                      Sv4rs.thirdAlert, 
+                      V4rs.selectedLanguage.toString(), 
+                      tts,
+                      sherpaOnnxSynth,
+                      init,
+                      player
+                     );
+                    }
                   },
                 ),
           ),
@@ -751,6 +928,12 @@ class RightOfMessageWindow extends StatefulWidget {
   final VoidCallback onUndo;
   final VoidCallback onRedo;
   final TTSInterface synth;
+  final sherpa_onnx.OfflineTts? sherpaOnnxSynth;
+  final Future<void> Function() init;
+  final AudioPlayer player;
+  final sherpa_onnx.OfflineTts? speakSelectSherpaOnnxSynth;
+  final Future<void> Function() initForSS;
+  final AudioPlayer playerForSS;
 
   const RightOfMessageWindow({
     super.key, 
@@ -758,6 +941,12 @@ class RightOfMessageWindow extends StatefulWidget {
     required this.onUndo,
     required this.onRedo,
     required this.synth,
+    required this.sherpaOnnxSynth,
+    required this.init,
+    required this.player,
+    required this.speakSelectSherpaOnnxSynth,
+    required this.initForSS,
+    required this.playerForSS,
     });
 
   @override
@@ -802,7 +991,14 @@ class _RightOfMessageWindowState extends State<RightOfMessageWindow> {
                       imagePath: 'assets/interface_icons/interface_icons/iUndo.png',
                       onPressed: () {
                         if (Sv4rs.speakInterfaceButtonsOnSelect) {
-                          V4rs.speakOnSelect('undo', V4rs.selectedLanguage.value, widget.synth);
+                          V4rs.speakOnSelect(
+                            'undo', 
+                            V4rs.selectedLanguage.value, 
+                            widget.synth,
+                            widget.speakSelectSherpaOnnxSynth,
+                            widget.initForSS,
+                            widget.playerForSS,
+                           );
                           }
                         widget.onUndo();
                       },
@@ -825,7 +1021,14 @@ class _RightOfMessageWindowState extends State<RightOfMessageWindow> {
                                 async {
                                   if (Sv4rs.speakInterfaceButtonsOnSelect) {
                                     await widget.synth.stop();
-                                    V4rs.speakOnSelect('pause', V4rs.selectedLanguage.value, widget.synth);
+                                    V4rs.speakOnSelect(
+                                      'pause', 
+                                      V4rs.selectedLanguage.value, 
+                                      widget.synth,
+                                      widget.speakSelectSherpaOnnxSynth,
+                                      widget.initForSS,
+                                      widget.playerForSS,
+                                    );
                                     } else {
                                       await widget.synth.pause();
                                       V4rs.wasPaused.value = true;
@@ -844,11 +1047,32 @@ class _RightOfMessageWindowState extends State<RightOfMessageWindow> {
                               onPressed: () 
                                 async {
                                   if (Sv4rs.speakInterfaceButtonsOnSelect) {
-                                    await V4rs.speakOnSelect('play', V4rs.selectedLanguage.value, widget.synth);
-                                    await V4rs.mwSpeakWithSSRestore( V4rs.message.value, V4rs.selectedLanguage.value, widget.synth);
+                                    await V4rs.speakOnSelect(
+                                      'play', 
+                                      V4rs.selectedLanguage.value, 
+                                      widget.synth,
+                                      widget.speakSelectSherpaOnnxSynth,
+                                      widget.initForSS,
+                                      widget.playerForSS,
+                                    );
+                                    await V4rs.mwSpeakWithSSRestore(
+                                      V4rs.message.value, 
+                                      V4rs.selectedLanguage.value, 
+                                      widget.synth,
+                                      widget.sherpaOnnxSynth,
+                                      widget.init,
+                                      widget.player
+                                    );
                                     } else {
-                                  await V4rs.messageWindowSpeak( V4rs.message.value, V4rs.selectedLanguage.value, widget.synth);
-                                    }
+                                  await V4rs.messageWindowSpeak(
+                                    V4rs.message.value, 
+                                    V4rs.selectedLanguage.value, 
+                                    widget.synth,
+                                    widget.sherpaOnnxSynth,
+                                    widget.init,
+                                    widget.player
+                                    );
+                                  }
                                 },
                               ),
                             ),
@@ -865,8 +1089,15 @@ class _RightOfMessageWindowState extends State<RightOfMessageWindow> {
                   imagePath: 'assets/interface_icons/interface_icons/iRe-do.png',
                   onPressed: () {
                     if (Sv4rs.speakInterfaceButtonsOnSelect) {
-                          V4rs.speakOnSelect('redo', V4rs.selectedLanguage.value, widget.synth);
-                          }
+                      V4rs.speakOnSelect(
+                        'redo', 
+                        V4rs.selectedLanguage.value, 
+                        widget.synth,
+                        widget.speakSelectSherpaOnnxSynth,
+                        widget.initForSS,
+                        widget.playerForSS,
+                      );
+                    }
                     widget.onRedo();
                   },
                 ),
@@ -888,12 +1119,34 @@ class _RightOfMessageWindowState extends State<RightOfMessageWindow> {
                         onPressed: () async {
                          
                             await widget.synth.stop();
+                            V4rs.currentSpeakingFile = null;
                           
                           if (Sv4rs.speakInterfaceButtonsOnSelect) {
-                            await V4rs.speakOnSelect('rewind', V4rs.selectedLanguage.value, widget.synth);
-                            await V4rs.mwSpeakWithSSRestore( V4rs.message.value, V4rs.selectedLanguage.value, widget.synth);
+                            await V4rs.speakOnSelect(
+                              'rewind', 
+                              V4rs.selectedLanguage.value, 
+                              widget.synth,
+                              widget.speakSelectSherpaOnnxSynth,
+                              widget.initForSS,
+                              widget.playerForSS,
+                            );
+                            await V4rs.mwSpeakWithSSRestore(
+                              V4rs.message.value, 
+                              V4rs.selectedLanguage.value, 
+                              widget.synth,
+                              widget.sherpaOnnxSynth,
+                              widget.init,
+                              widget.player
+                            );
                           } else {
-                          await V4rs.messageWindowSpeak( V4rs.message.value, V4rs.selectedLanguage.value, widget.synth);
+                          await V4rs.messageWindowSpeak( 
+                            V4rs.message.value, 
+                            V4rs.selectedLanguage.value, 
+                            widget.synth,
+                            widget.sherpaOnnxSynth,
+                            widget.init,
+                            widget.player
+                            );
                           }
                         },
                       ),
@@ -908,7 +1161,14 @@ class _RightOfMessageWindowState extends State<RightOfMessageWindow> {
                       imagePath: 'assets/interface_icons/interface_icons/iSearch.png',
                       onPressed: () { setState((){
                         if (Sv4rs.speakInterfaceButtonsOnSelect) {
-                          V4rs.speakOnSelect('search', V4rs.selectedLanguage.value, widget.synth);
+                          V4rs.speakOnSelect(
+                            'search', 
+                            V4rs.selectedLanguage.value, 
+                            widget.synth,
+                            widget.speakSelectSherpaOnnxSynth,
+                            widget.initForSS,
+                            widget.playerForSS,
+                            );
                           }
                           SeV4rs.openSearch.value = true;
                           SeV4rs.findAndPick.value = false;
@@ -927,7 +1187,14 @@ class _RightOfMessageWindowState extends State<RightOfMessageWindow> {
                     imagePath: 'assets/interface_icons/interface_icons/iClear.png',
                     onPressed: () {
                       if (Sv4rs.speakInterfaceButtonsOnSelect) {
-                          V4rs.speakOnSelect('clear', V4rs.selectedLanguage.value, widget.synth);
+                          V4rs.speakOnSelect(
+                            'clear', 
+                            V4rs.selectedLanguage.value, 
+                            widget.synth,
+                            widget.speakSelectSherpaOnnxSynth,
+                            widget.initForSS,
+                            widget.playerForSS,
+                            );
                           }
                       widget.controller.clear();
                     },
@@ -1220,9 +1487,5 @@ class _SearchDisplay extends State<SearchDisplay> {
       },
     );
   }
-
 }
-
-
-
 

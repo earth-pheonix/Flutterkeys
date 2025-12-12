@@ -1,6 +1,6 @@
 
 import 'package:flutterkeysaac/Variables/colors/color_variables.dart';
-import 'package:flutterkeysaac/Variables/tts/tts_interface.dart';
+import 'package:flutterkeysaac/Variables/system_tts/tts_interface.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutterkeysaac/Variables/settings/settings_variables.dart';
 import 'package:flutterkeysaac/Variables/search_variables.dart';
@@ -14,10 +14,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutterkeysaac/Models/json_model_nav_and_root.dart';
 import 'package:flutterkeysaac/Models/json_model_boards.dart';
+import 'package:flutterkeysaac/Variables/settings/voice_variables.dart';
 import 'dart:io';
 import 'dart:convert';
 import 'package:path/path.dart' as p;
-import 'package:http/http.dart' as http;   
+import 'package:flutterkeysaac/Variables/sherpa_onnx_tts.dart';
+import 'package:audioplayers/audioplayers.dart';
+import 'package:sherpa_onnx/sherpa_onnx.dart' as sherpa_onnx;
 
 class V4rs {
 
@@ -48,6 +51,12 @@ class V4rs {
 //
 //Message window variables
 //
+
+  //for sherpa-onnx
+  static double? wordsPerMinute; 
+  static Duration? pauseMoment;
+  static String? currentSpeakingFile;
+
   static bool changedMWfromButton = false;
 
   static  ValueNotifier<String> message = ValueNotifier("");
@@ -307,56 +316,90 @@ static Future<void> saveMyBoardsets (List<File> myBoardsets) async {
     'fr': 'Français',
   };
 
+  static Map<String, String> langNameToCode = {
+    'English': 'en',
+    '中文': 'zh',
+    'Española': 'es',
+    'Français': 'fr',
+  };
+
   static String getLangName(String code) {
     return langCodeToName[code] ?? code;
   }
 
-  static Future<void> universalSpeak (String text, String deafultLang, TTSInterface tts,) async {
+  static String getLangCode(String lang) {
+    return langNameToCode[lang] ?? lang;
+  }
+
+ 
+  static Future<void> alertSpeak (
+    String text, 
+    String deafultLang, 
+    TTSInterface tts, 
+    sherpa_onnx.OfflineTts? sherpaOnnxSynth,
+    Future<void> Function() init,
+    AudioPlayer player,
+  ) async {
    final segments = identifyLanguageSegments(text, deafultLang);
      for (final segment in segments) {
       final lang = segment['lang']!;
       final segmentText = segment['text']!;
 
       final langName = getLangName(lang);
-      final voiceID = Sv4rs.getLangVoice(langName);
-      final rate = Sv4rs.getLangRate(langName);
-      final pitch = Sv4rs.getLangPitch(langName);
-
-      final allVoices = await tts.getVoices();
-
-      final matchingVoice = allVoices.firstWhere(
-        (v) => v['identifier'] == voiceID,
-        orElse: () => <String, String>{},
-      );
-
-      final voiceName = matchingVoice['name'] ?? 'default';
-
-    if (voiceName != null) {
-     // await tts.setLanguage(lang);
-      await tts.setVoice({
-        'identifier': voiceID ?? 'default',
-      });
-      await tts.setRate(rate);
-      await tts.setPitch(pitch);
+      final voiceEngine = Vv4rs.myEngineForVoiceLang[lang];
       
-      await tts.speak(segmentText);
+      if (voiceEngine == 'system'){
+        final voiceID = Vv4rs.getSystemValue(langName, 'voice');
+        final rate = Vv4rs.getSystemValue(langName, 'rate');
+        final pitch = Vv4rs.getSystemValue(langName, 'pitch');
 
-      await Future.doWhile(() async {
-        await Future.delayed(const Duration(milliseconds: 100));
-        return tts.isSpeaking.value;
-      });
-    }
+        final allVoices = await tts.getVoices();
+
+        final matchingVoice = allVoices.firstWhere(
+          (v) => v['identifier'] == voiceID,
+          orElse: () => <String, String>{},
+        );
+
+        final voiceName = matchingVoice['name'] ?? 'default';
+
+        if (voiceName != null) {
+        // await tts.setLanguage(lang);
+          await tts.setVoice({
+            'identifier': voiceID ?? 'default',
+          });
+          await tts.setRate(rate);
+          await tts.setPitch(pitch);
+          
+          await tts.speak(segmentText);
+
+          await Future.doWhile(() async {
+            await Future.delayed(const Duration(milliseconds: 100));
+            return tts.isSpeaking.value;
+          });
+        }
+      } else {
+        if (sherpaOnnxSynth != null){
+          SherpaOnnxV4rs.speak(false, lang, segmentText, sherpaOnnxSynth, init, player);
+        }
+      }
   }
  } 
 
-  static Future<void> universalSpeakWithSSRestore(String text, String lang, TTSInterface tts) async {
+  static Future<void> alertSpeakWithSSRestore(
+    String text, 
+    String lang, 
+    TTSInterface tts,
+    sherpa_onnx.OfflineTts? sherpaOnnxSynth,
+    Future<void> Function() init,
+    AudioPlayer player,
+  ) async {
     // Save SS voice settings
-    final currentSSVoice = Sv4rs.getSSLangVoice(lang);
-    final currentSSRate = Sv4rs.getSSLangRate(lang);
-    final currentSSPitch = Sv4rs.getssLangPitch(lang);
+      final currentSSVoice = Vv4rs.getSystemSSValue(lang, 'voice');
+      final currentSSRate = Vv4rs.getSystemSSValue(lang, 'rate');
+      final currentSSPitch = Vv4rs.getSystemSSValue(lang, 'pitch');
 
     // Call universal speak (uses regular voices)
-    await universalSpeak(text, lang, tts);
+    await alertSpeak(text, lang, tts, sherpaOnnxSynth, init, player);
 
     // Validate voice ID before restoring
     final allVoices = await tts.getVoices();
@@ -372,7 +415,15 @@ static Future<void> saveMyBoardsets (List<File> myBoardsets) async {
     } 
   }
 
-  static Future<void> messageWindowSpeak (String text, String deafultLang, TTSInterface tts,) async {
+  static Future<void> messageWindowSpeak (
+    String text, 
+    String deafultLang, 
+    TTSInterface tts,
+    sherpa_onnx.OfflineTts? sherpaOnnxSynth,
+    Future<void> Function() init,
+    AudioPlayer player,
+  ) async {
+    print('start message window speak');
    final segments = identifyLanguageSegments(text, deafultLang);
      resetHighlightStart();
      int cumulativeStart = 0;
@@ -383,29 +434,38 @@ static Future<void> saveMyBoardsets (List<File> myBoardsets) async {
 
       setHighlightStart(cumulativeStart);
 
-      final langName = getLangName(lang);
-      final voiceID = Sv4rs.getLangVoice(langName);
-      final rate = Sv4rs.getLangRate(langName);
-      final pitch = Sv4rs.getLangPitch(langName);
+      if (Vv4rs.myEngineForVoiceLang[lang] == "system") {
 
-      final allVoices = await tts.getVoices();
+        final langName = getLangName(lang);
+        final voiceID = Vv4rs.getSystemValue(langName, 'voice');
+        final rate = Vv4rs.getSystemValue(langName, 'rate');
+        final pitch = Vv4rs.getSystemValue(langName, 'pitch');
 
-      final matchingVoice = allVoices.firstWhere(
-        (v) => v['identifier'] == voiceID,
-        orElse: () => <String, String>{},
-      );
+        final allVoices = await tts.getVoices();
 
-      final voiceName = matchingVoice['name'] ?? 'default';
+        final matchingVoice = allVoices.firstWhere(
+          (v) => v['identifier'] == voiceID,
+          orElse: () => <String, String>{},
+        );
 
-    if (voiceName != null) {
-      await tts.setVoice({
-        'identifier': voiceID ?? 'default',
-      });
-      await tts.setRate(rate);
-      await tts.setPitch(pitch);
-      await tts.speak(segmentText);
-      await tts.onDone.first;
-      cumulativeStart += segmentText.length;
+        final voiceName = matchingVoice['name'] ?? 'default';
+
+      if (voiceName != null) {
+        await tts.setVoice({
+          'identifier': voiceID ?? 'default',
+        });
+        await tts.setRate(rate);
+        await tts.setPitch(pitch);
+        await tts.speak(segmentText);
+        await tts.onDone.first;
+        cumulativeStart += segmentText.length;
+      }
+    } else {
+      print("message window speak: engine is sherpa onnx");
+      if (sherpaOnnxSynth != null){
+        print("message window speak: sherpaOnnxSynth isnt null");
+        SherpaOnnxV4rs.speak(false, lang, segmentText, sherpaOnnxSynth, init, player);
+      }
     }
   }
     resetHighlightStart();
@@ -415,15 +475,22 @@ static Future<void> saveMyBoardsets (List<File> myBoardsets) async {
 
  } 
 
-  static Future<void> mwSpeakWithSSRestore(String text, String lang, TTSInterface tts) async {
+  static Future<void> mwSpeakWithSSRestore(
+    String text, 
+    String lang, 
+    TTSInterface tts,
+    sherpa_onnx.OfflineTts? sherpaOnnxSynth,
+    Future<void> Function() init,
+    AudioPlayer player,
+  ) async {
   // Save SS voice settings
-  final currentSSVoice = Sv4rs.getSSLangVoice(lang);
-  final currentSSRate = Sv4rs.getSSLangRate(lang);
-  final currentSSPitch = Sv4rs.getssLangPitch(lang);
+  final currentSSVoice = Vv4rs.getSystemSSValue(lang, 'voice');
+  final currentSSRate = Vv4rs.getSystemSSValue(lang, 'rate');
+  final currentSSPitch = Vv4rs.getSystemSSValue(lang, 'pitch');
 
-  // Call universal speak (uses regular voices)
+  // Call MW speak (uses regular voices)
   wasPaused.value = false;
-  await messageWindowSpeak(text, lang, tts);
+  await messageWindowSpeak(text, lang, tts, sherpaOnnxSynth, init, player);
 
   // Validate voice ID before restoring
   final allVoices = await tts.getVoices();
@@ -440,7 +507,14 @@ static Future<void> saveMyBoardsets (List<File> myBoardsets) async {
 }
 
 // speak on select 
-  static Future<void> speakOnSelect (String text, String deafultLang, TTSInterface tts) async {
+  static Future<void> speakOnSelect (
+    String text, 
+    String deafultLang, 
+    TTSInterface tts,
+    sherpa_onnx.OfflineTts? speakSelectSherpaOnnxSynth,
+    Future<void> Function() init,
+    AudioPlayer playerForSS,
+  ) async {
    final segments = identifyLanguageSegments(text, deafultLang);
      for (final segment in segments) {
       final lang = segment['lang']!;
@@ -456,34 +530,47 @@ static Future<void> saveMyBoardsets (List<File> myBoardsets) async {
       }
       //pronouncistaion exception code end 
 
-      final langName = getLangName(lang);
-      final voiceID = Sv4rs.useDifferentVoiceforSS ? Sv4rs.getSSLangVoice(langName) : Sv4rs.getLangVoice(langName);
-      final rate = Sv4rs.useDifferentVoiceforSS ? Sv4rs.getSSLangRate(langName) : Sv4rs.getLangRate(langName);
-      final pitch = Sv4rs.useDifferentVoiceforSS ? Sv4rs.getssLangPitch(langName) : Sv4rs.getLangPitch(langName);
+      if (Vv4rs.myEngineForSSVoiceLang[lang] == "system"){
+        
+        final langName = getLangName(lang);
+        final voiceID = Sv4rs.useDifferentVoiceforSS 
+          ? Vv4rs.getSystemSSValue(langName, 'voice') 
+          : Vv4rs.getSystemValue(langName, 'voice');
+        final rate = Sv4rs.useDifferentVoiceforSS 
+          ? Vv4rs.getSystemSSValue(langName, 'rate') 
+          : Vv4rs.getSystemValue(langName, 'rate');
+        final pitch = Sv4rs.useDifferentVoiceforSS 
+          ? Vv4rs.getSystemSSValue(langName, 'pitch') 
+          : Vv4rs.getSystemValue(langName, 'pitch');
 
-      final allVoices = await tts.getVoices();
+        final allVoices = await tts.getVoices();
 
-      final matchingVoice = allVoices.firstWhere(
-        (v) => v['identifier'] == voiceID,
-        orElse: () => <String, String>{},
-      );
+        final matchingVoice = allVoices.firstWhere(
+          (v) => v['identifier'] == voiceID,
+          orElse: () => <String, String>{},
+        );
 
-      final voiceName = matchingVoice['name'] ?? 'default';
+        final voiceName = matchingVoice['name'] ?? 'default';
 
-    if (voiceName != null) {
+        if (voiceName != null) {
 
-     // await tts.setLanguage(lang);
-      await tts.setVoice({
-        'identifier': voiceID ?? 'default',
-      });
-      await tts.setRate(rate);
-      await tts.setPitch(pitch);
-      await tts.speak(segmentText);
-      await Future.doWhile(() async {
-        await Future.delayed(const Duration(milliseconds: 100));
-        return tts.isSpeaking.value;
-      });
-       setHighlightStart(segmentText.length);
+        // await tts.setLanguage(lang);
+          await tts.setVoice({
+            'identifier': voiceID ?? 'default',
+          });
+          await tts.setRate(rate);
+          await tts.setPitch(pitch);
+          await tts.speak(segmentText);
+          await Future.doWhile(() async {
+            await Future.delayed(const Duration(milliseconds: 100));
+            return tts.isSpeaking.value;
+          });
+          setHighlightStart(segmentText.length);
+        }
+    } else {
+      if (speakSelectSherpaOnnxSynth != null) {
+        SherpaOnnxV4rs.speak(true, lang, text, speakSelectSherpaOnnxSynth, init, playerForSS);
+      }
     }
   }
  } 
@@ -698,19 +785,7 @@ static Future<File> resolveImageFile(String relativePath) async {
   final dir = await getApplicationDocumentsDirectory();
   return File(p.join(dir.path, relativePath));
 }
-
-
-
-//
-// Load Voice Manifest
-//
-
-static Future<void> fetchVoiceManifest() async{
-  final url = "https://raw.githubusercontent.com/<yourname>/<repo>/main/voices/manifest.json";
-  final response = await http.get(Uri.parse(url));
-  final manifest = json.decode(response.body);
-}
-
+  
   //
   //LOADING SAVED VALUES
   //
@@ -728,6 +803,7 @@ static Future<void> fetchVoiceManifest() async{
     Cv4rs.loadSavedColorValues();
     Bv4rs.loadSavedBoardsetValues();
     ExV4rs.loadSavedExportValues();
+    Vv4rs.loadSavedValues();
 
     //load the boardsets
     final myBoardsetNames = prefs.getStringList(_myBoardsets);
@@ -758,7 +834,6 @@ static Future<void> fetchVoiceManifest() async{
     interfaceLanguage = prefs.getString(_interfaceLanguage) ?? 'English';
     selectedLanguage.value = prefs.getString(_selectedLanguage) ?? interfaceLanguage;
 
-    
 
     Sv4rs.alertCount = prefs.getInt(Sv4rs.alertCount_) ?? 3;
     Sv4rs.firstAlert = prefs.getString(Sv4rs.firstAlert_) ?? '.en. I have something to say .en.';
@@ -779,15 +854,12 @@ static Future<void> fetchVoiceManifest() async{
 
     primaryUseSubFolders = prefs.getBool(_primaryUseSubFolders) ?? true;
 
-    for (final lang in Sv4rs.myLanguages) {
-      Sv4rs.languageRates[lang] = prefs.getDouble('tts_rate_$lang') ?? 0.5;
-      Sv4rs.languagePitch[lang] = prefs.getDouble('tts_pitch_$lang') ?? 1.0;
-      Sv4rs.languageVoice[lang] = prefs.getString('tts_voice_$lang') ?? 'default';
-      
-      Sv4rs.sslanguageRates[lang] = prefs.getDouble('tts_forSS_rate_$lang') ?? 0.5;
-      Sv4rs.sslanguagePitch[lang] = prefs.getDouble('tts_forSS_pitch_$lang') ?? 1.0;
-      Sv4rs.speakSelectLanguageVoice[lang] = prefs.getString('tts_forSS_voice_$lang') ?? 'default';
-    }
+    Sv4rs.pickFromEngine = prefs.getString(Sv4rs.pickFromEngine_) ?? 'sherpa-onnx';
   }
+
+}
+
+extension SpeakFuncs on V4rs {
+  
 
 }

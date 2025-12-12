@@ -5,8 +5,10 @@ import 'package:flutterkeysaac/Variables/settings/boardset_settings_variables.da
 import 'package:flutterkeysaac/Variables/editing/editable_buttons.dart';
 import 'package:flutterkeysaac/Variables/variables.dart';
 import 'package:flutterkeysaac/Variables/assorted_ui/ui_boards.dart';
-import 'package:flutterkeysaac/Variables/tts/tts_interface.dart';
+import 'package:flutterkeysaac/Variables/system_tts/tts_interface.dart';
 import 'package:flutterkeysaac/Models/json_model_boards.dart';
+import 'package:audioplayers/audioplayers.dart';
+import 'package:sherpa_onnx/sherpa_onnx.dart' as sherpa_onnx;
 
 class Root {
   final List<NavObjects> navRow;
@@ -303,8 +305,11 @@ extension NavRowDisplay on NavObjects {
   VoidCallback toggleStorage, 
   void Function(BoardObjects) openBoard, 
   List<BoardObjects> boards, 
-  BoardObjects? Function(String uuid, List<BoardObjects> boards) 
-  findBoardById) {
+  BoardObjects? Function(String uuid, List<BoardObjects> boards) findBoardById,
+    final sherpa_onnx.OfflineTts? speakSelectSherpaOnnxSynth,
+    final Future<void> Function() initForSS,
+    final AudioPlayer playerForSS,
+  ) {
 
     final perRow = buttonsPerRow ?? content.length;
 
@@ -337,7 +342,11 @@ extension NavRowDisplay on NavObjects {
                 children : [
                 for (var item in row.sublist(0, (row.length / 2).ceil())) 
                   Expanded(child: Padding(padding: EdgeInsetsGeometry.all(3), 
-                    child:  item.buildWidget(synth, toggleStorage, openBoard, boards, findBoardById, item))),
+                    child: item.buildWidget(
+                      synth, toggleStorage, openBoard, 
+                      boards, findBoardById, item, 
+                      speakSelectSherpaOnnxSynth, initForSS, playerForSS,
+                    ))),
                 for (var i = 0; i < (perRow / 2 ).ceil() - (row.length / 2).ceil(); i++)
                  Expanded(child: Padding(padding: EdgeInsetsGeometry.all(3), child: SizedBox())),  // empty slot
               ])
@@ -361,7 +370,11 @@ extension NavRowDisplay on NavObjects {
                     flex: 11,
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 2),
-                      child: btn.buildWidget(synth, toggleStorage, openBoard, boards, findBoardById, btn),
+                      child: btn.buildWidget(
+                        synth, toggleStorage, openBoard, 
+                        boards, findBoardById, btn,
+                        speakSelectSherpaOnnxSynth, initForSS, playerForSS,
+                      ),
                     ),
                   ),
                 // storageChest
@@ -372,7 +385,11 @@ extension NavRowDisplay on NavObjects {
                     child: Column(
                       children: [
                         for (var chest in storageChest)
-                          Expanded(child: chest.buildWidget(synth, toggleStorage, openBoard, boards, findBoardById, chest)),
+                          Expanded(child: chest.buildWidget(
+                            synth, toggleStorage, openBoard, 
+                            boards, findBoardById, chest,
+                            speakSelectSherpaOnnxSynth, initForSS, playerForSS,
+                          )),
                       ],
                     ),
                   ),
@@ -383,7 +400,11 @@ extension NavRowDisplay on NavObjects {
                     flex: 11,
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 2),
-                      child: btn.buildWidget(synth, toggleStorage, openBoard, boards, findBoardById, btn),
+                      child: btn.buildWidget(
+                        synth, toggleStorage, openBoard, 
+                        boards, findBoardById, btn,
+                        speakSelectSherpaOnnxSynth, initForSS, playerForSS,
+                      ),
                     ),
                   ),
                   Spacer(flex: 1)
@@ -404,7 +425,11 @@ extension NavRowDisplay on NavObjects {
                 children : [
                 for (var item in row.sublist((row.length / 2).ceil(), row.length)) 
                   Expanded(child: Padding(padding: EdgeInsetsGeometry.all(3), 
-                    child: item.buildWidget(synth, toggleStorage, openBoard, boards, findBoardById, item))),
+                    child: item.buildWidget(
+                      synth, toggleStorage, openBoard, 
+                      boards, findBoardById, item,
+                      speakSelectSherpaOnnxSynth, initForSS, playerForSS,
+                    ))),
                 for (var i = 0; i < (perRow / 2).floor() - (row.length / 2).floor(); i++)
                   Expanded(child: Padding(padding: EdgeInsetsGeometry.all(3), child: SizedBox())),  // empty slot
               ]),
@@ -422,8 +447,11 @@ extension NavRowDisplay on NavObjects {
   VoidCallback toggleStorage, 
   void Function(BoardObjects) openBoard, 
   List<BoardObjects> boards, 
-  BoardObjects? Function(String uuid, List<BoardObjects> boards) 
-  findBoardById) {
+  BoardObjects? Function(String uuid, List<BoardObjects> boards) findBoardById,
+  final sherpa_onnx.OfflineTts? speakSelectSherpaOnnxSynth,
+    final Future<void> Function() initForSS,
+    final AudioPlayer playerForSS,
+  ) {
 
     final perRow = buttonsPerRow ?? content.length;
 
@@ -456,7 +484,11 @@ extension NavRowDisplay on NavObjects {
                 children : [
                 for (var item in row.sublist(0, (row.length / 2).ceil())) 
                   Expanded(child: Padding(padding: EdgeInsetsGeometry.all(3), 
-                    child:  item.buildEditableWidget(root, synth, item, toggleStorage, openBoard, boards, findBoardById,))),
+                    child:  item.buildEditableWidget(
+                      root, synth, item, 
+                      toggleStorage, openBoard, boards, 
+                      findBoardById, speakSelectSherpaOnnxSynth, initForSS, playerForSS,
+                    ))),
                 for (var i = 0; i < (perRow / 2 ).ceil() - (row.length / 2).ceil(); i++)
                  Expanded(child: Padding(padding: EdgeInsetsGeometry.all(3), child: SizedBox())),  // empty slot
               ])
@@ -480,7 +512,11 @@ extension NavRowDisplay on NavObjects {
                     flex: 11,
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 2),
-                      child: btn.buildEditableWidget(root, synth, btn, toggleStorage, openBoard, boards, findBoardById,),
+                      child: btn.buildEditableWidget(
+                        root, synth, btn, toggleStorage, 
+                        openBoard, boards, findBoardById,
+                        speakSelectSherpaOnnxSynth, initForSS, playerForSS,
+                      ),
                     ),
                   ),
                 // storageChest
@@ -491,7 +527,11 @@ extension NavRowDisplay on NavObjects {
                     child: Column(
                       children: [
                         for (var chest in storageChest)
-                          Expanded(child: chest.buildEditableWidget(root, synth, chest, toggleStorage, openBoard, boards, findBoardById,)),
+                          Expanded(child: chest.buildEditableWidget(
+                            root, synth, chest, toggleStorage, 
+                            openBoard, boards, findBoardById,
+                            speakSelectSherpaOnnxSynth, initForSS, playerForSS,
+                            )),
                       ],
                     ),
                   ),
@@ -502,7 +542,11 @@ extension NavRowDisplay on NavObjects {
                     flex: 11,
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 2),
-                      child: btn.buildEditableWidget(root, synth, btn, toggleStorage, openBoard, boards, findBoardById,),
+                      child: btn.buildEditableWidget(
+                        root, synth, btn, toggleStorage, 
+                        openBoard, boards, findBoardById,
+                        speakSelectSherpaOnnxSynth, initForSS, playerForSS,
+                        ),
                     ),
                   ),
                   Spacer(flex: 1)
@@ -523,7 +567,11 @@ extension NavRowDisplay on NavObjects {
                 children : [
                 for (var item in row.sublist((row.length / 2).ceil(), row.length)) 
                   Expanded(child: Padding(padding: EdgeInsetsGeometry.all(3), 
-                    child: item.buildEditableWidget(root, synth, item, toggleStorage, openBoard, boards, findBoardById,))),
+                    child: item.buildEditableWidget(
+                      root, synth, item, toggleStorage, 
+                      openBoard, boards, findBoardById,
+                      speakSelectSherpaOnnxSynth, initForSS, playerForSS,
+                    ))),
                 for (var i = 0; i < (perRow / 2).floor() - (row.length / 2).floor(); i++)
                   Expanded(child: Padding(padding: EdgeInsetsGeometry.all(3), child: SizedBox())),  // empty slot
               ]),
@@ -537,14 +585,26 @@ extension NavRowDisplay on NavObjects {
   }
 
 
-  Widget buildWidget(TTSInterface synth, VoidCallback toggleStorage, void Function(BoardObjects) openBoard, List<BoardObjects> boards, BoardObjects? Function(String uuid, List<BoardObjects> boards) findBoardById, NavObjects? obj,) {
+  Widget buildWidget(
+    TTSInterface synth, 
+    VoidCallback toggleStorage, 
+    void Function(BoardObjects) openBoard, 
+    List<BoardObjects> boards, 
+    BoardObjects? Function(String uuid, List<BoardObjects> boards) findBoardById, 
+    NavObjects? obj,
+    final sherpa_onnx.OfflineTts? speakSelectSherpaOnnxSynth,
+    final Future<void> Function() initForSS,
+    final AudioPlayer playerForSS,
+  ) {
     switch(type) {
       case 'row': 
-        return _buildRow(synth, toggleStorage, openBoard, boards, findBoardById,);
+        return _buildRow(
+          synth, toggleStorage, openBoard, 
+          boards, findBoardById, speakSelectSherpaOnnxSynth, initForSS, playerForSS,);
       case 'navButton':
-        return _buildNavButton(synth, openBoard, boards, findBoardById, obj);
+        return _buildNavButton(synth, openBoard, boards, findBoardById, obj, speakSelectSherpaOnnxSynth, initForSS, playerForSS,);
       case "specialNavButton":
-        return _buildSpecialNavButton(synth, obj);
+        return _buildSpecialNavButton(synth, obj, speakSelectSherpaOnnxSynth, initForSS, playerForSS,);
       case "storage":
         return _buildStorageChest(synth, toggleStorage);
       default:
@@ -560,15 +620,18 @@ extension NavRowDisplay on NavObjects {
     VoidCallback toggleStorage, 
     void Function(BoardObjects) openBoard, 
     List<BoardObjects> boards, 
-    BoardObjects? Function(String uuid, List<BoardObjects> boards) findBoardById
+    BoardObjects? Function(String uuid, List<BoardObjects> boards) findBoardById,
+    final sherpa_onnx.OfflineTts? speakSelectSherpaOnnxSynth,
+    final Future<void> Function() initForSS,
+    final AudioPlayer playerForSS,
     ) {
     switch(type) {
       case 'row': 
-        return _buildEditableRow(root, synth, toggleStorage, openBoard, boards, findBoardById,);
+        return _buildEditableRow(root, synth, toggleStorage, openBoard, boards, findBoardById, speakSelectSherpaOnnxSynth, initForSS, playerForSS,);
       case 'navButton':
-        return _buildEditableNavButton(root, synth, obj, openBoard, boards, findBoardById,);
+        return _buildEditableNavButton(root, synth, obj, openBoard, boards, findBoardById, speakSelectSherpaOnnxSynth, initForSS, playerForSS,);
       case "specialNavButton":
-        return _buildSpecialNavButton(synth, obj);
+        return _buildSpecialNavButton(synth, obj, speakSelectSherpaOnnxSynth, initForSS, playerForSS,);
       case "storage":
         return _buildStorageChest(synth, toggleStorage);
       default:
@@ -576,7 +639,16 @@ extension NavRowDisplay on NavObjects {
     }
   }
 
-  Widget _buildNavButton(TTSInterface synth, void Function(BoardObjects) openBoard, List<BoardObjects> boards, BoardObjects? Function(String uuid, List<BoardObjects> boards) findBoardById, NavObjects? me,) {
+  Widget _buildNavButton(
+    TTSInterface synth, 
+    void Function(BoardObjects) openBoard, 
+    List<BoardObjects> boards, 
+    BoardObjects? Function(String uuid, List<BoardObjects> boards) findBoardById, 
+    NavObjects? me,
+    final sherpa_onnx.OfflineTts? speakSelectSherpaOnnxSynth,
+    final Future<void> Function() initForSS,
+    final AudioPlayer playerForSS,
+  ) {
    return ValueListenableBuilder(valueListenable: V4rs.searchPathUUIDS, builder: (context, search, _) {
       
    return NavButtonStyle(
@@ -619,12 +691,20 @@ extension NavRowDisplay on NavObjects {
     matchSpeakOS: matchSpeakOS ?? false,
     speakOS: speakOS ?? 1,
     alternateLabel: alternateLabel ?? '',
+    speakSelectSherpaOnnxSynth: speakSelectSherpaOnnxSynth,
+    initForSS: initForSS,
+    playerForSS: playerForSS,
    );
     }
    );
   }
   
-  Widget _buildSpecialNavButton(TTSInterface synth, NavObjects? me) {
+  Widget _buildSpecialNavButton(
+    TTSInterface synth, NavObjects? me,
+    final sherpa_onnx.OfflineTts? speakSelectSherpaOnnxSynth,
+    final Future<void> Function() initForSS,
+    final AudioPlayer playerForSS,
+    ) {
     return (Bv4rs.showCenterButtons != 2) ? SpecialNavButtonStyle(
       me: me,
       onPressed: () {}, 
@@ -656,6 +736,9 @@ extension NavRowDisplay on NavObjects {
       matchSpeakOS: matchSpeakOS ?? false,
       speakOS: speakOS ?? 1,
       alternateLabel: alternateLabel ?? '',
+      speakSelectSherpaOnnxSynth: speakSelectSherpaOnnxSynth,
+      initForSS: initForSS,
+      playerForSS: playerForSS,
       )
     : SizedBox.shrink();
   }
@@ -833,7 +916,16 @@ extension NavRowDisplay on NavObjects {
     }
   }
 
-  Widget _buildEditableNavButton(Root root, TTSInterface synth, NavObjects obj, void Function(BoardObjects) openBoard, List<BoardObjects> boards, BoardObjects? Function(String uuid, List<BoardObjects> boards) findBoardById) {
+  Widget _buildEditableNavButton(
+    Root root, 
+    TTSInterface synth, 
+    NavObjects obj, void Function(BoardObjects) openBoard, 
+    List<BoardObjects> boards, 
+    BoardObjects? Function(String uuid, List<BoardObjects> boards) findBoardById,
+    final sherpa_onnx.OfflineTts? speakSelectSherpaOnnxSynth,
+    final Future<void> Function() initForSS,
+    final AudioPlayer playerForSS,
+    ) {
    return EditableNavButton(
     root: root,
     tts: synth,
@@ -874,6 +966,9 @@ extension NavRowDisplay on NavObjects {
     matchSpeakOS: matchSpeakOS ?? false,
     speakOS: speakOS ?? 1,
     alternateLabel: alternateLabel ?? '',
+    speakSelectSherpaOnnxSynth: speakSelectSherpaOnnxSynth,
+    initForSS: initForSS,
+    playerForSS: playerForSS,
    );
   }
   

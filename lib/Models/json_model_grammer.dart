@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutterkeysaac/Variables/editing/editable_buttons.dart';
 import 'package:flutterkeysaac/Variables/assorted_ui/ui_boards.dart';
-import 'package:flutterkeysaac/Variables/tts/tts_interface.dart';
+import 'package:flutterkeysaac/Variables/system_tts/tts_interface.dart';
 import 'package:flutterkeysaac/Models/json_model_boards.dart';
 import 'package:flutterkeysaac/Variables/colors/color_variables.dart';
 import 'package:flutterkeysaac/Models/json_model_nav_and_root.dart';
+import 'package:audioplayers/audioplayers.dart';
+import 'package:sherpa_onnx/sherpa_onnx.dart' as sherpa_onnx;
 
 class GrammerObjects {
   final String id;
@@ -179,8 +181,11 @@ extension BoardsDisplay on GrammerObjects {
     TTSInterface synth, 
     void Function(BoardObjects) openBoard, 
     List<BoardObjects> boards, 
-    BoardObjects? Function(String uuid, List<BoardObjects> boards) 
-    findBoardById) {
+    BoardObjects? Function(String uuid, List<BoardObjects> boards) findBoardById,
+    final sherpa_onnx.OfflineTts? speakSelectSherpaOnnxSynth,
+    final Future<void> Function() initForSS,
+    final AudioPlayer playerForSS,
+    ) {
 
        int index = 0;
 
@@ -197,18 +202,30 @@ extension BoardsDisplay on GrammerObjects {
               synth: synth, 
               openBoard: openBoard, 
               boards: boards, 
-              findBoardById: findBoardById)
+              findBoardById: findBoardById,
+              speakSelectSherpaOnnxSynth: speakSelectSherpaOnnxSynth,
+              initForSS: initForSS,
+              playerForSS: playerForSS,
+              )
             )
             : (content[i].type == 'placeholder') 
               ? Expanded(child: 
               BuildGrammerPlacholder(
                 obj: content[index++], 
-                synth: synth)
+                synth: synth,
+                speakSelectSherpaOnnxSynth: speakSelectSherpaOnnxSynth,
+                initForSS: initForSS,
+                playerForSS: playerForSS,
+                )
               )
               : Expanded(child: 
               BuildGrammerButton(
                 obj: content[index++], 
-                synth: synth)
+                synth: synth,
+                speakSelectSherpaOnnxSynth: speakSelectSherpaOnnxSynth,
+                initForSS: initForSS,
+                playerForSS: playerForSS,
+                )
               ),
              
           if (i < 10) Padding(padding: EdgeInsetsGeometry.symmetric(vertical: 10, horizontal: 6), child:
@@ -230,9 +247,11 @@ extension BoardsDisplay on GrammerObjects {
     Root root,
     void Function(BoardObjects) openBoard, 
     List<BoardObjects> boards, 
-    BoardObjects? Function(String uuid, List<BoardObjects> boards) 
-    findBoardById) {
-
+    BoardObjects? Function(String uuid, List<BoardObjects> boards) findBoardById,
+    final sherpa_onnx.OfflineTts? speakSelectSherpaOnnxSynth,
+    final Future<void> Function() initForSS,
+    final AudioPlayer playerForSS,
+   ) {
        int index = 0;
 
       return Row(
@@ -249,20 +268,32 @@ extension BoardsDisplay on GrammerObjects {
               openBoard: openBoard, 
               boards: boards, 
               findBoardById: findBoardById,
-              root: root)
+              root: root,
+              speakSelectSherpaOnnxSynth: speakSelectSherpaOnnxSynth,
+              initForSS: initForSS,
+              playerForSS: playerForSS,
+              )
             )
             : (content[i].type == 'placeholder') 
               ? Expanded(child: 
               BuildEditableGrammerPlacholder(
                 obj: content[index++], 
                 synth: synth,
-                root: root)
+                root: root,
+                speakSelectSherpaOnnxSynth: speakSelectSherpaOnnxSynth,
+                initForSS: initForSS,
+                playerForSS: playerForSS,
+               )
               )
               : Expanded(child: 
                BuildEditableGrammerButton(
                 obj: content[index++], 
                 synth: synth,
-                root: root)
+                root: root,
+                speakSelectSherpaOnnxSynth: speakSelectSherpaOnnxSynth,
+                initForSS: initForSS,
+                playerForSS: playerForSS,
+                )
               ),
              
           if (i < 10) Padding(padding: EdgeInsetsGeometry.symmetric(vertical: 10, horizontal: 6), child:

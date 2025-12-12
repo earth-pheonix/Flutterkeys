@@ -3,7 +3,7 @@ import 'package:flutterkeysaac/Variables/settings/boardset_settings_variables.da
 import 'package:flutterkeysaac/Variables/variables.dart';
 import 'package:flutterkeysaac/Variables/colors/color_variables.dart';
 import 'package:flutterkeysaac/Screens/message_row.dart';
-import 'package:flutterkeysaac/Variables/tts/tts_interface.dart';
+import 'package:flutterkeysaac/Variables/system_tts/tts_interface.dart';
 import 'package:flutterkeysaac/Models/json_model_nav_and_root.dart';
 import 'package:flutterkeysaac/Models/json_model_boards.dart';
 import 'package:flutterkeysaac/Models/json_model_grammer.dart';
@@ -13,19 +13,40 @@ import 'package:flutterkeysaac/Variables/fonts/font_variables.dart';
 import 'package:flutterkeysaac/Screens/settings.dart';
 import 'dart:async';
 import 'dart:typed_data';
+import 'package:flutterkeysaac/Variables/sherpa_onnx_tts.dart';
+
+import 'package:flutterkeysaac/Variables/settings/voice_variables.dart';
+
 import 'dart:ui' as ui;
 import 'package:flutter/rendering.dart';
+import 'package:audioplayers/audioplayers.dart';
+import 'package:sherpa_onnx/sherpa_onnx.dart' as sherpa_onnx;
 
 class Home extends StatefulWidget {
   final TTSInterface synth;
   final int? highlightStart;
   final int? highlightLength;
+  final sherpa_onnx.OfflineTts? sherpaOnnxSynth;
+  final Future<void> Function() init;
+  final AudioPlayer openTTSPlayer;
+
+  final Future<void> Function() reloadSherpaOnnx;
+  final sherpa_onnx.OfflineTts? speakSelectSherpaOnnxSynth;
+  final Future<void> Function() initForSS;
+  final AudioPlayer playerForSS;
 
   const Home({
     super.key,
     required this.synth,
     this.highlightStart,
     this.highlightLength,
+    required this.sherpaOnnxSynth,
+    required this.init,
+    required this.openTTSPlayer,
+    required this.speakSelectSherpaOnnxSynth,
+    required this.initForSS,
+    required this.playerForSS,
+    required this.reloadSherpaOnnx,
   });
 
   @override
@@ -129,6 +150,12 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
+     print("home, start of builder: Vv4rs.sherpaOnnxLanguageVoice['English']: ${Vv4rs.sherpaOnnxLanguageVoice['English']}");
+     sherpa_onnx.initBindings();
+
+    print("home, after load engines: Vv4rs.sherpaOnnxLanguageVoice['English']: ${Vv4rs.sherpaOnnxLanguageVoice['English']}");
+    
+                  
     final media = MediaQuery.of(context);
     final screenSize = MediaQuery.of(context).size;
     final double defaultBoardHeight = screenSize.height * (4 / 6);
@@ -180,6 +207,10 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
                 Settings(
                   synth: widget.synth,
                   captureAllForPrint: captureAllForPrint,
+                  speakSelectSherpaOnnxSynth: widget.speakSelectSherpaOnnxSynth,
+                  initForSS: widget.initForSS,
+                  playerForSS: widget.playerForSS,
+                  reloadSherpaOnnx: widget.reloadSherpaOnnx,
                 ),
 
           if (!V4rs.showSettings.value)
@@ -200,6 +231,12 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
                         synth: widget.synth,
                         highlightStart: widget.highlightStart,
                         highlightLength: widget.highlightLength,
+                        sherpaOnnxSynth: widget.sherpaOnnxSynth,
+                        init: widget.init,
+                        player: widget.openTTSPlayer,
+                        speakSelectSherpaOnnxSynth: widget.speakSelectSherpaOnnxSynth,
+                        initForSS: widget.initForSS,
+                        playerForSS: widget.playerForSS,
                       ),
                     ),
                   ),
@@ -222,6 +259,9 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
                                   _root!.boards,
                                   _findBoardById,
                                   navObj,
+                                  widget.speakSelectSherpaOnnxSynth,
+                                  widget.initForSS,
+                                  widget.playerForSS,
                                 ),
                             ),
                         ],
@@ -260,6 +300,9 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
                                   _openBoard,
                                   _root!.boards,
                                   _findBoardById,
+                                  widget.speakSelectSherpaOnnxSynth,
+                                  widget.initForSS,
+                                  widget.playerForSS,
                                 );
                               },
                             ),
@@ -286,6 +329,9 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
                                 _openBoardWithReturn,
                                 _root!.boards,
                                 _findBoardById,
+                                widget.speakSelectSherpaOnnxSynth,
+                                widget.initForSS,
+                                widget.playerForSS,
                               ),
                         ],
                       ),
@@ -394,6 +440,12 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
                           synth: widget.synth,
                           highlightStart: widget.highlightStart,
                           highlightLength: widget.highlightLength,
+                          sherpaOnnxSynth: widget.sherpaOnnxSynth,
+                          init: widget.init,
+                          player: widget.openTTSPlayer,
+                          speakSelectSherpaOnnxSynth: widget.speakSelectSherpaOnnxSynth,
+                          initForSS: widget.initForSS,
+                          playerForSS: widget.playerForSS,
                         ),
                       ),
                     ),
@@ -482,6 +534,9 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
                                     _root!.boards,
                                     _findBoardById,
                                     navObj,
+                                    widget.speakSelectSherpaOnnxSynth,
+                                  widget.initForSS,
+                                  widget.playerForSS,
                                   ),
                               ),
                           ],
@@ -532,6 +587,9 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
                                     _openBoard,
                                     _root!.boards,
                                     _findBoardById,
+                                    widget.speakSelectSherpaOnnxSynth,
+                                    widget.initForSS,
+                                    widget.playerForSS,
                                   );
                                 },
                               ),
@@ -565,6 +623,9 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
                                   _openBoardWithReturn,
                                   _root!.boards,
                                   _findBoardById,
+                                  widget.speakSelectSherpaOnnxSynth,
+                                  widget.initForSS,
+                                  widget.playerForSS,
                                 ),
                         ),
                       ),

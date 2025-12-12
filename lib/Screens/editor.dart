@@ -6,24 +6,32 @@ import 'package:flutterkeysaac/Variables/editing/editing_nav_and_grammer.dart';
 import 'package:flutterkeysaac/Variables/variables.dart';
 import 'package:flutterkeysaac/Variables/colors/color_variables.dart';
 import 'package:flutterkeysaac/Variables/editing/editor_variables.dart';
-import 'package:flutterkeysaac/Variables/tts/tts_interface.dart';
+import 'package:flutterkeysaac/Variables/system_tts/tts_interface.dart';
 import 'package:flutterkeysaac/Models/json_model_nav_and_root.dart';
 import 'package:flutterkeysaac/Models/json_model_boards.dart';
 import 'package:flutterkeysaac/Models/json_model_grammer.dart';
 import 'package:flutterkeysaac/Variables/assorted_ui/ui_shortcuts.dart';
 import 'package:flutterkeysaac/Variables/editing/save_indicator.dart';
+import 'package:audioplayers/audioplayers.dart';
+import 'package:sherpa_onnx/sherpa_onnx.dart' as sherpa_onnx;
 
 
 class Editor extends StatefulWidget {
   final TTSInterface synth;
   final int? highlightStart;
   final int? highlightLength;
+  final sherpa_onnx.OfflineTts? speakSelectSherpaOnnxSynth;
+  final Future<void> Function() initForSS;
+  final AudioPlayer playerForSS;
 
   const Editor({
     super.key,
     required this.synth,
     this.highlightStart,
     this.highlightLength,
+    required this.speakSelectSherpaOnnxSynth,
+    required this.initForSS,
+    required this.playerForSS
   });
 
   @override
@@ -416,6 +424,9 @@ class _Editor extends State<Editor> with WidgetsBindingObserver {
                                               _openBoard,
                                               _root!.boards,
                                               _findBoardById,
+                                              widget.speakSelectSherpaOnnxSynth,
+                                              widget.initForSS,
+                                              widget.playerForSS,
                                             ),
                                           ),
                                         ),
@@ -466,6 +477,9 @@ class _Editor extends State<Editor> with WidgetsBindingObserver {
                                         _openBoard,
                                         _root!.boards,
                                         _findBoardById,
+                                        widget.speakSelectSherpaOnnxSynth,
+                                        widget.initForSS,
+                                        widget.playerForSS,
                                       );
                                     },
                                   ),
@@ -510,6 +524,10 @@ class _Editor extends State<Editor> with WidgetsBindingObserver {
                                                 _openBoard,
                                                 _root!.boards,
                                                 _findBoardById,
+
+                                        widget.speakSelectSherpaOnnxSynth,
+                                        widget.initForSS,
+                                        widget.playerForSS,
                                               ),
                                           ],
                                         ),
@@ -569,6 +587,10 @@ class _Editor extends State<Editor> with WidgetsBindingObserver {
                                                 _openBoard,
                                                 _root!.boards,
                                                 _findBoardById,
+
+                                        widget.speakSelectSherpaOnnxSynth,
+                                        widget.initForSS,
+                                        widget.playerForSS,
                                               ),
                                           ],
                                         ),

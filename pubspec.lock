@@ -246,6 +246,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_archive:
+    dependency: "direct main"
+    description:
+      name: flutter_archive
+      sha256: e433389fde0bdfc20af40784fdb6d91753794b40cf708a43f95244fcd5d6c298
+      url: "https://pub.dev"
+    source: hosted
+    version: "6.0.4"
   flutter_colorpicker:
     dependency: "direct main"
     description:
@@ -648,6 +656,54 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.4.1"
+  sherpa_onnx:
+    dependency: "direct main"
+    description:
+      name: sherpa_onnx
+      sha256: e94ffcab993434dafc6b684a89f011689acd07f4b2f7972f2abaf47b3661630a
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.12.18"
+  sherpa_onnx_android:
+    dependency: transitive
+    description:
+      name: sherpa_onnx_android
+      sha256: "55b49880c02dcbfefb8a5cf2d4bda9b44db41e1c1f9a96c8800a1ee61c5142b3"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.12.18"
+  sherpa_onnx_ios:
+    dependency: transitive
+    description:
+      name: sherpa_onnx_ios
+      sha256: def282c73e959e62422dbcfa82a99b65b773cb0708dd9403d7ebe14ae64c3e94
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.12.18"
+  sherpa_onnx_linux:
+    dependency: transitive
+    description:
+      name: sherpa_onnx_linux
+      sha256: "93f21d27e907267d3d744c153b47499dbbcb82c679712e6732360a60cbf44889"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.12.18"
+  sherpa_onnx_macos:
+    dependency: transitive
+    description:
+      name: sherpa_onnx_macos
+      sha256: "2272c7adbae9c204ba0fa72e0e9b8c268c9d24b3f7b9eb807d3fbb2f5b69d31c"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.12.18"
+  sherpa_onnx_windows:
+    dependency: transitive
+    description:
+      name: sherpa_onnx_windows
+      sha256: "5b6b252db2c92c455dce6893193b44d7155a2edc1a56dcc6a8e2687f2bb46d26"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.12.18"
   sky_engine:
     dependency: transitive
     description: flutter

@@ -152,7 +152,7 @@ class Fv4rs {
       fontWeight: FontWeight.values[((mwFontWeight ~/ 100) - 1 ).clamp(0, 8)],
       fontStyle: mwFontItalics ? FontStyle.italic : FontStyle.normal,
       height: 1.5,
-      fontFamilyFallback: [fallbackFont1, fallbackFont2]
+      fontFamilyFallback: [Fontsy.fontToFamily[fallbackFont1] ?? '', Fontsy.fontToFamily[fallbackFont2] ?? '']
     );
 
      //hint text style 

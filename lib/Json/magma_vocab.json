@@ -3350,7 +3350,7 @@
                 "id": "dc5928d0-4e22-46df-a944-dd0a792772ee",
                 "type": "button",
                 "language": "en",
-                "label": "ed- suffix",
+                "label": "-ed suffix",
                 "function": "edSuffix",
 
 

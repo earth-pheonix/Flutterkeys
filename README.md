@@ -6,16 +6,62 @@ This code is Licensed under GPL 3.0
 
 # Welcome to Flutterkeys! 
 
-This is an AAC [augmentive alternative communication] app that was created by a nonspeaking AAC user named Pheonix.
+This is an AAC (augmentive alternative communication) app being created by a nonspeaking AAC user named Pheonix.
+Feedback and collaboraion are welcome. 
 
-Pheonix struggled to accsess robust AAC apps because of their cost, and none of these apps were designed in a way that met Pheonix's needs. So, after realizing no one else would build it for them, they began learning to code. 
+Pheonix would like to partner with a nonprofit when the app is ready for beta testing & release to get an iOS fee waiver. 
 
-This app is not yet completed, but should be functional. Currently Pheonix is working to impliment Piper TTS as an option in the app after having their voice deleted by Apple. RIP Aaron. 
+The goal of this project is to provide a hybrid of symbol and typing based AAC. The app should be robust and highly customizable. It should align with values of accsess and openness. 
 
-Pheonix would like to partner with a nonprofit when the app is ready for beta testing & release so that iOS users can download Flutterkeys for free. 
+## How will FlutterKeys accomplish these goals?
 
-To contact Pheonix, email them at: [Pheonix@michaeljohnclark.com] 
+**Symbol and Typing Hybrid:**
+- Symbol supported boardsets & system keyboard accsess.
+- Keygaurd compatable with the iOS system keyboard (QWERTY).
+- Message window is a regular text feild.
+    - allows moving the cursor via direct select,
+    - allows selecting text within the message window and using the context menu,
+    - while typing: preserves accsess to autoccorect and autocapitalization (if enabled),
+    - while typing: preserves accsess to keyboard shortcuts, personal dictonary and text replacment settings,
+- Keyboard does not cover the grammer, message, or navigation rows & their functions remain accssessible.
+- Navigation buttons automatically hide the keyboard. 
 
-### Disclaimer: 
+**Robust:**
+- Planned pre built vocabulary of over 4,000 words.
+- Full array of features.
+    - speak on select, buttons that override speak on select settings, 
+    - grammer/inflector buttons,
+    - history,
+    - search button,
+    - and more!
 
-I (Pheonix) have entireley learned to code working on Flutterkeys. I started this project (and therefore coding) less than 2 years ago (it is currently December 2025). I started in Swift UI, I learned the absolute bare minimum in playgrounds before starting on Flutterkeys. I moved to Flutter several months ago, and did no "how to use flutter" prep. I have learned Flutter ONLY through this project. My learning curve is visible, and while I have built this entire code base (and I am very proud of myself for that!) I don't know much of the technical language behind what I have done, and don't know how to do anything that isn't in this project. I also do not consider myself a computer person, and don't understand GitHub very well. 
+**Customizable:**
+- App color scheme
+- Fonts
+- Buttons (color, label, message, symbol, boarder, border color, font, speak on select, ect)
+- Boards (planned options for various layouts, creating from a template, infinite number of boards, ect)
+- Boardsets (multiple boardsets, option for a blank boardset, plan for multiple pre built options)
+- Languages (can pick multiple languages, with unique voices for each language) 
+    - voices are limited by what is on the device, and what the app is allowed to use
+    - prebuild boardsets + grammer buttons are english only (But- I would accsept & appreciate help in changing that)
+
+**Accsess and Openess:**
+- 100% free
+- Open Source voice options (*because companies shouldn't get to own our voices*)
+- Import and export voices (must be in compatible format)
+- Import and export boards & boardsets (must be in compatible format)
+- Exporting includes the image files
+- Plan for supporting .OBF format
+- Android & iOS (likly to also be on web, windows, linux, and macOS)
+- Somewhat multilingual
+    - fonts in multiple scripts
+    - language code wrappers to use multiple languages in one sentance with complete control 
+    - language slider to change what your default speaking language is
+    - per language voice setings
+
+
+## Get in touch: 
+
+Pheonix regularly shares progress in the Flutterkeys Discord Server: [https://discord.gg/MxGFgqsSQS]
+
+To contact or collaborate with Pheonix, email them at: [Pheonix@michaeljohnclark.com] 

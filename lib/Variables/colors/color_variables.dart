@@ -467,34 +467,34 @@ class Cv4rs {
       determiner = Color(prefs.getInt(determiner_) ?? 0xFFe4e4e4);
       social = Color(prefs.getInt(social_) ?? 0xFFf3d6e9);
       pronoun = Color(prefs.getInt(pronoun_) ?? 0xFFf2edd2);
-      noun = Color(prefs.getInt(noun_) ?? 0xFFf2ddcd);
+      noun = Color(prefs.getInt(noun_) ?? 0xFFf9e2da);
       verb = Color(prefs.getInt(verb_) ?? 0xFFd8ecd8);
       adjective = Color(prefs.getInt(adjective_) ?? 0xFFd0e6f3);
       adverb = Color(prefs.getInt(adverb_) ?? 0xFFf4dede);
-      question = Color(prefs.getInt(question_) ?? 0xFFe5e1f7);
-      conjunction = Color(prefs.getInt(conjunction_) ?? 0xFFe1e6ba);
-      preposition = Color(prefs.getInt(preposition_) ?? 0xFFe4d5e6);
+      question = Color(prefs.getInt(question_) ?? 0xFFf0dff1);
+      conjunction = Color(prefs.getInt(conjunction_) ?? 0xFFd5ede0);
+      preposition = Color(prefs.getInt(preposition_) ?? 0xFFe5e2e9);
       negation = Color(prefs.getInt(negation_) ?? 0xFFefa1a1);
       interjection = Color(prefs.getInt(interjection_) ?? 0xFFffcbea);
       folder = Color(prefs.getInt(folder_) ?? 0xFFFFFFFF);
-      extra1 = Color(prefs.getInt(extra1_) ?? 0xFFd8efe8);
-      extra2 = Color(prefs.getInt(extra2_) ?? 0xFFf0dff1);
+      extra1 = Color(prefs.getInt(extra1_) ?? 0xFFe5e1f7);
+      extra2 = Color(prefs.getInt(extra2_) ?? 0xFFd8edea);
 
       determinerBorder = Color(prefs.getInt(determinerBorder_) ?? 0xFFb8b3b3);
       socialBorder = Color(prefs.getInt(socialBorder_) ?? 0xFFe6a4c0);
       pronounBorder = Color(prefs.getInt(pronounBorder_) ?? 0xFFddcaa6);
-      nounBorder = Color(prefs.getInt(nounBorder_) ?? 0xFFe1c0a6);
+      nounBorder = Color(prefs.getInt(nounBorder_) ?? 0xFFdcc1ae);
       verbBorder = Color(prefs.getInt(verbBorder_) ?? 0xFF9dd4b1);
       adjectiveBorder = Color(prefs.getInt(adjectiveBorder_) ?? 0xFFaed0e4);
       adverbBorder = Color(prefs.getInt(adverbBorder_) ?? 0xFFe1afaf);
-      questionBorder = Color(prefs.getInt(questionBorder_) ?? 0xFFc1bae1);
-      conjunctionBorder = Color(prefs.getInt(conjunctionBorder_) ?? 0xFFc3c995);
-      prepositionBorder = Color(prefs.getInt(prepositionBorder_) ?? 0xFFd1add6);
+      questionBorder = Color(prefs.getInt(questionBorder_) ?? 0xFFc2bcd8);
+      conjunctionBorder = Color(prefs.getInt(conjunctionBorder_) ?? 0xFFbacbc3);
+      prepositionBorder = Color(prefs.getInt(prepositionBorder_) ?? 0xFFcbb0cf);
       negationBorder = Color(prefs.getInt(negationBorder_) ?? 0xFFd47575);
       interjectionBorder = Color(prefs.getInt(interjectionBorder_) ?? 0xFF6cdd71);
       folderBorder = Color(prefs.getInt(folderBorder_) ?? 0xFFb4b4b4);
-      extra1Border = Color(prefs.getInt(extra1Border_) ?? 0xFF97d4c1);
-      extra2Border = Color(prefs.getInt(extra2Border_) ?? 0xFFcfadd1);
+      extra1Border = Color(prefs.getInt(extra1Border_) ?? 0xFFc1bae1);
+      extra2Border = Color(prefs.getInt(extra2Border_) ?? 0xFF97d4c4);
 
       cornerTabColor = Color(prefs.getInt(cornerTabColor_) ?? cornerTabColor.toARGB32());
     

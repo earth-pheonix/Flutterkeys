@@ -6,12 +6,16 @@ import 'package:flutterkeysaac/Variables/editing/editor_variables.dart';
 import 'package:flutterkeysaac/Variables/assorted_ui/ui_pops.dart';
 import 'package:flutterkeysaac/Variables/variables.dart'; 
 import 'package:flutterkeysaac/Screens/expand_page.dart';
-import 'package:flutterkeysaac/Variables/tts/tts_interface.dart';
-import 'package:flutterkeysaac/Variables/tts/tts_factory.dart';
+import 'package:flutterkeysaac/Variables/system_tts/tts_interface.dart';
+import 'package:flutterkeysaac/Variables/system_tts/tts_factory.dart';
 import 'package:flutterkeysaac/Variables/settings/settings_variables.dart';
 import 'package:flutterkeysaac/Variables/settings/boardset_settings_variables.dart';
 import 'dart:async';
+import 'package:flutterkeysaac/Variables/settings/voice_variables.dart';
 
+import 'package:audioplayers/audioplayers.dart';
+import 'package:sherpa_onnx/sherpa_onnx.dart' as sherpa_onnx;
+import 'package:flutterkeysaac/Variables/sherpa_onnx_tts.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,8 +32,17 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyApp extends State<MyApp> {
-    TTSInterface? synth;
+  TTSInterface? synth;
+
   bool synthInitialized = false;
+  bool speakSelectSherpaOnnxInitialized = false;
+  bool sherpaOnnxInitialized = false;
+
+  sherpa_onnx.OfflineTts? sherpaOnnxSynth;
+  sherpa_onnx.OfflineTts? speakSelectSherpaOnnxSynth;
+
+  late AudioPlayer openTtsPlayerSherpaOnnx;
+  late AudioPlayer openTtsPlayerSpeakSelectSherpaOnnx;
 
   int? _highlightStart;
   int? _highlightLength;
@@ -40,7 +53,55 @@ class _MyApp extends State<MyApp> {
   void initState() {
     super.initState();
     initSynth();
+    initSherpaOnnx();
+    initSpeakSelectSherpaOnnx();
   }
+
+  Future<void> initSherpaOnnx() async {
+     print('init sherpa onnx running');
+    if (!sherpaOnnxInitialized) {
+       print('init sherpa onnx not initialized');
+      sherpa_onnx.initBindings();
+
+      sherpaOnnxSynth?.free();
+       print('init sherpa onnx free');
+      sherpaOnnxSynth = await SherpaOnnxV4rs.loadSherpaOnnxEngine();
+
+      openTtsPlayerSherpaOnnx = AudioPlayer();
+
+      sherpaOnnxInitialized = true;
+       print('init sherpa onnx ran, sherpa onnx synth is $sherpaOnnxSynth');
+    }
+  }
+
+  Future<void> reloadSherpaOnnx() async {
+    print('reload sherpa onnx running');
+    sherpaOnnxInitialized = false;
+      sherpa_onnx.initBindings();
+
+      sherpaOnnxSynth?.free();
+       print('reload sherpa onnx free');
+      sherpaOnnxSynth = await SherpaOnnxV4rs.loadSherpaOnnxEngine();
+
+      openTtsPlayerSherpaOnnx = AudioPlayer();
+
+      sherpaOnnxInitialized = true;
+       print('reload sherpa onnx ran, sherpa onnx synth is $sherpaOnnxSynth');
+  }
+
+  Future<void> initSpeakSelectSherpaOnnx() async {
+    if (!speakSelectSherpaOnnxInitialized) {
+      sherpa_onnx.initBindings();
+
+      speakSelectSherpaOnnxSynth?.free();
+      speakSelectSherpaOnnxSynth = await SherpaOnnxV4rs.loadSherpaOnnxSSEngine();
+
+      openTtsPlayerSpeakSelectSherpaOnnx = AudioPlayer();
+
+      speakSelectSherpaOnnxInitialized = true;
+    }
+  }
+  
 
   Future<void> initSynth() async {
     final s = await TTSFactory.getTTS(languageCode: V4rs.selectedLanguage.value);
@@ -93,8 +154,13 @@ class _MyApp extends State<MyApp> {
       title: 'FlutterKeysAAC',
       home: Builder(
         builder: (context) {
+           print("main, start of builder: Vv4rs.sherpaOnnxLanguageVoice['English']: ${Vv4rs.sherpaOnnxLanguageVoice['English']}");
+                  
 
-            if (!synthInitialized) {
+           print("main after sherpa onnx init funcs: Vv4rs.sherpaOnnxLanguageVoice['English']: ${Vv4rs.sherpaOnnxLanguageVoice['English']}");
+                   
+
+          if (!synthInitialized || speakSelectSherpaOnnxInitialized == false || sherpaOnnxInitialized == false) {
             return const Scaffold(
               body: Center(child: CircularProgressIndicator()),
             );
@@ -113,11 +179,18 @@ class _MyApp extends State<MyApp> {
                 return Onboarding();
             //=====: expand page :====
               } else if (V4rs.showExpandPage.value) {
-                return ExpandPage();
+                return ExpandPage(
+                  speakSelectSherpaOnnxSynth: speakSelectSherpaOnnxSynth,
+                  initForSS: initSpeakSelectSherpaOnnx,
+                  playerForSS: openTtsPlayerSpeakSelectSherpaOnnx,
+                );
             //=====: editor :====
               } else if (Ev4rs.showEditor.value) {
                 return Editor(
-                  synth: synth!
+                  synth: synth!,
+                  speakSelectSherpaOnnxSynth: speakSelectSherpaOnnxSynth,
+                    initForSS: initSpeakSelectSherpaOnnx,
+                    playerForSS: openTtsPlayerSpeakSelectSherpaOnnx,
                 );
               }
              //=====: home :====
@@ -176,6 +249,13 @@ class _MyApp extends State<MyApp> {
                     synth: synth!,
                     highlightLength: _highlightLength,
                     highlightStart: _highlightStart,
+                    sherpaOnnxSynth: sherpaOnnxSynth,
+                    openTTSPlayer: openTtsPlayerSherpaOnnx,
+                    init: initSherpaOnnx,
+                    speakSelectSherpaOnnxSynth: speakSelectSherpaOnnxSynth,
+                    initForSS: initSpeakSelectSherpaOnnx,
+                    playerForSS: openTtsPlayerSpeakSelectSherpaOnnx,
+                    reloadSherpaOnnx: reloadSherpaOnnx,
                   )
                 );
               }

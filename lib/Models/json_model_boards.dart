@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutterkeysaac/Variables/assorted_ui/ui_boards.dart';
 import 'package:flutterkeysaac/Variables/editing/editable_buttons.dart';
-import 'package:flutterkeysaac/Variables/tts/tts_interface.dart';
+import 'package:flutterkeysaac/Variables/system_tts/tts_interface.dart';
 import 'package:flutterkeysaac/Variables/variables.dart';
 import 'package:flutterkeysaac/Variables/editing/editor_variables.dart';
 import 'package:flutterkeysaac/Models/json_model_nav_and_root.dart';
+import 'package:audioplayers/audioplayers.dart';
+import 'package:sherpa_onnx/sherpa_onnx.dart' as sherpa_onnx;
 
 
 class BoardObjects {
@@ -244,8 +246,12 @@ extension BoardsDisplay on BoardObjects {
     void Function(BoardObjects) openBoard, 
     void Function(BoardObjects) openBoardWithReturn, 
     List<BoardObjects> boards, 
-    BoardObjects? Function(String uuid, List<BoardObjects> boards) 
-    findBoardById) {
+    BoardObjects? Function(String uuid, List<BoardObjects> boards) findBoardById,
+    final sherpa_onnx.OfflineTts? speakSelectSherpaOnnxSynth,
+    final Future<void> Function() initForSS,
+    final AudioPlayer playerForSS,
+    
+    ) {
       
     switch (format) {
       case 1:
@@ -266,16 +272,76 @@ extension BoardsDisplay on BoardObjects {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Spacer(flex: 1),
-                  Expanded(flex: 24, child: BuildSubFolder(obj: content[index++], synth: synth, goBack: goBack, openBoard: openBoard, openBoardWithReturn: openBoardWithReturn, boards: boards, findBoardById: findBoardById,)),
+                  Expanded(
+                    flex: 24, 
+                    child: BuildSubFolder(
+                      obj: content[index++], 
+                      synth: synth, 
+                      goBack: goBack, 
+                      openBoard: openBoard, 
+                      openBoardWithReturn: 
+                      openBoardWithReturn, 
+                      boards: boards, 
+                      findBoardById: 
+                      findBoardById,
+                      speakSelectSherpaOnnxSynth: speakSelectSherpaOnnxSynth,
+                      initForSS: initForSS,
+                      playerForSS: playerForSS,
+                    )),
                   Spacer(flex: 2), // Special 1
-                  Expanded(flex: 36, child: BuildSubFolder(obj: content[index++], synth: synth, goBack: goBack, openBoard: openBoard, openBoardWithReturn: openBoardWithReturn, boards: boards, findBoardById: findBoardById,)),
+                  Expanded(
+                    flex: 36, 
+                    child: BuildSubFolder(
+                      obj: content[index++], 
+                      synth: synth, 
+                      goBack: goBack, 
+                      openBoard: openBoard, 
+                      openBoardWithReturn: openBoardWithReturn,
+                      boards: boards, 
+                      findBoardById: findBoardById,
+                      speakSelectSherpaOnnxSynth: speakSelectSherpaOnnxSynth,
+                      initForSS: initForSS,
+                      playerForSS: playerForSS,
+                    )),
                   Spacer(flex: 2), // Subfolder
-                  Expanded(flex: 36, child: BuildSubFolder(obj: content[index++], synth: synth, goBack: goBack, openBoard: openBoard, openBoardWithReturn: openBoardWithReturn, boards: boards, findBoardById: findBoardById,)),
+                  Expanded(flex: 36, child: BuildSubFolder(
+                      obj: content[index++], 
+                      synth: synth, 
+                      goBack: goBack, 
+                      openBoard: openBoard, 
+                      openBoardWithReturn: openBoardWithReturn,
+                      boards: boards, 
+                      findBoardById: findBoardById,
+                      speakSelectSherpaOnnxSynth: speakSelectSherpaOnnxSynth,
+                      initForSS: initForSS,
+                      playerForSS: playerForSS,
+                    )),
                   Spacer(flex: 2),
-                  Expanded(flex: 36, child: BuildSubFolder(obj: content[index++], synth: synth, goBack: goBack, openBoard: openBoard, openBoardWithReturn: openBoardWithReturn, boards: boards, findBoardById: findBoardById,)),
+                  Expanded(flex: 36, child: BuildSubFolder(
+                      obj: content[index++], 
+                      synth: synth, 
+                      goBack: goBack, 
+                      openBoard: openBoard, 
+                      openBoardWithReturn: openBoardWithReturn,
+                      boards: boards, 
+                      findBoardById: findBoardById,
+                      speakSelectSherpaOnnxSynth: speakSelectSherpaOnnxSynth,
+                      initForSS: initForSS,
+                      playerForSS: playerForSS,
+                    )),
                   Spacer(flex: 2),
-                  Expanded(flex: 24, child: BuildSubFolder(obj: content[index++], synth: synth, goBack: goBack, openBoard: openBoard, openBoardWithReturn: openBoardWithReturn, boards: boards, findBoardById: findBoardById,)),
-                  Spacer(flex: 1), // Special 2
+                  Expanded(flex: 24, child: BuildSubFolder(
+                      obj: content[index++], 
+                      synth: synth, 
+                      goBack: goBack, 
+                      openBoard: openBoard, 
+                      openBoardWithReturn: openBoardWithReturn,
+                      boards: boards, 
+                      findBoardById: findBoardById,
+                      speakSelectSherpaOnnxSynth: speakSelectSherpaOnnxSynth,
+                      initForSS: initForSS,
+                      playerForSS: playerForSS,
+                    )),Spacer(flex: 1), // Special 2
                 ],
               ),
               ),
@@ -293,7 +359,11 @@ extension BoardsDisplay on BoardObjects {
               children: [
                 buildSpacer(1), // half spacer
                 for (int i = 0; i < 11; i++) ...[
-                  Expanded(flex: 10, child: buildBoardObjectWidget(content[index++], synth, openBoard, openBoardWithReturn, boards, findBoardById)),
+                  Expanded(flex: 10, child: buildBoardObjectWidget(
+                    content[index++], synth, openBoard, 
+                    openBoardWithReturn, boards, findBoardById,
+                    speakSelectSherpaOnnxSynth, initForSS, playerForSS,
+                  )),
                   if (i < 10) buildSpacer(2), //full Spacer
                 ],
                 buildSpacer(1), // half spacer
@@ -311,7 +381,11 @@ extension BoardsDisplay on BoardObjects {
               children: [
                 buildSpacer(21), // special first spacer
                 for (int i = 0; i < 10; i++) ...[
-                  Expanded(flex: 36, child: buildBoardObjectWidget(content[index++], synth, openBoard, openBoardWithReturn, boards, findBoardById)),
+                  Expanded(flex: 36, child: buildBoardObjectWidget(
+                    content[index++], synth, openBoard, 
+                    openBoardWithReturn, boards, findBoardById,
+                    speakSelectSherpaOnnxSynth, initForSS, playerForSS,
+                  )),
                 if (i < 9)
                   buildSpacer((i == 8) ? 21 : 7), // if is 7 or 8 do the first 
                 ],
@@ -330,7 +404,11 @@ extension BoardsDisplay on BoardObjects {
               children: [
                 buildSpacer(6), // special first spacer
                 for (int i = 0; i < 11; i++) ...[
-                 Expanded(flex: 47, child: buildBoardObjectWidget(content[index++], synth, openBoard, openBoardWithReturn, boards, findBoardById)),
+                 Expanded(flex: 47, child: buildBoardObjectWidget(
+                  content[index++], synth, openBoard, 
+                  openBoardWithReturn, boards, findBoardById,
+                  speakSelectSherpaOnnxSynth, initForSS, playerForSS,
+                )),
                   if (i < 10)
                     buildSpacer((i == 9) ? 19 : 11), //if 8 do the first
                 ],
@@ -350,7 +428,11 @@ extension BoardsDisplay on BoardObjects {
                 buildSpacer(2), // special first
                 for (int i = 0; i < 10; i++) ...[
                   Expanded(flex: 24, child: (
-                    buildBoardObjectWidget(content[index++], synth, openBoard, openBoardWithReturn, boards, findBoardById)
+                    buildBoardObjectWidget(
+                      content[index++], synth, openBoard, 
+                      openBoardWithReturn, boards, findBoardById,
+                      speakSelectSherpaOnnxSynth, initForSS, playerForSS,
+                      )
                     )),
                   if (i < 9)
                     buildSpacer((i >= 7) ? 20 : 6), // last 3 spacers special
@@ -385,11 +467,21 @@ extension BoardsDisplay on BoardObjects {
       void Function(BoardObjects) openBoardWithReturn,
       List<BoardObjects> boards,
       BoardObjects? Function(String, List<BoardObjects>) findBoardById,
+      final sherpa_onnx.OfflineTts? speakSelectSherpaOnnxSynth,
+    final Future<void> Function() initForSS,
+    final AudioPlayer playerForSS,
     ) {
       switch (obj.type) { // type = 1, 2, 3, 4, 5, 6
         case 1: 
           return ValueListenableBuilder(valueListenable: V4rs.searchPathUUIDS, builder: (context, search, _) { //button
-            return BuildButton(obj: obj, synth: synth); });
+            return BuildButton(
+              obj: obj, 
+              synth: synth,
+              speakSelectSherpaOnnxSynth: speakSelectSherpaOnnxSynth,
+              initForSS: initForSS,
+              playerForSS: playerForSS,
+              ); 
+            });
         case 2: //pocketFolder 
     return ValueListenableBuilder(valueListenable: V4rs.searchPathUUIDS, builder: (context, search, _) { 
       return BuildPocketFolder(
@@ -399,20 +491,51 @@ extension BoardsDisplay on BoardObjects {
             openBoardWithReturn: openBoardWithReturn,
             boards: boards,
             findBoardById: findBoardById,
+            speakSelectSherpaOnnxSynth: speakSelectSherpaOnnxSynth,
+            initForSS: initForSS,
+            playerForSS: playerForSS,
           );});
         case 3: //folder
           return ValueListenableBuilder(valueListenable: V4rs.searchPathUUIDS, builder: (context, search, _) { 
-            return BuildFolder(obj: obj, synth: synth, openBoard: openBoard, openBoardWithReturn: openBoardWithReturn, boards: boards, findBoardById: findBoardById);
+            return BuildFolder(
+              obj: obj, 
+              synth: synth, 
+              openBoard: openBoard, 
+              openBoardWithReturn: openBoardWithReturn, 
+              boards: boards, 
+              findBoardById: findBoardById,
+              speakSelectSherpaOnnxSynth: speakSelectSherpaOnnxSynth,
+              initForSS: initForSS,
+              playerForSS: playerForSS,
+            );
     });
         case 4: //audioTile
           return ValueListenableBuilder(valueListenable: V4rs.searchPathUUIDS, builder: (context, search, _) { 
-            return BuildAudioTile(obj: obj, synth: synth);});
+            return BuildAudioTile(
+              obj: obj, 
+              synth: synth,
+              speakSelectSherpaOnnxSynth: speakSelectSherpaOnnxSynth,
+              initForSS: initForSS,
+              playerForSS: playerForSS,
+              );});
         case 5: //typingKey
           return ValueListenableBuilder(valueListenable: V4rs.searchPathUUIDS, builder: (context, search, _) { 
-            return BuildTypingKey(obj: obj, synth: synth);});
+            return BuildTypingKey(
+              obj: obj, 
+              synth: synth,
+              speakSelectSherpaOnnxSynth: speakSelectSherpaOnnxSynth,
+              initForSS: initForSS,
+              playerForSS: playerForSS,
+            );});
         case 6:
           return ValueListenableBuilder(valueListenable: V4rs.searchPathUUIDS, builder: (context, search, _) { 
-            return BuildButtonGrammer(obj: obj, synth: synth);});
+            return BuildButtonGrammer(
+              obj: obj, 
+              synth: synth,
+              speakSelectSherpaOnnxSynth: speakSelectSherpaOnnxSynth,
+              initForSS: initForSS,
+              playerForSS: playerForSS,
+            );});
         default:
           return const SizedBox.shrink(); // fallback
       }
@@ -428,8 +551,11 @@ extension BoardsDisplay on BoardObjects {
     void Function(BoardObjects) openBoard, 
     void Function(BoardObjects) openBoardWithReturn,
     List<BoardObjects> boards, 
-    BoardObjects? Function(String uuid, List<BoardObjects> boards) 
-    findBoardById) {
+    BoardObjects? Function(String uuid, List<BoardObjects> boards) findBoardById,
+    final sherpa_onnx.OfflineTts? speakSelectSherpaOnnxSynth,
+    final Future<void> Function() initForSS,
+    final AudioPlayer playerForSS,
+    ) {
       
     switch (format) {
       case 1:
@@ -450,16 +576,74 @@ extension BoardsDisplay on BoardObjects {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Spacer(flex: 1),
-                Expanded(flex: 24, child: BuildEditableSubFolder(root: root, obj: content[index++], synth: synth, goBack: goBack, openBoard: openBoard, boards: boards, findBoardById: findBoardById,)),
+                Expanded(
+                  flex: 24, 
+                  child: BuildEditableSubFolder(
+                    root: root, 
+                    obj: content[index++], 
+                    synth: synth, goBack: 
+                    goBack, openBoard: 
+                    openBoard, boards: 
+                    boards, findBoardById: 
+                    findBoardById,
+                    speakSelectSherpaOnnxSynth: speakSelectSherpaOnnxSynth,
+                    initForSS: initForSS,
+                    playerForSS: playerForSS,
+                  )),
                 Spacer(flex: 2), // Special 1
-                Expanded(flex: 36, child: BuildEditableSubFolder(root: root, obj: content[index++], synth: synth, goBack: goBack, openBoard: openBoard, boards: boards, findBoardById: findBoardById,)),
-                Spacer(flex: 2), // Subfolder
-                Expanded(flex: 36, child: BuildEditableSubFolder(root: root, obj: content[index++], synth: synth, goBack: goBack, openBoard: openBoard,  boards: boards, findBoardById: findBoardById,)),
+                Expanded(
+                  flex: 36, 
+                  child: BuildEditableSubFolder(
+                    root: root, 
+                    obj: content[index++], 
+                    synth: synth, goBack: 
+                    goBack, openBoard: 
+                    openBoard, boards: 
+                    boards, findBoardById: 
+                    findBoardById,
+                    speakSelectSherpaOnnxSynth: speakSelectSherpaOnnxSynth,
+                    initForSS: initForSS,
+                    playerForSS: playerForSS,
+                  )), Spacer(flex: 2), // Subfolder
+                Expanded(
+                  flex: 36, 
+                  child: BuildEditableSubFolder(
+                    root: root, 
+                    obj: content[index++], 
+                    synth: synth, 
+                    goBack: goBack, 
+                    openBoard: openBoard,  
+                    boards: boards, 
+                    findBoardById: findBoardById,
+                    speakSelectSherpaOnnxSynth: speakSelectSherpaOnnxSynth,
+                    initForSS: initForSS,
+                    playerForSS: playerForSS,
+                  )),
                 Spacer(flex: 2),
-                Expanded(flex: 36, child: BuildEditableSubFolder(root: root, obj: content[index++], synth: synth, goBack: goBack, openBoard: openBoard, boards: boards, findBoardById: findBoardById,)),
-                Spacer(flex: 2),
-                Expanded(flex: 24, child: BuildEditableSubFolder(root: root, obj: content[index++], synth: synth, goBack: goBack, openBoard: openBoard, boards: boards, findBoardById: findBoardById,)),
-                Spacer(flex: 1), // Special 2
+                Expanded(flex: 36, child: BuildEditableSubFolder(
+                    root: root, 
+                    obj: content[index++], 
+                    synth: synth, goBack: 
+                    goBack, openBoard: 
+                    openBoard, boards: 
+                    boards, findBoardById: 
+                    findBoardById,
+                    speakSelectSherpaOnnxSynth: speakSelectSherpaOnnxSynth,
+                    initForSS: initForSS,
+                    playerForSS: playerForSS,
+                  )), Spacer(flex: 2),
+                Expanded(flex: 24, child: BuildEditableSubFolder(
+                    root: root, 
+                    obj: content[index++], 
+                    synth: synth, goBack: 
+                    goBack, openBoard: 
+                    openBoard, boards: 
+                    boards, findBoardById: 
+                    findBoardById,
+                    speakSelectSherpaOnnxSynth: speakSelectSherpaOnnxSynth,
+                    initForSS: initForSS,
+                    playerForSS: playerForSS,
+                  )), Spacer(flex: 1), // Special 2
               ],
             ),
              ),
@@ -477,9 +661,12 @@ extension BoardsDisplay on BoardObjects {
                 buildSpacer(1), // half spacer
                 for (int i = 0; i < 11; i++) ...[
                   Expanded(
-                     
                     flex: 10, 
-                    child: buildBoardEditObjectWidget(content[index++], root, synth, openBoard, boards, findBoardById)),
+                    child: buildBoardEditObjectWidget(
+                      content[index++], root, synth, 
+                      openBoard, boards, findBoardById,
+                      speakSelectSherpaOnnxSynth, initForSS, playerForSS,
+                    )),
                   if (i < 10) buildSpacer(2), //full Spacer
                 ],
                 buildSpacer(1), // half spacer
@@ -499,7 +686,10 @@ extension BoardsDisplay on BoardObjects {
                 for (int i = 0; i < 10; i++) ...[
                   Expanded(
                     flex: 36, 
-                    child: buildBoardEditObjectWidget(content[index++], root, synth, openBoard, boards, findBoardById)),
+                    child: buildBoardEditObjectWidget(
+                      content[index++], root, synth, openBoard, boards, findBoardById,
+                      speakSelectSherpaOnnxSynth, initForSS, playerForSS,
+                      )),
                 if (i < 9)
                   buildSpacer((i == 8) ? 21 : 7), // if is 7 or 8 do the first 
                 ],
@@ -521,7 +711,11 @@ extension BoardsDisplay on BoardObjects {
                  Expanded(
                   
                   flex: 47, 
-                  child: buildBoardEditObjectWidget(content[index++], root, synth, openBoard, boards, findBoardById)),
+                  child: buildBoardEditObjectWidget(
+                    content[index++], root, synth, 
+                    openBoard, boards, findBoardById,
+                    speakSelectSherpaOnnxSynth, initForSS, playerForSS,
+                    )),
                   if (i < 10)
                     buildSpacer((i == 9) ? 19 : 11), //if 8 do the first
                 ],
@@ -544,8 +738,11 @@ extension BoardsDisplay on BoardObjects {
                     
                     flex: 24, 
                     child: (
-                    buildBoardEditObjectWidget(content[index++], root, synth, openBoard, boards, findBoardById)
-                    )),
+                    buildBoardEditObjectWidget(
+                      content[index++], root, synth, 
+                      openBoard, boards, findBoardById,
+                      speakSelectSherpaOnnxSynth, initForSS, playerForSS,
+                    ))),
                   if (i < 9)
                     buildSpacer((i >= 7) ? 20 : 6), // last 3 spacers special
                 ],
@@ -578,6 +775,9 @@ extension BoardsDisplay on BoardObjects {
       void Function(BoardObjects) openBoard,
       List<BoardObjects> boards,
       BoardObjects? Function(String, List<BoardObjects>) findBoardById,
+      final sherpa_onnx.OfflineTts? speakSelectSherpaOnnxSynth,
+      final Future<void> Function() initForSS,
+      final AudioPlayer playerForSS,
     ) {
       final key = GlobalKey();
       Ev4rs.buttonKeys[obj.id] = key;
@@ -594,15 +794,42 @@ extension BoardsDisplay on BoardObjects {
             boards: boards,
             findBoardById: findBoardById,
             root: root,
+            speakSelectSherpaOnnxSynth: speakSelectSherpaOnnxSynth,
+            initForSS: initForSS,
+            playerForSS: playerForSS,
           );
         case 3: //folder
-           child = BuildEditableFolder(obj: obj, synth: synth, openBoard: openBoard, boards: boards, findBoardById: findBoardById, root: root);
+           child = BuildEditableFolder(
+            obj: obj, 
+            synth: synth, 
+            openBoard: openBoard, 
+            boards: boards, 
+            findBoardById: findBoardById, 
+            root: root,
+            speakSelectSherpaOnnxSynth: speakSelectSherpaOnnxSynth,
+            initForSS: initForSS,
+            playerForSS: playerForSS,
+          );
         case 4: //audioTile
-           child = BuildEditableAudioTile(obj: obj, synth: synth, root: root);
+           child = BuildEditableAudioTile(obj: obj, synth: synth, root: root, );
         case 5: //typingKey
-           child = BuildEditableTypingKey(obj: obj, synth: synth, root: root);
+           child = BuildEditableTypingKey(
+            obj: obj, 
+            synth: synth, 
+            root: root,
+            speakSelectSherpaOnnxSynth: speakSelectSherpaOnnxSynth,
+            initForSS: initForSS,
+            playerForSS: playerForSS,
+          );
         case 6:
-           child = BuildEditableButtonGrammer(obj: obj, synth: synth, root: root);
+           child = BuildEditableButtonGrammer(
+            obj: obj, 
+            synth: synth, 
+            root: root,
+            speakSelectSherpaOnnxSynth: speakSelectSherpaOnnxSynth,
+            initForSS: initForSS,
+            playerForSS: playerForSS,
+            );
         default:
            child = const SizedBox.shrink(); // fallback
       }
