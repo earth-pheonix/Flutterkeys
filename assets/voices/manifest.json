@@ -455,655 +455,655 @@
           "idSpeaker": 0,
           "name": "0",
           "sound": "GB-Fem",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/0.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/0.wav"
         },
         { 
           "idSpeaker": 1,
           "name": "1",
           "sound": "GB-Fem",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/1.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/1.wav"
         },
         { 
           "idSpeaker": 2,
           "name": "2",
           "sound": "GB-Masc",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/2.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/2.wav"
         },
         { 
           "idSpeaker": 3,
           "name": "3",
           "sound": "GB-Fem",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/3.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/3.wav"
         },
         { 
           "idSpeaker": 4,
           "name": "4",
           "sound": "GB-masc",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/4.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/4.wav"
         },
         { 
           "idSpeaker": 5,
           "name": "5",
           "sound": "GB-Masc",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/5.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/5.wav"
         },
         { 
           "idSpeaker": 6,
           "name": "6",
           "sound": "GB-masc",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/6.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/6.wav"
         },
         { 
           "idSpeaker": 7,
           "name": "7",
           "sound": "GB-Masc",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/7.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/7.wav"
         },
         { 
           "idSpeaker": 8,
           "name": "8",
           "sound": "GB-Masc",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/8.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/8.wav"
         },
         { 
           "idSpeaker": 9,
           "name": "9",
           "sound": "GB-masc",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/9.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/9.wav"
         },
         { 
           "idSpeaker": 10,
           "name": "10",
           "sound": "GB-Masc",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/10.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/10.wav"
         },
         { 
           "idSpeaker": 11,
           "name": "11",
           "sound": "GB-Masc",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/11.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/11.wav"
         },
         { 
           "idSpeaker": 12,
           "name": "12",
           "sound": "GB-fem",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/12.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/12.wav"
         },
         { 
           "idSpeaker": 13,
           "name": "13",
           "sound": "GB-Masc",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/13.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/13.wav"
         },
         { 
           "idSpeaker": 14,
           "name": "14",
           "sound": "GB-Masc",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/14.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/14.wav"
         },
         { 
           "idSpeaker": 15,
           "name": "15",
           "sound": "GB-Fem",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/15.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/15.wav"
         },
         { 
           "idSpeaker": 16,
           "name": "16",
           "sound": "GB-Masc",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/16.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/16.wav"
         },
         { 
           "idSpeaker": 17,
           "name": "17",
           "sound": "GB-fem",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/17.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/17.wav"
         },
         { 
           "idSpeaker": 18,
           "name": "18",
           "sound": "GB-fem",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/18.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/18.wav"
         },
         { 
           "idSpeaker": 19,
           "name": "19",
           "sound": "GB-fem",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/19.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/19.wav"
         },
         { 
           "idSpeaker": 20,
           "name": "20",
           "sound": "GB-fem",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/20.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/20.wav"
         },
         { 
           "idSpeaker": 21,
           "name": "21",
           "sound": "GB-fem",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/21.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/21.wav"
         },
         { 
           "idSpeaker": 22,
           "name": "22",
           "sound": "GB-fem",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/22.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/22.wav"
         },
         { 
           "idSpeaker": 23,
           "name": "23",
           "sound": "GB-fem",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/23.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/23.wav"
         },
         { 
           "idSpeaker": 24,
           "name": "24",
           "sound": "GB-fem",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/24.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/24.wav"
         },
         { 
           "idSpeaker": 25,
           "name": "25",
           "sound": "GB-Masc",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/25.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/25.wav"
         },
         { 
           "idSpeaker": 26,
           "name": "26",
           "sound": "GB-Masc",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/26.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/26.wav"
         },
         { 
           "idSpeaker": 27,
           "name": "27",
           "sound": "GB-masc",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/27.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/27.wav"
         },
         { 
           "idSpeaker": 28,
           "name": "28",
           "sound": "GB-Masc",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/28.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/28.wav"
         },
         { 
           "idSpeaker": 29,
           "name": "29",
           "sound": "GB-Masc",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/29.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/29.wav"
         },
         { 
           "idSpeaker": 30,
           "name": "30",
           "sound": "GB-masc",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/30.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/30.wav"
         },
         { 
           "idSpeaker": 31,
           "name": "31",
           "sound": "GB-fem",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/31.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/31.wav"
         },
         { 
           "idSpeaker": 32,
           "name": "32",
           "sound": "GB-Masc",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/32.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/32.wav"
         },
         { 
           "idSpeaker": 33,
           "name": "33",
           "sound": "GB-fem",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/33.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/33.wav"
         },
         { 
           "idSpeaker": 34,
           "name": "34",
           "sound": "GB-fem",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/34.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/34.wav"
         },
         { 
           "idSpeaker": 35,
           "name": "35",
           "sound": "GB-fem",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/35.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/35.wav"
         },
         { 
           "idSpeaker": 36,
           "name": "36",
           "sound": "GB-masc",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/16.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/16.wav"
         },
         { 
           "idSpeaker": 37,
           "name": "37",
           "sound": "GB-fem",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/37.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/37.wav"
         },
         { 
           "idSpeaker": 38,
           "name": "38",
           "sound": "GB-Masc",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/38.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/38.wav"
         },
         { 
           "idSpeaker": 39,
           "name": "39",
           "sound": "GB-masc",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/39.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/39.wav"
         },
         { 
           "idSpeaker": 40,
           "name": "40",
           "sound": "GB-Masc",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/40.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/40.wav"
         },
         { 
           "idSpeaker": 41,
           "name": "41",
           "sound": "GB-Masc",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/41.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/41.wav"
         },
         { 
           "idSpeaker": 42,
           "name": "42",
           "sound": "GB-fem",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/42.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/42.wav"
         },
         { 
           "idSpeaker": 43,
           "name": "43",
           "sound": "GB-Masc",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/43.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/43.wav"
         },
         { 
           "idSpeaker": 44,
           "name": "44",
           "sound": "GB-fem",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/44.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/44.wav"
         },
         { 
           "idSpeaker": 45,
           "name": "45",
           "sound": "GB-fem",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/45.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/45.wav"
         },
         { 
           "idSpeaker": 46,
           "name": "46",
           "sound": "GB-Masc",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/46.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/46.wav"
         },
         { 
           "idSpeaker": 47,
           "name": "47",
           "sound": "GB-fem",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/47.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/47.wav"
         },
         { 
           "idSpeaker": 48,
           "name": "48",
           "sound": "GB-fem",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/48.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/48.wav"
         },
         { 
           "idSpeaker": 49,
           "name": "49",
           "sound": "GB-fem",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/49.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/49.wav"
         },
         { 
           "idSpeaker": 50,
           "name": "50",
           "sound": "GB-fem",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/50.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/50.wav"
         },
         { 
           "idSpeaker": 51,
           "name": "51",
           "sound": "GB-fem",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/51.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/51.wav"
         },
         { 
           "idSpeaker": 52,
           "name": "52",
           "sound": "GB-Masc",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/52.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/52.wav"
         },
         { 
           "idSpeaker": 53,
           "name": "53",
           "sound": "GB-Masc",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/53.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/53.wav"
         },
         { 
           "idSpeaker": 54,
           "name": "54",
           "sound": "GB-fem",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/54.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/54.wav"
         },
         { 
           "idSpeaker": 55,
           "name": "55",
           "sound": "GB-Masc",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/55.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/55.wav"
         },
         { 
           "idSpeaker": 56,
           "name": "56",
           "sound": "GB-Masc",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/56.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/56.wav"
         },
         { 
           "idSpeaker": 57,
           "name": "57",
           "sound": "GB-fem",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/47.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/47.wav"
         },
         { 
           "idSpeaker": 58,
           "name": "58",
           "sound": "GB-fem",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/58.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/58.wav"
         },
         { 
           "idSpeaker": 59,
           "name": "59",
           "sound": "GB-Masc",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/59.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/59.wav"
         },
         { 
           "idSpeaker": 60,
           "name": "60",
           "sound": "GB-masc",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/60.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/60.wav"
         },
         { 
           "idSpeaker": 61,
           "name": "61",
           "sound": "GB-Masc",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/61.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/61.wav"
         },
         { 
           "idSpeaker": 62,
           "name": "62",
           "sound": "GB-fem",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/62.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/62.wav"
         },
         { 
           "idSpeaker": 63,
           "name": "63",
           "sound": "GB-masc",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/63.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/63.wav"
         },
         { 
           "idSpeaker": 64,
           "name": "64",
           "sound": "GB-fem",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/64.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/64.wav"
         },
         { 
           "idSpeaker": 65,
           "name": "65",
           "sound": "GB-fem",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/65.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/65.wav"
         },
         { 
           "idSpeaker": 66,
           "name": "66",
           "sound": "GB-fem",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/66.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/66.wav"
         },
         { 
           "idSpeaker": 67,
           "name": "67",
           "sound": "GB-fem",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/67.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/67.wav"
         },
         { 
           "idSpeaker": 68,
           "name": "68",
           "sound": "GB-Masc",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/68.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/68.wav"
         },
         { 
           "idSpeaker": 69,
           "name": "69",
           "sound": "GB-masc",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/69.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/69.wav"
         },
         { 
           "idSpeaker": 70,
           "name": "70",
           "sound": "GB-fem",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/70.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/70.wav"
         },
         { 
           "idSpeaker": 71,
           "name": "71",
           "sound": "GB-Masc",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/71.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/71.wav"
         },
         { 
           "idSpeaker": 72,
           "name": "72",
           "sound": "GB-masc",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/72.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/72.wav"
         },
         { 
           "idSpeaker": 73,
           "name": "73",
           "sound": "GB-fem",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/73.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/73.wav"
         },
         { 
           "idSpeaker": 74,
           "name": "74",
           "sound": "GB-fem",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/74.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/74.wav"
         },
         { 
           "idSpeaker": 75,
           "name": "75",
           "sound": "GB-fem",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/75.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/75.wav"
         },
         { 
           "idSpeaker": 76,
           "name": "76",
           "sound": "GB-fem",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/76.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/76.wav"
         },
         { 
           "idSpeaker": 77,
           "name": "77",
           "sound": "GB-Masc",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/77.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/77.wav"
         },
         { 
           "idSpeaker": 78,
           "name": "78",
           "sound": "GB-fem",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/78.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/78.wav"
         },
         { 
           "idSpeaker": 79,
           "name": "79",
           "sound": "GB-fem",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/79.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/79.wav"
         },
         { 
           "idSpeaker": 80,
           "name": "80",
           "sound": "GB-fem",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/80.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/80.wav"
         },
         { 
           "idSpeaker": 81,
           "name": "81",
           "sound": "GB-masc",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/81.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/81.wav"
         },
         { 
           "idSpeaker": 82,
           "name": "82",
           "sound": "GB-Masc",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/82.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/82.wav"
         },
         { 
           "idSpeaker": 83,
           "name": "83",
           "sound": "GB-fem",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/83.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/83.wav"
         },
         { 
           "idSpeaker": 84,
           "name": "84",
           "sound": "GB-fem",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/84.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/84.wav"
         },
         { 
           "idSpeaker": 85,
           "name": "85",
           "sound": "GB-Masc",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/85.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/85.wav"
         },
         { 
           "idSpeaker": 86,
           "name": "86",
           "sound": "GB-Masc",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/86.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/86.wav"
         },
         { 
           "idSpeaker": 87,
           "name": "87",
           "sound": "GB-fem",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/87.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/87.wav"
         },
         { 
           "idSpeaker": 88,
           "name": "88",
           "sound": "GB-Masc",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/88.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/88.wav"
         },
         { 
           "idSpeaker": 89,
           "name": "89",
           "sound": "GB-fem",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/89.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/89.wav"
         },
         { 
           "idSpeaker": 90,
           "name": "90",
           "sound": "GB-masc",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/90.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/90.wav"
         },
         { 
           "idSpeaker": 91,
           "name": "91",
           "sound": "GB-fem",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/91.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/91.wav"
         },
         { 
           "idSpeaker": 92,
           "name": "92",
           "sound": "GB-fem",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/92.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/92.wav"
         },
         { 
           "idSpeaker": 93,
           "name": "93",
           "sound": "GB-fem",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/93.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/93.wav"
         },
         { 
           "idSpeaker": 94,
           "name": "94",
           "sound": "GB-fem",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/94.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/94.wav"
         },
         { 
           "idSpeaker": 95,
           "name": "95",
           "sound": "GB-fem",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/95.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/95.wav"
         },
         { 
           "idSpeaker": 96,
           "name": "96",
           "sound": "GB-masc",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/96.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/96.wav"
         },
         { 
           "idSpeaker": 97,
           "name": "97",
           "sound": "GB-fem",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/97.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/97.wav"
         },
         { 
           "idSpeaker": 98,
           "name": "98",
           "sound": "GB-fem",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/98.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/98.wav"
         },
         { 
           "idSpeaker": 99,
           "name": "99",
           "sound": "fem",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/99.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/99.wav"
         },
         { 
           "idSpeaker": 100,
           "name": "100",
           "sound": "GB-fem",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/100.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/100.wav"
         },
         { 
           "idSpeaker": 101,
           "name": "101",
           "sound": "GB-fem",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/101.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/101.wav"
         },
         { 
           "idSpeaker": 102,
           "name": "102",
           "sound": "US-fem",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/102.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/102.wav"
         },
         { 
           "idSpeaker": 103,
           "name": "103",
           "sound": "GB-fem",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/103.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/103.wav"
         },
         { 
           "idSpeaker": 104,
           "name": "104",
           "sound": "fem",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/104.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/104.wav"
         },
         { 
           "idSpeaker": 105,
           "name": "105",
           "sound": "GB-fem",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/105.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/105.wav"
         },
         { 
           "idSpeaker": 106,
           "name": "106",
           "sound": "GB-fem",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/106.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/106.wav"
         },
         { 
           "idSpeaker": 107,
           "name": "107",
           "sound": "",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/107.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/107.wav"
         },
         { 
           "idSpeaker": 108,
           "name": "108",
           "sound": "",
-          "sample_path": "assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/108.wav"
+          "sample_path": "voices/samples/vits-coqui-en-vctk-flutterkeys_samples/108.wav"
         }
       ]
     }
