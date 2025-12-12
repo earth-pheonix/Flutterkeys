@@ -6,14 +6,19 @@ This code is Licensed under GPL 3.0
 
 # Welcome to Flutterkeys! 
 
-This is an AAC (augmentive alternative communication) app being created by a nonspeaking AAC user named Pheonix.
-Feedback and collaboraion are welcome. 
+This is an **AAC** *(augmentive alternative communication)* app being created by a nonspeaking AAC user named Pheonix.
+**Feedback and collaboraion are welcome.**
 
-Pheonix would like to partner with a nonprofit when the app is ready for beta testing & release to get an iOS fee waiver. 
+Pheonix would like to partner with a nonprofit to get a fee waiver when the app is ready for beta testing & release.
 
-The goal of this project is to provide a hybrid of symbol and typing based AAC. The app should be robust and highly customizable. It should align with values of accsess and openness. 
+**The goal of this project** 
+- is to provide a hybrid of symbol and typing based AAC.
+- the app should be robust and highly customizable.
+- it should align with values of accsess and openness.
 
-## How will FlutterKeys accomplish these goals?
+---
+
+## How will Flutterkeys meet these goals?
 
 ### Symbol + Typing Hybrid:
 - Symbol supported boardsets & system keyboard accsess.
@@ -26,6 +31,7 @@ The goal of this project is to provide a hybrid of symbol and typing based AAC. 
 - Keyboard does not cover the grammer, message, or navigation rows & their functions remain accssessible.
 - Navigation buttons automatically hide the keyboard. 
 
+---
 
 ### Robust:
 - Planned pre built vocabulary of over 4,000 words.
@@ -37,6 +43,8 @@ The goal of this project is to provide a hybrid of symbol and typing based AAC. 
     - and more!
 
 
+---
+
 ### Customizable:
 - App color scheme
 - Fonts
@@ -47,6 +55,8 @@ The goal of this project is to provide a hybrid of symbol and typing based AAC. 
     - voices are limited by what is on the device, and what the app is allowed to use
     - prebuild boardsets + grammer buttons are english only (But- I would accsept & appreciate help in changing that)
 
+
+---
 
 ### Accsess and Openess:
 - 100% free
