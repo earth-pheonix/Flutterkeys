@@ -7,7 +7,6 @@ This code is Licensed under GPL 3.0
 # Welcome to Flutterkeys! 
 
 This is an AAC *(augmentive alternative communication)* app being created by a nonspeaking AAC user named Pheonix.
-**Feedback and collaboraion are welcome.**
 
 Pheonix would like to partner with a nonprofit to get a fee waiver when the app is ready for beta testing & release.
 
@@ -77,8 +76,13 @@ The goal of this project:
 
 ## Get in touch: 
 
-Pheonix regularly shares progress in the Flutterkeys Discord Server: [https://discord.gg/MxGFgqsSQS]
+Anyone is welcome to use the project dicussion pages.
 
-To contact or collaborate with Pheonix, email them at: [Pheonix@michaeljohnclark.com] 
+Pheonix regularly shares progress in the Flutterkeys Discord Server: [https://discord.gg/MxGFgqsSQS]
+They are also happy to chat & receive feedback
+
+To contact Pheonix directly, email them at: [Pheonix@michaeljohnclark.com]
+
+**Feedback and collaboraion is incredibly welcome.**
 
 ---
