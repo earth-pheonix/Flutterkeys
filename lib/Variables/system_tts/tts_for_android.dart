@@ -1,14 +1,11 @@
 // lib/tts/tts_android.dart
 import 'package:flutter_tts/flutter_tts.dart';
-import 'package:flutter/foundation.dart';
+import 'package:flutterkeysaac/Variables/variables.dart';
 import 'tts_interface.dart';
 import 'dart:async';
 
 class TTSAndroid implements TTSInterface {
   FlutterTts _tts = FlutterTts();
-
-  @override
-  ValueNotifier<bool> isSpeaking = ValueNotifier(false);
 
   final StreamController<void> _doneController = StreamController.broadcast();
 
@@ -35,22 +32,22 @@ class TTSAndroid implements TTSInterface {
     });
 
     _tts.setPauseHandler(() {
-      isSpeaking.value = false;
+      V4rs.theIsSpeaking.value = false;
     });
 
     _tts.setContinueHandler(() {
-      isSpeaking.value = true;
+      V4rs.theIsSpeaking.value = true;
     });
   }
 
   @override
   void notifyStart() {
-    isSpeaking.value = true;
+    V4rs.theIsSpeaking.value = true;
   }
 
   @override
   void notifyDone() {
-    isSpeaking.value = false;
+    V4rs.theIsSpeaking.value = false;
     if (!_doneController.isClosed) {
       _doneController.add(null);
     }

@@ -1,26 +1,21 @@
 
-import 'package:flutterkeysaac/Variables/settings/settings_variables.dart';
 import 'package:flutterkeysaac/Variables/settings/voice_variables.dart';
 import 'package:flutterkeysaac/Variables/variables.dart';
 import 'dart:async';
-
 import 'package:audioplayers/audioplayers.dart';
 import 'package:sherpa_onnx/sherpa_onnx.dart' as sherpa_onnx;
-
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as p;
-
 import "dart:io";
 
-
-
-
-//Flutterkeys supports vits, kokoro, and single onnx matcha files. 
+//supports vits, kokoro, and matcha
 
 class SherpaOnnxV4rs {
 
+  late final String globalVocoderPath;
+
   static Future<sherpa_onnx.OfflineTts> createOfflineTts(String voiceId) async {
-    print('start createOfflineTts');
+    print('creating offline TTS');
     sherpa_onnx.initBindings();
 
     final base = p.join(
@@ -33,6 +28,8 @@ class SherpaOnnxV4rs {
     final voicesBin = p.join(base, "$voiceId-voices.bin");
     final tokens = p.join(base, "tokens.txt");
     final espeak = p.join(base, "eSpeak-ng");
+    final acoustic = p.join(base, 'voice.id-acoustic.onnx');
+    final vocodor = p.join(base, 'voice.id-vocodor.onnx');
 
     final dir = Directory(base);
     final entries = await dir.list(recursive: true).toList();
@@ -52,17 +49,19 @@ class SherpaOnnxV4rs {
         .map((e) => e.path)
         .join(",");
 
-    
     final isKokoro = File(voicesBin).existsSync();
 
+    final espeakDir = Directory(p.join(base, "eSpeak-ng"));
+    final isEspeakEmpty = !espeakDir.existsSync() || espeakDir.listSync().isEmpty;
+    final isMatcha = isEspeakEmpty;
+    final isMultiMatcha = isEspeakEmpty && Directory(vocodor).existsSync();
 
     late final sherpa_onnx.OfflineTtsVitsModelConfig vits;
     late final sherpa_onnx.OfflineTtsKokoroModelConfig kokoro;
-
-    print('createOfflineTts: variables set');
+    late final sherpa_onnx.OfflineTtsMatchaModelConfig matcha;
 
     if (isKokoro) {
-      print('createOfflineTts: is kokoro');
+      print('is kokoro');
       vits = sherpa_onnx.OfflineTtsVitsModelConfig(); // unused
       kokoro = sherpa_onnx.OfflineTtsKokoroModelConfig(
         model: modelOnnx,
@@ -71,85 +70,101 @@ class SherpaOnnxV4rs {
         dataDir: espeak,
         lexicon: lexicons,
       );
-    } else {
-      print('createOfflineTts: is not kokoro');
+      matcha = sherpa_onnx.OfflineTtsMatchaModelConfig(); //unused
+    } else if (isMultiMatcha){
+      print('is multi matcha');
+      vits = sherpa_onnx.OfflineTtsVitsModelConfig(); //unused
       kokoro = sherpa_onnx.OfflineTtsKokoroModelConfig(); // unused
+      matcha = sherpa_onnx.OfflineTtsMatchaModelConfig(
+        acousticModel: acoustic,
+        vocoder: vocodor,
+        tokens: tokens,
+        dataDir: '',
+        lexicon: lexicons,
+      );
+    } else if (isMatcha){
+      print('is matcha');
+      vits = sherpa_onnx.OfflineTtsVitsModelConfig(); //unused
+      kokoro = sherpa_onnx.OfflineTtsKokoroModelConfig();
+      matcha = sherpa_onnx.OfflineTtsMatchaModelConfig(
+        acousticModel: modelOnnx,
+        vocoder: Vv4rs.globalVocoderPath,
+        tokens: tokens,
+        dataDir: '',
+        lexicon: lexicons,
+      );
+    } else {
+      print('is vits');
       vits = sherpa_onnx.OfflineTtsVitsModelConfig(
         model: modelOnnx,
         tokens: tokens,
         lexicon: lexicons,
         dataDir: espeak,
       );
+      kokoro = sherpa_onnx.OfflineTtsKokoroModelConfig(); // unused
+      matcha = sherpa_onnx.OfflineTtsMatchaModelConfig(); //unused
     }
 
     final modelConfig = sherpa_onnx.OfflineTtsModelConfig(
       vits: vits, //settings for vits models
       kokoro: kokoro, //settings for kokoro models
+      matcha: matcha, //settings for matcha models
+      
       numThreads: 2, //number of cpu threads allowed
-      debug: true, //how much to print (true = lots)
+      debug: true, //print info? yes or no
       provider: 'cpu', //what hardware backend to use
     );
 
     final config = sherpa_onnx.OfflineTtsConfig(
-      model: modelConfig, //vits or kokoro
-      ruleFsts: ruleFsts, 
-      ruleFars: ruleFars,
+      model: modelConfig, //vits, kokoro, matcha
+      ruleFsts: 
+        (isMatcha || isMultiMatcha) 
+        ? ''
+        : ruleFsts, 
+      ruleFars: 
+        (isMatcha || isMultiMatcha) 
+        ? ''
+        : ruleFars,
       maxNumSenetences: 1, //sentance count for proccess per call
     );
 
-    print('createOfflineTts: model configs set');
 
     final tts = sherpa_onnx.OfflineTts(config);
-    print('createOfflineTts: done');
 
     return tts;
     }
 
-  static Future<dynamic> loadSherpaOnnxEngine() async {
-    print('loadSherpaOnnxEngine');
-    //for (final lang in Sv4rs.myLanguages){
-    //  print('loadSherpaOnnxEngine: engine: ${Vv4rs.sherpaOnnxLanguageVoice[lang]?.engine}');
-    //  print('loadSherpaOnnxEngine: language: $lang');
-      if (Vv4rs.myEngineForVoiceLang['English'] == 'sherpa-onnx'){
-        print('loadSherpaOnnxEngine: engine is sherpa-onnx');
-        if (Vv4rs.sherpaOnnxLanguageVoice['English'] != null){
-          print('loadSherpaOnnxEngine: voice is not null');
+  static Future<dynamic> loadSherpaOnnxEngine(String lang) async {
+    print('4. loading sherpa onnx');
+      print('4. lang $lang');
+      if (Vv4rs.myEngineForVoiceLang[lang] == 'sherpa-onnx'){
+        print('4. engine is sherpa onnx');
+        print('4. (Vv4rs.sherpaOnnxLanguageVoice[lang] ${Vv4rs.sherpaOnnxLanguageVoice[lang]}');
+        if (Vv4rs.sherpaOnnxLanguageVoice[lang] != null){
           final tts = await createOfflineTts(
-            Vv4rs.sherpaOnnxLanguageVoice['English']!.id ?? '',
+            Vv4rs.sherpaOnnxLanguageVoice[lang]!.id ?? '',
           );
-          print('loadSherpaOnnxEngine: done');
           return tts;
         }
-    //  }
-      print('loadSherpaOnnxEngine: engine isnt sherpa-onnx');
     }
   }
 
-  static Future<dynamic> loadSherpaOnnxSSEngine() async {
-    print('loadSherpaOnnxSSEngine');
-    for (final lang in Sv4rs.myLanguages){
-      if (Vv4rs.myEngineForSSVoiceLang[lang] == 'sherpa-onnx'){
-        print('loadSherpaOnnxEngine: engine is sherpa onnx');
-        if (Vv4rs.sherpaOnnxSSLanguageVoice[lang] != null){
-          print('loadSherpaOnnxEngine: voice is not null');
-          await createOfflineTts(
-            Vv4rs.sherpaOnnxSSLanguageVoice[lang]!.id ?? '',
+  static Future<dynamic> loadSherpaOnnxSSEngine(String language) async {
+      if (Vv4rs.myEngineForSSVoiceLang[language] == 'sherpa-onnx'){
+        if (Vv4rs.sherpaOnnxSSLanguageVoice[language] != null){
+          final tts = await createOfflineTts(
+            Vv4rs.sherpaOnnxSSLanguageVoice[language]!.id ?? '',
           );
-          print('loadSherpaOnnxEngine: done');
+          return tts;
         }
       }
-    }
   }
 
   static Future<String> generateWaveFilename([String suffix = '']) async {
-     print('generateWaveFilename: start');
     final Directory directory = await getApplicationSupportDirectory();
-    print('generateWaveFilename: directory has been got');
     DateTime now = DateTime.now();
-    print('generateWaveFilename: time has been got');
     final filename =
         '${now.year.toString()}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')}-${now.hour.toString().padLeft(2, '0')}-${now.minute.toString().padLeft(2, '0')}-${now.second.toString().padLeft(2, '0')}$suffix.wav';
-    print('generateWaveFilename: file name has been set, returning now');
     return p.join(directory.path, filename);
   }
 
@@ -157,76 +172,58 @@ class SherpaOnnxV4rs {
     bool forSS,
     String lang, 
     String text, 
-    sherpa_onnx.OfflineTts sherpaOnnxSynth,
-    Future<void> Function() init,
+    Map<String, sherpa_onnx.OfflineTts?>? sherpaOnnxSynth,
     AudioPlayer player,
   ) async {
-    print('speak: start');
-    await init();
     await player.stop();
 
-    print('speak: init has run, player is ready');
 
-    final stopwatch = Stopwatch();
-      stopwatch.start();
-    print('speak: stopwatch started');
-
-      final speakerID = (forSS) 
-        ? Vv4rs.sherpaOnnxSSLanguageVoice[lang]!.speakerID
-        : Vv4rs.sherpaOnnxLanguageVoice[lang]!.speakerID;
-      final rate = (forSS) 
-        ? Vv4rs.sherpaOnnxSSLanguageVoice[lang]!.lengthScale
-        : Vv4rs.sherpaOnnxLanguageVoice[lang]!.lengthScale;
-    
-    print('speak: speaker is and rate set');
-
-      final audio = 
-        sherpaOnnxSynth.generate(
-          text: text, 
-          sid: speakerID ?? 0, 
-          speed: rate ?? 1.0,
-        );
-
-    print('speak: audio set');
-
-      final suffix = '-sid-${speakerID ?? 0}-speed-${(rate ?? 1.0).toStringAsPrecision(2)}';
-      final filename = await generateWaveFilename(suffix);
+    final speakerID = (forSS) 
+      ? Vv4rs.sherpaOnnxSSLanguageVoice[lang]?.speakerID
+      : Vv4rs.sherpaOnnxLanguageVoice[lang]?.speakerID;
+    final rate = (forSS) 
+      ? Vv4rs.sherpaOnnxSSLanguageVoice[lang]?.lengthScale
+      : Vv4rs.sherpaOnnxLanguageVoice[lang]?.lengthScale;
   
-    print('speak: suffix and file name set');
+    final audio = 
+      sherpaOnnxSynth?[lang]?.generate(
+        text: text, 
+        sid: speakerID ?? 0, 
+        speed: rate ?? 1.0,
+      );
 
+    final suffix = '-sid-${speakerID ?? 0}-speed-${(rate ?? 1.0).toStringAsPrecision(2)}';
+    final filename = await generateWaveFilename(suffix);
+
+    if (audio != null){
       final wav = sherpa_onnx.writeWave(
         filename: filename,
         samples: audio.samples,
         sampleRate: audio.sampleRate,
       );
 
-    print('speak: ready for wav');
-
       if (wav) {
-        print('speak: wav started');
-
         V4rs.currentSpeakingFile = filename;
 
-        print('speak: current speaking file set');
-
-        stopwatch.stop();
-        print('speak: stopwatch stopped');
-        double elapsed = stopwatch.elapsed.inMilliseconds.toDouble();
+        double time = audio.samples.length / audio.sampleRate; //in seconds
+        double minutes = time * 60;
         int wordCount(String text) {
           return text
             .trim()
             .split(RegExp(r'\s+'))
             .length;
-         }
-        V4rs.wordsPerMinute = wordCount(text)/elapsed;
+          }
 
-        print('speak: start playing');
+        V4rs.currentWPM = wordCount(text)/minutes;
+
+        final completer = Completer<void>();
+        player.onPlayerComplete.listen((event) {
+          if (!completer.isCompleted) completer.complete();
+        });
         await player.play(DeviceFileSource(V4rs.currentSpeakingFile!));
-        print('speak: done');
-
-        } else {
-          print('speak: Failed to generate (SherpaOnnxV4rs.speakSS.65)',);
-        }
+        await completer.future; 
+      }
+    }
   }
 
   static Future<void> pause(

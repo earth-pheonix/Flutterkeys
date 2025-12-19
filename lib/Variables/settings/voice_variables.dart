@@ -1,3 +1,4 @@
+import 'package:flutter/widgets.dart';
 import 'package:flutterkeysaac/Variables/system_tts/tts_interface.dart';
 import 'package:flutterkeysaac/Variables/settings/settings_variables.dart';
 import 'package:flutterkeysaac/Variables/variables.dart';
@@ -9,6 +10,7 @@ import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:archive/archive_io.dart'; // zip handling 
+import 'package:path/path.dart' as p;
  
 class Vv4rs{
   static Map<String, String?> myEngineForSSVoiceLang = {};
@@ -53,7 +55,7 @@ class Vv4rs{
   static List<Map<String, dynamic>> systemVoices = [];
   static Map<String, List<Map<String, dynamic>>> uniqueSystemVoices = {};
 
-  static Future<void> loadSystemVoices(TTSInterface tts) async {
+  static Future<dynamic> loadSystemVoices(TTSInterface tts) async {
     List<Map<String, dynamic>> allVoices = [];
 
     for (String lang in Sv4rs.myLanguages) {
@@ -71,8 +73,8 @@ class Vv4rs{
         });
       }
     }
-    
-    Vv4rs.systemVoices = allVoices;
+     
+    return Vv4rs.systemVoices = allVoices;
   }
 
   static String cleanSystemVoiceLabel(Map voice) {
@@ -156,7 +158,7 @@ class Vv4rs{
       } else if (value == 'pitch'){
         return speakSelectSystemLanguageVoice[langVoice]?.pitch ?? 1.0;
       } else if (value == 'rate'){
-        return speakSelectSystemLanguageVoice[langVoice]?.rate ?? 0.5;
+        return speakSelectSystemLanguageVoice[langVoice]?.rate ?? ((Platform.isIOS) ? 0.5 : 1.0);
       }
     }
 
@@ -212,7 +214,7 @@ class Vv4rs{
       } else if (value == 'pitch'){
         return systemLanguageVoice[langVoice]?.pitch ?? 1.0;
       } else if (value == 'rate'){
-        return systemLanguageVoice[langVoice]?.rate ?? 0.5;
+        return systemLanguageVoice[langVoice]?.rate ?? ((Platform.isIOS) ? 0.5 : 1.0);
       }
     }
 
@@ -544,9 +546,9 @@ class Vv4rs{
       }
       else if (value == 'speakerCount'){
         if (forSS){
-          return prefs.setString('sherpa_onnx-tts-forSS-speakerCount-$language', saving);
+          return prefs.setInt('sherpa_onnx-tts-forSS-speakerCount-$language', saving);
         } else {
-          return prefs.setString('sherpa_onnx-tts-speakerCount-$language', saving);
+          return prefs.setInt('sherpa_onnx-tts-speakerCount-$language', saving);
         }
       }
     }
@@ -622,8 +624,6 @@ class Vv4rs{
         );
       
       if(sampleSherpaOnnx != null && sampleSherpaOnnx?.engine != null){
-        print("set language voice sherpa onnx, sample engine isnt null");
-        print("set language voice sherpa onnx, sample engine isnt null lang: $langVoice");
         myEngineForVoiceLang[langVoice] = sampleSherpaOnnx?.engine;
         await saveMyEngineForVoiceLang(langVoice, null, myEngineForVoiceLang[langVoice]);
       }
@@ -688,10 +688,42 @@ class Vv4rs{
 // Download & Pick voice
 //
 
-static bool isDownloading = false;
+static ValueNotifier<bool> isDownloading = ValueNotifier(false);
+static ValueNotifier<String> downloadMessage = ValueNotifier('');
+
+static void setupIsDownloadingListener(){
+  isDownloading.addListener((){
+    if (isDownloading.value == false){
+      Future.delayed(const Duration(seconds: 5), () {
+        downloadMessage.value = '';
+      });
+    }
+  });
+}
+
+static late final String globalVocoderPath;
+
+static Future<void> initGlobalVocoder() async {
+  final dir = await getApplicationDocumentsDirectory();
+  final vocoderFile = File(p.join(dir.path, 'vocos-22khz-univ.onnx'));
+
+  if (!await vocoderFile.exists()) {
+    final data = await rootBundle.load(
+      'assets/voices/vocos-22khz-univ.onnx',
+    );
+    await vocoderFile.writeAsBytes(
+      data.buffer.asUint8List(),
+      flush: true,
+    );
+  }
+
+  globalVocoderPath = vocoderFile.path;
+}
 
 static Future<ManifestModel?> downloadSherpaOnnxVoice(ManifestModel voice) async {
+  isDownloading.value = true;
   try {
+    downloadMessage.value = 'Download starting...';
     final dir = await getApplicationDocumentsDirectory();
     final savePath = "${dir.path}/sherpaOnnx_models";
     final voiceFolder = "$savePath/${voice.id}"; //model dir
@@ -709,7 +741,10 @@ static Future<ManifestModel?> downloadSherpaOnnxVoice(ManifestModel voice) async
     await Directory(voiceFolder).create(recursive: true);
 
     
-    if (voice.downloadURL == null) return null;
+    if (voice.downloadURL == null) {
+      downloadMessage.value = 'download URL empty- download failed';
+      return null;
+    }
 
     // Download zip
     final zipFile = File(zipPath);
@@ -721,8 +756,13 @@ static Future<ManifestModel?> downloadSherpaOnnxVoice(ManifestModel voice) async
     // 2. Send the request and get a streamed response
     final response = await client.send(request);
 
+    downloadMessage.value = 'Opening Zip...';
+
     // 3. Open file sink and pipe the streamed response directly to disk
     final fileSink = zipFile.openWrite();
+
+    downloadMessage.value = 'Getting Data.. (this can take up to 20 minutes)...';
+
     await response.stream.pipe(fileSink);
     await fileSink.close();
 
@@ -742,21 +782,54 @@ static Future<ManifestModel?> downloadSherpaOnnxVoice(ManifestModel voice) async
 
       // Special handling for .onnx file
       if (file.isFile && filename.toLowerCase().endsWith(".onnx")) {
+        if (filename.contains('acoustic')){
+          final outFile = File("$voiceFolder/${voice.id}-acoustic.onnx");
+          final sink = outFile.openWrite();
 
-        final outFile = File(onnxPath);
-        final sink = outFile.openWrite();
+          file.decompress();
 
-        file.decompress();
+          final content = file.content;
 
-        final content = file.content;
+          if (content is List<int>) {
+            sink.add(content);
+          }
 
-        if (content is List<int>) {
-          sink.add(content);
+          await sink.close();
+          downloadMessage.value = 'Download starting... .onnx downloaded';
+          continue;
+
+        } else if (filename.contains('vocoder')){
+          final outFile = File("$voiceFolder/${voice.id}-vocoder.onnx");
+          final sink = outFile.openWrite();
+
+          file.decompress();
+
+          final content = file.content;
+
+          if (content is List<int>) {
+            sink.add(content);
+          }
+
+          await sink.close();
+          downloadMessage.value = 'Download starting... .onnx downloaded';
+          continue;
+
         } else {
-        }
+          final outFile = File(onnxPath);
+          final sink = outFile.openWrite();
 
-        await sink.close();
-        continue;
+          file.decompress();
+
+          final content = file.content;
+
+          if (content is List<int>) {
+            sink.add(content);
+          }
+
+          await sink.close();
+          downloadMessage.value = 'Download starting... .onnx downloaded';
+          continue;
+        }
       }
 
       // Special handling for voices.bin file
@@ -770,10 +843,10 @@ static Future<ManifestModel?> downloadSherpaOnnxVoice(ManifestModel voice) async
 
         if (content is List<int>){
           sink.add(content);
-        } else {
-        }
+        } 
 
         await sink.close();
+        downloadMessage.value = 'Download starting... voices.bin downloaded';
         continue;
       }
 
@@ -792,6 +865,7 @@ static Future<ManifestModel?> downloadSherpaOnnxVoice(ManifestModel voice) async
         }
 
         await sink.close();
+        downloadMessage.value = 'Download starting... tokens.txt downloaded';
         continue;
       }
 
@@ -808,8 +882,7 @@ static Future<ManifestModel?> downloadSherpaOnnxVoice(ManifestModel voice) async
 
           if (content is List<int>) {
             sink.add(content);   // write bytes directly
-          } else {
-          }
+          } 
 
           await sink.close();
           listOfFst.add(fstPaths);
@@ -817,6 +890,7 @@ static Future<ManifestModel?> downloadSherpaOnnxVoice(ManifestModel voice) async
         } else {
           await Directory(fstPaths).create(recursive: true);
         }
+        downloadMessage.value = 'Download starting... .fst added';
         continue;
       }
 
@@ -833,8 +907,7 @@ static Future<ManifestModel?> downloadSherpaOnnxVoice(ManifestModel voice) async
 
           if (content is List<int>) {
             sink.add(content);   // write bytes directly
-          } else {
-          }
+          } 
 
           await sink.close();
           listOfFst.add(farPaths);
@@ -842,6 +915,7 @@ static Future<ManifestModel?> downloadSherpaOnnxVoice(ManifestModel voice) async
         } else {
           await Directory(farPaths).create(recursive: true);
         }
+        downloadMessage.value = 'Download starting... .far downloaded';
         continue;
       }
 
@@ -858,14 +932,14 @@ static Future<ManifestModel?> downloadSherpaOnnxVoice(ManifestModel voice) async
 
           if (content is List<int>) {
             sink.add(content);   // write bytes directly
-          } else {
-          }
+          } 
 
           await sink.close();
           listOfLexicon.add(lexPaths);
         } else {
           await Directory(lexPaths).create(recursive: true);
         }
+        downloadMessage.value = 'Download starting... lexicon.txt downloaded';
         continue;
       }
 
@@ -893,6 +967,7 @@ static Future<ManifestModel?> downloadSherpaOnnxVoice(ManifestModel voice) async
         } else {
           await Directory(outPath1).create(recursive: true);
         }
+        downloadMessage.value = 'Download starting... eSpeak NG added';
         continue;
       }
 
@@ -915,6 +990,8 @@ static Future<ManifestModel?> downloadSherpaOnnxVoice(ManifestModel voice) async
         await Directory(outPath).create(recursive: true);
       }
     }
+
+    downloadMessage.value = 'All files downloaded... getting values';
 
     await zipFile.delete();
 
@@ -945,9 +1022,13 @@ static Future<ManifestModel?> downloadSherpaOnnxVoice(ManifestModel voice) async
 
     savedownloadedSherpaOnnxLanguageVoice(downloadedSherpaOnnxLanguageIds);
 
+    isDownloading.value = false;
+    downloadMessage.value = 'Done';
     return voice;
 
   } catch (e) {
+    downloadMessage.value = 'Download failed: $e';
+    isDownloading.value = false;
     return null;
   }
 }
@@ -957,10 +1038,12 @@ static Future<ManifestModel?> downloadSherpaOnnxVoice(ManifestModel voice) async
   //LOADING SAVED VALUES
   //
 
-  static Future<void> loadSavedValues() async {
+  static Future<void> loadSavedVoiceValues() async {
     final prefs = await SharedPreferences.getInstance();
     // how to clear a value from shared prefs:  
     // await prefs.remove('_downloadedSherpaOnnxLanguageVoice');
+
+    initGlobalVocoder();
 
     //
     //Get Manifest

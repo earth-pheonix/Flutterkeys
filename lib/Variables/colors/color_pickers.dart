@@ -245,7 +245,7 @@ class SymbolColorCustomizer extends StatefulWidget {
   final ValueChanged<double> onSaturationChanged;
   final ValueChanged<double> onContrastChanged;
   final TTSInterface tts;
-  final sherpa_onnx.OfflineTts? speakSelectSherpaOnnxSynth;
+  final Map<String, sherpa_onnx.OfflineTts?>? speakSelectSherpaOnnxSynth;
   final Future<void> Function() initForSS;
   final AudioPlayer playerForSS;
 

@@ -306,7 +306,7 @@ extension NavRowDisplay on NavObjects {
   void Function(BoardObjects) openBoard, 
   List<BoardObjects> boards, 
   BoardObjects? Function(String uuid, List<BoardObjects> boards) findBoardById,
-    final sherpa_onnx.OfflineTts? speakSelectSherpaOnnxSynth,
+    final Map<String, sherpa_onnx.OfflineTts?>? speakSelectSherpaOnnxSynth,
     final Future<void> Function() initForSS,
     final AudioPlayer playerForSS,
   ) {
@@ -448,7 +448,7 @@ extension NavRowDisplay on NavObjects {
   void Function(BoardObjects) openBoard, 
   List<BoardObjects> boards, 
   BoardObjects? Function(String uuid, List<BoardObjects> boards) findBoardById,
-  final sherpa_onnx.OfflineTts? speakSelectSherpaOnnxSynth,
+  final Map<String, sherpa_onnx.OfflineTts?>? speakSelectSherpaOnnxSynth,
     final Future<void> Function() initForSS,
     final AudioPlayer playerForSS,
   ) {
@@ -592,7 +592,7 @@ extension NavRowDisplay on NavObjects {
     List<BoardObjects> boards, 
     BoardObjects? Function(String uuid, List<BoardObjects> boards) findBoardById, 
     NavObjects? obj,
-    final sherpa_onnx.OfflineTts? speakSelectSherpaOnnxSynth,
+    final Map<String, sherpa_onnx.OfflineTts?>? speakSelectSherpaOnnxSynth,
     final Future<void> Function() initForSS,
     final AudioPlayer playerForSS,
   ) {
@@ -621,7 +621,7 @@ extension NavRowDisplay on NavObjects {
     void Function(BoardObjects) openBoard, 
     List<BoardObjects> boards, 
     BoardObjects? Function(String uuid, List<BoardObjects> boards) findBoardById,
-    final sherpa_onnx.OfflineTts? speakSelectSherpaOnnxSynth,
+    final Map<String, sherpa_onnx.OfflineTts?>? speakSelectSherpaOnnxSynth,
     final Future<void> Function() initForSS,
     final AudioPlayer playerForSS,
     ) {
@@ -645,7 +645,7 @@ extension NavRowDisplay on NavObjects {
     List<BoardObjects> boards, 
     BoardObjects? Function(String uuid, List<BoardObjects> boards) findBoardById, 
     NavObjects? me,
-    final sherpa_onnx.OfflineTts? speakSelectSherpaOnnxSynth,
+    final Map<String, sherpa_onnx.OfflineTts?>? speakSelectSherpaOnnxSynth,
     final Future<void> Function() initForSS,
     final AudioPlayer playerForSS,
   ) {
@@ -701,7 +701,7 @@ extension NavRowDisplay on NavObjects {
   
   Widget _buildSpecialNavButton(
     TTSInterface synth, NavObjects? me,
-    final sherpa_onnx.OfflineTts? speakSelectSherpaOnnxSynth,
+    final Map<String, sherpa_onnx.OfflineTts?>? speakSelectSherpaOnnxSynth,
     final Future<void> Function() initForSS,
     final AudioPlayer playerForSS,
     ) {
@@ -922,7 +922,7 @@ extension NavRowDisplay on NavObjects {
     NavObjects obj, void Function(BoardObjects) openBoard, 
     List<BoardObjects> boards, 
     BoardObjects? Function(String uuid, List<BoardObjects> boards) findBoardById,
-    final sherpa_onnx.OfflineTts? speakSelectSherpaOnnxSynth,
+    final Map<String, sherpa_onnx.OfflineTts?>? speakSelectSherpaOnnxSynth,
     final Future<void> Function() initForSS,
     final AudioPlayer playerForSS,
     ) {

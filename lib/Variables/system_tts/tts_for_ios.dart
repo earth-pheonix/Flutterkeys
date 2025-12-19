@@ -1,20 +1,19 @@
 import 'package:flutter/services.dart';
-import 'package:flutter/foundation.dart';
 import 'dart:async';
 import 'tts_interface.dart';
+import 'package:flutterkeysaac/Variables/variables.dart';
 
 class TTSiOS implements TTSInterface {
   static const MethodChannel _methodChannel =
       MethodChannel('tts_highlighter_plugin');
+
+  Completer<void>? _speakCompleter;
 
   final _highlighter = TtsHighlighter();
 
   double _currentPitch = 1.0;
   double _currentRate = 0.5;
   String? _currentVoiceIdentifier;
-
-  @override
-  ValueNotifier<bool> isSpeaking = ValueNotifier(false);
 
   final StreamController<void> _doneController = StreamController<void>.broadcast();
 
@@ -38,10 +37,10 @@ class TTSiOS implements TTSInterface {
           notifyDone();
           break;
         case 'onPause':
-          isSpeaking.value = false;
+          V4rs.theIsSpeaking.value = false;
           break;
         case 'onResume':
-          isSpeaking.value = true;
+          V4rs.theIsSpeaking.value = true;
           break;
       }
     });
@@ -52,18 +51,24 @@ class TTSiOS implements TTSInterface {
     if (!_doneController.isClosed) {
       _doneController.add(null);
     }
-    isSpeaking.value = false;
+
+    if (_speakCompleter != null && !_speakCompleter!.isCompleted) {
+      _speakCompleter!.complete();
+      _speakCompleter = null;
+    }
+
+    V4rs.theIsSpeaking.value = false;
   }
 
   @override
   void notifyStart() {
-    isSpeaking.value = true;
+    V4rs.theIsSpeaking.value = true;
   }
 
   @override
   Future<void> speak(String text) async {
+     _speakCompleter = Completer<void>();
     notifyStart();
-
     final normalizedText = _normalizeText(text);
 
     try {
@@ -73,7 +78,9 @@ class TTSiOS implements TTSInterface {
         'rate': _currentRate,
         'voice': _currentVoiceIdentifier,
       });
+      await _speakCompleter!.future;
     } catch (e) {
+      await _speakCompleter!.future;
       notifyDone(); 
     }
   }

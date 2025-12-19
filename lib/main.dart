@@ -11,7 +11,6 @@ import 'package:flutterkeysaac/Variables/system_tts/tts_factory.dart';
 import 'package:flutterkeysaac/Variables/settings/settings_variables.dart';
 import 'package:flutterkeysaac/Variables/settings/boardset_settings_variables.dart';
 import 'dart:async';
-import 'package:flutterkeysaac/Variables/settings/voice_variables.dart';
 
 import 'package:audioplayers/audioplayers.dart';
 import 'package:sherpa_onnx/sherpa_onnx.dart' as sherpa_onnx;
@@ -38,15 +37,14 @@ class _MyApp extends State<MyApp> {
   bool speakSelectSherpaOnnxInitialized = false;
   bool sherpaOnnxInitialized = false;
 
-  sherpa_onnx.OfflineTts? sherpaOnnxSynth;
-  sherpa_onnx.OfflineTts? speakSelectSherpaOnnxSynth;
+  Map<String, sherpa_onnx.OfflineTts?> sherpaOnnxSynth = {};
+  Map<String, sherpa_onnx.OfflineTts?> speakSelectSherpaOnnxSynth = {};
 
   late AudioPlayer openTtsPlayerSherpaOnnx;
   late AudioPlayer openTtsPlayerSpeakSelectSherpaOnnx;
 
   int? _highlightStart;
   int? _highlightLength;
-  StreamSubscription? _wordSub;
   StreamSubscription? _doneSub;
 
   @override
@@ -55,53 +53,70 @@ class _MyApp extends State<MyApp> {
     initSynth();
     initSherpaOnnx();
     initSpeakSelectSherpaOnnx();
+    V4rs.useWPM.addListener((){
+      subscribeWordStream();
+    });
   }
 
   Future<void> initSherpaOnnx() async {
-     print('init sherpa onnx running');
+    print('0. init sherpa onnx');
     if (!sherpaOnnxInitialized) {
-       print('init sherpa onnx not initialized');
-      sherpa_onnx.initBindings();
-
-      sherpaOnnxSynth?.free();
-       print('init sherpa onnx free');
-      sherpaOnnxSynth = await SherpaOnnxV4rs.loadSherpaOnnxEngine();
-
+      print('0. sherpa onnx is not initialized');
+    sherpa_onnx.initBindings();
+      for (final lang in Sv4rs.myLanguages){
+        print('0. lang: $lang');
+        sherpaOnnxSynth[lang]?.free(); 
+        sherpaOnnxSynth[lang] = await SherpaOnnxV4rs.loadSherpaOnnxEngine(lang);
+      }
       openTtsPlayerSherpaOnnx = AudioPlayer();
-
       sherpaOnnxInitialized = true;
-       print('init sherpa onnx ran, sherpa onnx synth is $sherpaOnnxSynth');
     }
   }
 
-  Future<void> reloadSherpaOnnx() async {
-    print('reload sherpa onnx running');
+  Future<void> reloadSherpaOnnx(bool forSS) async {
     sherpaOnnxInitialized = false;
-      sherpa_onnx.initBindings();
+    sherpa_onnx.initBindings();
+    print('3. reload sherpa onnx');
 
-      sherpaOnnxSynth?.free();
-       print('reload sherpa onnx free');
-      sherpaOnnxSynth = await SherpaOnnxV4rs.loadSherpaOnnxEngine();
+    if (forSS){
+      print('3. forSS');
+      for (final lang in Sv4rs.myLanguages){
+        print('3. lang $lang');
+        speakSelectSherpaOnnxSynth[lang]?.free();
+        print('3. free');
+        speakSelectSherpaOnnxSynth[lang] = await SherpaOnnxV4rs.loadSherpaOnnxSSEngine(lang);
+        print('3. speakSelectSherpaOnnxSynth?[lang] ${speakSelectSherpaOnnxSynth[lang]}');
+      }
+      openTtsPlayerSpeakSelectSherpaOnnx = AudioPlayer();
+    } 
 
+    else {
+      print('3. not for ss');
+      for (final lang in Sv4rs.myLanguages){
+        print('3. lang $lang');
+        sherpaOnnxSynth[lang]?.free();
+        print('3. free');
+        sherpaOnnxSynth[lang] = await SherpaOnnxV4rs.loadSherpaOnnxEngine(lang);
+        print('3. sherpaOnnxSynth?[lang] ${sherpaOnnxSynth[lang]}');
+      }
       openTtsPlayerSherpaOnnx = AudioPlayer();
+    }
 
-      sherpaOnnxInitialized = true;
-       print('reload sherpa onnx ran, sherpa onnx synth is $sherpaOnnxSynth');
+    sherpaOnnxInitialized = true;
   }
 
   Future<void> initSpeakSelectSherpaOnnx() async {
     if (!speakSelectSherpaOnnxInitialized) {
       sherpa_onnx.initBindings();
-
-      speakSelectSherpaOnnxSynth?.free();
-      speakSelectSherpaOnnxSynth = await SherpaOnnxV4rs.loadSherpaOnnxSSEngine();
-
+      for (final lang in Sv4rs.myLanguages){
+        speakSelectSherpaOnnxSynth[lang]?.free();
+        speakSelectSherpaOnnxSynth[lang] = await SherpaOnnxV4rs.loadSherpaOnnxSSEngine(lang);
+      }
       openTtsPlayerSpeakSelectSherpaOnnx = AudioPlayer();
-
       speakSelectSherpaOnnxInitialized = true;
     }
   }
-  
+
 
   Future<void> initSynth() async {
     final s = await TTSFactory.getTTS(languageCode: V4rs.selectedLanguage.value);
@@ -127,21 +142,42 @@ class _MyApp extends State<MyApp> {
   }
 
   void subscribeWordStream() {
-    if (synth?.wordStream == null) return;
+    print('subscribing');
 
-    _wordSub = synth!.wordStream.listen((event) {
-      if (!mounted) return;
+    if (V4rs.useWPM.value) {
+      final interval = Duration(milliseconds: (60000 / V4rs.currentWPM).round());
+      final words = V4rs.message.value.split(' ');
+        print('WORDS: $words');
+        print('WORD COUNT: ${words.length}');
+      int currentHighlightStart = 0;
+      V4rs.theStream = null;
 
-      setState(() {
-        _highlightStart = event['start'] as int?;
-        _highlightLength = event['length'] as int?;
-      });
-    });
+      V4rs.theStream = Stream<Map<String, int>?>.periodic(interval, (i) {
+        if (i >= words.length) return null;
+
+        String word = words[i];
+        int start = V4rs.message.value.indexOf(word, currentHighlightStart);
+        currentHighlightStart = start + word.length; 
+        
+        return {
+          'start': start, 
+          'length': word.length
+        };
+      })
+      .take(words.length)
+      .where((e) => e != null)
+      .asBroadcastStream();
+
+
+    } else {
+      if (synth?.wordStream == null) return;
+      V4rs.theStream = synth!.wordStream;
+    }
+    V4rs.streamVersion.value++;
   }
 
   @override
   void dispose() {
-    _wordSub?.cancel();
     _doneSub?.cancel();
     super.dispose();
   }
@@ -154,13 +190,10 @@ class _MyApp extends State<MyApp> {
       title: 'FlutterKeysAAC',
       home: Builder(
         builder: (context) {
-           print("main, start of builder: Vv4rs.sherpaOnnxLanguageVoice['English']: ${Vv4rs.sherpaOnnxLanguageVoice['English']}");
-                  
-
-           print("main after sherpa onnx init funcs: Vv4rs.sherpaOnnxLanguageVoice['English']: ${Vv4rs.sherpaOnnxLanguageVoice['English']}");
-                   
-
-          if (!synthInitialized || speakSelectSherpaOnnxInitialized == false || sherpaOnnxInitialized == false) {
+          if (!synthInitialized 
+            || speakSelectSherpaOnnxInitialized == false 
+            || sherpaOnnxInitialized == false
+          ) {
             return const Scaffold(
               body: Center(child: CircularProgressIndicator()),
             );

@@ -195,7 +195,7 @@ import 'dart:async';
         final void Function(BoardObjects board) openBoard;
         final List<BoardObjects> boards;
         final BoardObjects? Function(String uuid, List<BoardObjects> boards) findBoardById;
-        final sherpa_onnx.OfflineTts? speakSelectSherpaOnnxSynth;
+        final Map<String, sherpa_onnx.OfflineTts?>? speakSelectSherpaOnnxSynth;
         final Future<void> Function() initForSS;
         final AudioPlayer playerForSS;
 
@@ -523,7 +523,7 @@ import 'dart:async';
         final Root root;
         final BoardObjects obj;
         final TTSInterface synth;
-        final sherpa_onnx.OfflineTts? speakSelectSherpaOnnxSynth;
+        final Map<String, sherpa_onnx.OfflineTts?>? speakSelectSherpaOnnxSynth;
         final Future<void> Function() initForSS;
         final AudioPlayer playerForSS;
 
@@ -1152,7 +1152,7 @@ import 'dart:async';
         final void Function(BoardObjects board) openBoard;
         final List<BoardObjects> boards;
         final BoardObjects? Function(String uuid, List<BoardObjects> boards) findBoardById;
-        final sherpa_onnx.OfflineTts? speakSelectSherpaOnnxSynth;
+        final Map<String, sherpa_onnx.OfflineTts?>? speakSelectSherpaOnnxSynth;
         final Future<void> Function() initForSS;
         final AudioPlayer playerForSS;
 
@@ -1487,7 +1487,7 @@ import 'dart:async';
       final BoardObjects obj;
         final TTSInterface synth;
         final Root root;
-        final sherpa_onnx.OfflineTts? speakSelectSherpaOnnxSynth;
+        final Map<String, sherpa_onnx.OfflineTts?>? speakSelectSherpaOnnxSynth;
         final Future<void> Function() initForSS;
         final AudioPlayer playerForSS;
 
@@ -1765,7 +1765,7 @@ import 'dart:async';
         final void Function() goBack;
         final List<BoardObjects> boards;
         final BoardObjects? Function(String uuid, List<BoardObjects> boards) findBoardById;
-        final sherpa_onnx.OfflineTts? speakSelectSherpaOnnxSynth;
+        final Map<String, sherpa_onnx.OfflineTts?>? speakSelectSherpaOnnxSynth;
         final Future<void> Function() initForSS;
         final AudioPlayer playerForSS;
 
@@ -2251,7 +2251,7 @@ import 'dart:async';
       final Root root;
       final GrammerObjects obj;
       final TTSInterface synth;
-      final sherpa_onnx.OfflineTts? speakSelectSherpaOnnxSynth;
+      final Map<String, sherpa_onnx.OfflineTts?>? speakSelectSherpaOnnxSynth;
       final Future<void> Function() initForSS;
       final AudioPlayer playerForSS;
 
@@ -2437,7 +2437,7 @@ import 'dart:async';
       final void Function(BoardObjects board) openBoard;
       final List<BoardObjects> boards;
       final BoardObjects? Function(String uuid, List<BoardObjects> boards) findBoardById;
-      final sherpa_onnx.OfflineTts? speakSelectSherpaOnnxSynth;
+      final Map<String, sherpa_onnx.OfflineTts?>? speakSelectSherpaOnnxSynth;
       final Future<void> Function() initForSS;
       final AudioPlayer playerForSS;
 
@@ -2664,7 +2664,7 @@ import 'dart:async';
       final Root root;
       final GrammerObjects obj;
       final TTSInterface synth;
-      final sherpa_onnx.OfflineTts? speakSelectSherpaOnnxSynth;
+      final Map<String, sherpa_onnx.OfflineTts?>? speakSelectSherpaOnnxSynth;
       final Future<void> Function() initForSS;
       final AudioPlayer playerForSS;
 
@@ -2742,7 +2742,7 @@ class EditableNavButton extends StatefulWidget {
   final void Function(BoardObjects board) openBoard;
   final List<BoardObjects> boards;
   final BoardObjects? Function(String uuid, List<BoardObjects> boards) findBoardById;
-  final sherpa_onnx.OfflineTts? speakSelectSherpaOnnxSynth;
+  final Map<String, sherpa_onnx.OfflineTts?>? speakSelectSherpaOnnxSynth;
   final Future<void> Function() initForSS;
   final AudioPlayer playerForSS;
 

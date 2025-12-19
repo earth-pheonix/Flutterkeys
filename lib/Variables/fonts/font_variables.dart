@@ -298,7 +298,7 @@ class Fv4rs {
 
     //underline
 
-    static bool highlightFontUnderline = false;
+    static bool highlightFontUnderline = true;
     static final String _highlightFontUnderline = "highlightFontUnderline";
 
     static Future<void> savehighlightFontUnderline (bool highlightFontUnderline) async {

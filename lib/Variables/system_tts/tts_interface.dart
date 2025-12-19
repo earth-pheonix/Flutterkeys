@@ -1,5 +1,5 @@
-import 'package:flutter/foundation.dart';
 import 'dart:async';
+import 'package:flutterkeysaac/Variables/variables.dart';
 
 abstract class TTSInterface {
   Future<void> speak(String text);
@@ -21,19 +21,17 @@ abstract class TTSInterface {
 
   final StreamController<void> _doneController = StreamController.broadcast();
   Stream<void> get onDone => _doneController.stream;
-
-  final ValueNotifier<bool> isSpeaking = ValueNotifier(false);
   
   Stream<Map<String, dynamic>> get wordStream;
 
   void notifyStart() {
-    isSpeaking.value = true;
+    V4rs.theIsSpeaking.value = true;
   }
 
   void notifyDone() {
     if (!_doneController.isClosed) {
       _doneController.add(null);
     }
-    isSpeaking.value = false;
+    V4rs.theIsSpeaking.value = false;
   }
 }

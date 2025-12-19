@@ -29,6 +29,7 @@ class Sv4rs {
   fontFamilyFallback: [Fv4rs.fallbackFont1, Fv4rs.fallbackFont2]
   );
 
+
 // Language settings
   static List <String> allLanguages = ['English', '中文', 'Española', 'Français'];
   static Set <String> myLanguages = {V4rs.interfaceLanguage};

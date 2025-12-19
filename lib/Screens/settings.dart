@@ -26,11 +26,11 @@ class Settings extends StatefulWidget {
   final TTSInterface synth;
   final Future<List<Uint8List?>> Function() captureAllForPrint;
   
-  final sherpa_onnx.OfflineTts? speakSelectSherpaOnnxSynth;
+  final Map<String, sherpa_onnx.OfflineTts?>? speakSelectSherpaOnnxSynth;
   final Future<void> Function() initForSS;
   final AudioPlayer playerForSS;
 
-  final Future<void> Function() reloadSherpaOnnx;
+  final Future<void> Function(bool) reloadSherpaOnnx;
 
   const Settings({
     super.key, 
@@ -190,6 +190,10 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
                                   );
                                 }
                               }
+                              for (var language in Sv4rs.myLanguages) {
+                                    Vv4rs.setupSystemVoicePicker(language, 'default');
+                                    Vv4rs.setupSherpaOnnxVoicePicker(language, 'default');
+                                  }
                             });
                           },
                         ),
@@ -1123,7 +1127,6 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
                     ),
                     ),
                     
-                    if (!kIsWeb && Platform.isIOS) 
                       ExpansionTile(
                         title: Row (children: [
                           Text.rich( 

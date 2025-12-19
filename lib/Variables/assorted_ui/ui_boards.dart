@@ -26,7 +26,7 @@ class BuildPocketFolder extends StatefulWidget{
     final void Function(BoardObjects board) openBoardWithReturn;
     final List<BoardObjects> boards;
     final BoardObjects? Function(String uuid, List<BoardObjects> boards) findBoardById;
-    final sherpa_onnx.OfflineTts? speakSelectSherpaOnnxSynth;
+    final Map<String, sherpa_onnx.OfflineTts?>? speakSelectSherpaOnnxSynth;
     final Future<void> Function() initForSS;
     final AudioPlayer playerForSS;
 
@@ -415,7 +415,7 @@ class BuildTypingKey extends StatefulWidget{
     final BoardObjects obj;
     final TTSInterface synth;
 
-    final sherpa_onnx.OfflineTts? speakSelectSherpaOnnxSynth;
+    final Map<String, sherpa_onnx.OfflineTts?>? speakSelectSherpaOnnxSynth;
     final Future<void> Function() initForSS;
     final AudioPlayer playerForSS;
 
@@ -789,7 +789,7 @@ class BuildAudioTile extends StatefulWidget{
     final BoardObjects obj;
     final TTSInterface synth;
 
-  final sherpa_onnx.OfflineTts? speakSelectSherpaOnnxSynth;
+  final Map<String, sherpa_onnx.OfflineTts?>? speakSelectSherpaOnnxSynth;
   final Future<void> Function() initForSS;
   final AudioPlayer playerForSS;
 
@@ -1170,7 +1170,7 @@ class BuildButtonGrammer extends StatelessWidget{
     final BoardObjects obj;
     final TTSInterface synth;
 
-  final sherpa_onnx.OfflineTts? speakSelectSherpaOnnxSynth;
+  final Map<String, sherpa_onnx.OfflineTts?>? speakSelectSherpaOnnxSynth;
   final Future<void> Function() initForSS;
   final AudioPlayer playerForSS;
 
@@ -1591,7 +1591,7 @@ class BuildFolder extends StatefulWidget{
     final List<BoardObjects> boards;
     final BoardObjects? Function(String uuid, List<BoardObjects> boards) findBoardById;
 
-  final sherpa_onnx.OfflineTts? speakSelectSherpaOnnxSynth;
+  final Map<String, sherpa_onnx.OfflineTts?>? speakSelectSherpaOnnxSynth;
   final Future<void> Function() initForSS;
   final AudioPlayer playerForSS;
 
@@ -1987,7 +1987,7 @@ class BuildButton extends StatelessWidget{
     final BoardObjects obj;
     final TTSInterface synth;
 
-      final sherpa_onnx.OfflineTts? speakSelectSherpaOnnxSynth;
+      final Map<String, sherpa_onnx.OfflineTts?>? speakSelectSherpaOnnxSynth;
       final Future<void> Function() initForSS;
       final AudioPlayer playerForSS;
 
@@ -2192,7 +2192,7 @@ class BuildSubFolder extends StatelessWidget {
     final List<BoardObjects> boards;
     final BoardObjects? Function(String uuid, List<BoardObjects> boards) findBoardById;
 
-  final sherpa_onnx.OfflineTts? speakSelectSherpaOnnxSynth;
+  final Map<String, sherpa_onnx.OfflineTts?>? speakSelectSherpaOnnxSynth;
   final Future<void> Function() initForSS;
   final AudioPlayer playerForSS;
 
@@ -2563,7 +2563,7 @@ class NavButtonStyle extends StatelessWidget {
   final int speakOS;
   final String alternateLabel;
 
-  final sherpa_onnx.OfflineTts? speakSelectSherpaOnnxSynth;
+  final Map<String, sherpa_onnx.OfflineTts?>? speakSelectSherpaOnnxSynth;
   final Future<void> Function() initForSS;
   final AudioPlayer playerForSS;
 
@@ -3115,7 +3115,7 @@ class StorageButtonStyle extends StatelessWidget {
 }
 
 class SpecialNavButtonStyle extends StatelessWidget {
-  final sherpa_onnx.OfflineTts? speakSelectSherpaOnnxSynth;
+  final Map<String, sherpa_onnx.OfflineTts?>? speakSelectSherpaOnnxSynth;
   final Future<void> Function() initForSS;
   final AudioPlayer playerForSS;
   final VoidCallback onPressed; 
@@ -3434,7 +3434,7 @@ class BuildGrammerButton extends StatelessWidget{
 
     final GrammerObjects obj;
     final TTSInterface synth;
-  final sherpa_onnx.OfflineTts? speakSelectSherpaOnnxSynth;
+  final Map<String, sherpa_onnx.OfflineTts?>? speakSelectSherpaOnnxSynth;
   final Future<void> Function() initForSS;
   final AudioPlayer playerForSS;
 
@@ -3631,7 +3631,7 @@ class BuildGrammerFolder extends StatelessWidget{
     final void Function(BoardObjects board) openBoard;
     final List<BoardObjects> boards;
     final BoardObjects? Function(String uuid, List<BoardObjects> boards) findBoardById;
-    final sherpa_onnx.OfflineTts? speakSelectSherpaOnnxSynth;
+    final Map<String, sherpa_onnx.OfflineTts?>? speakSelectSherpaOnnxSynth;
     final Future<void> Function() initForSS;
     final AudioPlayer playerForSS;
 
@@ -3825,7 +3825,7 @@ class BuildGrammerPlacholder extends StatelessWidget{
 
     final GrammerObjects obj;
     final TTSInterface synth;
-    final sherpa_onnx.OfflineTts? speakSelectSherpaOnnxSynth;
+    final Map<String, sherpa_onnx.OfflineTts?>? speakSelectSherpaOnnxSynth;
     final Future<void> Function() initForSS;
     final AudioPlayer playerForSS;
 

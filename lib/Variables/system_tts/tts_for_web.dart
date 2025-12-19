@@ -1,15 +1,12 @@
 // lib/tts/tts_web.dart
 
 import 'dart:async';
-import 'package:flutter/foundation.dart';
+import 'package:flutterkeysaac/Variables/variables.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'tts_interface.dart';
 
 class TTSWeb implements TTSInterface {
   FlutterTts _tts = FlutterTts();
-
-  @override
-  ValueNotifier<bool> isSpeaking = ValueNotifier(false);
 
   final StreamController<void> _doneController = StreamController.broadcast();
 
@@ -30,17 +27,17 @@ class TTSWeb implements TTSInterface {
     });
 
     _tts.setPauseHandler(() {
-      isSpeaking.value = false;
+      V4rs.theIsSpeaking.value = false;
     });
 
     _tts.setContinueHandler(() {
-      isSpeaking.value = true;
+      V4rs.theIsSpeaking.value = true;
     });
   }
 
   @override
   void notifyStart() {
-    isSpeaking.value = true;
+    V4rs.theIsSpeaking.value = true;
   }
 
   @override
@@ -48,17 +45,18 @@ class TTSWeb implements TTSInterface {
     if (!_doneController.isClosed) {
       _doneController.add(null);
     }
-    isSpeaking.value = false;
+    V4rs.theIsSpeaking.value = false;
   }
 
   @override
   Future<void> speak(String text) async {
-    try {
-      notifyStart();
-      await _tts.speak(text);
-    } catch (e) {
+    final completer = Completer<void>();
+    _tts.setCompletionHandler(() {
       notifyDone();
-    }
+      if (!completer.isCompleted) completer.complete();
+    });
+    await _tts.speak(text);
+    return completer.future; // blocks until done
   }
 
   @override
@@ -74,7 +72,7 @@ class TTSWeb implements TTSInterface {
   Future<void> pause() async {
     try {
       await _tts.pause();
-      isSpeaking.value = false;
+      V4rs.theIsSpeaking.value = false;
     } catch (e) {
       await _tts.stop();
     }

@@ -1,6 +1,7 @@
-import 'package:flutter/foundation.dart';
+
 import 'package:flutterkeysaac/Variables/system_tts/tts_interface.dart';
 import 'dart:async';
+import 'package:flutterkeysaac/Variables/variables.dart';
 
 class DummyTTS implements TTSInterface {
     @override
@@ -13,13 +14,13 @@ class DummyTTS implements TTSInterface {
 
   @override
   void notifyDone() {
-    isSpeaking.value = false;
+    V4rs.theIsSpeaking.value = false;
     _doneController.add(null);
   }
 
   @override
   void notifyStart() {
-    isSpeaking.value = true;
+    V4rs.theIsSpeaking.value = true;
   }
 
   @override
@@ -75,6 +76,4 @@ class DummyTTS implements TTSInterface {
   Future<List<dynamic>> getVoices() async {
     return []; // return empty list
   }
-  @override
-  ValueNotifier<bool> isSpeaking = ValueNotifier(false);
 }

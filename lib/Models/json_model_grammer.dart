@@ -182,7 +182,7 @@ extension BoardsDisplay on GrammerObjects {
     void Function(BoardObjects) openBoard, 
     List<BoardObjects> boards, 
     BoardObjects? Function(String uuid, List<BoardObjects> boards) findBoardById,
-    final sherpa_onnx.OfflineTts? speakSelectSherpaOnnxSynth,
+    final Map<String, sherpa_onnx.OfflineTts?>? speakSelectSherpaOnnxSynth,
     final Future<void> Function() initForSS,
     final AudioPlayer playerForSS,
     ) {
@@ -248,7 +248,7 @@ extension BoardsDisplay on GrammerObjects {
     void Function(BoardObjects) openBoard, 
     List<BoardObjects> boards, 
     BoardObjects? Function(String uuid, List<BoardObjects> boards) findBoardById,
-    final sherpa_onnx.OfflineTts? speakSelectSherpaOnnxSynth,
+    final Map<String, sherpa_onnx.OfflineTts?>? speakSelectSherpaOnnxSynth,
     final Future<void> Function() initForSS,
     final AudioPlayer playerForSS,
    ) {

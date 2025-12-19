@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutterkeysaac/Variables/fonts/font_variables.dart';
 import 'package:flutterkeysaac/Variables/settings/settings_variables.dart';
-import 'package:flutterkeysaac/Variables/sherpa_onnx_tts.dart';
 import 'package:flutterkeysaac/Variables/system_tts/tts_interface.dart';
 import 'package:flutterkeysaac/Variables/assorted_ui/ui_shortcuts.dart';
 import 'package:flutterkeysaac/Variables/variables.dart';
@@ -11,11 +11,13 @@ import 'package:flutterkeysaac/Variables/settings/voice_variables.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutterkeysaac/Models/manifest_model.dart';
 import 'package:sherpa_onnx/sherpa_onnx.dart' as sherpa_onnx;
+import 'dart:io'; //platform
+
 
 class TopRowForSettings extends StatefulWidget {
   final TTSInterface synth;
   final Root root;
-  final sherpa_onnx.OfflineTts? speakSelectSherpaOnnxSynth;
+  final Map<String, sherpa_onnx.OfflineTts?>? speakSelectSherpaOnnxSynth;
   final Future<void> Function() initForSS;
   final AudioPlayer playerForSS;
 
@@ -46,7 +48,6 @@ class _TopRowForSettings extends State<TopRowForSettings> with WidgetsBindingObs
               child: ButtonStyle1(
                 imagePath: 'assets/interface_icons/interface_icons/iBack.png',
                 onPressed: () {
-                    print("pressing back: Vv4rs.sherpaOnnxLanguageVoice['English']: ${Vv4rs.sherpaOnnxLanguageVoice['English']}");
                     if (Sv4rs.speakInterfaceButtonsOnSelect) {
                     V4rs.speakOnSelect(
                       'back', 
@@ -58,8 +59,7 @@ class _TopRowForSettings extends State<TopRowForSettings> with WidgetsBindingObs
                       );
                     }
                   V4rs.showSettings.value = false;
-                   print("show settings false: Vv4rs.sherpaOnnxLanguageVoice['English']: ${Vv4rs.sherpaOnnxLanguageVoice['English']}");
-                },
+                   },
               ),
             ),
           ),
@@ -109,7 +109,7 @@ class _TopRowForSettings extends State<TopRowForSettings> with WidgetsBindingObs
 
 class OpenWelcomeScreen extends StatefulWidget {
   final TTSInterface synth;
-  final sherpa_onnx.OfflineTts? speakSelectSherpaOnnxSynth;
+  final Map<String, sherpa_onnx.OfflineTts?>? speakSelectSherpaOnnxSynth;
   final Future<void> Function() initForSS;
   final AudioPlayer playerForSS;
 
@@ -167,10 +167,10 @@ class _OpenWelcomeScreen extends State<OpenWelcomeScreen> with WidgetsBindingObs
 class VoicePicker extends StatefulWidget {
   final TTSInterface synth;
   final double totalWidth;
-  final sherpa_onnx.OfflineTts? speakSelectSherpaOnnxSynth;
+  final Map<String, sherpa_onnx.OfflineTts?>? speakSelectSherpaOnnxSynth;
   final Future<void> Function() initForSS;
   final AudioPlayer playerForSS;
-  final Future<void> Function() reloadSherpaOnnx;
+  final Future<void> Function(bool) reloadSherpaOnnx;
 
   const VoicePicker({
     super.key, 
@@ -195,12 +195,12 @@ class _VoicePicker extends State<VoicePicker> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
+    Vv4rs.setupIsDownloadingListener();
     wavSamplePlayer = AudioPlayer();
     for (var language in Sv4rs.myLanguages) {
       Vv4rs.setupSystemVoicePicker(language, 'default');
       Vv4rs.setupSherpaOnnxVoicePicker(language, 'default');
     }
-    
   }
 
   @override
@@ -297,8 +297,7 @@ class _VoicePicker extends State<VoicePicker> with WidgetsBindingObserver {
     int speakerDropdownCount = findSampleSpeakerDropdownCount();
 
     //select sample voice as voice
-    Future<void> selectSampleVoice(){
-      print('select sample voice: sample engine: ${Vv4rs.sampleSherpaOnnx?.engine}');
+    Future<void> selectSampleVoice(bool forSS){
       if(forSS){
         return Vv4rs.setSSlanguageVoiceSherpaOnnx(
           language, 
@@ -308,7 +307,7 @@ class _VoicePicker extends State<VoicePicker> with WidgetsBindingObserver {
           Vv4rs.sampleSherpaOnnx?.modelPath,
           Vv4rs.sampleSherpaOnnx?.speakerCount,
           Vv4rs.sampleSpeaker,
-          Vv4rs.sherpaOnnxLanguageVoice[language]?.lengthScale, 
+          Vv4rs.sherpaOnnxSSLanguageVoice[language]?.lengthScale, 
           Vv4rs.sampleSherpaOnnx?.speakers,
           Vv4rs.sampleSherpaOnnx?.lexicon,
           Vv4rs.sampleSherpaOnnx?.ruleFars,
@@ -342,7 +341,9 @@ class _VoicePicker extends State<VoicePicker> with WidgetsBindingObserver {
         Row(children: [
           Text('Voice', style: Sv4rs.settingslabelStyle),
           Spacer(),
+          //
           //Pick Voice to sample
+          //
           DropdownButton<ManifestModel?>(
           value: dropdownValue,
           onChanged: (value) async {
@@ -389,10 +390,13 @@ class _VoicePicker extends State<VoicePicker> with WidgetsBindingObserver {
               items: List.generate(
                 speakerDropdownCount,
                 (index) {
-                  final speaker = (Vv4rs.sherpaOnnxLanguageVoice[language] == null
-                    && Vv4rs.sampleSherpaOnnx != null)
-                      ? Vv4rs.sampleSherpaOnnx!.speakers![index]
-                      : Vv4rs.sherpaOnnxLanguageVoice[language]!.speakers![index];
+                  final speaker = (forSS) 
+                    ? (Vv4rs.sampleSherpaOnnx != null)
+                        ? Vv4rs.sampleSherpaOnnx!.speakers![index]
+                        : (Vv4rs.sherpaOnnxLanguageVoice[language]?.speakers?[index] ?? 0)
+                    : (Vv4rs.sampleSherpaOnnx != null)
+                        ? Vv4rs.sampleSherpaOnnx!.speakers![index]
+                        : (Vv4rs.sherpaOnnxSSLanguageVoice[language]?.speakers?[index] ?? 0);
 
                   return DropdownMenuItem<int>(
                     value: speaker["idSpeaker"], 
@@ -406,8 +410,23 @@ class _VoicePicker extends State<VoicePicker> with WidgetsBindingObserver {
             ) )
           ],
         ),
-        Row( children: [
+        Row( 
+          children: [
           Spacer(),
+
+          //
+          //downloading info
+          //
+          ValueListenableBuilder(
+            valueListenable: Vv4rs.downloadMessage, 
+            builder: (context, message, _) {
+              return Text(
+                message, 
+                style: Fv4rs.interfacelabelStyle,
+              );
+            }
+          ),
+
           //
           //Sample
           //
@@ -442,39 +461,54 @@ class _VoicePicker extends State<VoicePicker> with WidgetsBindingObserver {
           //Select
           //
           Padding(padding: EdgeInsetsGeometry.all(10), child:
-          SizedBox(height: 40, width: widget.totalWidth * 0.1,
-            child: ButtonStyle1(
-              imagePath: 'assets/interface_icons/interface_icons/iCheck.png',
-              onPressed: () async {
-                //set the selected voice to the language
-                print('pressing check');
-              if (Vv4rs.sampleSherpaOnnx != null) {
-                print('Vv4rs.sampleSherpaOnnx != null');
-                if (Vv4rs.downloadedSherpaOnnxLanguageVoice.contains(Vv4rs.sampleSherpaOnnx)){
-                   print('in downloaded voices');
-                   selectSampleVoice();
-                  setState(() { 
-                    
-                    print('from voice dropdown: ${Vv4rs.sherpaOnnxLanguageVoice[language]!.engine}');
-                    print('from voice dropdown: $language');
-                    Vv4rs.myEngineForVoiceLang[language] = Vv4rs.sherpaOnnxLanguageVoice[language]!.engine;
-                  });
-                  widget.reloadSherpaOnnx();
-                } else {
-                  print('not in downloaded voices');
-                  await Vv4rs.downloadSherpaOnnxVoice(Vv4rs.sampleSherpaOnnx!);
-                  print('downloaded');
-                  selectSampleVoice();
-                  setState(() { 
-                    
-                    Vv4rs.myEngineForVoiceLang[language] = Vv4rs.sherpaOnnxLanguageVoice[language]!.engine;
-                  });
-                  widget.reloadSherpaOnnx();
-               }
+            ValueListenableBuilder(
+              valueListenable: Vv4rs.isDownloading, 
+              builder: (context, isDownloading, _) {
+                return Stack( 
+                  children: [
+                    (!isDownloading) 
+                    ? SizedBox(height: 40, width: widget.totalWidth * 0.1,
+                        child: ButtonStyle1(
+                        imagePath: 'assets/interface_icons/interface_icons/iCheck.png',
+                        onPressed: () async {
+                          print('1. pressing check');
+                          if (Vv4rs.sampleSherpaOnnx != null) {
+                            print('1. not null');
+                            if (!Vv4rs.downloadedSherpaOnnxLanguageVoice.contains(Vv4rs.sampleSherpaOnnx)){
+                              print('1. not downloaded');
+                              await Vv4rs.downloadSherpaOnnxVoice(Vv4rs.sampleSherpaOnnx!);
+                            } 
+                            print('downloaded');
+                            selectSampleVoice(forSS); //for ss is built into this func
+                            if (forSS){
+                              setState(() { 
+                                Vv4rs.myEngineForSSVoiceLang[language] = Vv4rs.sherpaOnnxSSLanguageVoice[language]!.engine;
+                              });
+                            } else {
+                              setState(() { 
+                                Vv4rs.myEngineForVoiceLang[language] = Vv4rs.sherpaOnnxLanguageVoice[language]!.engine;
+                              });
+                            }
+                            widget.reloadSherpaOnnx(forSS);
+                            if (forSS == false && Sv4rs.useDifferentVoiceforSS){
+                              selectSampleVoice(true);
+                              setState(() { 
+                                Vv4rs.myEngineForSSVoiceLang[language] = Vv4rs.sherpaOnnxSSLanguageVoice[language]!.engine;
+                              });
+                              widget.reloadSherpaOnnx(true);
+                            }
+                            print('1. reloaded');
+                          }
+                        },
+                      )
+                      )
+                    : Center(child:
+                        CircularProgressIndicator(),
+                      ),
+                  ],
+                );
               }
-              },
             ),
-          ),
           ),
          ],
         )
@@ -503,7 +537,7 @@ class _VoicePicker extends State<VoicePicker> with WidgetsBindingObserver {
               ? Vv4rs.getSystemSSValue(language, 'rate')
               : Vv4rs.getSystemValue(language, 'rate'),
             min: 0.0,
-            max: 1.0,
+            max: (Platform.isIOS) ? 1.0 : 2.0,
             divisions: 20,
             activeColor: Cv4rs.themeColor1,
             inactiveColor: Cv4rs.themeColor3,
@@ -784,6 +818,7 @@ class _VoicePicker extends State<VoicePicker> with WidgetsBindingObserver {
                 }
               } 
             } else {
+              if (Vv4rs.perLangSherpaOnnxVoices[language] != null){
               for (final voice in Vv4rs.perLangSherpaOnnxVoices[language]!){
                 if (voice.id == Vv4rs.sampleSherpaOnnx!.id){
                   return value = voice;
@@ -791,6 +826,7 @@ class _VoicePicker extends State<VoicePicker> with WidgetsBindingObserver {
                   value = null;
                 }
               } 
+              }
             }
             return value;
           }
@@ -798,9 +834,7 @@ class _VoicePicker extends State<VoicePicker> with WidgetsBindingObserver {
           var dropdownValue = (Sv4rs.pickFromEngine == "system") 
             ? Vv4rs.systemLanguageVoice[language]?.voice ?? 'default'
             : findDropdownValue();
-          
-        
-  
+    
 
           return SizedBox(width: widget.totalWidth, child:
           ExpansionTile(
@@ -878,9 +912,40 @@ class _VoicePicker extends State<VoicePicker> with WidgetsBindingObserver {
           if (Sv4rs.useDifferentVoiceforSS) 
           
         ...Sv4rs.myLanguages.map((language){
-          var dropdownValue = 'default';
-          Vv4rs.setupSystemVoicePicker(language, dropdownValue);
-          Vv4rs.setupSherpaOnnxVoicePicker(language, dropdownValue);
+
+          if (
+            Vv4rs.systemVoices.isEmpty || 
+            Vv4rs.uniqueSystemVoices.isEmpty || 
+            Vv4rs.perLangSherpaOnnxVoices.isEmpty
+          ){
+            return CircularProgressIndicator();
+          } 
+          
+          ManifestModel? findDropdownValue() {
+            ManifestModel? value;
+            if (Vv4rs.sampleSherpaOnnx == null){
+              for (final voice in Vv4rs.perLangSherpaOnnxVoices[language]!){
+                if (voice.id == Vv4rs.sherpaOnnxSSLanguageVoice[language]?.id){
+                  return value = voice;
+                } else {
+                  value = null;
+                }
+              } 
+            } else {
+              for (final voice in Vv4rs.perLangSherpaOnnxVoices[language]!){
+                if (voice.id == Vv4rs.sampleSherpaOnnx!.id){
+                  return value = voice;
+                } else {
+                  value = null;
+                }
+              } 
+            }
+            return value;
+          }
+
+          var dropdownValue = (Sv4rs.pickFromEngine == "system") 
+            ? Vv4rs.speakSelectSystemLanguageVoice[language]?.voice ?? 'default'
+            : findDropdownValue();
 
           return ExpansionTile(
             title: Text(language, style: Sv4rs.settingslabelStyle),
@@ -899,6 +964,7 @@ class _VoicePicker extends State<VoicePicker> with WidgetsBindingObserver {
               // if sherpa-onnx
               //
               if (Sv4rs.pickFromEngine == 'sherpa-onnx')
+              sherpaOnnxVoiceDropdown(true, language, dropdownValue),
               
 
               //

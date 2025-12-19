@@ -247,7 +247,7 @@ extension BoardsDisplay on BoardObjects {
     void Function(BoardObjects) openBoardWithReturn, 
     List<BoardObjects> boards, 
     BoardObjects? Function(String uuid, List<BoardObjects> boards) findBoardById,
-    final sherpa_onnx.OfflineTts? speakSelectSherpaOnnxSynth,
+    final Map<String, sherpa_onnx.OfflineTts?>? speakSelectSherpaOnnxSynth,
     final Future<void> Function() initForSS,
     final AudioPlayer playerForSS,
     
@@ -467,7 +467,7 @@ extension BoardsDisplay on BoardObjects {
       void Function(BoardObjects) openBoardWithReturn,
       List<BoardObjects> boards,
       BoardObjects? Function(String, List<BoardObjects>) findBoardById,
-      final sherpa_onnx.OfflineTts? speakSelectSherpaOnnxSynth,
+      final Map<String, sherpa_onnx.OfflineTts?>? speakSelectSherpaOnnxSynth,
     final Future<void> Function() initForSS,
     final AudioPlayer playerForSS,
     ) {
@@ -552,7 +552,7 @@ extension BoardsDisplay on BoardObjects {
     void Function(BoardObjects) openBoardWithReturn,
     List<BoardObjects> boards, 
     BoardObjects? Function(String uuid, List<BoardObjects> boards) findBoardById,
-    final sherpa_onnx.OfflineTts? speakSelectSherpaOnnxSynth,
+    final Map<String, sherpa_onnx.OfflineTts?>? speakSelectSherpaOnnxSynth,
     final Future<void> Function() initForSS,
     final AudioPlayer playerForSS,
     ) {
@@ -775,7 +775,7 @@ extension BoardsDisplay on BoardObjects {
       void Function(BoardObjects) openBoard,
       List<BoardObjects> boards,
       BoardObjects? Function(String, List<BoardObjects>) findBoardById,
-      final sherpa_onnx.OfflineTts? speakSelectSherpaOnnxSynth,
+      final Map<String, sherpa_onnx.OfflineTts?>? speakSelectSherpaOnnxSynth,
       final Future<void> Function() initForSS,
       final AudioPlayer playerForSS,
     ) {

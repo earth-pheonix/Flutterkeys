@@ -13,10 +13,6 @@ import 'package:flutterkeysaac/Variables/fonts/font_variables.dart';
 import 'package:flutterkeysaac/Screens/settings.dart';
 import 'dart:async';
 import 'dart:typed_data';
-import 'package:flutterkeysaac/Variables/sherpa_onnx_tts.dart';
-
-import 'package:flutterkeysaac/Variables/settings/voice_variables.dart';
-
 import 'dart:ui' as ui;
 import 'package:flutter/rendering.dart';
 import 'package:audioplayers/audioplayers.dart';
@@ -26,12 +22,12 @@ class Home extends StatefulWidget {
   final TTSInterface synth;
   final int? highlightStart;
   final int? highlightLength;
-  final sherpa_onnx.OfflineTts? sherpaOnnxSynth;
+  final Map<String, sherpa_onnx.OfflineTts?>? sherpaOnnxSynth;
   final Future<void> Function() init;
   final AudioPlayer openTTSPlayer;
 
-  final Future<void> Function() reloadSherpaOnnx;
-  final sherpa_onnx.OfflineTts? speakSelectSherpaOnnxSynth;
+  final Future<void> Function(bool) reloadSherpaOnnx;
+  final Map<String, sherpa_onnx.OfflineTts?>? speakSelectSherpaOnnxSynth;
   final Future<void> Function() initForSS;
   final AudioPlayer playerForSS;
 
@@ -150,12 +146,8 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-     print("home, start of builder: Vv4rs.sherpaOnnxLanguageVoice['English']: ${Vv4rs.sherpaOnnxLanguageVoice['English']}");
-     sherpa_onnx.initBindings();
-
-    print("home, after load engines: Vv4rs.sherpaOnnxLanguageVoice['English']: ${Vv4rs.sherpaOnnxLanguageVoice['English']}");
-    
-                  
+    sherpa_onnx.initBindings();
+   
     final media = MediaQuery.of(context);
     final screenSize = MediaQuery.of(context).size;
     final double defaultBoardHeight = screenSize.height * (4 / 6);

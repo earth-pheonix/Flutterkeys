@@ -12,7 +12,7 @@ import 'package:flutterkeysaac/Models/json_model_nav_and_root.dart';
 import 'package:flutterkeysaac/Variables/assorted_ui/ui_boards.dart';
 import 'package:flutterkeysaac/Models/json_model_boards.dart';
 import 'dart:async';
-import 'package:audioplayers/audioplayers.dart';
+import 'package:audioplayers/audioplayers.dart'; 
 import 'package:sherpa_onnx/sherpa_onnx.dart' as sherpa_onnx;
 
 class MessageRow extends StatefulWidget {
@@ -20,10 +20,10 @@ class MessageRow extends StatefulWidget {
   final int? highlightStart;
   final int? highlightLength;
   final Root? root;
-  final sherpa_onnx.OfflineTts? sherpaOnnxSynth;
+  final Map<String, sherpa_onnx.OfflineTts?>? sherpaOnnxSynth;
   final Future<void> Function() init;
   final AudioPlayer player;
-  final sherpa_onnx.OfflineTts? speakSelectSherpaOnnxSynth;
+  final Map<String, sherpa_onnx.OfflineTts?>? speakSelectSherpaOnnxSynth;
   final Future<void> Function() initForSS;
   final AudioPlayer playerForSS;
 
@@ -186,7 +186,7 @@ class _MessageRowState extends State<MessageRow> {
 class LeftOfMessageWindow extends StatefulWidget {
   final TextEditingController controller;
   final TTSInterface synth;
-  final sherpa_onnx.OfflineTts? speakSelectSherpaOnnxSynth;
+  final Map<String, sherpa_onnx.OfflineTts?>? speakSelectSherpaOnnxSynth;
   final Future<void> Function() initForSS;
   final AudioPlayer playerForSS;
 
@@ -360,10 +360,10 @@ class MessageWindow extends StatefulWidget {
   final TTSInterface synth;
   final int? highlightStart;
   final int? highlightLength;
-  final sherpa_onnx.OfflineTts? sherpaOnnxSynth;
+  final Map<String, sherpa_onnx.OfflineTts?>? sherpaOnnxSynth;
   final Future<void> Function() init;
   final AudioPlayer player;
-  final sherpa_onnx.OfflineTts? speakSelectSherpaOnnxSynth;
+  final Map<String, sherpa_onnx.OfflineTts?>? speakSelectSherpaOnnxSynth;
   final Future<void> Function() initForSS;
   final AudioPlayer playerForSS;
       
@@ -501,8 +501,10 @@ class _MessageWindowState extends State<MessageWindow> {
                 child: Stack(
                   children: [
                     ValueListenableBuilder<bool>(
-                  valueListenable: widget.synth.isSpeaking,
+                  valueListenable: V4rs.theIsSpeaking,
                   builder: (context, isSpeaking, _) {
+                    print('is speaking: $isSpeaking');
+                    print('is useWPM: ${V4rs.useWPM}');
                      return isSpeaking
                           ? Positioned.fill(
                             child: Padding(
@@ -716,6 +718,7 @@ class _MessageWindowState extends State<MessageWindow> {
   ),
   );
 }
+
 Widget _highlightedTextWidget() {
   final defaultStyle = Theme.of(context).textTheme.bodyLarge ?? const TextStyle();
   final text = widget.controller.text;
@@ -726,8 +729,25 @@ Widget _highlightedTextWidget() {
   return ValueListenableBuilder<int>(
     valueListenable: V4rs.highlightStart,
     builder: (context, notifierStart, _) {
-      final start = (widget.highlightStart ?? 0) + notifierStart;
-      final length = widget.highlightLength ?? text.length;
+      return ValueListenableBuilder<int>(
+    valueListenable: V4rs.streamVersion,
+    builder: (context, _, _) {
+      
+return StreamBuilder<dynamic>(
+  stream: V4rs.theStream, 
+  builder: (context, highlightStream) {
+
+    //saftey
+    if (!highlightStream.hasData || highlightStream.data == null) {
+      return Text(
+        widget.controller.text,
+        style: defaultStyle,
+      );
+    }
+
+      final data = highlightStream.data!;
+      final start = (data['start'] as int) + notifierStart;
+      final length = (data['length'] as int);
 
       final safeStart = start.clamp(0, text.length);
       final safeEnd = (safeStart + length).clamp(0, text.length);
@@ -777,14 +797,19 @@ Widget _highlightedTextWidget() {
 );
     },
   );
-}}
+  }
+  );
+  }
+  );
+}
+}
 
 class Alerts extends StatelessWidget {
   final TTSInterface tts;
-  final sherpa_onnx.OfflineTts? sherpaOnnxSynth;
+  final Map<String, sherpa_onnx.OfflineTts?>? sherpaOnnxSynth;
   final Future<void> Function() init;
   final AudioPlayer player;
-  final sherpa_onnx.OfflineTts? speakSelectSherpaOnnxSynth;
+  final Map<String, sherpa_onnx.OfflineTts?>? speakSelectSherpaOnnxSynth;
   final Future<void> Function() initForSS;
   final AudioPlayer playerForSS;
   
@@ -824,7 +849,7 @@ class Alerts extends StatelessWidget {
                         playerForSS,
                         );
                       await Future.delayed(const Duration(milliseconds: 100));
-                      await V4rs.alertSpeakWithSSRestore(
+                      await V4rs.mwSpeakWithSSRestore(
                         Sv4rs.firstAlert, V4rs.selectedLanguage.toString(), 
                         tts,
                         sherpaOnnxSynth,
@@ -832,7 +857,7 @@ class Alerts extends StatelessWidget {
                         player
                       );
                       } else {
-                      await V4rs.alertSpeak(
+                      await V4rs.messageWindowSpeak(
                         Sv4rs.firstAlert, 
                         V4rs.selectedLanguage.toString(), 
                         tts,
@@ -859,7 +884,7 @@ class Alerts extends StatelessWidget {
                         initForSS,
                         playerForSS,
                       );
-                      await V4rs.alertSpeakWithSSRestore(
+                      await V4rs.mwSpeakWithSSRestore(
                         Sv4rs.secondAlert, 
                         V4rs.selectedLanguage.toString(), 
                         tts,
@@ -868,7 +893,7 @@ class Alerts extends StatelessWidget {
                         player
                         );
                       } else {
-                    await V4rs.alertSpeak(
+                    await V4rs.messageWindowSpeak(
                       Sv4rs.secondAlert, 
                       V4rs.selectedLanguage.toString(), 
                       tts,
@@ -895,7 +920,7 @@ class Alerts extends StatelessWidget {
                           initForSS,
                           playerForSS,
                         );
-                        await V4rs.alertSpeakWithSSRestore(
+                        await V4rs.mwSpeakWithSSRestore(
                           Sv4rs.thirdAlert, 
                           V4rs.selectedLanguage.toString(), 
                           tts,
@@ -904,7 +929,7 @@ class Alerts extends StatelessWidget {
                           player
                         );
                       } else {
-                     await V4rs.alertSpeak(
+                     await V4rs.messageWindowSpeak(
                       Sv4rs.thirdAlert, 
                       V4rs.selectedLanguage.toString(), 
                       tts,
@@ -928,10 +953,10 @@ class RightOfMessageWindow extends StatefulWidget {
   final VoidCallback onUndo;
   final VoidCallback onRedo;
   final TTSInterface synth;
-  final sherpa_onnx.OfflineTts? sherpaOnnxSynth;
+  final Map<String, sherpa_onnx.OfflineTts?>? sherpaOnnxSynth;
   final Future<void> Function() init;
   final AudioPlayer player;
-  final sherpa_onnx.OfflineTts? speakSelectSherpaOnnxSynth;
+  final Map<String, sherpa_onnx.OfflineTts?>? speakSelectSherpaOnnxSynth;
   final Future<void> Function() initForSS;
   final AudioPlayer playerForSS;
 
@@ -1006,7 +1031,7 @@ class _RightOfMessageWindowState extends State<RightOfMessageWindow> {
                   ),
                 ),
                 ValueListenableBuilder<bool>(
-                  valueListenable: widget.synth.isSpeaking,
+                  valueListenable: V4rs.theIsSpeaking,
                   builder: (context, isSpeaking, _) {
                   
                     return isSpeaking

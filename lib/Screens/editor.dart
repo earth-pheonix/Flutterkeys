@@ -20,7 +20,7 @@ class Editor extends StatefulWidget {
   final TTSInterface synth;
   final int? highlightStart;
   final int? highlightLength;
-  final sherpa_onnx.OfflineTts? speakSelectSherpaOnnxSynth;
+  final Map<String, sherpa_onnx.OfflineTts?>? speakSelectSherpaOnnxSynth;
   final Future<void> Function() initForSS;
   final AudioPlayer playerForSS;
 

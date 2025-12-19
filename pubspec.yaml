@@ -100,6 +100,7 @@ flutter:
     - assets/voices/samples/
     - assets/voices/samples/kokoro-multi-lang-v1_0-flutterkeys_samples/
     - assets/voices/samples/vits-piper-en_GB-semaine-medium-flutterkeys_samples/
+    - assets/voices/samples/vits-coqui-en-vctk-flutterkeys_samples/
 
 
     - lib/Json/magma_vocab.json

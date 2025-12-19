@@ -29,7 +29,7 @@ class FontPicker1 extends StatefulWidget {
   final TTSInterface tts;
   final int sizeMin;
   final int sizeMax;
-  final sherpa_onnx.OfflineTts? speakSelectSherpaOnnxSynth;
+  final Map<String, sherpa_onnx.OfflineTts?>? speakSelectSherpaOnnxSynth;
   final Future<void> Function() initForSS;
   final AudioPlayer playerForSS;
 
@@ -590,7 +590,7 @@ class FontFamilyPicker extends StatefulWidget {
   final ValueChanged<String> onFontChanged;
   final TTSInterface? tts;
   final String label;
-  final sherpa_onnx.OfflineTts? speakSelectSherpaOnnxSynth;
+  final Map<String, sherpa_onnx.OfflineTts?>? speakSelectSherpaOnnxSynth;
   final Future<void> Function()? initForSS;
   final AudioPlayer? playerForSS;
 
