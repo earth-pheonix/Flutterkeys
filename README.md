@@ -78,11 +78,10 @@ The goal of this project:
 
 Anyone is welcome to use the project dicussion pages.
 
-Pheonix regularly shares progress in the Flutterkeys Discord Server: [https://discord.gg/MxGFgqsSQS]
-They are also happy to chat & receive feedback
+Pheonix regularly shares progress and requests feedback in the Flutterkeys Discord Server: [https://discord.gg/MxGFgqsSQS]
 
 To contact Pheonix directly, email them at: [Pheonix@michaeljohnclark.com]
 
-**Feedback and collaboraion is incredibly welcome.**
+**Feedback and collaboraion are incredibly welcome.**
 
 ---
