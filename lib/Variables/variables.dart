@@ -1,5 +1,6 @@
 
 import 'package:flutterkeysaac/Variables/colors/color_variables.dart';
+import 'package:flutterkeysaac/Variables/highlight_message_window.dart';
 import 'package:flutterkeysaac/Variables/system_tts/tts_interface.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutterkeysaac/Variables/settings/settings_variables.dart';
@@ -11,7 +12,6 @@ import 'package:path/path.dart';
 import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutterkeysaac/Models/json_model_nav_and_root.dart';
 import 'package:flutterkeysaac/Models/json_model_boards.dart';
 import 'package:flutterkeysaac/Variables/settings/voice_variables.dart';
@@ -63,31 +63,7 @@ class V4rs {
 
   static ValueNotifier<bool> wasPaused = ValueNotifier(false);
 
-  static bool highlightAsSpoken = !kIsWeb && Platform.isIOS;
-  static final String _highlightAsSpoken = "highlightAsSpoken";
-
-  static Future<void> saveHighlightAsSpoken (bool highlightAsSpoken) async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setBool(_highlightAsSpoken, highlightAsSpoken);
-  } 
-
-  static final highlightStart = ValueNotifier<int>(0);
-  static ValueNotifier<int> highlightAdd = ValueNotifier<int>(0);
-  static ValueNotifier<int?> highlightLength = ValueNotifier<int?>(null);
-
-  static ValueNotifier<bool> useWPM = ValueNotifier(false);
-  static double currentWPM = 150;
-  static ValueNotifier<int> streamVersion = ValueNotifier(0);
-  static Stream<dynamic>? theStream;
-
-  static void resetHighlightStart() {
-    highlightStart.value = 0;
-  }
-
-  static void setHighlightStart(int where){
-    highlightStart.value += where;
-  }
-
+ 
   static ValueNotifier<bool> theIsSpeaking = ValueNotifier(false);
 
   static bool clearAfterSpeak = true;
@@ -349,57 +325,66 @@ static Future<void> saveMyBoardsets (List<File> myBoardsets) async {
     Future<void> Function() init,
     AudioPlayer player,
   ) async {
-    print('start message window speak');
 
     final segments = identifyLanguageSegments(text, deafultLang);
-    resetHighlightStart();
-    int cumulativeStart = 0;
-
+    
     for (final langKey in sherpaOnnxSynth!.keys) {
       if (sherpaOnnxSynth[langKey] != null) {
         await init();
       }
     }
 
+    //setup highlight offset
+    HV4rs.resetHighlightStart();
+    HV4rs.enableHighlighting.value = true;
+    int cumulativeStart = 0;
+
     for (final segment in segments) {
+      //multilingual handling
       final lang = segment['lang']!;
+      final langName = getLangName(lang);
       String segmentText = segment['text']!;
 
+      //pronunciation excemptions 
       const Map<String, String> pronunciationExceptions = {
         "I": "eye",
         "Pheonix" : "Phoenix",
       };
-
       if (pronunciationExceptions.containsKey(segmentText.trim())) {
         segmentText = pronunciationExceptions[segmentText.trim()]!;
       }
 
-      setHighlightStart(cumulativeStart);
-      final langName = getLangName(lang);
+      //set highlight offset
+      HV4rs.setHighlightStart(cumulativeStart);
 
+      //
+      //System Engine
+      //
       if (Vv4rs.myEngineForVoiceLang[lang] == "system") {
+        //set voice properties
         final voiceID = Vv4rs.getSystemValue(langName, 'voice');
         final rate = Vv4rs.getSystemValue(langName, 'rate');
-        if (Platform.isIOS){
-          useWPM.value = false;
-        } else {
-          useWPM.value = true;
-        }
-        V4rs.currentWPM = (150 * rate).toDouble();
-
         final pitch = Vv4rs.getSystemValue(langName, 'pitch');
-
+      
+        //for system engines set up WPM based highlighting or callback based
+        if (Platform.isIOS){
+          HV4rs.useWPM.value = false;
+        } else {
+          HV4rs.useWPM.value = true;
+          HV4rs.currentWPM = (150 * rate).toDouble();
+        }
+      
+        //find selected voice
         final allVoices = await tts.getVoices();
-
         final matchingVoice = allVoices.firstWhere(
           (v) => v['identifier'] == voiceID,
           orElse: () => <String, String>{},
         );
-
         final voiceName = matchingVoice['name'] ?? 'default';
 
+        //if found set
+        HV4rs.subscribeWordStream(tts);
         if (voiceName != null) {
-          print("speaking: lang: $lang, text: $segmentText");
           await tts.setVoice({
             'identifier': voiceID ?? 'default',
           });
@@ -407,26 +392,27 @@ static Future<void> saveMyBoardsets (List<File> myBoardsets) async {
           await tts.setPitch(pitch);
           await tts.speak(segmentText);
         }
-      } else {
-        print("message window speak: engine is sherpa onnx");
-        if (sherpaOnnxSynth[lang] != null){
-          V4rs.theIsSpeaking.value = true;
-          V4rs.useWPM.value = false;
-          await Future.microtask(() {});
-          V4rs.useWPM.value = true;
-          print("message window speak: sherpaOnnxSynth isnt null");
-          print("speaking: lang: $lang, text: $segmentText, sherpaOnnx: $sherpaOnnxSynth");
-          await SherpaOnnxV4rs.speak(false, lang, segmentText, sherpaOnnxSynth, player);
-          V4rs.theIsSpeaking.value = false;
-      }
-    }
-    cumulativeStart += segmentText.length;
-  }
-    resetHighlightStart();
-    if (clearAfterSpeak == true && !wasPaused.value) {
-    message.value = "";
-  }
+      } 
 
+      //
+      //Sherpa Onnx Engine
+      //
+      else {
+        if (sherpaOnnxSynth[lang] != null){
+          await SherpaOnnxV4rs.speak(false, lang, segmentText, sherpaOnnxSynth, player);
+        }
+      }
+
+      //move offset to next segment
+      cumulativeStart += segmentText.length;
+    }
+
+    //cleanup
+    HV4rs.resetHighlightStart();
+    if (clearAfterSpeak == true && !wasPaused.value) {
+      message.value = "";
+    }
+    HV4rs.enableHighlighting.value = false;
  } 
 
   static Future<void> mwSpeakWithSSRestore(

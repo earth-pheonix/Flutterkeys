@@ -53,18 +53,12 @@ class _MyApp extends State<MyApp> {
     initSynth();
     initSherpaOnnx();
     initSpeakSelectSherpaOnnx();
-    V4rs.useWPM.addListener((){
-      subscribeWordStream();
-    });
   }
 
   Future<void> initSherpaOnnx() async {
-    print('0. init sherpa onnx');
     if (!sherpaOnnxInitialized) {
-      print('0. sherpa onnx is not initialized');
     sherpa_onnx.initBindings();
       for (final lang in Sv4rs.myLanguages){
-        print('0. lang: $lang');
         sherpaOnnxSynth[lang]?.free(); 
         sherpaOnnxSynth[lang] = await SherpaOnnxV4rs.loadSherpaOnnxEngine(lang);
       }
@@ -76,28 +70,19 @@ class _MyApp extends State<MyApp> {
   Future<void> reloadSherpaOnnx(bool forSS) async {
     sherpaOnnxInitialized = false;
     sherpa_onnx.initBindings();
-    print('3. reload sherpa onnx');
 
     if (forSS){
-      print('3. forSS');
       for (final lang in Sv4rs.myLanguages){
-        print('3. lang $lang');
         speakSelectSherpaOnnxSynth[lang]?.free();
-        print('3. free');
         speakSelectSherpaOnnxSynth[lang] = await SherpaOnnxV4rs.loadSherpaOnnxSSEngine(lang);
-        print('3. speakSelectSherpaOnnxSynth?[lang] ${speakSelectSherpaOnnxSynth[lang]}');
       }
       openTtsPlayerSpeakSelectSherpaOnnx = AudioPlayer();
     } 
 
     else {
-      print('3. not for ss');
       for (final lang in Sv4rs.myLanguages){
-        print('3. lang $lang');
         sherpaOnnxSynth[lang]?.free();
-        print('3. free');
         sherpaOnnxSynth[lang] = await SherpaOnnxV4rs.loadSherpaOnnxEngine(lang);
-        print('3. sherpaOnnxSynth?[lang] ${sherpaOnnxSynth[lang]}');
       }
       openTtsPlayerSherpaOnnx = AudioPlayer();
     }
@@ -128,9 +113,6 @@ class _MyApp extends State<MyApp> {
       synthInitialized = true;
     });
 
-    // Listen for word events (highlighting)
-    subscribeWordStream();
-
     // Listen for speech done events
     _doneSub = synth?.onDone.listen((_) {
       if (!mounted) return;
@@ -140,42 +122,7 @@ class _MyApp extends State<MyApp> {
       });
     });
   }
-
-  void subscribeWordStream() {
-    print('subscribing');
-
-    if (V4rs.useWPM.value) {
-      final interval = Duration(milliseconds: (60000 / V4rs.currentWPM).round());
-      final words = V4rs.message.value.split(' ');
-        print('WORDS: $words');
-        print('WORD COUNT: ${words.length}');
-      int currentHighlightStart = 0;
-      V4rs.theStream = null;
-
-      V4rs.theStream = Stream<Map<String, int>?>.periodic(interval, (i) {
-        if (i >= words.length) return null;
-
-        String word = words[i];
-        int start = V4rs.message.value.indexOf(word, currentHighlightStart);
-        currentHighlightStart = start + word.length; 
-        
-        return {
-          'start': start, 
-          'length': word.length
-        };
-      })
-      .take(words.length)
-      .where((e) => e != null)
-      .asBroadcastStream();
-
-
-    } else {
-      if (synth?.wordStream == null) return;
-      V4rs.theStream = synth!.wordStream;
-    }
-    V4rs.streamVersion.value++;
-  }
-
+  
   @override
   void dispose() {
     _doneSub?.cancel();

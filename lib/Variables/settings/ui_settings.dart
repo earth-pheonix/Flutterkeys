@@ -471,14 +471,10 @@ class _VoicePicker extends State<VoicePicker> with WidgetsBindingObserver {
                         child: ButtonStyle1(
                         imagePath: 'assets/interface_icons/interface_icons/iCheck.png',
                         onPressed: () async {
-                          print('1. pressing check');
                           if (Vv4rs.sampleSherpaOnnx != null) {
-                            print('1. not null');
                             if (!Vv4rs.downloadedSherpaOnnxLanguageVoice.contains(Vv4rs.sampleSherpaOnnx)){
-                              print('1. not downloaded');
                               await Vv4rs.downloadSherpaOnnxVoice(Vv4rs.sampleSherpaOnnx!);
                             } 
-                            print('downloaded');
                             selectSampleVoice(forSS); //for ss is built into this func
                             if (forSS){
                               setState(() { 
@@ -497,7 +493,6 @@ class _VoicePicker extends State<VoicePicker> with WidgetsBindingObserver {
                               });
                               widget.reloadSherpaOnnx(true);
                             }
-                            print('1. reloaded');
                           }
                         },
                       )

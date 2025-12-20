@@ -14,6 +14,7 @@ import 'package:flutterkeysaac/Models/json_model_boards.dart';
 import 'dart:async';
 import 'package:audioplayers/audioplayers.dart'; 
 import 'package:sherpa_onnx/sherpa_onnx.dart' as sherpa_onnx;
+import 'package:flutterkeysaac/Variables/highlight_message_window.dart';
 
 class MessageRow extends StatefulWidget {
   final TTSInterface synth;
@@ -503,17 +504,14 @@ class _MessageWindowState extends State<MessageWindow> {
                     ValueListenableBuilder<bool>(
                   valueListenable: V4rs.theIsSpeaking,
                   builder: (context, isSpeaking, _) {
-                    print('is speaking: $isSpeaking');
-                    print('is useWPM: ${V4rs.useWPM}');
                      return isSpeaking
                           ? Positioned.fill(
                             child: Padding(
-                              padding: EdgeInsets.symmetric(vertical: V4rs.highlightAsSpoken ? 8 : 10),
+                              padding: EdgeInsets.symmetric(vertical: HV4rs.highlightAsSpoken ? 8 : 10),
                                child:
                                SizedBox( child: 
-                            V4rs.highlightAsSpoken ? 
-                                 _highlightedTextWidget()
-                              
+                            HV4rs.highlightAsSpoken ? 
+                                 HV4rs.highlightedTextWidget(context, widget.controller, _scrollController)
                             : SizedBox(child:
                             SingleChildScrollView( child:
                             Text(V4rs.message.value, style: Fv4rs.mwLabelStyle,) ))
@@ -717,92 +715,7 @@ class _MessageWindowState extends State<MessageWindow> {
     ],
   ),
   );
-}
-
-Widget _highlightedTextWidget() {
-  final defaultStyle = Theme.of(context).textTheme.bodyLarge ?? const TextStyle();
-  final text = widget.controller.text;
-
-  // A key for the highlighted part
-  final highlightKey = GlobalKey();
-
-  return ValueListenableBuilder<int>(
-    valueListenable: V4rs.highlightStart,
-    builder: (context, notifierStart, _) {
-      return ValueListenableBuilder<int>(
-    valueListenable: V4rs.streamVersion,
-    builder: (context, _, _) {
-      
-return StreamBuilder<dynamic>(
-  stream: V4rs.theStream, 
-  builder: (context, highlightStream) {
-
-    //saftey
-    if (!highlightStream.hasData || highlightStream.data == null) {
-      return Text(
-        widget.controller.text,
-        style: defaultStyle,
-      );
-    }
-
-      final data = highlightStream.data!;
-      final start = (data['start'] as int) + notifierStart;
-      final length = (data['length'] as int);
-
-      final safeStart = start.clamp(0, text.length);
-      final safeEnd = (safeStart + length).clamp(0, text.length);
-
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (highlightKey.currentContext != null) {
-          Scrollable.ensureVisible(
-            highlightKey.currentContext!,
-            duration: Duration.zero, 
-            alignment: 0.5,         
-          );
-        }
-      });
-
-      return SingleChildScrollView(
-        controller: _scrollController,
-        child: RichText(
-          textScaler: MediaQuery.of(context).textScaler,
-          text: TextSpan(
-            style: defaultStyle.merge(Fv4rs.mwLabelStyle),
-            children: [
-              TextSpan(
-                text: text.substring(0, safeStart),
-                style: Fv4rs.mwLabelStyle,
-              ),
-              TextSpan(
-        text: text.substring(safeStart, safeEnd),
-        style: Fv4rs.highlightTextStyle,
-      ),
-
-      // anchor for scrolling
-      WidgetSpan(
-        child: SizedBox(
-          key: highlightKey,
-          width: 0,
-          height: 0,
-        ),
-      ),
-
-      TextSpan(
-        text: text.substring(safeEnd),
-        style: Fv4rs.mwLabelStyle,
-      ),
-    ],
-  ),
-        ),
-);
-    },
-  );
-  }
-  );
-  }
-  );
-}
-}
+}}
 
 class Alerts extends StatelessWidget {
   final TTSInterface tts;

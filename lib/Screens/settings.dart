@@ -11,6 +11,7 @@ import 'package:flutterkeysaac/Variables/settings/boardset_settings_variables.da
 import 'package:flutterkeysaac/Models/json_model_nav_and_root.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutterkeysaac/Variables/highlight_message_window.dart';
 import 'package:flutterkeysaac/Variables/editing/save_indicator.dart';
 import 'package:flutterkeysaac/Variables/assorted_ui/ui_pops.dart';
 import 'package:flutterkeysaac/Variables/fonts/font_pickers.dart';
@@ -1150,10 +1151,10 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
                                 ), 
                                 Spacer(),
                                  Switch(
-                                  value: V4rs.highlightAsSpoken,
+                                  value: HV4rs.highlightAsSpoken,
                                   onChanged: (val) { setState(() {
-                                      V4rs.highlightAsSpoken = val;
-                                      V4rs.saveHighlightAsSpoken(val);
+                                      HV4rs.highlightAsSpoken = val;
+                                      HV4rs.saveHighlightAsSpoken(val);
                                   });
                                   },
                                 ),

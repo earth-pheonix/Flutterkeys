@@ -1,6 +1,7 @@
 
 import 'package:flutterkeysaac/Variables/settings/voice_variables.dart';
 import 'package:flutterkeysaac/Variables/variables.dart';
+import 'package:flutterkeysaac/Variables/highlight_message_window.dart';
 import 'dart:async';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:sherpa_onnx/sherpa_onnx.dart' as sherpa_onnx;
@@ -15,7 +16,6 @@ class SherpaOnnxV4rs {
   late final String globalVocoderPath;
 
   static Future<sherpa_onnx.OfflineTts> createOfflineTts(String voiceId) async {
-    print('creating offline TTS');
     sherpa_onnx.initBindings();
 
     final base = p.join(
@@ -61,7 +61,6 @@ class SherpaOnnxV4rs {
     late final sherpa_onnx.OfflineTtsMatchaModelConfig matcha;
 
     if (isKokoro) {
-      print('is kokoro');
       vits = sherpa_onnx.OfflineTtsVitsModelConfig(); // unused
       kokoro = sherpa_onnx.OfflineTtsKokoroModelConfig(
         model: modelOnnx,
@@ -72,7 +71,6 @@ class SherpaOnnxV4rs {
       );
       matcha = sherpa_onnx.OfflineTtsMatchaModelConfig(); //unused
     } else if (isMultiMatcha){
-      print('is multi matcha');
       vits = sherpa_onnx.OfflineTtsVitsModelConfig(); //unused
       kokoro = sherpa_onnx.OfflineTtsKokoroModelConfig(); // unused
       matcha = sherpa_onnx.OfflineTtsMatchaModelConfig(
@@ -83,7 +81,6 @@ class SherpaOnnxV4rs {
         lexicon: lexicons,
       );
     } else if (isMatcha){
-      print('is matcha');
       vits = sherpa_onnx.OfflineTtsVitsModelConfig(); //unused
       kokoro = sherpa_onnx.OfflineTtsKokoroModelConfig();
       matcha = sherpa_onnx.OfflineTtsMatchaModelConfig(
@@ -94,7 +91,6 @@ class SherpaOnnxV4rs {
         lexicon: lexicons,
       );
     } else {
-      print('is vits');
       vits = sherpa_onnx.OfflineTtsVitsModelConfig(
         model: modelOnnx,
         tokens: tokens,
@@ -135,11 +131,7 @@ class SherpaOnnxV4rs {
     }
 
   static Future<dynamic> loadSherpaOnnxEngine(String lang) async {
-    print('4. loading sherpa onnx');
-      print('4. lang $lang');
       if (Vv4rs.myEngineForVoiceLang[lang] == 'sherpa-onnx'){
-        print('4. engine is sherpa onnx');
-        print('4. (Vv4rs.sherpaOnnxLanguageVoice[lang] ${Vv4rs.sherpaOnnxLanguageVoice[lang]}');
         if (Vv4rs.sherpaOnnxLanguageVoice[lang] != null){
           final tts = await createOfflineTts(
             Vv4rs.sherpaOnnxLanguageVoice[lang]!.id ?? '',
@@ -203,25 +195,36 @@ class SherpaOnnxV4rs {
       );
 
       if (wav) {
+        //set file
         V4rs.currentSpeakingFile = filename;
 
+        //set wpm for highlighting
         double time = audio.samples.length / audio.sampleRate; //in seconds
-        double minutes = time * 60;
+        double minutes = time / 60;
         int wordCount(String text) {
           return text
             .trim()
             .split(RegExp(r'\s+'))
             .length;
           }
+        HV4rs.currentWPM = wordCount(text)/minutes;
+        HV4rs.useWPM.value = true;
 
-        V4rs.currentWPM = wordCount(text)/minutes;
-
+        //set listener for completer
         final completer = Completer<void>();
         player.onPlayerComplete.listen((event) {
           if (!completer.isCompleted) completer.complete();
         });
+
+        //speak
+        V4rs.theIsSpeaking.value = true;
+        HV4rs.subscribeWordStream(null);
         await player.play(DeviceFileSource(V4rs.currentSpeakingFile!));
         await completer.future; 
+
+        //cleanup
+        V4rs.theIsSpeaking.value = false;
+        HV4rs.useWPM.value = false;
       }
     }
   }
