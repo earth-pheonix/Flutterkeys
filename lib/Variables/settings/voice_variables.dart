@@ -33,16 +33,16 @@ class Vv4rs{
 
   static dynamic saveMyEngineForVoiceLang(
     String language, 
-    String? systemVoiceName, 
-    String? sherpaOnnxVoiceId
+    bool sherpaOnnx,
+    String engine,
   ) async {
     final prefs = await SharedPreferences.getInstance();
 
-    if (systemVoiceName != null){
-      return prefs.setString('myEngineForVoiceFor_$language', systemVoiceName);
+    if (sherpaOnnx = false){
+      return prefs.setString('myEngineForVoiceFor_$language', engine);
     } 
-    else if (sherpaOnnxVoiceId != null){
-      return prefs.setString('myEngineForVoiceFor_$language', sherpaOnnxVoiceId);
+    else if (sherpaOnnx = true){
+      return prefs.setString('myEngineForVoiceFor_$language', engine);
     } 
   }
 
@@ -197,7 +197,7 @@ class Vv4rs{
 
       if (systemLanguageVoice[langVoice]?.engine != null){
         myEngineForVoiceLang[langVoice] = systemLanguageVoice[langVoice]!.engine!;
-        await saveMyEngineForVoiceLang(langVoice, myEngineForVoiceLang[langVoice], null);
+        await saveMyEngineForVoiceLang(langVoice, false, myEngineForVoiceLang[langVoice]!);
       }
       
       await saveSystemValue(langVoice, "voice", voice);
@@ -474,80 +474,103 @@ class Vv4rs{
 
       if (value == 'id'){
         if (forSS){
+          print('save value: $value for ss: $forSS saving: $saving, language: $language');
           return prefs.setString('sherpa_onnx-tts-forSS-id-$language', saving);
         } else {
+          print('save value: $value for ss: $forSS saving: $saving, language: $language');
           return prefs.setString('sherpa_onnx-tts-id-$language', saving);
         }
       } 
       else if (value == 'tokenPath'){
         if (forSS){
+          print('save value: $value for ss: $forSS saving: $saving, language: $language');
           return prefs.setString('sherpa_onnx-tts-forSS-tokenPath-$language', saving);
         } else {
+          print('save value: $value for ss: $forSS saving: $saving, language: $language');
           return prefs.setString('sherpa_onnx-tts-tokenPath-$language', saving);
         }
       } 
       else if (value == 'modelVoice'){
         if (forSS){
+          print('save value: $value for ss: $forSS saving: $saving, language: $language');
           return prefs.setString('sherpa_onnx-tts-forSS-modelVoice-$language', saving);
         } else {
+          print('save value: $value for ss: $forSS saving: $saving, language: $language');
           return prefs.setString('sherpa_onnx-tts-modelVoice-$language', saving);
         }
       } 
       else if (value == 'engine'){
         if (forSS){
+          print('save value: $value for ss: $forSS saving: $saving, language: $language');
           return prefs.setString('sherpa_onnx-tts-forSS-engine-$language', saving);
         } else {
+          print('save value: $value for ss: $forSS saving: $saving, language: $language');
           return prefs.setString('sherpa_onnx-tts-engine-$language', saving);
         }
       } 
       else if (value == 'speakerID'){
         if (forSS){
+          print('save value: $value for ss: $forSS saving: $saving, language: $language');
           return prefs.setInt('sherpa_onnx-tts-forSS-speakerID-$language', saving);
         } else {
+          print('save value: $value for ss: $forSS saving: $saving, language: $language');
           return prefs.setInt('sherpa_onnx-tts-speakerID-$language', saving);
         }
       } 
       else if (value == 'lengthScale'){
         if (forSS){
+          print('save value: $value for ss: $forSS saving: $saving, language: $language');
           return prefs.setDouble('sherpa_onnx-tts-forSS-lengthScale-$language', saving ?? 1.0);
         } else {
+          print('null check for: save value: $value for ss: $forSS saving: $saving, language: $language');
           if (saving != null) {
+            print('not null: save value: $value for ss: $forSS saving: $saving, language: $language');
             return prefs.setDouble('sherpa_onnx-tts-lengthScale-$language', saving ?? 1.0);
           }
         }
       }
       else if (value == 'lexicon'){
         if (forSS){
+          print('save value: $value for ss: $forSS saving: $saving, language: $language');
           return prefs.setString('sherpa_onnx-tts-forSS-lexicon-$language', saving ?? '');
         } else {
+          print('save value: $value for ss: $forSS saving: $saving, language: $language');
           return prefs.setString('sherpa_onnx-tts-lexicon-$language', saving ?? '');
         }
       }
       else if (value == 'farFiles'){
         if (forSS){
+          print('save value: $value for ss: $forSS saving: $saving, language: $language');
           return prefs.setString('sherpa_onnx-tts-forSS-farFiles-$language', saving ?? '');
         } else {
+          print('save value: $value for ss: $forSS saving: $saving, language: $language');
           return prefs.setString('sherpa_onnx-tts-farFiles-$language', saving ?? '');
         }
       }
       else if (value == 'fstFiles'){
         if (forSS){
+          print('save value: $value for ss: $forSS saving: $saving, language: $language');
           return prefs.setString('sherpa_onnx-tts-forSS-fstFiles-$language', saving ?? '');
         } else {
+          print('save value: $value for ss: $forSS saving: $saving, language: $language');
           return prefs.setString('sherpa_onnx-tts-fstFiles-$language', saving ?? '');
         }
       }
       else if (value == 'voicesBin'){
         if (forSS){
+          print('save value: $value for ss: $forSS saving: $saving, language: $language');
           return prefs.setString('sherpa_onnx-tts-forSS-voicesBin-$language', saving);
         } else {
+          print('save value: $value for ss: $forSS saving: $saving, language: $language');
           return prefs.setString('sherpa_onnx-tts-voicesBin-$language', saving);
         }
       }
       else if (value == 'speakerCount'){
         if (forSS){
+          print('save value: $value for ss: $forSS saving: $saving, language: $language');
           return prefs.setInt('sherpa_onnx-tts-forSS-speakerCount-$language', saving);
         } else {
+          print('save value: $value for ss: $forSS saving: $saving, language: $language');
           return prefs.setInt('sherpa_onnx-tts-speakerCount-$language', saving);
         }
       }
@@ -625,7 +648,7 @@ class Vv4rs{
       
       if(sampleSherpaOnnx != null && sampleSherpaOnnx?.engine != null){
         myEngineForVoiceLang[langVoice] = sampleSherpaOnnx?.engine;
-        await saveMyEngineForVoiceLang(langVoice, null, myEngineForVoiceLang[langVoice]);
+        await saveMyEngineForVoiceLang(langVoice, true, myEngineForVoiceLang[langVoice]!);
       }
 
       await saveSherpaOnnxValue(langVoice, "id", id, false);
@@ -1080,16 +1103,19 @@ static Future<ManifestModel?> downloadSherpaOnnxVoice(ManifestModel voice) async
       Vv4rs.myEngineForSSVoiceLang[lang] = prefs.getString('myEngineForSSVoiceFor_$lang');
       Vv4rs.myEngineForVoiceLang[lang] = prefs.getString('myEngineForVoiceFor_$lang');
       
+      Vv4rs.systemLanguageVoice[lang] = SystemVoice();
       Vv4rs.systemLanguageVoice[lang]?.voice = prefs.getString('system-tts-voice-$lang');
       Vv4rs.systemLanguageVoice[lang]?.engine = prefs.getString('system-tts-engine-$lang');
       Vv4rs.systemLanguageVoice[lang]?.pitch = prefs.getDouble('system-tts-pitch-$lang');
       Vv4rs.systemLanguageVoice[lang]?.rate = prefs.getDouble('system-tts-rate-$lang');
 
+      Vv4rs.speakSelectSystemLanguageVoice[lang] = SystemVoice();
       Vv4rs.speakSelectSystemLanguageVoice[lang]?.voice = prefs.getString('system-tts-forSS-voice-$lang');
       Vv4rs.speakSelectSystemLanguageVoice[lang]?.engine = prefs.getString('system-tts-forSS-engine-$lang');
       Vv4rs.speakSelectSystemLanguageVoice[lang]?.pitch = prefs.getDouble('system-tts-forSS-pitch-$lang');
       Vv4rs.speakSelectSystemLanguageVoice[lang]?.rate = prefs.getDouble('system-tts-forSS-rate-$lang');
-
+      
+      Vv4rs.sherpaOnnxLanguageVoice[lang] = SherpaOnnxVoice();
       Vv4rs.sherpaOnnxLanguageVoice[lang]?.id = prefs.getString('sherpa_onnx-tts-id-$lang');
       Vv4rs.sherpaOnnxLanguageVoice[lang]?.tokenPath = prefs.getString('sherpa_onnx-tts-tokenPath-$lang');
       Vv4rs.sherpaOnnxLanguageVoice[lang]?.modelVoice = prefs.getString('sherpa_onnx-tts-modelVoice-$lang');
@@ -1102,6 +1128,7 @@ static Future<ManifestModel?> downloadSherpaOnnxVoice(ManifestModel voice) async
       Vv4rs.sherpaOnnxLanguageVoice[lang]?.fstFiles = prefs.getString('sherpa_onnx-tts-fstFiles-$lang');
       Vv4rs.sherpaOnnxLanguageVoice[lang]?.voicesBin = prefs.getString('sherpa_onnx-tts-voicesBin-$lang');
       
+      Vv4rs.sherpaOnnxSSLanguageVoice[lang] = SherpaOnnxVoice();
       Vv4rs.sherpaOnnxSSLanguageVoice[lang]?.id = prefs.getString('sherpa_onnx-tts-forSS-id-$lang');
       Vv4rs.sherpaOnnxSSLanguageVoice[lang]?.tokenPath = prefs.getString('sherpa_onnx-tts-forSS-tokenPath-$lang');
       Vv4rs.sherpaOnnxSSLanguageVoice[lang]?.modelVoice = prefs.getString('sherpa_onnx-tts-forSS-modelVoice-$lang');

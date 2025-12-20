@@ -479,6 +479,7 @@ class _VoicePicker extends State<VoicePicker> with WidgetsBindingObserver {
                             if (forSS){
                               setState(() { 
                                 Vv4rs.myEngineForSSVoiceLang[language] = Vv4rs.sherpaOnnxSSLanguageVoice[language]!.engine;
+                                Vv4rs.saveMyEngineForSSVoiceLang(language, null, Vv4rs.myEngineForSSVoiceLang[language]);
                               });
                             } else {
                               setState(() { 
@@ -898,6 +899,37 @@ class _VoicePicker extends State<VoicePicker> with WidgetsBindingObserver {
                   setState(() {
                     Sv4rs.useDifferentVoiceforSS = value;
                     Sv4rs.saveUseDiffVoiceSS(value);
+
+                    if (Sv4rs.useDifferentVoiceforSS = false){
+                      for (final lang in Sv4rs.myLanguages){
+                        if (Vv4rs.myEngineForVoiceLang[lang] == 'sherpa-onnx'){
+                          Vv4rs.setSSlanguageVoiceSherpaOnnx(
+                            lang, 
+                            Vv4rs.sherpaOnnxLanguageVoice[lang]?.id, 
+                            Vv4rs.sherpaOnnxLanguageVoice[lang]?.engine, 
+                            Vv4rs.sherpaOnnxLanguageVoice[lang]?.tokenPath, 
+                            Vv4rs.sherpaOnnxLanguageVoice[lang]?.modelVoice,
+                            Vv4rs.sherpaOnnxLanguageVoice[lang]?.speakerCount,
+                            Vv4rs.sherpaOnnxLanguageVoice[lang]?.speakerID,
+                            Vv4rs.sherpaOnnxLanguageVoice[lang]?.lengthScale, 
+                            Vv4rs.sherpaOnnxLanguageVoice[lang]?.speakers,
+                            Vv4rs.sherpaOnnxLanguageVoice[lang]?.lexicon,
+                            Vv4rs.sherpaOnnxLanguageVoice[lang]?.farFiles,
+                            Vv4rs.sherpaOnnxLanguageVoice[lang]?.fstFiles,
+                            Vv4rs.sherpaOnnxLanguageVoice[lang]?.voicesBin,
+                            Vv4rs.sherpaOnnxLanguageVoice[lang]?.eSpeakPath,
+                          );
+                        } else {
+                          Vv4rs.setSSlanguageVoiceSystem(
+                            lang, 
+                            Vv4rs.systemLanguageVoice[lang]?.voice, 
+                            Vv4rs.systemLanguageVoice[lang]?.engine, 
+                            Vv4rs.systemLanguageVoice[lang]?.pitch, 
+                            Vv4rs.systemLanguageVoice[lang]?.rate
+                          );
+                        }
+                      }
+                    }
                   });
                 }),
               ]

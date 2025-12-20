@@ -131,11 +131,16 @@ class SherpaOnnxV4rs {
     }
 
   static Future<dynamic> loadSherpaOnnxEngine(String lang) async {
+    print('loadSherpaOnnxEngine');
+    print('Engine: ${Vv4rs.myEngineForVoiceLang[lang]}');
+    print('voice: ${Vv4rs.sherpaOnnxLanguageVoice[lang]}');
+    print('voice id: ${Vv4rs.sherpaOnnxLanguageVoice[lang]?.id}');
       if (Vv4rs.myEngineForVoiceLang[lang] == 'sherpa-onnx'){
         if (Vv4rs.sherpaOnnxLanguageVoice[lang] != null){
           final tts = await createOfflineTts(
             Vv4rs.sherpaOnnxLanguageVoice[lang]!.id ?? '',
           );
+          print('returned with tts');
           return tts;
         }
     }

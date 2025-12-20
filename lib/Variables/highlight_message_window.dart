@@ -102,20 +102,17 @@ class HV4rs {
       valueListenable: HV4rs.streamVersion,
       builder: (context, _, _) {
     
-    return StreamBuilder<Map<String, dynamic>>(
+    return StreamBuilder<Map<String, dynamic>?>(
       stream: wordStream, 
       builder: (context, highlightStream) {
 
       //saftey
-      if (!highlightStream.hasData 
-        || highlightStream.data == null 
-        || enableHighlighting.value == false
-      ) {
-        Text(
+      if (!enableHighlighting.value || !highlightStream.hasData) {
+        return Text(
           controller.text,
           style: defaultStyle,
         );
-      }
+      } 
 
       //highlight info
       final data = highlightStream.data!;

@@ -361,6 +361,7 @@ static Future<void> saveMyBoardsets (List<File> myBoardsets) async {
       //System Engine
       //
       if (Vv4rs.myEngineForVoiceLang[lang] == "system") {
+        print('message window speak: engine is system');
         //set voice properties
         final voiceID = Vv4rs.getSystemValue(langName, 'voice');
         final rate = Vv4rs.getSystemValue(langName, 'rate');
@@ -398,7 +399,9 @@ static Future<void> saveMyBoardsets (List<File> myBoardsets) async {
       //Sherpa Onnx Engine
       //
       else {
+        print('message window speak: engine is sherpa');
         if (sherpaOnnxSynth[lang] != null){
+          print('message window speak: sherpa synth is not null');
           await SherpaOnnxV4rs.speak(false, lang, segmentText, sherpaOnnxSynth, player);
         }
       }
@@ -732,7 +735,11 @@ static Future<File> resolveImageFile(String relativePath) async {
   //LOADING SAVED VALUES
   //
 
+  static bool variablesReady = false;
+
   static Future<void> loadSavedValues() async {
+    print('loading saved values');
+    variablesReady = false;
     final prefs = await SharedPreferences.getInstance();
     // how to clear a value from shared prefs:  
     //await prefs.remove('myBoardsets');
@@ -741,11 +748,11 @@ static Future<File> resolveImageFile(String relativePath) async {
     //deleteLocalCopy(); 
     deleteLocalCopytemplates();
 
-    Fv4rs.loadSavedFontValues(); 
-    Cv4rs.loadSavedColorValues();
-    Bv4rs.loadSavedBoardsetValues();
-    ExV4rs.loadSavedExportValues();
-    Vv4rs.loadSavedVoiceValues();
+    await Fv4rs.loadSavedFontValues(); 
+    await Cv4rs.loadSavedColorValues();
+    await Bv4rs.loadSavedBoardsetValues();
+    await ExV4rs.loadSavedExportValues();
+    await Vv4rs.loadSavedVoiceValues();
 
     //load the boardsets
     final myBoardsetNames = prefs.getStringList(_myBoardsets);
@@ -797,6 +804,9 @@ static Future<File> resolveImageFile(String relativePath) async {
     primaryUseSubFolders = prefs.getBool(_primaryUseSubFolders) ?? true;
 
     Sv4rs.pickFromEngine = prefs.getString(Sv4rs.pickFromEngine_) ?? 'sherpa-onnx';
+    
+    variablesReady = true;
+    print('saved values loaded');
   }
 
 }
