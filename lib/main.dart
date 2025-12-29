@@ -5,7 +5,6 @@ import 'package:flutterkeysaac/Screens/home.dart';
 import 'package:flutterkeysaac/Variables/editing/editor_variables.dart';
 import 'package:flutterkeysaac/Variables/assorted_ui/ui_pops.dart';
 import 'package:flutterkeysaac/Variables/variables.dart'; 
-import 'package:flutterkeysaac/Screens/expand_page.dart';
 import 'package:flutterkeysaac/Variables/system_tts/tts_interface.dart';
 import 'package:flutterkeysaac/Variables/system_tts/tts_factory.dart';
 import 'package:flutterkeysaac/Variables/settings/settings_variables.dart';
@@ -148,6 +147,12 @@ class _MyApp extends State<MyApp> {
     super.dispose();
   }
 
+  @override
+  void reassemble() {
+    super.reassemble();
+    PaintingBinding.instance.imageCache.clear();
+    PaintingBinding.instance.imageCache.clearLiveImages();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -176,13 +181,6 @@ class _MyApp extends State<MyApp> {
             //=====: onboarding :====
               if (V4rs.doOnboarding.value) {
                 return Onboarding();
-            //=====: expand page :====
-              } else if (V4rs.showExpandPage.value) {
-                return ExpandPage(
-                  speakSelectSherpaOnnxSynth: speakSelectSherpaOnnxSynth,
-                  initForSS: initSpeakSelectSherpaOnnx,
-                  playerForSS: openTtsPlayerSpeakSelectSherpaOnnx,
-                );
             //=====: editor :====
               } else if (Ev4rs.showEditor.value) {
                 return Editor(

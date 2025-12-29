@@ -177,7 +177,7 @@ import 'package:flutterkeysaac/Models/json_model_boards.dart';
                   //
                   //back, in positioned is the tap expander
                   //
-                  Padding(padding: EdgeInsetsGeometry.all(7),
+                  Padding(padding: EdgeInsetsGeometry.all(V4rs.paddingValue(7)),
                   child: SizedBox( 
                     height: (isLandscape) ? MediaQuery.of(context).size.height * 0.065 : MediaQuery.of(context).size.height * 0.03 ,
                     child: ButtonStyle1(
@@ -203,7 +203,7 @@ import 'package:flutterkeysaac/Models/json_model_boards.dart';
                       (Ev4rs.showAddBoard.value) 
                           ? addBoard()
                           : Padding(
-                            padding: EdgeInsetsGeometry.all(10),
+                            padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)),
                             child: Row(
                               mainAxisSize: MainAxisSize.min,
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -213,7 +213,8 @@ import 'package:flutterkeysaac/Models/json_model_boards.dart';
                           //title, edit layout/format
                           (Ev4rs.selectedBoard.value != null)
                           ? Flexible(
-                            child: Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 10), child: 
+                            child: Padding(padding: EdgeInsetsGeometry.symmetric(
+                              horizontal: V4rs.paddingValue(10)), child: 
                             Container(
                                       decoration: BoxDecoration(
                                         color: Cv4rs.themeColor4,
@@ -228,7 +229,8 @@ import 'package:flutterkeysaac/Models/json_model_boards.dart';
                                             fit: FlexFit.loose,
                                             flex: 5, 
                                             child: Padding(
-                                              padding: EdgeInsetsGeometry.symmetric(horizontal: 10, vertical: 0), 
+                                              padding: EdgeInsetsGeometry.symmetric(
+                                                horizontal: V4rs.paddingValue(10), vertical: 0), 
                                               child: ValueListenableBuilder(valueListenable: Ev4rs.notes, builder: (context, value, _) {
                                                 final titleController = TextEditingController(text: value)
                                                   ..selection = TextSelection.collapsed(offset: value.length);
@@ -255,7 +257,7 @@ import 'package:flutterkeysaac/Models/json_model_boards.dart';
                                             fit: FlexFit.loose,
                                             flex: 2, 
                                             child: Padding(
-                                              padding: EdgeInsetsGeometry.symmetric(vertical: 5), 
+                                              padding: EdgeInsetsGeometry.symmetric(vertical: V4rs.paddingValue(5)), 
                                               child: ButtonStyle4(
                                                 imagePath: 'assets/interface_icons/interface_icons/iCheck.png', 
                                                 onPressed: (){setState(() {
@@ -293,7 +295,7 @@ import 'package:flutterkeysaac/Models/json_model_boards.dart';
                           //grammer row picker, use subfolders toggle,
                           (Ev4rs.selectedBoard.value != null)
                           ? Flexible(
-                            child: Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 10), child: 
+                            child: Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: V4rs.paddingValue(10)), child: 
                             Container(
                                       decoration: BoxDecoration(
                                         color: Cv4rs.themeColor4,
@@ -303,13 +305,13 @@ import 'package:flutterkeysaac/Models/json_model_boards.dart';
                                         //
                                         //grammer row picker
                                         //
-                                        Padding(padding: EdgeInsetsGeometry.all(10), child: 
+                                        Padding(padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)), child: 
                                           Row(children: [
                                             Flexible(
                                               fit: FlexFit.loose,
                                                 flex: 5, 
                                                 child: Padding(
-                                                  padding: EdgeInsetsGeometry.symmetric(horizontal: 10, vertical: 0),
+                                                  padding: EdgeInsetsGeometry.symmetric(horizontal: V4rs.paddingValue(10), vertical: 0),
                                                   child:
                                                 Column(children: [
                                                   Text('Grammar Row:', style: Sv4rs.settingslabelStyle, textAlign: TextAlign.center,),
@@ -355,7 +357,7 @@ import 'package:flutterkeysaac/Models/json_model_boards.dart';
                                               fit: FlexFit.loose,
                                               flex: 2, 
                                               child: Padding(
-                                                padding: EdgeInsetsGeometry.symmetric(vertical: 5), 
+                                                padding: EdgeInsetsGeometry.symmetric(vertical: V4rs.paddingValue(5)), 
                                                 child: ButtonStyle4(
                                                   imagePath: 'assets/interface_icons/interface_icons/iCheck.png', 
                                                   onPressed: (){setState(() {
@@ -379,13 +381,13 @@ import 'package:flutterkeysaac/Models/json_model_boards.dart';
                                           valueListenable: Ev4rs.useSubFolders, 
                                           builder: (context, use, _) {
                                           return Padding(
-                                            padding: EdgeInsetsGeometry.all(10), 
+                                            padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)), 
                                             child: Row(children: [
                                               Flexible(
                                               fit: FlexFit.tight,
                                               flex: 5, 
                                               child: Padding(
-                                                  padding: EdgeInsetsGeometry.symmetric(horizontal: 10, vertical: 0),
+                                                  padding: EdgeInsetsGeometry.symmetric(horizontal: V4rs.paddingValue(10), vertical: 0),
                                                   child:
                                             Column( children: [
                                               Text(
@@ -393,7 +395,7 @@ import 'package:flutterkeysaac/Models/json_model_boards.dart';
                                                 style: Sv4rs.settingslabelStyle,
                                                 textAlign: TextAlign.start,
                                                ),
-                                               Padding(padding: EdgeInsetsGeometry.all(5), child:
+                                               Padding(padding: EdgeInsetsGeometry.all(V4rs.paddingValue(5)), child:
                                               ValueListenableBuilder<int>(
                                                 valueListenable: Ev4rs.useSubFolders, builder: (context, use, _) {
                                                   return DropdownButton<int>(
@@ -432,7 +434,7 @@ import 'package:flutterkeysaac/Models/json_model_boards.dart';
                                               fit: FlexFit.tight,
                                               flex: 2, 
                                               child: Padding(
-                                              padding: EdgeInsetsGeometry.symmetric(vertical: 5),  
+                                              padding: EdgeInsetsGeometry.symmetric(vertical: V4rs.paddingValue(5)),  
                                               child: ButtonStyle4(
                                                 imagePath: 'assets/interface_icons/interface_icons/iCheck.png', 
                                                 onPressed: (){setState(() {
@@ -459,12 +461,12 @@ import 'package:flutterkeysaac/Models/json_model_boards.dart';
 
                           //delete, add, template
                           Flexible(
-                            child: Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 10), child: 
+                            child: Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: V4rs.paddingValue(10)), child: 
                           Column(
                               children: [
                               //add
                               Padding(
-                                padding: EdgeInsetsGeometry.all(4),
+                                padding: EdgeInsetsGeometry.all(V4rs.paddingValue(4)),
                                 child: ButtonStyle2(
                                   imagePath: 'assets/interface_icons/interface_icons/iAddBoard.png', 
                                   onPressed: () async {
@@ -478,7 +480,7 @@ import 'package:flutterkeysaac/Models/json_model_boards.dart';
                               ),
                               //delete
                               Padding(
-                                padding: EdgeInsetsGeometry.all(4),
+                                padding: EdgeInsetsGeometry.all(V4rs.paddingValue(4)),
                                 child: ButtonStyle2(
                                   imagePath: 'assets/interface_icons/interface_icons/iAddBoard.png', 
                                   onPressed: () async {
@@ -524,12 +526,12 @@ import 'package:flutterkeysaac/Models/json_model_boards.dart';
       
                           //edit grammer edit overlay
                           Flexible(
-                            child: Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 10), child: 
+                            child: Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: V4rs.paddingValue(10)), child: 
                           
                             Column(children: [
                               //edit grammer
                               Padding(
-                                padding: EdgeInsetsGeometry.all(7),
+                                padding: EdgeInsetsGeometry.all(V4rs.paddingValue(7)),
                                 child: ButtonStyle2(
                                   imagePath: 'assets/interface_icons/interface_icons/iGrammerRowSettings.png', 
                                   onPressed: () async {
@@ -561,7 +563,9 @@ import 'package:flutterkeysaac/Models/json_model_boards.dart';
                   Flexible(
                     flex: 2, 
                     child: Padding(
-                      padding: EdgeInsetsGeometry.fromLTRB(3, 7, 3, 0),
+                      padding: EdgeInsetsGeometry.fromLTRB(
+                        V4rs.paddingValue(3), 
+                        V4rs.paddingValue(7), V4rs.paddingValue(3), 0),
                       child: SizedBox( 
                         height: (isLandscape) ? MediaQuery.of(context).size.height * 0.06 : MediaQuery.of(context).size.height * 0.04 ,
                         child: ButtonStyle1(
@@ -583,7 +587,9 @@ import 'package:flutterkeysaac/Models/json_model_boards.dart';
                   Expanded(
                     flex: 1, 
                     child: Padding(
-                      padding: EdgeInsetsGeometry.fromLTRB(3, 7, 3, 0),
+                      padding: EdgeInsetsGeometry.fromLTRB(
+                        V4rs.paddingValue(3), 
+                        V4rs.paddingValue(7), V4rs.paddingValue(3), 0),
                       child: SizedBox( 
                       ),
                     ),
@@ -596,7 +602,8 @@ import 'package:flutterkeysaac/Models/json_model_boards.dart';
                   Flexible(flex: 2, child: 
                     Column( children:[
                       //undo
-                      Padding(padding: EdgeInsetsGeometry.fromLTRB(3, 7, 3, 0),
+                      Padding(padding: EdgeInsetsGeometry.fromLTRB(
+                        V4rs.paddingValue(3), V4rs.paddingValue(7), V4rs.paddingValue(3), 0),
                   child:
                       SizedBox( 
                     height: (isLandscape) ? MediaQuery.of(context).size.height * 0.06 : MediaQuery.of(context).size.height * 0.04 ,
@@ -617,7 +624,8 @@ import 'package:flutterkeysaac/Models/json_model_boards.dart';
                       ),
 
                       //share
-                      Padding(padding: EdgeInsetsGeometry.fromLTRB(3, 7, 3, 0),
+                      Padding(padding: EdgeInsetsGeometry.fromLTRB(
+                        V4rs.paddingValue(3), V4rs.paddingValue(7), V4rs.paddingValue(3), 0),
                   child:
                       SizedBox( 
                     height: (isLandscape) ? MediaQuery.of(context).size.height * 0.06 : MediaQuery.of(context).size.height * 0.04 ,
@@ -642,7 +650,9 @@ import 'package:flutterkeysaac/Models/json_model_boards.dart';
                   Flexible(flex: 2, child: 
                     Column( children:[
                       //redo
-                      Padding(padding: EdgeInsetsGeometry.fromLTRB(3, 7, 3, 0),
+                      Padding(padding: EdgeInsetsGeometry.fromLTRB(
+                        V4rs.paddingValue(3), 
+                        V4rs.paddingValue(7), V4rs.paddingValue(3), 0),
                   child:
                       SizedBox( 
                     height: (isLandscape) ? MediaQuery.of(context).size.height * 0.06 : MediaQuery.of(context).size.height * 0.04,
@@ -662,7 +672,8 @@ import 'package:flutterkeysaac/Models/json_model_boards.dart';
                       ),
                       ),
                       //print
-                      Padding(padding: EdgeInsetsGeometry.fromLTRB(3, 7, 3, 0),
+                      Padding(padding: EdgeInsetsGeometry.fromLTRB(
+                        V4rs.paddingValue(3), V4rs.paddingValue(7), V4rs.paddingValue(3), 0),
                   child:
                       SizedBox( 
                     height: (isLandscape) ? MediaQuery.of(context).size.height * 0.06 : MediaQuery.of(context).size.height * 0.04,
@@ -685,7 +696,9 @@ import 'package:flutterkeysaac/Models/json_model_boards.dart';
                   //
                   Column( children:[
                     Padding(
-                      padding: EdgeInsetsGeometry.fromLTRB(7, 7, 7, 0),
+                      padding: EdgeInsetsGeometry.fromLTRB(
+                        V4rs.paddingValue(7), 
+                        V4rs.paddingValue(7), V4rs.paddingValue(7), 0),
                       child: SizedBox( 
                         height: (isLandscape) ? MediaQuery.of(context).size.height * 0.07 : MediaQuery.of(context).size.height * 0.04,
                         child: (Ev4rs.isButtonExpanded.value) 
@@ -708,7 +721,9 @@ import 'package:flutterkeysaac/Models/json_model_boards.dart';
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsetsGeometry.fromLTRB(7, 0, 7, 7),
+                      padding: EdgeInsetsGeometry.fromLTRB(
+                        V4rs.paddingValue(7), 0, 
+                        V4rs.paddingValue(7), V4rs.paddingValue(7)),
                       child: SizedBox( 
                         height: (isLandscape) ? MediaQuery.of(context).size.height * 0.08 : MediaQuery.of(context).size.height * 0.04 ,
                         child: Padding(
@@ -739,7 +754,7 @@ import 'package:flutterkeysaac/Models/json_model_boards.dart';
           return SizedBox( 
             height: (isLandscape) ? MediaQuery.of(context).size.height * 0.09 : MediaQuery.of(context).size.height * 0.04,
             child: Padding(
-              padding: EdgeInsetsGeometry.all(7), 
+              padding: EdgeInsetsGeometry.all(V4rs.paddingValue(7)), 
               child: Row(
                 children: [
               //tap
@@ -892,7 +907,7 @@ import 'package:flutterkeysaac/Models/json_model_boards.dart';
               flex: 4,
               child: 
               Padding(
-                padding: EdgeInsetsGeometry.all(20),
+                padding: EdgeInsetsGeometry.all(V4rs.paddingValue(20)),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
@@ -917,7 +932,7 @@ import 'package:flutterkeysaac/Models/json_model_boards.dart';
               flex: 4,
               child:
             Padding(
-              padding: EdgeInsetsGeometry.all(10),
+              padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)),
               child: Container(
                 decoration: BoxDecoration(
                   color: Cv4rs.themeColor4,
@@ -925,7 +940,9 @@ import 'package:flutterkeysaac/Models/json_model_boards.dart';
                   ),
                 child: Column( children: [
                   Padding(
-                    padding: EdgeInsetsGeometry.fromLTRB(10, 15, 10, 5), 
+                    padding: EdgeInsetsGeometry.fromLTRB(
+                      V4rs.paddingValue(10), 
+                      V4rs.paddingValue(15), V4rs.paddingValue(10), V4rs.paddingValue(15)), 
                     child: Text('Create from Template:', 
                       style: Sv4rs.settingslabelStyle.copyWith(
                         fontSize: 12,
@@ -937,7 +954,8 @@ import 'package:flutterkeysaac/Models/json_model_boards.dart';
                   //dropdown menu from template json
                   Row(children: [
                     Flexible(child: 
-                    Padding(padding: EdgeInsetsGeometry.fromLTRB(10, 0, 10, 0), child:
+                    Padding(padding: EdgeInsetsGeometry.fromLTRB(
+                      V4rs.paddingValue(10), 0, V4rs.paddingValue(10), 0), child:
                       Text(
                         'Template:', 
                         style: Sv4rs.settingslabelStyle,
@@ -983,7 +1001,7 @@ import 'package:flutterkeysaac/Models/json_model_boards.dart';
                   ),
                   //title
                   Padding(
-                      padding: EdgeInsetsGeometry.symmetric(horizontal: 10, vertical: 0), 
+                      padding: EdgeInsetsGeometry.symmetric(horizontal: V4rs.paddingValue(10), vertical: 0), 
                       child: TextField(
                         textAlign: TextAlign.center,
                         style: Sv4rs.settingslabelStyle,

@@ -33,14 +33,30 @@ class V4rs {
 //
 //Dimensions
 //
-  static double screenheight = 0.0;
-  static final String _screenheight = "screenheight";
-  
-  static double screenwidth = 0.0;
-  static final String _screenwidth = "screenwidth";
+
+  static bool xSmallModeWidth = false;
+  static bool xSmallModeHeight = false;
+  static bool xSmallMode = false;
+  static bool isLandscape = true;
 
   static double keyboardheight = 0.0;
   static final String _keyboardheight = "keyboardheight";  
+
+  static double paddingValue(double padding){
+    if (xSmallModeWidth || xSmallModeHeight){
+      return (padding / 3).roundToDouble();
+    } else {
+      return padding;
+    }
+  }
+
+  static double fontValue(double size){
+    if (xSmallModeWidth || xSmallModeHeight){
+      return (size - 5).roundToDouble();
+    } else {
+      return size;
+    }
+  }
 
 //
 //Onboarding
@@ -224,14 +240,6 @@ static Future<void> saveMyBoardsets (List<File> myBoardsets) async {
 // 
 //Functions for saving values
 //
-  static Future<void> savescreenheight(double screenheight) async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setDouble(_screenheight, screenheight);
-  } 
-  static Future<void> savescreenwidth (double screenwidth) async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setDouble(_screenwidth, screenwidth);
-  } 
   static Future<void> savekeyboardheight (double keyboardheight) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setDouble(_keyboardheight, keyboardheight);
@@ -773,8 +781,6 @@ static Future<File> resolveImageFile(String relativePath) async {
     showLanguageSelectorSlider = prefs.getBool(_showLanguageSelectorSlider) ?? true;
 
     doOnboarding.value = prefs.getBool(_doOnboarding) ?? true; // Default to true if not set
-    screenheight = prefs.getDouble(_screenheight) ?? 0.0;
-    screenwidth = prefs.getDouble(_screenwidth) ?? 0.0;
     keyboardheight = prefs.getDouble(_keyboardheight) ?? 250.0;
 
     Sv4rs.useDifferentVoiceforSS = prefs.getBool(Sv4rs.useDifferentVoiceforSS_) ?? false;

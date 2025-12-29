@@ -3,6 +3,7 @@ import 'package:flutterkeysaac/Variables/colors/color_variables.dart';
 import 'package:flutterkeysaac/Variables/editing/save_indicator.dart';
 import 'package:flutterkeysaac/Variables/settings/settings_variables.dart';
 import 'package:flutterkeysaac/Variables/export_variables.dart';
+import 'package:flutterkeysaac/Variables/variables.dart';
 import 'package:printing/printing.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:pdf/pdf.dart';
@@ -28,7 +29,7 @@ Future<void> showOptionsPopupForSpeakOnSelect(BuildContext context, {
       return StatefulBuilder(
         builder: (context, setState) {
           return Padding(
-            padding: const EdgeInsets.all(16),
+            padding: EdgeInsets.all(V4rs.paddingValue(16)),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -64,7 +65,10 @@ Future<void> showOptionsPopupForSpeakOnSelect(BuildContext context, {
                         borderRadius: BorderRadius.circular(10), 
                       ),
                       shadowColor: Cv4rs.themeColor4,
-                      padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5), 
+                      padding: EdgeInsets.symmetric(
+                        horizontal: V4rs.paddingValue(5), 
+                        vertical: V4rs.paddingValue(5)
+                      ), 
                     ),
                   onPressed: () {
                     Navigator.pop(context);
@@ -175,13 +179,13 @@ Future<void> showPrintPop(
       ),
       if (ExV4rs.includeIndicatorRow)
        Padding(
-        padding: EdgeInsets.fromLTRB(20, 0, 0, 15),
+        padding: EdgeInsets.fromLTRB(V4rs.paddingValue(20), 0, 0, V4rs.paddingValue(15)),
         child: Row(
           children: [
             Text('1st Indicator Message:'),
             Expanded(
             child: Padding(
-              padding: EdgeInsets.fromLTRB(15, 0, 20, 0), 
+              padding: EdgeInsets.fromLTRB(V4rs.paddingValue(15), 0, V4rs.paddingValue(20), 0), 
               child: TextField(
                 onChanged: (value) {
                   ExV4rs.indicator1 = value;
@@ -198,13 +202,13 @@ Future<void> showPrintPop(
       ),
       if (ExV4rs.includeIndicatorRow)
       Padding(
-        padding: EdgeInsets.fromLTRB(20, 0, 0, 15),
+        padding: EdgeInsets.fromLTRB(V4rs.paddingValue(20), 0, 0, V4rs.paddingValue(15)),
         child: Row(
           children: [
             Text('2nd Indicator Message:'),
             Expanded(
             child: Padding(
-              padding: EdgeInsets.fromLTRB(15, 0, 20, 0), 
+              padding: EdgeInsets.fromLTRB(V4rs.paddingValue(15), 0, V4rs.paddingValue(20), 0), 
               child: TextField(
                 onChanged: (value) {
                   ExV4rs.indicator2 = value;
@@ -221,13 +225,13 @@ Future<void> showPrintPop(
       ),
       if (ExV4rs.includeIndicatorRow)
       Padding(
-        padding: EdgeInsets.fromLTRB(20, 0, 0, 15),
+        padding: EdgeInsets.fromLTRB(V4rs.paddingValue(20), 0, 0, V4rs.paddingValue(15)),
         child: Row(
           children: [
             Text('3rd Indicator Message:'),
             Expanded(
             child: Padding(
-              padding: EdgeInsets.fromLTRB(15, 0, 20, 0), 
+              padding: EdgeInsets.fromLTRB(V4rs.paddingValue(15), 0, V4rs.paddingValue(20), 0), 
               child: TextField(
                 onChanged: (value) {
                   ExV4rs.indicator3 = value;
@@ -253,7 +257,9 @@ Future<void> showPrintPop(
               borderRadius: BorderRadius.circular(10), 
             ),
             shadowColor: Cv4rs.themeColor4,
-            padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5), 
+            padding: EdgeInsets.symmetric(
+              horizontal: V4rs.paddingValue(5), 
+              vertical: V4rs.paddingValue(5)), 
           ),
         onPressed: () async { if (ExV4rs.loadingPrint.value){} else {
             final pages =

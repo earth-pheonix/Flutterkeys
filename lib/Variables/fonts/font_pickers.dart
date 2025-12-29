@@ -102,7 +102,7 @@ class _FontPickerState1 extends State<FontPicker1> {
       title: Text(widget.label,  style: Sv4rs.settingslabelStyle,),
       collapsedBackgroundColor: Cv4rs.themeColor4,
       backgroundColor: Cv4rs.themeColor4,
-      childrenPadding: EdgeInsets.symmetric(horizontal: 20),
+      childrenPadding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(20)),
       onExpansionChanged: (bool expanded) {  
         if (Sv4rs.speakInterfaceButtonsOnSelect) {
             V4rs.speakOnSelect(
@@ -129,7 +129,7 @@ class _FontPickerState1 extends State<FontPicker1> {
         ),
 
         // Size slider
-         Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 20), child:
+         Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: V4rs.paddingValue(20)), child:
         Row(
           children: [
             Text('Size:', style: Sv4rs.settingslabelStyle,),
@@ -153,7 +153,7 @@ class _FontPickerState1 extends State<FontPicker1> {
         ),
 
         // Italics switch
-        Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 20), child:
+        Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: V4rs.paddingValue(20)), child:
         Row(
           children: [
             Text('Italics:', style: Sv4rs.settingslabelStyle, ),
@@ -171,7 +171,7 @@ class _FontPickerState1 extends State<FontPicker1> {
 
         // Underline switch
         if (_useUnderline) 
-        Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 20), child:
+        Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: V4rs.paddingValue(20)), child:
         Row(
           children: [
             Text('Underline:', style: Sv4rs.settingslabelStyle, ),
@@ -189,7 +189,7 @@ class _FontPickerState1 extends State<FontPicker1> {
 
        
         // Weight slider
-        Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 20), child:
+        Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: V4rs.paddingValue(20)), child:
         Row(
           children: [
             Text('Weight:', style: Sv4rs.settingslabelStyle,),
@@ -242,7 +242,7 @@ class _FontPickerState1 extends State<FontPicker1> {
             children: [
               //hexcode input
               Padding(
-                padding: EdgeInsetsGeometry.symmetric(horizontal: 40, vertical: 20),
+                padding: EdgeInsetsGeometry.symmetric(horizontal: V4rs.paddingValue(40), vertical: V4rs.paddingValue(20)),
                 child: HexCodeInput(
                   startValue: _color.toHexString(),
                   textStyle: Sv4rs.settingslabelStyle,
@@ -255,7 +255,9 @@ class _FontPickerState1 extends State<FontPicker1> {
               ),
               //color picker
               Padding(
-                padding: EdgeInsets.fromLTRB(40, 0, 10, 10),
+                padding: EdgeInsets.fromLTRB(
+                  V4rs.paddingValue(40), 0, 
+                  V4rs.paddingValue(10), V4rs.paddingValue(10)),
                 child: ColorPicker(
                   pickerColor: _color, 
                   enableAlpha: true,
@@ -368,7 +370,7 @@ class _FontPickerState2 extends State<FontPicker2> {
   @override
   Widget build(BuildContext context) {
     return Container(
-       padding: EdgeInsets.all(10),
+       padding: EdgeInsets.all(V4rs.paddingValue(10)),
        decoration: BoxDecoration(
         color: Cv4rs.themeColor4,
         borderRadius: BorderRadius.circular(10)
@@ -382,7 +384,7 @@ class _FontPickerState2 extends State<FontPicker2> {
           children: [
             Expanded( child: Center( child: 
             Padding(
-              padding: EdgeInsetsGeometry.all(5),
+              padding: EdgeInsetsGeometry.all(V4rs.paddingValue(V4rs.paddingValue(5))),
               child: 
             Text(
               'Sample Text: Abcde',
@@ -414,12 +416,17 @@ class _FontPickerState2 extends State<FontPicker2> {
         
 
         // Size slider
-        Padding(padding: EdgeInsetsGeometry.symmetric(vertical: 10), child: 
+        Padding(padding: EdgeInsetsGeometry.symmetric(vertical: V4rs.paddingValue(10)), child: 
         Column(
           children: [
             Text('Size: $_size', style: Sv4rs.settingslabelStyle,),
              Slider(
-              padding: EdgeInsets.fromLTRB(5, 5, 5, 10,),
+              padding: EdgeInsets.fromLTRB(
+                V4rs.paddingValue(5), 
+                V4rs.paddingValue(5), 
+                V4rs.paddingValue(5), 
+                V4rs.paddingValue(10),
+              ),
               value: _size,
               min: widget.sizeMin.toDouble(),
               max: widget.sizeMax.toDouble(),
@@ -472,13 +479,18 @@ class _FontPickerState2 extends State<FontPicker2> {
         
         
         // Weight slider
-        Padding(padding: EdgeInsetsGeometry.fromLTRB(0, 10, 0, 0), child: 
+        Padding(padding: EdgeInsetsGeometry.fromLTRB(0, V4rs.paddingValue(10), 0, 0), child: 
         Column(
           children: [ 
             Text('Weight: $_weight', style: Sv4rs.settingslabelStyle,),
             
             Slider(
-              padding: EdgeInsets.fromLTRB(5, 5, 5, 10,),
+              padding: EdgeInsets.fromLTRB(
+                V4rs.paddingValue(5), 
+                V4rs.paddingValue(5), 
+                V4rs.paddingValue(5), 
+                V4rs.paddingValue(10),
+              ),
                 value: _weight.toDouble(),
                 min: 100,
                 max: 900,
@@ -526,7 +538,8 @@ class _FontPickerState2 extends State<FontPicker2> {
               Column(children:[
               //hexcode input
               Padding(
-                padding: EdgeInsetsGeometry.symmetric(horizontal: 10, vertical: 20),
+                padding: EdgeInsetsGeometry.symmetric(
+                  horizontal: V4rs.paddingValue(10), vertical: V4rs.paddingValue(20)),
                 child: HexCodeInput2(
                   startValue: _color.toHexString(),
                   textStyle: Sv4rs.settingslabelStyle,
@@ -635,7 +648,7 @@ class _FontFamilyPicker extends State<FontFamilyPicker> {
       title: Text(widget.label,  style: Sv4rs.settingslabelStyle,),
       collapsedBackgroundColor: Cv4rs.themeColor4,
       backgroundColor: Cv4rs.themeColor4,
-      childrenPadding: EdgeInsets.symmetric(horizontal: 20),
+      childrenPadding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(20)),
       onExpansionChanged: (bool expanded) {  
         if (Sv4rs.speakInterfaceButtonsOnSelect 
           && widget.tts != null
@@ -690,9 +703,9 @@ class _FontFamilyPicker extends State<FontFamilyPicker> {
           }', style: Sv4rs.settingslabelStyle,
           ), 
           Spacer(), ]),
-          childrenPadding: EdgeInsets.symmetric(horizontal: 40), 
+          childrenPadding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(40)), 
           children: [
-            Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 60), child:
+            Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: V4rs.paddingValue(60)), child:
             Row(
               children: [
             Text('Writing System:', style: Sv4rs.settingslabelStyle,),

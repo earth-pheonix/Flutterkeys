@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutterkeysaac/Variables/colors/color_variables.dart';
 import 'package:flutterkeysaac/Variables/settings/settings_variables.dart';
 import 'package:flutterkeysaac/Variables/fonts/font_variables.dart';
+import 'package:flutterkeysaac/Variables/variables.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'dart:async';
 import 'dart:io';
@@ -111,6 +112,7 @@ class ButtonStyle1 extends StatelessWidget {
   final bool glow;
   final bool specialImageColor;
   final int turn;
+  final double padding;
 
   //constructs the button 
   const ButtonStyle1 ({
@@ -120,6 +122,7 @@ class ButtonStyle1 extends StatelessWidget {
     this.specialImageColor = false,
     this.glow = false,
     this.turn = 0,
+    this.padding = 5,
   });
 
   //defines the button 
@@ -143,7 +146,10 @@ class ButtonStyle1 extends StatelessWidget {
             borderRadius: BorderRadius.circular(10), // number is corner roundness
           ),
           shadowColor: Cv4rs.themeColor4,  //shadow color
-          padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5), // Padding around pictures 
+          padding: EdgeInsets.symmetric(  // Padding around pictures
+            horizontal: V4rs.paddingValue(padding), 
+            vertical: V4rs.paddingValue(padding)
+          ), 
           overlayColor: Cv4rs.themeColor4,
         ),
         onPressed: onPressed,
@@ -194,7 +200,7 @@ class ButtonStyle2 extends StatelessWidget {
             borderRadius: BorderRadius.circular(10), // number is corner roundness
           ),
           shadowColor: Cv4rs.themeColor1,  //shadow color
-          padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5), // Padding around pictures 
+          padding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(5), vertical: V4rs.paddingValue(5)), // Padding around pictures 
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
@@ -202,7 +208,7 @@ class ButtonStyle2 extends StatelessWidget {
           Expanded(
             flex: 1,
             child:
-            Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: padding), child: 
+            Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: V4rs.paddingValue(padding)), child: 
         ColorFiltered(
           colorFilter: ColorFilter.mode(Colors.black, BlendMode.srcIn
           ),
@@ -257,7 +263,7 @@ class ButtonStyle3 extends StatelessWidget {
             borderRadius: BorderRadius.circular(10), // number is corner roundness
           ),
           shadowColor: Cv4rs.themeColor1,  //shadow color
-          padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5), // Padding around pictures 
+          padding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(5), vertical: V4rs.paddingValue(5)), // Padding around pictures 
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -310,7 +316,7 @@ class ButtonStyle4 extends StatelessWidget {
             borderRadius: BorderRadius.circular(10), // number is corner roundness
           ),
           shadowColor: Cv4rs.themeColor1,  //shadow color
-          padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5), // Padding around pictures 
+          padding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(5), vertical: V4rs.paddingValue(5)), // Padding around pictures 
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -332,7 +338,7 @@ class ButtonStyle4 extends StatelessWidget {
 
 }
 
-
+//not the same as button style 1 because colors have to be able to be different
 class ExpandButtonStyle extends StatelessWidget {
   //these are the values that we will define when using the button
   final String imagePath;
@@ -364,7 +370,9 @@ class ExpandButtonStyle extends StatelessWidget {
             borderRadius: BorderRadius.circular(10), // number is corner roundness
           ),
           shadowColor: Cv4rs.themeColor4,  //shadow color
-          padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5), // Padding around pictures 
+          padding: EdgeInsets.symmetric(
+            horizontal: 5, 
+            vertical: 5), // Padding around pictures 
         ),
         child: ColorFiltered( //the image on the button, I have it wraped in a color filter, thats optional
           colorFilter: ColorFilter.mode(Cv4rs.expandIconColor, BlendMode.srcIn

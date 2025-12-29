@@ -3,6 +3,7 @@ import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutterkeysaac/Models/json_model_grammer.dart';
 import 'package:flutterkeysaac/Variables/assorted_ui/ui_shortcuts.dart';
 import 'package:flutterkeysaac/Variables/editing/editor_variables.dart';
+import 'package:flutterkeysaac/Variables/variables.dart';
 import 'package:flutterkeysaac/Variables/settings/boardset_settings_variables.dart';
 import 'package:flutterkeysaac/Variables/settings/settings_variables.dart';
 import 'package:flutterkeysaac/Variables/Grammer_variables.dart';
@@ -69,7 +70,7 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
               //
               //back, in positioned is the tap expander
               //
-              Padding(padding: EdgeInsetsGeometry.all(7),
+              Padding(padding: EdgeInsetsGeometry.all(V4rs.paddingValue(7)),
               child: SizedBox( 
                 height: (isLandscape) ? MediaQuery.of(context).size.height * 0.065 : MediaQuery.of(context).size.height * 0.03 ,
                 child: ButtonStyle1(
@@ -99,7 +100,7 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                   //image
                   //
                   Padding(
-                    padding: EdgeInsetsGeometry.all(10),
+                    padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)),
                     child: 
                           Container(
                             width: MediaQuery.of(context).size.height * 0.25,
@@ -110,7 +111,7 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
-                                Expanded(child: Padding(padding: EdgeInsetsGeometry.all(Ev4rs.padding.value), 
+                                Expanded(child: Padding(padding: EdgeInsetsGeometry.all(V4rs.paddingValue(Ev4rs.padding.value)), 
                                   child: ImageStyle1(
                                       image: image, 
                                       symbolSaturation: Ev4rs.saturation.value, 
@@ -132,7 +133,7 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                                   Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 10), child:
+                                      Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: V4rs.paddingValue(10)), child:
                                         SizedBox( 
                                           width: MediaQuery.of(context).size.height * 0.08,
                                           child: ButtonStyle3(
@@ -152,7 +153,7 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                                     maintainSize: true,
                                     maintainAnimation: true,
                                     maintainState: true,
-                                    child: Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 10), child:
+                                    child: Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: V4rs.paddingValue(10)), child:
                                     SizedBox( 
                                       width: MediaQuery.of(context).size.height * 0.07,
                                       child: ButtonStyle3(
@@ -178,7 +179,7 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                   //
                   //padding
                   //
-                  Padding(padding: EdgeInsetsGeometry.all(10),
+                  Padding(padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)),
                   child:
                   SizedBox( 
                     width: MediaQuery.of(context).size.height * 0.25,
@@ -192,11 +193,11 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Padding(padding: EdgeInsets.all(10), child: 
+                        Padding(padding: EdgeInsets.all(V4rs.paddingValue(10)), child: 
                         Column(children: [
                         Text('Image Padding: ${Ev4rs.padding.value}', style: Sv4rs.settingslabelStyle,),
                         Slider(
-                              padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+                              padding: EdgeInsets.fromLTRB(V4rs.paddingValue(10), V4rs.paddingValue(10), V4rs.paddingValue(10), 0),
                               value: Ev4rs.padding.value,
                               min: 0.0,
                               max: 10.0,
@@ -228,7 +229,7 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                   //
                   //symbolColors
                   //
-                  Padding(padding: EdgeInsetsGeometry.all(10),
+                  Padding(padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)),
                   child:
                   SizedBox(
                     child:
@@ -303,7 +304,7 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
               Expanded(flex: 7, child: 
                 Column( children:[
                   //label
-                  Padding(padding: EdgeInsetsGeometry.all(10),
+                  Padding(padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)),
                   child:
                     Container(
                       decoration: BoxDecoration(
@@ -313,7 +314,7 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                       child: Column(children: [
                         Row(children: [ 
                           Expanded(flex: 5, child: 
-                            Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 10, vertical: 0), child: 
+                            Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: V4rs.paddingValue(10), vertical: 0), child: 
                               ValueListenableBuilder(valueListenable: Ev4rs.notes, builder: (context, value, _) {
                           final labelController = TextEditingController(text: value)
                           ..selection = TextSelection.collapsed(offset: value.length);
@@ -334,7 +335,7 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                             ),
                           ),
                           Flexible(flex: 2, child: 
-                          Padding(padding: EdgeInsetsGeometry.symmetric(vertical: 5), child: 
+                          Padding(padding: EdgeInsetsGeometry.symmetric(vertical: V4rs.paddingValue(5)), child: 
                           ButtonStyle4(
                           imagePath: 'assets/interface_icons/interface_icons/iCheck.png', 
                             onPressed: (){setState(() {
@@ -351,7 +352,7 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                     ]
                     ))),
                   //match speak on select, speak on select
-                  Padding(padding: EdgeInsetsGeometry.all(10),
+                  Padding(padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)),
                     child: Container(
                       decoration: BoxDecoration(
                         color: Cv4rs.themeColor4,
@@ -364,7 +365,11 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                             return Row(children: [
                               Expanded(child: 
                               Padding(
-                                padding: EdgeInsetsGeometry.fromLTRB(10, 10, 10, 0), 
+                                padding: EdgeInsetsGeometry.fromLTRB(
+                                  V4rs.paddingValue(10), 
+                                  V4rs.paddingValue(10), 
+                                  V4rs.paddingValue(10), 
+                                  0), 
                                 child: Text(
                                   'Match Speak on Select:', 
                                   maxLines: 2,
@@ -375,7 +380,7 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                                 ),
                               ),
                               Padding(
-                                padding: EdgeInsetsGeometry.fromLTRB(0, 0, 10, 0), 
+                                padding: EdgeInsetsGeometry.fromLTRB(0, 0, V4rs.paddingValue(10), 0), 
                                 child: Switch(
                                   padding: EdgeInsets.all(0),
                                   value: Ev4rs.matchSpeakOnSelect.value, 
@@ -392,10 +397,10 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                           valueListenable: Ev4rs.speakOnSelect, 
                           builder: (context, speakOnSelect, _) {
                             return Padding(
-                              padding: EdgeInsetsGeometry.all(10), 
+                              padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)), 
                               child: Column(children: [
                                 Slider(
-                                  padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
+                                  padding: EdgeInsets.fromLTRB(V4rs.paddingValue(5), 0, V4rs.paddingValue(5), 0),
                                   min: 1.0,
                                   max: 3.0,
                                   divisions: 2,
@@ -409,7 +414,7 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                                     }
                                   ),
                                 Padding(
-                                  padding: EdgeInsetsGeometry.fromLTRB(0, 0, 0, 10), 
+                                  padding: EdgeInsetsGeometry.fromLTRB(0, 0, 0, V4rs.paddingValue(10)), 
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                     children: [
@@ -462,7 +467,7 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                   ),
                   //font, match font settings, font picker
                   Padding(
-                      padding: EdgeInsetsGeometry.all(10), 
+                      padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)), 
                       child: FontPicker2(
                         widgety:  ButtonStyle2(
                           imagePath: 'assets/interface_icons/interface_icons/iCheck.png', 
@@ -530,9 +535,9 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                   //
 
                   Padding(
-                    padding: EdgeInsetsGeometry.all(10), 
+                    padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)), 
                     child: Container(
-                      padding: EdgeInsetsGeometry.all(10),
+                      padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)),
                       decoration: BoxDecoration(
                         color: Cv4rs.themeColor4,
                         borderRadius: BorderRadius.circular(10)
@@ -544,7 +549,12 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                             return Row(children: [
                               Expanded(child: 
                                 Padding(
-                                  padding: EdgeInsetsGeometry.fromLTRB(5, 10, 5, 0), 
+                                  padding: EdgeInsetsGeometry.fromLTRB(
+                                    V4rs.paddingValue(5), 
+                                    V4rs.paddingValue(10), 
+                                    V4rs.paddingValue(5), 
+                                    0
+                                  ), 
                                     child: Text(
                                       'Match Format:', 
                                       maxLines: 2,
@@ -555,7 +565,7 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                                   ),
                               ),
                               Padding(
-                                padding: EdgeInsetsGeometry.fromLTRB(0, 0, 10, 0), 
+                                padding: EdgeInsetsGeometry.fromLTRB(0, 0, V4rs.paddingValue(10), 0), 
                                 child: Switch(
                                   padding: EdgeInsets.all(0),
                                   value: Ev4rs.matchFormat.value, 
@@ -572,7 +582,12 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                           valueListenable: Ev4rs.format, 
                           builder: (context, format, _) {
                             return Padding(
-                              padding: EdgeInsetsGeometry.fromLTRB(5, 15, 5, 10), 
+                              padding: EdgeInsetsGeometry.fromLTRB(
+                                V4rs.paddingValue(5), 
+                                V4rs.paddingValue(15), 
+                                V4rs.paddingValue(5), 
+                                V4rs.paddingValue(10)
+                              ), 
                               child: Column(children: [
                                       Text(
                                         "Format: ${
@@ -592,7 +607,7 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                                         textAlign: TextAlign.center,
                                       ),
                                 Slider(
-                                  padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
+                                  padding: EdgeInsets.fromLTRB(0, V4rs.paddingValue(5), 0, 0),
                                   min: 1.0,
                                   max: 4.0,
                                   divisions: 3,
@@ -626,9 +641,9 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
 
                   //background
                   
-                  Padding(padding: EdgeInsetsGeometry.all(10), child: //outer padding 
+                  Padding(padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)), child: //outer padding 
                     Container(
-                      padding: EdgeInsetsGeometry.all(10), //inner padding 
+                      padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)), //inner padding 
                       decoration: BoxDecoration(
                         color: Cv4rs.themeColor4,
                         borderRadius: BorderRadius.circular(10)
@@ -644,7 +659,12 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                               children: [
                               Expanded(child: 
                                 Padding(
-                                  padding: EdgeInsetsGeometry.fromLTRB(5, 10, 5, 10), 
+                                  padding: EdgeInsetsGeometry.fromLTRB(
+                                    V4rs.paddingValue(5), 
+                                    V4rs.paddingValue(10), 
+                                    V4rs.paddingValue(5), 
+                                    V4rs.paddingValue(10)
+                                  ), 
                                     child: Text(
                                       'Match Color:', 
                                       maxLines: 3,
@@ -655,7 +675,7 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                                   ),
                               ),
                               Padding(
-                                padding: EdgeInsetsGeometry.fromLTRB(0, 0, 10, 0), 
+                                padding: EdgeInsetsGeometry.fromLTRB(0, 0, V4rs.paddingValue(10), 0), 
                                 child: Switch(
                                   padding: EdgeInsets.all(0),
                                   value: Ev4rs.matchBackground.value,
@@ -697,7 +717,10 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                             Column(children:[
                             //hexcode input
                             Padding(
-                              padding: EdgeInsetsGeometry.symmetric(horizontal: 10, vertical: 20),
+                              padding: EdgeInsetsGeometry.symmetric(
+                                horizontal: V4rs.paddingValue(10), 
+                                vertical: V4rs.paddingValue(20)
+                              ),
                               child: HexCodeInput2(
                                 startValue: Ev4rs.backgroundColor.value.toHexString(),
                                 textStyle: Sv4rs.settingslabelStyle,
@@ -776,7 +799,7 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                  
                  //type 
                   Padding(
-                    padding: EdgeInsetsGeometry.all(10),
+                    padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)),
                     child: 
                       Container(
                         decoration: BoxDecoration(
@@ -789,13 +812,13 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                             return
                           Column(children: [
                             Padding (
-                              padding: EdgeInsetsGeometry.fromLTRB(0,15,0,0),
+                              padding: EdgeInsetsGeometry.fromLTRB(0,V4rs.paddingValue(15),0,0),
                               child: Text(
                                 'Type:', 
                                 style: Sv4rs.settingslabelStyle,
                                 ),
                             ),
-                            Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 10), child: 
+                            Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: V4rs.paddingValue(10)), child: 
                             DropdownButton<String>(
                               isExpanded: true,
                                 hint: Text(
@@ -853,7 +876,7 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                  //function
                  if (Ev4rs.grammerType.value == 'button' || Ev4rs.grammerType.value == 'placeholder')
                   Padding(
-                    padding: EdgeInsetsGeometry.all(10),
+                    padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)),
                     child: 
                       Container(
                         decoration: BoxDecoration(
@@ -866,13 +889,13 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                             return
                           Column(children: [
                             Padding (
-                              padding: EdgeInsetsGeometry.fromLTRB(0,15,0,0),
+                              padding: EdgeInsetsGeometry.fromLTRB(0,V4rs.paddingValue(15),0,0),
                               child: Text(
                                 'Grammer Function:', 
                                 style: Sv4rs.settingslabelStyle,
                                 ),
                             ),
-                          Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 10), child:
+                          Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: V4rs.paddingValue(10)), child:
                             DropdownButton<String>(
                                 isExpanded: true,
                                 hint: Text(
@@ -916,7 +939,7 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                  //link
                  if (Ev4rs.grammerType.value == 'folder')
                  Padding(
-                    padding: EdgeInsetsGeometry.all(10),
+                    padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)),
                     child: 
                       Container(
                         decoration: BoxDecoration(
@@ -929,13 +952,13 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                             return
                           Column(children: [
                             Padding (
-                              padding: EdgeInsetsGeometry.fromLTRB(0,15,0,0),
+                              padding: EdgeInsetsGeometry.fromLTRB(0,V4rs.paddingValue(15),0,0),
                               child: Text(
                                 'Link To...', 
                                 style: Sv4rs.settingslabelStyle,
                                 ),
                             ),
-                            Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 10), child: 
+                            Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: V4rs.paddingValue(10)), child: 
                             DropdownButton<String>(
                               isExpanded: true,
                                 hint: Text(
@@ -981,7 +1004,7 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                     ),
 
                   //notes
-                  Padding(padding: EdgeInsetsGeometry.all(10),
+                  Padding(padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)),
                   child:
                     Container(
                       decoration: BoxDecoration(
@@ -991,7 +1014,10 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                       child: Column(children: [
                         Row(children: [ 
                           Expanded(flex: 5, child: 
-                            Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 10, vertical: 10), child: 
+                            Padding(padding: EdgeInsetsGeometry.symmetric(
+                                horizontal: V4rs.paddingValue(10), 
+                                vertical: V4rs.paddingValue(10)
+                              ), child: 
                               ValueListenableBuilder(valueListenable: Ev4rs.notes, builder: (context, value, _) {
                           final notesController = TextEditingController(text: value)
                           ..selection = TextSelection.collapsed(offset: value.length);
@@ -1014,7 +1040,7 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                             ),
                           ),
                           Flexible(flex: 2, child: 
-                          Padding(padding: EdgeInsetsGeometry.symmetric(vertical: 5), child: 
+                          Padding(padding: EdgeInsetsGeometry.symmetric(vertical: V4rs.paddingValue(5)), child: 
                           ButtonStyle4(
                           imagePath: 'assets/interface_icons/interface_icons/iCheck.png', 
                             onPressed: (){setState(() {
@@ -1042,7 +1068,12 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
               Expanded(flex: 2, child: 
                 Column( children:[
                   //undo
-                  Padding(padding: EdgeInsetsGeometry.fromLTRB(3, 7, 3, 0),
+                  Padding(padding: EdgeInsetsGeometry.fromLTRB(
+                    V4rs.paddingValue(3), 
+                    V4rs.paddingValue(7), 
+                    V4rs.paddingValue(3), 
+                    0
+                  ),
               child:
                   SizedBox( 
                 height: (isLandscape) ? MediaQuery.of(context).size.height * 0.06 : MediaQuery.of(context).size.height * 0.04 ,
@@ -1063,7 +1094,12 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                   ),
 
                   //share
-                  Padding(padding: EdgeInsetsGeometry.fromLTRB(3, 7, 3, 0),
+                  Padding(padding: EdgeInsetsGeometry.fromLTRB(
+                    V4rs.paddingValue(3), 
+                    V4rs.paddingValue(7), 
+                    V4rs.paddingValue(3), 
+                    0
+                  ),
               child:
                   SizedBox( 
                 height: (isLandscape) ? MediaQuery.of(context).size.height * 0.06 : MediaQuery.of(context).size.height * 0.04 ,
@@ -1088,7 +1124,12 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
               Expanded(flex: 2, child: 
                 Column( children:[
                   //redo
-                  Padding(padding: EdgeInsetsGeometry.fromLTRB(3, 7, 3, 0),
+                  Padding(padding: EdgeInsetsGeometry.fromLTRB(
+                    V4rs.paddingValue(3), 
+                    V4rs.paddingValue(7), 
+                    V4rs.paddingValue(3), 
+                    0
+                  ),
               child:
                   SizedBox( 
                 height: (isLandscape) ? MediaQuery.of(context).size.height * 0.06 : MediaQuery.of(context).size.height * 0.04,
@@ -1108,7 +1149,12 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                   ),
                   ),
                   //print
-                  Padding(padding: EdgeInsetsGeometry.fromLTRB(3, 7, 3, 0),
+                  Padding(padding: EdgeInsetsGeometry.fromLTRB(
+                    V4rs.paddingValue(3), 
+                    V4rs.paddingValue(7), 
+                    V4rs.paddingValue(3), 
+                    0
+                  ),
               child:
                   SizedBox( 
                 height: (isLandscape) ? MediaQuery.of(context).size.height * 0.06 : MediaQuery.of(context).size.height * 0.04,
@@ -1131,7 +1177,12 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
               //
               Column( children:[
                 Padding(
-                  padding: EdgeInsetsGeometry.fromLTRB(7, 7, 7, 0),
+                  padding: EdgeInsetsGeometry.fromLTRB(
+                    V4rs.paddingValue(7), 
+                    V4rs.paddingValue(7), 
+                    V4rs.paddingValue(7), 
+                    0
+                  ),
                   child: SizedBox( 
                     height: (isLandscape) ? MediaQuery.of(context).size.height * 0.07 : MediaQuery.of(context).size.height * 0.04,
                     child: (Ev4rs.isButtonExpanded.value) 
@@ -1154,11 +1205,16 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsetsGeometry.fromLTRB(7, 0, 7, 7),
+                  padding: EdgeInsetsGeometry.fromLTRB(
+                    V4rs.paddingValue(7), 
+                    0, 
+                    V4rs.paddingValue(7), 
+                    V4rs.paddingValue(7)
+                  ),
                   child: SizedBox( 
                     height: (isLandscape) ? MediaQuery.of(context).size.height * 0.08 : MediaQuery.of(context).size.height * 0.04 ,
                     child: Padding(
-                      padding: EdgeInsetsGeometry.all(10), child: 
+                      padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)), child: 
                        ButtonStyle1(
                           glow: (Ev4rs.boardEditor.value) ? true : false,
                           imagePath: 'assets/interface_icons/interface_icons/iBoard.png', 
@@ -1181,7 +1237,7 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
           child: ValueListenableBuilder<bool>(valueListenable: Ev4rs.showSelectionMenu, builder: (context, showSelectionMenu, _) {
           return SizedBox( 
             height: (isLandscape) ? MediaQuery.of(context).size.height * 0.09 : MediaQuery.of(context).size.height * 0.04,
-            child:  Padding(padding: EdgeInsetsGeometry.all(7), child:
+            child:  Padding(padding: EdgeInsetsGeometry.all(V4rs.paddingValue(7)), child:
           Row(
             children: [
               //tap
@@ -1330,7 +1386,7 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
               //
               //back, in positioned is the tap expander
               //
-              Padding(padding: EdgeInsetsGeometry.all(7),
+              Padding(padding: EdgeInsetsGeometry.all(V4rs.paddingValue(7)),
               child: SizedBox( 
                 height: (isLandscape) ? MediaQuery.of(context).size.height * 0.065 : MediaQuery.of(context).size.height * 0.03 ,
                 child: ButtonStyle1(
@@ -1360,7 +1416,7 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                   //image
                   //
                   Padding(
-                    padding: EdgeInsetsGeometry.all(10),
+                    padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)),
                     child: 
                           Container(
                             width: MediaQuery.of(context).size.height * 0.25,
@@ -1371,7 +1427,7 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
-                                Expanded(child: Padding(padding: EdgeInsetsGeometry.all(Ev4rs.padding.value), 
+                                Expanded(child: Padding(padding: EdgeInsetsGeometry.all(V4rs.paddingValue(Ev4rs.padding.value)), 
                                   child: (!Ev4rs.compareGrammerObjFields(root.grammerRow, (b) => b.symbol)) ?
                                   Column(children: [
                                     Text('--Not All Match--', style: Sv4rs.settingslabelStyle),
@@ -1431,7 +1487,7 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                                   Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 10), child:
+                                      Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: V4rs.paddingValue(10)), child:
                                         SizedBox( 
                                           width: MediaQuery.of(context).size.height * 0.08,
                                           child: ButtonStyle3(
@@ -1451,7 +1507,7 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                                     maintainSize: true,
                                     maintainAnimation: true,
                                     maintainState: true,
-                                    child: Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 10), child:
+                                    child: Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: V4rs.paddingValue(10)), child:
                                     SizedBox( 
                                       width: MediaQuery.of(context).size.height * 0.07,
                                       child: ButtonStyle3(
@@ -1477,7 +1533,7 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                   //
                   //padding
                   //
-                  Padding(padding: EdgeInsetsGeometry.all(10),
+                  Padding(padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)),
                   child:
                   SizedBox( 
                     width: MediaQuery.of(context).size.height * 0.25,
@@ -1491,13 +1547,13 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Padding(padding: EdgeInsets.all(10), child: 
+                        Padding(padding: EdgeInsets.all(V4rs.paddingValue(10)), child: 
                         Column(children: [
                           (Ev4rs.compareGrammerObjFields(root.grammerRow, (b) => b.padding)) 
                         ? Text('Image Padding: ${Ev4rs.padding.value}', style: Sv4rs.settingslabelStyle,)
                         : Text('Image Padding: --Not All Match--', style: Sv4rs.settingslabelStyle,),
                         Slider(
-                              padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+                              padding: EdgeInsets.fromLTRB(V4rs.paddingValue(10), V4rs.paddingValue(10), V4rs.paddingValue(10), 0),
                               value: Ev4rs.padding.value,
                               min: 0.0,
                               max: 10.0,
@@ -1529,7 +1585,7 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                   //
                   //symbolColors
                   //
-                  Padding(padding: EdgeInsetsGeometry.all(10),
+                  Padding(padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)),
                   child:
                   SizedBox(
                     child:
@@ -1633,7 +1689,7 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
               Expanded(flex: 7, child: 
                 Column( children:[
                   //label
-                  Padding(padding: EdgeInsetsGeometry.all(10),
+                  Padding(padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)),
                   child:
                     Container(
                       decoration: BoxDecoration(
@@ -1643,7 +1699,7 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                       child: Column(children: [
                         Row(children: [ 
                           Expanded(flex: 5, child: 
-                            Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 10, vertical: 0), child: 
+                            Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: V4rs.paddingValue(10), vertical: 0), child: 
                               ValueListenableBuilder(valueListenable: Ev4rs.notes, builder: (context, value, _) {
                           final labelController = TextEditingController(text: value)
                           ..selection = TextSelection.collapsed(offset: value.length);
@@ -1664,7 +1720,7 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                             ),
                           ),
                           Flexible(flex: 2, child: 
-                          Padding(padding: EdgeInsetsGeometry.symmetric(vertical: 5), child: 
+                          Padding(padding: EdgeInsetsGeometry.symmetric(vertical: V4rs.paddingValue(5)), child: 
                           ButtonStyle4(
                           imagePath: 'assets/interface_icons/interface_icons/iCheck.png', 
                             onPressed: (){setState(() {
@@ -1684,7 +1740,7 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                       
                     ))),
                   //match speak on select, speak on select
-                  Padding(padding: EdgeInsetsGeometry.all(10),
+                  Padding(padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)),
                     child: Container(
                       decoration: BoxDecoration(
                         color: Cv4rs.themeColor4,
@@ -1697,7 +1753,12 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                             return Row(children: [
                               Expanded(child: 
                               Padding(
-                                padding: EdgeInsetsGeometry.fromLTRB(10, 10, 10, 0), 
+                                padding: EdgeInsetsGeometry.fromLTRB(
+                                  V4rs.paddingValue(10), 
+                                  V4rs.paddingValue(10), 
+                                  V4rs.paddingValue(10), 
+                                  0
+                                ), 
                                 child: Text( (Ev4rs.compareGrammerObjFields(root.grammerRow, (b) => b.matchSpeakOS)) ?
                                   'Match Speak on Select:' : 'Match Speak on Select: --Not All Match--', 
                                   maxLines: 3,
@@ -1708,7 +1769,7 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                                 ),
                               ),
                               Padding(
-                                padding: EdgeInsetsGeometry.fromLTRB(0, 0, 10, 0), 
+                                padding: EdgeInsetsGeometry.fromLTRB(0, 0, V4rs.paddingValue(10), 0), 
                                 child: Switch(
                                   padding: EdgeInsets.all(0),
                                   value: Ev4rs.matchSpeakOnSelect.value, 
@@ -1725,12 +1786,12 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                           valueListenable: Ev4rs.speakOnSelect, 
                           builder: (context, speakOnSelect, _) {
                             return Padding(
-                              padding: EdgeInsetsGeometry.all(10), 
+                              padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)), 
                               child: Column(children: [
                                 if (!Ev4rs.compareGrammerObjFields(root.grammerRow, (b) => b.matchSpeakOS)) 
                                   Text('Speak on Select: --Not All Match--', style: Sv4rs.settingslabelStyle),
                                 Slider(
-                                  padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
+                                  padding: EdgeInsets.fromLTRB(V4rs.paddingValue(5), 0, V4rs.paddingValue(5), 0),
                                   min: 1.0,
                                   max: 3.0,
                                   divisions: 2,
@@ -1747,7 +1808,7 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                                     }
                                   ),
                                 Padding(
-                                  padding: EdgeInsetsGeometry.fromLTRB(0, 0, 0, 10), 
+                                  padding: EdgeInsetsGeometry.fromLTRB(0, 0, 0, V4rs.paddingValue(10)), 
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                     children: [
@@ -1800,7 +1861,7 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                   ),
                   //font, match font settings, font picker
                   Padding(
-                      padding: EdgeInsetsGeometry.all(10), 
+                      padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)), 
                       child: FontPicker2(
                         widgety:  ButtonStyle2(
                           imagePath: 'assets/interface_icons/interface_icons/iCheck.png', 
@@ -1878,9 +1939,9 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                   //
 
                   Padding(
-                    padding: EdgeInsetsGeometry.all(10), 
+                    padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)), 
                     child: Container(
-                      padding: EdgeInsetsGeometry.all(10),
+                      padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)),
                       decoration: BoxDecoration(
                         color: Cv4rs.themeColor4,
                         borderRadius: BorderRadius.circular(10)
@@ -1892,7 +1953,7 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                             return Row(children: [
                               Expanded(child: 
                                 Padding(
-                                  padding: EdgeInsetsGeometry.fromLTRB(0, 10, 0, 0), 
+                                  padding: EdgeInsetsGeometry.fromLTRB(0, V4rs.paddingValue(10), 0, 0), 
                                     child: Text(
                                       (Ev4rs.compareGrammerObjFields(root.grammerRow, (b) => b.matchFormat)) 
                                         ? 'Match Format:'
@@ -1922,7 +1983,12 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                           valueListenable: Ev4rs.format, 
                           builder: (context, format, _) {
                             return Padding(
-                              padding: EdgeInsetsGeometry.fromLTRB(5, 15, 5, 10), 
+                              padding: EdgeInsetsGeometry.fromLTRB(
+                                V4rs.paddingValue(5), 
+                                V4rs.paddingValue(15), 
+                                V4rs.paddingValue(5), 
+                                V4rs.paddingValue(10)
+                              ), 
                               child: Column(children: [
                                       Text(
                                         "Format: ${ Ev4rs.compareGrammerObjFields(root.grammerRow, (b) => b.format) 
@@ -1943,7 +2009,7 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                                         textAlign: TextAlign.center,
                                       ),
                                 Slider(
-                                  padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
+                                  padding: EdgeInsets.fromLTRB(0, V4rs.paddingValue(5), 0, 0),
                                   min: 1.0,
                                   max: 4.0,
                                   divisions: 3,
@@ -1981,9 +2047,9 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                   //background
                   //
                   
-                  Padding(padding: EdgeInsetsGeometry.all(10), child: //outer padding 
+                  Padding(padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)), child: //outer padding 
                     Container(
-                      padding: EdgeInsetsGeometry.all(10), //inner padding 
+                      padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)), //inner padding 
                       decoration: BoxDecoration(
                         color: Cv4rs.themeColor4,
                         borderRadius: BorderRadius.circular(10)
@@ -2021,7 +2087,10 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                             Column(children:[
                             //hexcode input
                             Padding(
-                              padding: EdgeInsetsGeometry.symmetric(horizontal: 10, vertical: 20),
+                              padding: EdgeInsetsGeometry.symmetric(
+                                horizontal: V4rs.paddingValue(10), 
+                                vertical: V4rs.paddingValue(20)
+                              ),
                               child: HexCodeInput2(
                                 startValue: Ev4rs.backgroundColor.value.toHexString(),
                                 textStyle: Sv4rs.settingslabelStyle,
@@ -2099,7 +2168,7 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
 
                   //type 
                   Padding(
-                    padding: EdgeInsetsGeometry.all(10),
+                    padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)),
                     child: 
                       Container(
                         decoration: BoxDecoration(
@@ -2112,14 +2181,14 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                             return
                           Column(children: [
                             Padding (
-                              padding: EdgeInsetsGeometry.fromLTRB(0,15,0,0),
+                              padding: EdgeInsetsGeometry.fromLTRB(0,V4rs.paddingValue(15),0,0),
                               child: Text((Ev4rs.compareGrammerObjFields(root.grammerRow, (b) => b.type)) 
                                   ? 'Type: '
                                   : 'Type: --Not All Match--', 
                                 style: Sv4rs.settingslabelStyle,
                                 ),
                             ),
-                            Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 10), child: 
+                            Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: V4rs.paddingValue(10)), child: 
                             DropdownButton<String>(
                               isExpanded: true,
                                 hint: Text((Ev4rs.compareGrammerObjFields(root.grammerRow, (b) => b.type)) 
@@ -2178,7 +2247,7 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                   //function
                   if (Ev4rs.grammerType.value == 'button' || Ev4rs.grammerType.value == 'placeholder')
                    Padding(
-                    padding: EdgeInsetsGeometry.all(10),
+                    padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)),
                     child: 
                       Container(
                         decoration: BoxDecoration(
@@ -2191,7 +2260,7 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                             return
                           Column(children: [
                             Padding (
-                              padding: EdgeInsetsGeometry.fromLTRB(0,15,0,0),
+                              padding: EdgeInsetsGeometry.fromLTRB(0,V4rs.paddingValue(15),0,0),
                               child: Text(
                                 (Ev4rs.compareGrammerObjFields(root.grammerRow, (b) => b.function)) 
                                   ? 'Grammer Function:'
@@ -2199,7 +2268,7 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                                 style: Sv4rs.settingslabelStyle,
                                 ),
                             ),
-                          Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 10), child:
+                          Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: V4rs.paddingValue(10)), child:
                             DropdownButton<String>(
                                 isExpanded: true,
                                 hint: Text(
@@ -2243,7 +2312,7 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
 
                   if (Ev4rs.grammerType.value == 'folder')
                   Padding(
-                    padding: EdgeInsetsGeometry.all(10),
+                    padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)),
                     child: 
                       Container(
                         decoration: BoxDecoration(
@@ -2256,7 +2325,7 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                             return
                           Column(children: [
                             Padding (
-                              padding: EdgeInsetsGeometry.fromLTRB(0,15,0,0),
+                              padding: EdgeInsetsGeometry.fromLTRB(0,V4rs.paddingValue(15),0,0),
                               child:  Text(
                                 (Ev4rs.compareGrammerObjFields(root.grammerRow, (b) => b.openUUID)) 
                                   ? 'Link To...'
@@ -2311,7 +2380,7 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                     ),
 
                   //notes
-                  Padding(padding: EdgeInsetsGeometry.all(10),
+                  Padding(padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)),
                   child:
                     Container(
                       decoration: BoxDecoration(
@@ -2321,7 +2390,12 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                       child: Column(children: [
                         Row(children: [ 
                           Expanded(flex: 5, child: 
-                            Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 10, vertical: 10), child: 
+                            Padding(
+                              padding: EdgeInsetsGeometry.symmetric(
+                                horizontal: V4rs.paddingValue(10), 
+                                vertical: V4rs.paddingValue(10)
+                              ), 
+                              child: 
                               ValueListenableBuilder(valueListenable: Ev4rs.notes, builder: (context, value, _) {
                           final notesController = TextEditingController(text: value)
                           ..selection = TextSelection.collapsed(offset: value.length);
@@ -2346,7 +2420,7 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                             ),
                           ),
                           Flexible(flex: 2, child: 
-                          Padding(padding: EdgeInsetsGeometry.symmetric(vertical: 5), child: 
+                          Padding(padding: EdgeInsetsGeometry.symmetric(vertical: V4rs.paddingValue(5)), child: 
                           ButtonStyle4(
                           imagePath: 'assets/interface_icons/interface_icons/iCheck.png', 
                             onPressed: (){setState(() {
@@ -2374,7 +2448,12 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
               Expanded(flex: 2, child: 
                 Column( children:[
                   //undo
-                  Padding(padding: EdgeInsetsGeometry.fromLTRB(3, 7, 3, 0),
+                  Padding(padding: EdgeInsetsGeometry.fromLTRB(
+                    V4rs.paddingValue(3), 
+                    V4rs.paddingValue(7), 
+                    V4rs.paddingValue(3), 
+                    0
+                  ),
               child:
                   SizedBox( 
                 height: (isLandscape) ? MediaQuery.of(context).size.height * 0.06 : MediaQuery.of(context).size.height * 0.04 ,
@@ -2395,7 +2474,12 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                   ),
 
                   //share
-                  Padding(padding: EdgeInsetsGeometry.fromLTRB(3, 7, 3, 0),
+                  Padding(padding: EdgeInsetsGeometry.fromLTRB(
+                    V4rs.paddingValue(3), 
+                    V4rs.paddingValue(7), 
+                    V4rs.paddingValue(3), 
+                    0
+                  ),
               child:
                   SizedBox( 
                 height: (isLandscape) ? MediaQuery.of(context).size.height * 0.06 : MediaQuery.of(context).size.height * 0.04 ,
@@ -2419,7 +2503,12 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
               Expanded(flex: 2, child: 
                 Column( children:[
                   //redo
-                  Padding(padding: EdgeInsetsGeometry.fromLTRB(3, 7, 3, 0),
+                  Padding(padding: EdgeInsetsGeometry.fromLTRB(
+                    V4rs.paddingValue(3), 
+                    V4rs.paddingValue(7), 
+                    V4rs.paddingValue(3), 
+                    0
+                  ),
               child:
                   SizedBox( 
                 height: (isLandscape) ? MediaQuery.of(context).size.height * 0.06 : MediaQuery.of(context).size.height * 0.04 ,
@@ -2439,7 +2528,12 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                   ),
                   ),
                   //print
-                  Padding(padding: EdgeInsetsGeometry.fromLTRB(3, 7, 3, 0),
+                  Padding(padding: EdgeInsetsGeometry.fromLTRB(
+                    V4rs.paddingValue(3), 
+                    V4rs.paddingValue(7), 
+                    V4rs.paddingValue(3), 
+                    0
+                  ),
               child:
                   SizedBox( 
                 height: (isLandscape) ? MediaQuery.of(context).size.height * 0.06 : MediaQuery.of(context).size.height * 0.04 ,
@@ -2462,7 +2556,12 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
               //
               Column( children:[
                 Padding(
-                  padding: EdgeInsetsGeometry.fromLTRB(7, 7, 7, 0),
+                  padding: EdgeInsetsGeometry.fromLTRB(
+                    V4rs.paddingValue(7), 
+                    V4rs.paddingValue(7), 
+                    V4rs.paddingValue(7), 
+                    0
+                  ),
                   child: SizedBox( 
                     height: (isLandscape) ? MediaQuery.of(context).size.height * 0.07 : MediaQuery.of(context).size.height * 0.04,
                     child: (Ev4rs.isButtonExpanded.value) 
@@ -2485,11 +2584,16 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsetsGeometry.fromLTRB(7, 0, 7, 7),
+                  padding: EdgeInsetsGeometry.fromLTRB(
+                    V4rs.paddingValue(7), 
+                    0, 
+                    V4rs.paddingValue(7), 
+                    V4rs.paddingValue(7)
+                  ),
                   child: SizedBox( 
                     height: (isLandscape) ? MediaQuery.of(context).size.height * 0.08 : MediaQuery.of(context).size.height * 0.04 ,
                     child: Padding(
-                      padding: EdgeInsetsGeometry.all(10), child: 
+                      padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)), child: 
                        ButtonStyle1(
                           glow: (Ev4rs.boardEditor.value) ? true : false,
                           imagePath: 'assets/interface_icons/interface_icons/iBoard.png', 
@@ -2511,7 +2615,7 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
           child: ValueListenableBuilder<bool>(valueListenable: Ev4rs.showSelectionMenu, builder: (context, showSelectionMenu, _) {
           return SizedBox( 
             height: (isLandscape) ? MediaQuery.of(context).size.height * 0.09 : MediaQuery.of(context).size.height * 0.04,
-            child:  Padding(padding: EdgeInsetsGeometry.all(7), child:
+            child:  Padding(padding: EdgeInsetsGeometry.all(V4rs.paddingValue(7)), child:
           Row(
             children: [
               //tap
@@ -2666,7 +2770,7 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
               //
               //back, in positioned is the tap expander
               //
-              Padding(padding: EdgeInsetsGeometry.all(7),
+              Padding(padding: EdgeInsetsGeometry.all(V4rs.paddingValue(7)),
               child: SizedBox( 
                 height: (isLandscape) ? MediaQuery.of(context).size.height * 0.065 : MediaQuery.of(context).size.height * 0.03 ,
                 child: ButtonStyle1(
@@ -2696,7 +2800,7 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                   //image
                   //
                   Padding(
-                    padding: EdgeInsetsGeometry.all(10),
+                    padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)),
                     child: 
                           Container(
                             width: MediaQuery.of(context).size.height * 0.25,
@@ -2707,7 +2811,8 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
-                                Expanded(child: Padding(padding: EdgeInsetsGeometry.all(Ev4rs.padding.value), 
+                                Expanded(child: Padding(
+                                  padding: EdgeInsetsGeometry.all(V4rs.paddingValue(Ev4rs.padding.value)), 
                                   child: ImageStyle1(
                                       image: image, 
                                       symbolSaturation: Ev4rs.saturation.value, 
@@ -2729,7 +2834,7 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                                   Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 10), child:
+                                      Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: V4rs.paddingValue(10)), child:
                                         SizedBox( 
                                           width: MediaQuery.of(context).size.height * 0.08,
                                           child: ButtonStyle3(
@@ -2749,7 +2854,7 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                                     maintainSize: true,
                                     maintainAnimation: true,
                                     maintainState: true,
-                                    child: Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 10), child:
+                                    child: Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: V4rs.paddingValue(10)), child:
                                     SizedBox( 
                                       width: MediaQuery.of(context).size.height * 0.07,
                                       child: ButtonStyle3(
@@ -2775,7 +2880,7 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                   //
                   //padding
                   //
-                  Padding(padding: EdgeInsetsGeometry.all(10),
+                  Padding(padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)),
                   child:
                   SizedBox( 
                     width: MediaQuery.of(context).size.height * 0.25,
@@ -2789,11 +2894,16 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Padding(padding: EdgeInsets.all(10), child: 
+                        Padding(padding: EdgeInsets.all(V4rs.paddingValue(10)), child: 
                         Column(children: [
                         Text('Image Padding: ${Ev4rs.padding.value}', style: Sv4rs.settingslabelStyle,),
                         Slider(
-                              padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+                              padding: EdgeInsets.fromLTRB(
+                                V4rs.paddingValue(10), 
+                                V4rs.paddingValue(10), 
+                                V4rs.paddingValue(10), 
+                                0
+                              ),
                               value: Ev4rs.padding.value,
                               min: 0.0,
                               max: 10.0,
@@ -2825,7 +2935,7 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                   //
                   //symbolColors
                   //
-                  Padding(padding: EdgeInsetsGeometry.all(10),
+                  Padding(padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)),
                   child:
                   SizedBox(
                     child:
@@ -2901,7 +3011,7 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                 Column( children:[
                   //label and message
                   Padding(
-                    padding: EdgeInsetsGeometry.all(10),
+                    padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)),
                     child: Container(
                       decoration: BoxDecoration(
                         color: Cv4rs.themeColor4,
@@ -2911,7 +3021,7 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                         //label
                         Row(children: [ 
                           Expanded(flex: 5, child: 
-                            Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 10, vertical: 0), child: 
+                            Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: V4rs.paddingValue(10), vertical: 0), child: 
                                  ValueListenableBuilder(valueListenable: Ev4rs.notes, builder: (context, value, _) {
                           final labelController = TextEditingController(text: value)
                           ..selection = TextSelection.collapsed(offset: value.length);
@@ -2932,7 +3042,7 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                             ),
                           ),
                           Flexible(flex: 2, child: 
-                          Padding(padding: EdgeInsetsGeometry.symmetric(vertical: 5), child: 
+                          Padding(padding: EdgeInsetsGeometry.symmetric(vertical: V4rs.paddingValue(5)), child: 
                           ButtonStyle4(
                           imagePath: 'assets/interface_icons/interface_icons/iCheck.png', 
                             onPressed: (){setState(() {
@@ -2951,7 +3061,7 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                           Expanded(
                             flex: 5,
                             child: 
-                            Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 10, vertical: 0), child: 
+                            Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: V4rs.paddingValue(10), vertical: 0), child: 
                               ValueListenableBuilder(valueListenable: Ev4rs.notes, builder: (context, value, _) {
                           final alternateController = TextEditingController(text: value)
                           ..selection = TextSelection.collapsed(offset: value.length);
@@ -2974,7 +3084,7 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                         Flexible(
                           flex: 2,
                           child: 
-                          Padding(padding: EdgeInsetsGeometry.symmetric(vertical: 5), child: 
+                          Padding(padding: EdgeInsetsGeometry.symmetric(vertical: V4rs.paddingValue(5)), child: 
                         ButtonStyle4(
                         imagePath: 'assets/interface_icons/interface_icons/iCheck.png', 
                           onPressed: (){setState(() {
@@ -2994,7 +3104,7 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                     ),
                   
                   //match speak on select, speak on select
-                  Padding(padding: EdgeInsetsGeometry.all(10),
+                  Padding(padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)),
                     child: Container(
                       decoration: BoxDecoration(
                         color: Cv4rs.themeColor4,
@@ -3007,7 +3117,9 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                             return Row(children: [
                               Expanded(child: 
                               Padding(
-                                padding: EdgeInsetsGeometry.fromLTRB(10, 10, 10, 0), 
+                                padding: EdgeInsetsGeometry.fromLTRB(
+                                  V4rs.paddingValue(10), 
+                                  V4rs.paddingValue(10), V4rs.paddingValue(10), 0), 
                                 child: Text(
                                   'Match Speak on Select:', 
                                   maxLines: 2,
@@ -3018,7 +3130,7 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                                 ),
                               ),
                               Padding(
-                                padding: EdgeInsetsGeometry.fromLTRB(0, 0, 10, 0), 
+                                padding: EdgeInsetsGeometry.fromLTRB(0, 0, V4rs.paddingValue(10), 0), 
                                 child: Switch(
                                   padding: EdgeInsets.all(0),
                                   value: Ev4rs.matchSpeakOnSelect.value, 
@@ -3035,10 +3147,10 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                           valueListenable: Ev4rs.speakOnSelect, 
                           builder: (context, speakOnSelect, _) {
                             return Padding(
-                              padding: EdgeInsetsGeometry.all(10), 
+                              padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)), 
                               child: Column(children: [
                                 Slider(
-                                  padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
+                                  padding: EdgeInsets.fromLTRB(V4rs.paddingValue(5), 0, V4rs.paddingValue(5), 0),
                                   min: 1.0,
                                   max: 3.0,
                                   divisions: 2,
@@ -3052,7 +3164,7 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                                     }
                                   ),
                                 Padding(
-                                  padding: EdgeInsetsGeometry.fromLTRB(0, 0, 0, 10), 
+                                  padding: EdgeInsetsGeometry.fromLTRB(0, 0, 0, V4rs.paddingValue(10)), 
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                     children: [
@@ -3105,7 +3217,7 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                   ),
                   //font, match font settings, font picker
                   Padding(
-                      padding: EdgeInsetsGeometry.all(10), 
+                      padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)), 
                       child: FontPicker2(
                         widgety:  ButtonStyle2(
                           imagePath: 'assets/interface_icons/interface_icons/iCheck.png', 
@@ -3173,9 +3285,9 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                   //
 
                   Padding(
-                    padding: EdgeInsetsGeometry.all(10), 
+                    padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)), 
                     child: Container( 
-                      padding: EdgeInsetsGeometry.all(10),
+                      padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)),
                       decoration: BoxDecoration(
                         color: Cv4rs.themeColor4,
                         borderRadius: BorderRadius.circular(10)
@@ -3195,7 +3307,7 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                                 ),
                               ),
                               Padding(
-                                padding: EdgeInsetsGeometry.fromLTRB(0, 0, 10, 0), 
+                                padding: EdgeInsetsGeometry.fromLTRB(0, 0, V4rs.paddingValue(10), 0), 
                                 child: Switch(
                                   padding: EdgeInsets.all(0),
                                   value: Ev4rs.show.value, 
@@ -3227,9 +3339,9 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                   //
 
                   Padding(
-                    padding: EdgeInsetsGeometry.all(10), 
+                    padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)), 
                     child: Container(
-                      padding: EdgeInsetsGeometry.all(10),
+                      padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)),
                       decoration: BoxDecoration(
                         color: Cv4rs.themeColor4,
                         borderRadius: BorderRadius.circular(10)
@@ -3241,7 +3353,12 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                             return Row(children: [
                               Expanded(child: 
                                 Padding(
-                                  padding: EdgeInsetsGeometry.fromLTRB(5, 10, 5, 0), 
+                                  padding: EdgeInsetsGeometry.fromLTRB(
+                                    V4rs.paddingValue(5), 
+                                    V4rs.paddingValue(10), 
+                                    V4rs.paddingValue(5), 
+                                    0
+                                  ),
                                     child: Text(
                                       'Match Format:', 
                                       maxLines: 2,
@@ -3252,7 +3369,7 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                                   ),
                               ),
                               Padding(
-                                padding: EdgeInsetsGeometry.fromLTRB(0, 0, 10, 0), 
+                                padding: EdgeInsetsGeometry.fromLTRB(0, 0, V4rs.paddingValue(10), 0), 
                                 child: Switch(
                                   padding: EdgeInsets.all(0),
                                   value: Ev4rs.matchFormat.value, 
@@ -3269,7 +3386,12 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                           valueListenable: Ev4rs.format, 
                           builder: (context, format, _) {
                             return Padding(
-                              padding: EdgeInsetsGeometry.fromLTRB(5, 15, 5, 10), 
+                              padding: EdgeInsetsGeometry.fromLTRB(
+                                V4rs.paddingValue(5), 
+                                V4rs.paddingValue(15), 
+                                V4rs.paddingValue(5), 
+                                V4rs.paddingValue(10)
+                              ), 
                               child: Column(children: [
                                       Text(
                                         "Format: ${
@@ -3289,7 +3411,7 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                                         textAlign: TextAlign.center,
                                       ),
                                 Slider(
-                                  padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
+                                  padding: EdgeInsets.fromLTRB(0, V4rs.paddingValue(5), 0, 0),
                                   min: 1.0,
                                   max: 4.0,
                                   divisions: 3,
@@ -3325,9 +3447,9 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                   //border
                   //
 
-                  Padding(padding: EdgeInsetsGeometry.all(10), child: //outer padding 
+                  Padding(padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)), child: //outer padding 
                     Container(
-                      padding: EdgeInsetsGeometry.all(10), //inner padding 
+                      padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)), //inner padding 
                       decoration: BoxDecoration(
                         color: Cv4rs.themeColor4,
                         borderRadius: BorderRadius.circular(10)
@@ -3343,7 +3465,10 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                               children: [
                               Expanded(child: 
                                 Padding(
-                                  padding: EdgeInsetsGeometry.fromLTRB(5, 10, 5, 20), 
+                                  padding: EdgeInsetsGeometry.fromLTRB(
+                                    V4rs.paddingValue(5), V4rs.paddingValue(10), 
+                                    V4rs.paddingValue(5), 
+                                    V4rs.paddingValue(20)), 
                                     child: Text(
                                       'Match Border:', 
                                       maxLines: 2,
@@ -3354,7 +3479,7 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                                   ),
                               ),
                               Padding(
-                                padding: EdgeInsetsGeometry.fromLTRB(0, 0, 10, 0), 
+                                padding: EdgeInsetsGeometry.fromLTRB(0, 0, V4rs.paddingValue(10), 0), 
                                 child: Switch(
                                   padding: EdgeInsets.all(0),
                                   value: Ev4rs.matchBorder.value, 
@@ -3375,7 +3500,7 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                             return Column (children: [
                             Text('Border Weight: ${Ev4rs.borderWeight.value}', style: Sv4rs.settingslabelStyle),
                             Slider(
-                                  padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
+                                  padding: EdgeInsets.fromLTRB(V4rs.paddingValue(5), 0, V4rs.paddingValue(5), 0),
                                   min: 0.0,
                                   max: 10.0,
                                   divisions: 20,
@@ -3420,7 +3545,10 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                             Column(children:[
                             //hexcode input
                             Padding(
-                              padding: EdgeInsetsGeometry.symmetric(horizontal: 10, vertical: 20),
+                              padding: EdgeInsetsGeometry.symmetric(
+                                horizontal: V4rs.paddingValue(10), 
+                                vertical: V4rs.paddingValue(20)
+                              ),
                               child: HexCodeInput2(
                                 startValue: Ev4rs.borderColor.value.toHexString(),
                                 textStyle: Sv4rs.settingslabelStyle,
@@ -3491,9 +3619,9 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
 
                   //background
                   
-                  Padding(padding: EdgeInsetsGeometry.all(10), child: //outer padding 
+                  Padding(padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)), child: //outer padding 
                     Container(
-                      padding: EdgeInsetsGeometry.all(10), //inner padding 
+                      padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)), //inner padding 
                       decoration: BoxDecoration(
                         color: Cv4rs.themeColor4,
                         borderRadius: BorderRadius.circular(10)
@@ -3509,7 +3637,12 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                               children: [
                               Expanded(child: 
                                 Padding(
-                                  padding: EdgeInsetsGeometry.fromLTRB(5, 10, 5, 10), 
+                                  padding: EdgeInsetsGeometry.fromLTRB(
+                                    V4rs.paddingValue(5), 
+                                    V4rs.paddingValue(10), 
+                                    V4rs.paddingValue(5), 
+                                    V4rs.paddingValue(10)
+                                  ), 
                                     child: Text(
                                       'Match Color:', 
                                       maxLines: 3,
@@ -3520,7 +3653,7 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                                   ),
                               ),
                               Padding(
-                                padding: EdgeInsetsGeometry.fromLTRB(0, 0, 10, 0), 
+                                padding: EdgeInsetsGeometry.fromLTRB(0, 0, V4rs.paddingValue(10), 0), 
                                 child: Switch(
                                   padding: EdgeInsets.all(0),
                                   value: Ev4rs.matchBackground.value,
@@ -3562,7 +3695,10 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                             Column(children:[
                             //hexcode input
                             Padding(
-                              padding: EdgeInsetsGeometry.symmetric(horizontal: 10, vertical: 20),
+                              padding: EdgeInsetsGeometry.symmetric(
+                                horizontal: V4rs.paddingValue(10), 
+                                vertical: V4rs.paddingValue(20)
+                              ),
                               child: HexCodeInput2(
                                 startValue: Ev4rs.backgroundColor.value.toHexString(),
                                 textStyle: Sv4rs.settingslabelStyle,
@@ -3641,7 +3777,7 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                   //part of speech
                   
                   Padding(
-                    padding: EdgeInsetsGeometry.all(10),
+                    padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)),
                     child: SizedBox( child:
                       Container(
                         decoration: BoxDecoration(
@@ -3655,14 +3791,14 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                           Column(children: [
                             SizedBox(child:
                             Padding (
-                              padding: EdgeInsetsGeometry.fromLTRB(0,15,0,0),
+                              padding: EdgeInsetsGeometry.fromLTRB(0,V4rs.paddingValue(15),0,0),
                               child: Text(
                                 'Part of Speech:', 
                                 style: Sv4rs.settingslabelStyle,
                                 ),
                             ),
                             ),
-                            Padding(padding: EdgeInsets.symmetric(horizontal: 10), child:
+                            Padding(padding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(10)), child:
                             DropdownButton<String>(
                               isExpanded: true,
                               hint: SizedBox(child: Text(
@@ -3706,7 +3842,7 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                   ),
                   
                   Padding(
-                    padding: EdgeInsetsGeometry.all(10),
+                    padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)),
                     child: 
                       Container(
                         decoration: BoxDecoration(
@@ -3719,13 +3855,13 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                             return
                           Column(children: [
                             Padding (
-                              padding: EdgeInsetsGeometry.fromLTRB(0,15,0,0),
+                              padding: EdgeInsetsGeometry.fromLTRB(0,V4rs.paddingValue(15),0,0),
                               child: Text(
                                 'Link To...', 
                                 style: Sv4rs.settingslabelStyle,
                                 ),
                             ),
-                            Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 10), child: 
+                            Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: V4rs.paddingValue(10)), child: 
                             DropdownButton<String>(
                               isExpanded: true,
                                 hint: Text(
@@ -3774,7 +3910,7 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                     ),
 
                   //notes
-                  Padding(padding: EdgeInsetsGeometry.all(10),
+                  Padding(padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)),
                   child:
                     Container(
                       decoration: BoxDecoration(
@@ -3784,7 +3920,10 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                       child: Column(children: [
                         Row(children: [ 
                           Expanded(flex: 5, child: 
-                            Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 10, vertical: 10), child: 
+                            Padding(padding: EdgeInsetsGeometry.symmetric(
+                                horizontal: V4rs.paddingValue(10), 
+                                vertical: V4rs.paddingValue(10)
+                              ), child: 
                               ValueListenableBuilder(valueListenable: Ev4rs.notes, builder: (context, value, _) {
                           final notesController = TextEditingController(text: value)
                           ..selection = TextSelection.collapsed(offset: value.length);
@@ -3807,7 +3946,7 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                             ),
                           ),
                           Flexible(flex: 2, child: 
-                          Padding(padding: EdgeInsetsGeometry.symmetric(vertical: 5), child: 
+                          Padding(padding: EdgeInsetsGeometry.symmetric(vertical: V4rs.paddingValue(5)), child: 
                           ButtonStyle4(
                           imagePath: 'assets/interface_icons/interface_icons/iCheck.png', 
                             onPressed: (){setState(() {
@@ -3835,7 +3974,12 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
               Expanded(flex: 2, child: 
                 Column( children:[
                   //undo
-                  Padding(padding: EdgeInsetsGeometry.fromLTRB(3, 7, 3, 0),
+                  Padding(padding: EdgeInsetsGeometry.fromLTRB(
+                    V4rs.paddingValue(3), 
+                    V4rs.paddingValue(7), 
+                    V4rs.paddingValue(3), 
+                    0
+                  ),
               child:
                   SizedBox( 
                 height: (isLandscape) ? MediaQuery.of(context).size.height * 0.06 : MediaQuery.of(context).size.height * 0.04 ,
@@ -3856,7 +4000,12 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                   ),
 
                   //share
-                  Padding(padding: EdgeInsetsGeometry.fromLTRB(3, 7, 3, 0),
+                  Padding(padding: EdgeInsetsGeometry.fromLTRB(
+                    V4rs.paddingValue(3), 
+                    V4rs.paddingValue(7), 
+                    V4rs.paddingValue(3), 
+                    0
+                  ),
               child:
                   SizedBox( 
                 height: (isLandscape) ? MediaQuery.of(context).size.height * 0.06 : MediaQuery.of(context).size.height * 0.04 ,
@@ -3881,7 +4030,12 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
               Expanded(flex: 2, child: 
                 Column( children:[
                   //redo
-                  Padding(padding: EdgeInsetsGeometry.fromLTRB(3, 7, 3, 0),
+                  Padding(padding: EdgeInsetsGeometry.fromLTRB(
+                    V4rs.paddingValue(3), 
+                    V4rs.paddingValue(7), 
+                    V4rs.paddingValue(3), 
+                    0
+                  ),
               child:
                   SizedBox( 
                 height: (isLandscape) ? MediaQuery.of(context).size.height * 0.06 : MediaQuery.of(context).size.height * 0.04,
@@ -3901,7 +4055,12 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                   ),
                   ),
                   //print
-                  Padding(padding: EdgeInsetsGeometry.fromLTRB(3, 7, 3, 0),
+                  Padding(padding: EdgeInsetsGeometry.fromLTRB(
+                    V4rs.paddingValue(3), 
+                    V4rs.paddingValue(7), 
+                    V4rs.paddingValue(3), 
+                    0
+                  ),
               child:
                   SizedBox( 
                 height: (isLandscape) ? MediaQuery.of(context).size.height * 0.06 : MediaQuery.of(context).size.height * 0.04,
@@ -3924,7 +4083,12 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
               //
               Column( children:[
                 Padding(
-                  padding: EdgeInsetsGeometry.fromLTRB(7, 7, 7, 0),
+                  padding: EdgeInsetsGeometry.fromLTRB(
+                    V4rs.paddingValue(7), 
+                    V4rs.paddingValue(7), 
+                    V4rs.paddingValue(7), 
+                    0
+                  ),
                   child: SizedBox( 
                     height: (isLandscape) ? MediaQuery.of(context).size.height * 0.07 : MediaQuery.of(context).size.height * 0.04,
                     child: (Ev4rs.isButtonExpanded.value) 
@@ -3947,11 +4111,16 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsetsGeometry.fromLTRB(7, 0, 7, 7),
+                  padding: EdgeInsetsGeometry.fromLTRB(
+                    V4rs.paddingValue(7), 
+                    0, 
+                    V4rs.paddingValue(7), 
+                    V4rs.paddingValue(7)
+                  ),
                   child: SizedBox( 
                     height: (isLandscape) ? MediaQuery.of(context).size.height * 0.08 : MediaQuery.of(context).size.height * 0.04 ,
                     child: Padding(
-                      padding: EdgeInsetsGeometry.all(10), child: 
+                      padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)), child: 
                        ButtonStyle1(
                           glow: (Ev4rs.boardEditor.value) ? true : false,
                           imagePath: 'assets/interface_icons/interface_icons/iBoard.png', 
@@ -3973,7 +4142,7 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
           child: ValueListenableBuilder<bool>(valueListenable: Ev4rs.showSelectionMenu, builder: (context, showSelectionMenu, _) {
           return SizedBox( 
             height: (isLandscape) ? MediaQuery.of(context).size.height * 0.09 : MediaQuery.of(context).size.height * 0.04,
-            child:  Padding(padding: EdgeInsetsGeometry.all(7), child:
+            child:  Padding(padding: EdgeInsetsGeometry.all(V4rs.paddingValue(7)), child:
           Row(
             children: [
               //tap
@@ -4122,7 +4291,7 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
               //
               //back, in positioned is the tap expander
               //
-              Padding(padding: EdgeInsetsGeometry.all(7),
+              Padding(padding: EdgeInsetsGeometry.all(V4rs.paddingValue(7)),
               child: SizedBox( 
                 height: (isLandscape) ? MediaQuery.of(context).size.height * 0.065 : MediaQuery.of(context).size.height * 0.03 ,
                 child: ButtonStyle1(
@@ -4152,7 +4321,7 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                   //image
                   //
                   Padding(
-                    padding: EdgeInsetsGeometry.all(10),
+                    padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)),
                     child: 
                           Container(
                             width: MediaQuery.of(context).size.height * 0.25,
@@ -4163,7 +4332,9 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
-                                Expanded(child: Padding(padding: EdgeInsetsGeometry.all(Ev4rs.padding.value), 
+                                Expanded(child: 
+                                Padding(
+                                  padding: EdgeInsetsGeometry.all(V4rs.paddingValue(Ev4rs.padding.value)), 
                                   child: (!Ev4rs.compareNavObjFields(root.navRow, (b) => b.symbol)) ?
                                   Column(children: [
                                     Text('--Not All Match--', style: Sv4rs.settingslabelStyle),
@@ -4223,7 +4394,7 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                                   Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 10), child:
+                                      Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: V4rs.paddingValue(10)), child:
                                         SizedBox( 
                                           width: MediaQuery.of(context).size.height * 0.08,
                                           child: ButtonStyle3(
@@ -4243,8 +4414,10 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                                     maintainSize: true,
                                     maintainAnimation: true,
                                     maintainState: true,
-                                    child: Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 10), child:
-                                    SizedBox( 
+                                    child: Padding(
+                                      padding: EdgeInsetsGeometry.symmetric(
+                                        horizontal: V4rs.paddingValue(10)), 
+                                        child: SizedBox( 
                                       width: MediaQuery.of(context).size.height * 0.07,
                                       child: ButtonStyle3(
                                       imagePath: 'assets/interface_icons/interface_icons/iPlaceholder.png', 
@@ -4269,7 +4442,7 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                   //
                   //padding
                   //
-                  Padding(padding: EdgeInsetsGeometry.all(10),
+                  Padding(padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)),
                   child:
                   SizedBox( 
                     width: MediaQuery.of(context).size.height * 0.25,
@@ -4283,13 +4456,17 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Padding(padding: EdgeInsets.all(10), child: 
+                        Padding(padding: EdgeInsets.all(V4rs.paddingValue(10)), child: 
                         Column(children: [
                           (Ev4rs.compareNavObjFields(root.navRow, (b) => b.padding)) 
                         ? Text('Image Padding: ${Ev4rs.padding.value}', style: Sv4rs.settingslabelStyle,)
                         : Text('Image Padding: --Not All Match--', style: Sv4rs.settingslabelStyle,),
                         Slider(
-                              padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+                              padding: EdgeInsets.fromLTRB(
+                                V4rs.paddingValue(10), 
+                                V4rs.paddingValue(10), 
+                                V4rs.paddingValue(10), 
+                                0),
                               value: Ev4rs.padding.value,
                               min: 0.0,
                               max: 10.0,
@@ -4321,7 +4498,7 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                   //
                   //symbolColors
                   //
-                  Padding(padding: EdgeInsetsGeometry.all(10),
+                  Padding(padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)),
                   child:
                   SizedBox(
                     child:
@@ -4425,7 +4602,7 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
               Expanded(flex: 7, child: 
                 Column( children:[
                   //label and message
-                  Padding(padding: EdgeInsetsGeometry.all(10),
+                  Padding(padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)),
                   child:
                     Container(
                       decoration: BoxDecoration(
@@ -4435,7 +4612,7 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                       child: Column(children: [
                         Row(children: [ 
                           Expanded(flex: 5, child: 
-                            Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 10, vertical: 0), child: 
+                            Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: V4rs.paddingValue(10), vertical: 0), child: 
                                  ValueListenableBuilder(valueListenable: Ev4rs.notes, builder: (context, value, _) {
                           final labelController = TextEditingController(text: value)
                           ..selection = TextSelection.collapsed(offset: value.length);
@@ -4456,7 +4633,7 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                             ),
                           ),
                           Flexible(flex: 2, child: 
-                          Padding(padding: EdgeInsetsGeometry.symmetric(vertical: 5), child: 
+                          Padding(padding: EdgeInsetsGeometry.symmetric(vertical: V4rs.paddingValue(5)), child: 
                           ButtonStyle4(
                           imagePath: 'assets/interface_icons/interface_icons/iCheck.png', 
                             onPressed: (){setState(() {
@@ -4474,7 +4651,7 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                         Expanded(
                           flex: 5,
                           child: 
-                        Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 10, vertical: 0), child: 
+                        Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: V4rs.paddingValue(10), vertical: 0), child: 
                              ValueListenableBuilder(valueListenable: Ev4rs.notes, builder: (context, value, _) {
                           final alternateController = TextEditingController(text: value)
                           ..selection = TextSelection.collapsed(offset: value.length);
@@ -4497,7 +4674,7 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                         Flexible(
                           flex: 2,
                           child: 
-                          Padding(padding: EdgeInsetsGeometry.symmetric(vertical: 5), child: 
+                          Padding(padding: EdgeInsetsGeometry.symmetric(vertical: V4rs.paddingValue(5)), child: 
                         ButtonStyle4(
                         imagePath: 'assets/interface_icons/interface_icons/iCheck.png', 
                           onPressed: (){setState(() {
@@ -4517,7 +4694,7 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                     )
                     ),
                   //match speak on select, speak on select
-                  Padding(padding: EdgeInsetsGeometry.all(10),
+                  Padding(padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)),
                     child: Container(
                       decoration: BoxDecoration(
                         color: Cv4rs.themeColor4,
@@ -4530,7 +4707,10 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                             return Row(children: [
                               Expanded(child: 
                               Padding(
-                                padding: EdgeInsetsGeometry.fromLTRB(10, 10, 10, 0), 
+                                padding: EdgeInsetsGeometry.fromLTRB(
+                                  V4rs.paddingValue(10), 
+                                  V4rs.paddingValue(10), 
+                                  V4rs.paddingValue(10), 0), 
                                 child: Text( (Ev4rs.compareNavObjFields(root.navRow, (b) => b.matchSpeakOS)) ?
                                   'Match Speak on Select:' : 'Match Speak on Select: --Not All Match--', 
                                   maxLines: 3,
@@ -4541,7 +4721,7 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                                 ),
                               ),
                               Padding(
-                                padding: EdgeInsetsGeometry.fromLTRB(0, 0, 10, 0), 
+                                padding: EdgeInsetsGeometry.fromLTRB(0, 0, V4rs.paddingValue(10), 0), 
                                 child: Switch(
                                   padding: EdgeInsets.all(0),
                                   value: Ev4rs.matchSpeakOnSelect.value, 
@@ -4558,12 +4738,12 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                           valueListenable: Ev4rs.speakOnSelect, 
                           builder: (context, speakOnSelect, _) {
                             return Padding(
-                              padding: EdgeInsetsGeometry.all(10), 
+                              padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)), 
                               child: Column(children: [
                                 if (!Ev4rs.compareNavObjFields(root.navRow, (b) => b.matchSpeakOS)) 
                                   Text('Speak on Select: --Not All Match--', style: Sv4rs.settingslabelStyle),
                                 Slider(
-                                  padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
+                                  padding: EdgeInsets.fromLTRB(V4rs.paddingValue(5), 0, V4rs.paddingValue(5), 0),
                                   min: 1.0,
                                   max: 3.0,
                                   divisions: 2,
@@ -4580,7 +4760,7 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                                     }
                                   ),
                                 Padding(
-                                  padding: EdgeInsetsGeometry.fromLTRB(0, 0, 0, 10), 
+                                  padding: EdgeInsetsGeometry.fromLTRB(0, 0, 0, V4rs.paddingValue(10)), 
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                     children: [
@@ -4633,7 +4813,7 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                   ),
                   //font, match font settings, font picker
                   Padding(
-                      padding: EdgeInsetsGeometry.all(10), 
+                      padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)), 
                       child: FontPicker2(
                         widgety:  ButtonStyle2(
                           imagePath: 'assets/interface_icons/interface_icons/iCheck.png', 
@@ -4711,9 +4891,9 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                   //
 
                   Padding(
-                    padding: EdgeInsetsGeometry.all(10), 
+                    padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)), 
                     child: Container( 
-                      padding: EdgeInsetsGeometry.all(10),
+                      padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)),
                       decoration: BoxDecoration(
                         color: Cv4rs.themeColor4,
                         borderRadius: BorderRadius.circular(10)
@@ -4735,7 +4915,7 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                                 ),
                               ),
                               Padding(
-                                padding: EdgeInsetsGeometry.fromLTRB(0, 0, 10, 0), 
+                                padding: EdgeInsetsGeometry.fromLTRB(0, 0, V4rs.paddingValue(10), 0), 
                                 child: Switch(
                                   padding: EdgeInsets.all(0),
                                   value: Ev4rs.show.value, 
@@ -4767,9 +4947,9 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                   //
 
                   Padding(
-                    padding: EdgeInsetsGeometry.all(10), 
+                    padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)), 
                     child: Container(
-                      padding: EdgeInsetsGeometry.all(10),
+                      padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)),
                       decoration: BoxDecoration(
                         color: Cv4rs.themeColor4,
                         borderRadius: BorderRadius.circular(10)
@@ -4781,7 +4961,7 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                             return Row(children: [
                               Expanded(child: 
                                 Padding(
-                                  padding: EdgeInsetsGeometry.fromLTRB(0, 10, 0, 0), 
+                                  padding: EdgeInsetsGeometry.fromLTRB(0, V4rs.paddingValue(10), 0, 0), 
                                     child: Text(
                                       (Ev4rs.compareNavObjFields(root.navRow, (b) => b.matchFormat)) 
                                         ? 'Match Format:'
@@ -4811,7 +4991,12 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                           valueListenable: Ev4rs.format, 
                           builder: (context, format, _) {
                             return Padding(
-                              padding: EdgeInsetsGeometry.fromLTRB(5, 15, 5, 10), 
+                              padding: EdgeInsetsGeometry.fromLTRB(
+                                V4rs.paddingValue(5), 
+                                V4rs.paddingValue(15), 
+                                V4rs.paddingValue(5), 
+                                V4rs.paddingValue(10)
+                              ), 
                               child: Column(children: [
                                       Text(
                                         "Format: ${ Ev4rs.compareNavObjFields(root.navRow, (b) => b.format) 
@@ -4832,7 +5017,7 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                                         textAlign: TextAlign.center,
                                       ),
                                 Slider(
-                                  padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
+                                  padding: EdgeInsets.fromLTRB(0, V4rs.paddingValue(5), 0, 0),
                                   min: 1.0,
                                   max: 4.0,
                                   divisions: 3,
@@ -4868,9 +5053,9 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                   //border
                   //
 
-                  Padding(padding: EdgeInsetsGeometry.all(10), child: //outer padding 
+                  Padding(padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)), child: //outer padding 
                     Container(
-                      padding: EdgeInsetsGeometry.all(10), //inner padding 
+                      padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)), //inner padding 
                       decoration: BoxDecoration(
                         color: Cv4rs.themeColor4,
                         borderRadius: BorderRadius.circular(10)
@@ -4885,7 +5070,11 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                               children: [
                               Expanded(child: 
                                 Padding(
-                                  padding: EdgeInsetsGeometry.fromLTRB(0, 10, 3, 20), 
+                                  padding: EdgeInsetsGeometry.fromLTRB(
+                                    0, 
+                                    V4rs.paddingValue(10), 
+                                    V4rs.paddingValue(3), 
+                                    V4rs.paddingValue(20)), 
                                     child: Text(
                                       (Ev4rs.compareNavObjFields(root.navRow, (b) => b.matchBorder)) 
                                         ? 'Match Border: '
@@ -4923,7 +5112,7 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                               : 'Border Weight: --Not All Match--',
                               style: Sv4rs.settingslabelStyle),
                             Slider(
-                                  padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
+                                  padding: EdgeInsets.fromLTRB(V4rs.paddingValue(5), 0, V4rs.paddingValue(5), 0),
                                   min: 0.0,
                                   max: 10.0,
                                   divisions: 20,
@@ -4975,7 +5164,10 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                             Column(children:[
                             //hexcode input
                             Padding(
-                              padding: EdgeInsetsGeometry.symmetric(horizontal: 10, vertical: 20),
+                              padding: EdgeInsetsGeometry.symmetric(
+                                horizontal: V4rs.paddingValue(10), 
+                                vertical: V4rs.paddingValue(20)
+                              ),
                               child: HexCodeInput2(
                                 startValue: Ev4rs.borderColor.value.toHexString(),
                                 textStyle: Sv4rs.settingslabelStyle,
@@ -5046,9 +5238,9 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
 
                   //background
                   
-                  Padding(padding: EdgeInsetsGeometry.all(10), child: //outer padding 
+                  Padding(padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)), child: //outer padding 
                     Container(
-                      padding: EdgeInsetsGeometry.all(10), //inner padding 
+                      padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)), //inner padding 
                       decoration: BoxDecoration(
                         color: Cv4rs.themeColor4,
                         borderRadius: BorderRadius.circular(10)
@@ -5064,7 +5256,12 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                               children: [
                               Expanded(child: 
                                 Padding(
-                                  padding: EdgeInsetsGeometry.fromLTRB(5, 10, 5, 10), 
+                                  padding: EdgeInsetsGeometry.fromLTRB(
+                                    V4rs.paddingValue(5), 
+                                    V4rs.paddingValue(10), 
+                                    V4rs.paddingValue(5), 
+                                    V4rs.paddingValue(10)
+                                  ), 
                                     child: Text(
                                       (Ev4rs.compareNavObjFields(root.navRow, (b) => b.matchPOS)) 
                                         ? 'Background Color:'
@@ -5077,7 +5274,7 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                                   ),
                               ),
                               Padding(
-                                padding: EdgeInsetsGeometry.fromLTRB(0, 0, 10, 0), 
+                                padding: EdgeInsetsGeometry.fromLTRB(0, 0, V4rs.paddingValue(10), 0), 
                                 child: Switch(
                                   padding: EdgeInsets.all(0),
                                   value: Ev4rs.matchBackground.value,
@@ -5121,7 +5318,10 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                             Column(children:[
                             //hexcode input
                             Padding(
-                              padding: EdgeInsetsGeometry.symmetric(horizontal: 10, vertical: 20),
+                              padding: EdgeInsetsGeometry.symmetric(
+                                horizontal: V4rs.paddingValue(10), 
+                                vertical: V4rs.paddingValue(20)
+                              ),
                               child: HexCodeInput2(
                                 startValue: Ev4rs.backgroundColor.value.toHexString(),
                                 textStyle: Sv4rs.settingslabelStyle,
@@ -5200,7 +5400,7 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                   //part of speech
                   
                   Padding(
-                    padding: EdgeInsetsGeometry.all(10),
+                    padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)),
                     child: SizedBox( child:
                       Container(
                         decoration: BoxDecoration(
@@ -5214,7 +5414,7 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                           Column(children: [
                             SizedBox(child:
                             Padding (
-                              padding: EdgeInsetsGeometry.fromLTRB(0,15,0,0),
+                              padding: EdgeInsetsGeometry.fromLTRB(0,V4rs.paddingValue(15),0,0),
                               child: Text((Ev4rs.compareNavObjFields(root.navRow, (b) => b.pos)) 
                                   ? 'Part of Speech:'
                                   : 'Part of Speech: --Not All Match--', 
@@ -5222,7 +5422,7 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                                 ),
                             ),
                             ),
-                            Padding(padding: EdgeInsets.symmetric(horizontal: 10), child:
+                            Padding(padding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(10)), child:
                             DropdownButton<String>(
                               isExpanded: true,
                               hint: SizedBox(child: Text(
@@ -5266,7 +5466,7 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                   ),
                  
                   Padding(
-                    padding: EdgeInsetsGeometry.all(10),
+                    padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)),
                     child: 
                       Container(
                         decoration: BoxDecoration(
@@ -5279,7 +5479,7 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                             return
                           Column(children: [
                             Padding (
-                              padding: EdgeInsetsGeometry.fromLTRB(0,15,0,0),
+                              padding: EdgeInsetsGeometry.fromLTRB(0,V4rs.paddingValue(15),0,0),
                               child: Text(
                                 (Ev4rs.compareNavObjFields(root.navRow, (b) => b.linkToUUID)) 
                                   ? 'Link To...'
@@ -5287,7 +5487,7 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                                 style: Sv4rs.settingslabelStyle,
                                 ),
                             ),
-                          Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 10), child: 
+                          Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: V4rs.paddingValue(10)), child: 
                             DropdownButton<String>(
                               isExpanded: true,
                                 hint: Text(
@@ -5335,7 +5535,7 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                     ),
 
                   //notes
-                  Padding(padding: EdgeInsetsGeometry.all(10),
+                  Padding(padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)),
                   child:
                     Container(
                       decoration: BoxDecoration(
@@ -5345,7 +5545,10 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                       child: Column(children: [
                         Row(children: [ 
                           Expanded(flex: 5, child: 
-                            Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 10, vertical: 10), child: 
+                            Padding(padding: EdgeInsetsGeometry.symmetric(
+                                horizontal: V4rs.paddingValue(10), 
+                                vertical: V4rs.paddingValue(10)
+                              ), child: 
                               ValueListenableBuilder(valueListenable: Ev4rs.notes, builder: (context, value, _) {
                           final notesController = TextEditingController(text: value)
                           ..selection = TextSelection.collapsed(offset: value.length);
@@ -5370,7 +5573,7 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                             ),
                           ),
                           Flexible(flex: 2, child: 
-                          Padding(padding: EdgeInsetsGeometry.symmetric(vertical: 5), child: 
+                          Padding(padding: EdgeInsetsGeometry.symmetric(vertical: V4rs.paddingValue(5)), child: 
                           ButtonStyle4(
                           imagePath: 'assets/interface_icons/interface_icons/iCheck.png', 
                             onPressed: (){setState(() {
@@ -5400,7 +5603,12 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
               Expanded(flex: 2, child: 
                 Column( children:[
                   //undo
-                  Padding(padding: EdgeInsetsGeometry.fromLTRB(3, 7, 3, 0),
+                  Padding(padding: EdgeInsetsGeometry.fromLTRB(
+                    V4rs.paddingValue(3), 
+                    V4rs.paddingValue(7), 
+                    V4rs.paddingValue(3), 
+                    0
+                  ),
               child:
                   SizedBox( 
                 height: (isLandscape) ? MediaQuery.of(context).size.height * 0.06 : MediaQuery.of(context).size.height * 0.04 ,
@@ -5421,7 +5629,12 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                   ),
 
                   //share
-                  Padding(padding: EdgeInsetsGeometry.fromLTRB(3, 7, 3, 0),
+                  Padding(padding: EdgeInsetsGeometry.fromLTRB(
+                    V4rs.paddingValue(3), 
+                    V4rs.paddingValue(7), 
+                    V4rs.paddingValue(3), 
+                    0
+                  ),
               child:
                   SizedBox( 
                 height: (isLandscape) ? MediaQuery.of(context).size.height * 0.06 : MediaQuery.of(context).size.height * 0.04,
@@ -5445,7 +5658,12 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
               Expanded(flex: 2, child: 
                 Column( children:[
                   //redo
-                  Padding(padding: EdgeInsetsGeometry.fromLTRB(3, 7, 3, 0),
+                  Padding(padding: EdgeInsetsGeometry.fromLTRB(
+                    V4rs.paddingValue(3), 
+                    V4rs.paddingValue(7), 
+                    V4rs.paddingValue(3), 
+                    0
+                  ),
               child:
                   SizedBox( 
                 height: (isLandscape) ? MediaQuery.of(context).size.height * 0.06 : MediaQuery.of(context).size.height * 0.04,
@@ -5465,7 +5683,12 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                   ),
                   ),
                   //print
-                  Padding(padding: EdgeInsetsGeometry.fromLTRB(3, 7, 3, 0),
+                  Padding(padding: EdgeInsetsGeometry.fromLTRB(
+                    V4rs.paddingValue(3), 
+                    V4rs.paddingValue(7), 
+                    V4rs.paddingValue(3), 
+                    0
+                  ),
               child:
                   SizedBox( 
                 height: (isLandscape) ? MediaQuery.of(context).size.height * 0.06 : MediaQuery.of(context).size.height * 0.04 ,
@@ -5488,7 +5711,12 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
               //
               Column( children:[
                 Padding(
-                  padding: EdgeInsetsGeometry.fromLTRB(7, 7, 7, 0),
+                  padding: EdgeInsetsGeometry.fromLTRB(
+                    V4rs.paddingValue(7), 
+                    V4rs.paddingValue(7), 
+                    V4rs.paddingValue(7), 
+                    0
+                  ),
                   child: SizedBox( 
                     height: (isLandscape) ? MediaQuery.of(context).size.height * 0.07 : MediaQuery.of(context).size.height * 0.04,
                     child: (Ev4rs.isButtonExpanded.value) 
@@ -5511,11 +5739,16 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsetsGeometry.fromLTRB(7, 0, 7, 7),
+                  padding: EdgeInsetsGeometry.fromLTRB(
+                    V4rs.paddingValue(7), 
+                    0, 
+                    V4rs.paddingValue(7), 
+                    V4rs.paddingValue(7)
+                  ),
                   child: SizedBox( 
                     height: (isLandscape) ? MediaQuery.of(context).size.height * 0.08 : MediaQuery.of(context).size.height * 0.04 ,
                     child: Padding(
-                      padding: EdgeInsetsGeometry.all(10), child: 
+                      padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)), child: 
                        ButtonStyle1(
                           glow: (Ev4rs.boardEditor.value) ? true : false,
                           imagePath: 'assets/interface_icons/interface_icons/iBoard.png', 
@@ -5537,7 +5770,7 @@ import 'package:flutterkeysaac/Variables/colors/color_pickers.dart';
           child: ValueListenableBuilder<bool>(valueListenable: Ev4rs.showSelectionMenu, builder: (context, showSelectionMenu, _) {
           return SizedBox( 
             height: (isLandscape) ? MediaQuery.of(context).size.height * 0.09 : MediaQuery.of(context).size.height * 0.04,
-            child:  Padding(padding: EdgeInsetsGeometry.all(7), child:
+            child:  Padding(padding: EdgeInsetsGeometry.all(V4rs.paddingValue(7)), child:
           Row(
             children: [
               //tap

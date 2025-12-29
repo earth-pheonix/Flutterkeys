@@ -91,7 +91,7 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
       body: SafeArea(
         bottom: false, // Ignore keyboard
         child: Padding (
-          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 0),
+          padding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(20), vertical: 0),
           child: Column(
           children: [
             if (_root != null)
@@ -119,7 +119,7 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
                   title: Text('Language:', style: Sv4rs.settingslabelStyle),
                   collapsedBackgroundColor: Cv4rs.themeColor4,
                   backgroundColor: Cv4rs.themeColor4,
-                  childrenPadding: EdgeInsets.symmetric(horizontal: 20),
+                  childrenPadding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(20)),
                   onExpansionChanged: (bool expanded) {  
                     if (Sv4rs.speakInterfaceButtonsOnSelect) {
                         V4rs.speakOnSelect(
@@ -133,7 +133,11 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
                       }},
                   children: [
                     Padding(
-                      padding: EdgeInsets.fromLTRB(20, 10, 20, 0), 
+                      padding: EdgeInsets.fromLTRB(
+                        V4rs.paddingValue(20), 
+                        V4rs.paddingValue(10), 
+                        V4rs.paddingValue(20), 
+                        0), 
                       child: Row(
                         children: [
                           Text('Interface language', style: Sv4rs.settingslabelStyle),
@@ -226,7 +230,7 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
                   title: Text('Interface Settings:', style: Sv4rs.settingslabelStyle),
                   collapsedBackgroundColor: Cv4rs.themeColor4,
                   backgroundColor: Cv4rs.themeColor4,
-                  childrenPadding: EdgeInsets.symmetric(horizontal: 20),
+                  childrenPadding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(20)),
                   onExpansionChanged: (bool expanded) {  
                     if (Sv4rs.speakInterfaceButtonsOnSelect) {
                         V4rs.speakOnSelect(
@@ -244,7 +248,7 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
                       title: Text('Theme Colors:', style: Sv4rs.settingslabelStyle),
                       collapsedBackgroundColor: Cv4rs.themeColor4,
                       backgroundColor: Cv4rs.themeColor4,
-                      childrenPadding: EdgeInsets.symmetric(horizontal: 20),
+                      childrenPadding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(20)),
                       children: [
                         //theme color 1
                         ExpansionTile(
@@ -267,7 +271,9 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
                           children: [
                             //hexcode input
                             Padding(
-                              padding: EdgeInsetsGeometry.symmetric(horizontal: 40, vertical: 20),
+                              padding: EdgeInsetsGeometry.symmetric(
+                                horizontal: V4rs.paddingValue(40), 
+                                vertical: V4rs.paddingValue(20)),
                               child: HexCodeInput(
                                 startValue: Cv4rs.themeColor1.toHexString(),
                                 textStyle: Sv4rs.settingslabelStyle,
@@ -282,7 +288,8 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
                             ),
                             //color picker
                             Padding(
-                              padding: EdgeInsets.fromLTRB(40, 0, 10, 10),
+                              padding: EdgeInsets.fromLTRB(
+                                V4rs.paddingValue(40), 0, V4rs.paddingValue(10), V4rs.paddingValue(10)),
                               child: ColorPicker(
                                 pickerColor: Cv4rs.themeColor1, 
                                 enableAlpha: false,
@@ -319,7 +326,10 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
                           children: [
                             //hexcode input
                             Padding(
-                              padding: EdgeInsetsGeometry.symmetric(horizontal: 40, vertical: 20),
+                              padding: EdgeInsetsGeometry.symmetric(
+                                horizontal: V4rs.paddingValue(40), 
+                                vertical: V4rs.paddingValue(20)
+                              ),
                               child: HexCodeInput(
                                 startValue: Cv4rs.themeColor2.toHexString(),
                                 textStyle: Sv4rs.settingslabelStyle,
@@ -334,7 +344,11 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
                             ),
                             //color picker
                             Padding(
-                              padding: EdgeInsets.fromLTRB(40, 0, 10, 10),
+                              padding: EdgeInsets.fromLTRB(
+                                V4rs.paddingValue(40), 
+                                0, 
+                                V4rs.paddingValue(10), 
+                                V4rs.paddingValue(10)),
                               child: ColorPicker(
                                 pickerColor: Cv4rs.themeColor2, 
                                 enableAlpha: false,
@@ -380,7 +394,10 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
                           children: [
                             //hexcode input
                             Padding(
-                              padding: EdgeInsetsGeometry.symmetric(horizontal: 40, vertical: 20),
+                              padding: EdgeInsetsGeometry.symmetric(
+                                horizontal: V4rs.paddingValue(40), 
+                                vertical: V4rs.paddingValue(20)
+                              ),
                               child: HexCodeInput(
                                 startValue: Cv4rs.themeColor3.toHexString(),
                                 textStyle: Sv4rs.settingslabelStyle,
@@ -395,7 +412,12 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
                             ),
                             //color picker
                             Padding(
-                              padding: EdgeInsets.fromLTRB(40, 0, 10, 10),
+                              padding: EdgeInsets.fromLTRB(
+                                V4rs.paddingValue(40), 
+                                0, 
+                                V4rs.paddingValue(10), 
+                                V4rs.paddingValue(10)
+                              ),
                               child: ColorPicker(
                                 pickerColor: Cv4rs.themeColor3, 
                                 enableAlpha: false,
@@ -432,7 +454,9 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
                           children: [
                             //hexcode input
                             Padding(
-                              padding: EdgeInsetsGeometry.symmetric(horizontal: 40, vertical: 20),
+                              padding: EdgeInsetsGeometry.symmetric(
+                                horizontal: V4rs.paddingValue(40), 
+                                vertical: V4rs.paddingValue(20)),
                               child: HexCodeInput(
                                 startValue: Cv4rs.themeColor4.toHexString(),
                                 textStyle: Sv4rs.settingslabelStyle,
@@ -447,7 +471,12 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
                             ),
                             //color picker
                             Padding(
-                              padding: EdgeInsets.fromLTRB(40, 0, 10, 10),
+                              padding: EdgeInsets.fromLTRB(
+                                V4rs.paddingValue(40), 
+                                0, 
+                                V4rs.paddingValue(10), 
+                                V4rs.paddingValue(10)
+                              ),
                               child: ColorPicker(
                                 pickerColor: Cv4rs.themeColor4, 
                                 enableAlpha: false,
@@ -484,7 +513,9 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
                           children: [
                             //hexcode input
                             Padding(
-                              padding: EdgeInsetsGeometry.symmetric(horizontal: 40, vertical: 20),
+                              padding: EdgeInsetsGeometry.symmetric(
+                                horizontal: V4rs.paddingValue(40), 
+                                vertical: V4rs.paddingValue(20)),
                               child: HexCodeInput(
                                 startValue: Cv4rs.uiIconColor.toHexString(),
                                 textStyle: Sv4rs.settingslabelStyle,
@@ -499,7 +530,11 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
                             ),
                             //color picker
                             Padding(
-                              padding: EdgeInsets.fromLTRB(40, 0, 10, 10),
+                              padding: EdgeInsets.fromLTRB(
+                                V4rs.paddingValue(40), 
+                                0, 
+                                V4rs.paddingValue(10), 
+                                V4rs.paddingValue(10)),
                               child: ColorPicker(
                                 pickerColor: Cv4rs.uiIconColor, 
                                 enableAlpha: false,
@@ -590,7 +625,9 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
                 Expanded(
                     child: Container(
                       color: Cv4rs.themeColor4,
-                      child: Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 15), child:
+                      child: Padding(padding: EdgeInsetsGeometry.symmetric(
+                        horizontal: V4rs.paddingValue(15)
+                      ), child:
                       Row(
                         children: [
                           Text('Speak on select: Interface Buttons', style: Sv4rs.settingslabelStyle),
@@ -630,7 +667,7 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
                   title: Text('Alerts:', style: Sv4rs.settingslabelStyle),
                   collapsedBackgroundColor: Cv4rs.themeColor4,
                   backgroundColor: Cv4rs.themeColor4,
-                  childrenPadding: EdgeInsets.symmetric(horizontal: 20),
+                  childrenPadding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(20)),
                   onExpansionChanged: (bool expanded) {  
                     if (Sv4rs.speakInterfaceButtonsOnSelect) {
                         V4rs.speakOnSelect(
@@ -645,7 +682,7 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
                   children: [
                     //alert count 
                     Padding(
-                        padding: EdgeInsets.fromLTRB(20, 0, 0, 15),
+                        padding: EdgeInsets.fromLTRB(V4rs.paddingValue(20), 0, 0, V4rs.paddingValue(15)),
                         child: Row(
                           children: [
                             Text('Alert Count: ${Sv4rs.alertCount}', style: Sv4rs.settingslabelStyle,),
@@ -673,13 +710,18 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
                       ),
                       //first alert message
                       Padding(
-                        padding: EdgeInsets.fromLTRB(20, 0, 0, 15),
+                        padding: EdgeInsets.fromLTRB(V4rs.paddingValue(20), 0, 0, V4rs.paddingValue(15)),
                         child: Row(
                           children: [
                             Text('1st Alert Message:', style: Sv4rs.settingslabelStyle,),
                             Expanded(
                             child: Padding(
-                              padding: EdgeInsets.fromLTRB(15, 0, 20, 0), 
+                              padding: EdgeInsets.fromLTRB(
+                                V4rs.paddingValue(15), 
+                                0, 
+                                20, 
+                                0
+                              ), 
                               child: TextField(
                                 onChanged: (value) {
                                   Sv4rs.firstAlert = value;
@@ -696,13 +738,18 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.fromLTRB(20, 0, 0, 15),
+                        padding: EdgeInsets.fromLTRB(V4rs.paddingValue(20), 0, 0, V4rs.paddingValue(15)),
                         child: Row(
                           children: [
                             Text('2nd Alert Message:', style: Sv4rs.settingslabelStyle,),
                             Expanded(
                             child: Padding(
-                              padding: EdgeInsets.fromLTRB(15, 0, 20, 0), 
+                              padding: EdgeInsets.fromLTRB(
+                                V4rs.paddingValue(15), 
+                                0, 
+                                V4rs.paddingValue(20), 
+                                0
+                              ), 
                               child: TextField(
                                 onChanged: (value) {
                                   Sv4rs.secondAlert = value;
@@ -719,13 +766,13 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.fromLTRB(20, 0, 0, 15),
+                        padding: EdgeInsets.fromLTRB(V4rs.paddingValue(20), 0, 0, V4rs.paddingValue(15)),
                         child: Row(
                           children: [
                             Text('3rd Alert Message:', style: Sv4rs.settingslabelStyle,),
                             Expanded(
                             child: Padding(
-                              padding: EdgeInsets.fromLTRB(15, 0, 20, 0),
+                              padding: EdgeInsets.fromLTRB(V4rs.paddingValue(15), 0, V4rs.paddingValue(20), 0),
                               child: TextField(
                                 onChanged: (value) {
                                   Sv4rs.thirdAlert = value;
@@ -754,7 +801,7 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
                   title: Text('Expand Page:', style: Sv4rs.settingslabelStyle,),
                   collapsedBackgroundColor: Cv4rs.themeColor4,
                   backgroundColor: Cv4rs.themeColor4,
-                  childrenPadding: EdgeInsets.symmetric(horizontal: 20),
+                  childrenPadding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(20)),
                   onExpansionChanged: (bool expanded) {  
                     if (Sv4rs.speakInterfaceButtonsOnSelect) {
                         V4rs.speakOnSelect(
@@ -771,7 +818,7 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
                       title: Text('Page Colors:', style: Sv4rs.settingslabelStyle),
                       collapsedBackgroundColor: Cv4rs.themeColor4,
                       backgroundColor: Cv4rs.themeColor4,
-                      childrenPadding: EdgeInsets.symmetric(horizontal: 20),
+                      childrenPadding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(20)),
                       children: [
                         //theme color 1
                         ExpansionTile(
@@ -794,7 +841,7 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
                           children: [
                             //hexcode input
                             Padding(
-                              padding: EdgeInsetsGeometry.symmetric(horizontal: 40, vertical: 20),
+                              padding: EdgeInsetsGeometry.symmetric(horizontal: V4rs.paddingValue(40), vertical: V4rs.paddingValue(20)),
                               child: HexCodeInput(
                                 startValue: Cv4rs.expandColor1.toHexString(),
                                 textStyle: Sv4rs.settingslabelStyle,
@@ -809,7 +856,9 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
                             ),
                             //color picker
                             Padding(
-                              padding: EdgeInsets.fromLTRB(40, 0, 10, 10),
+                              padding: EdgeInsets.fromLTRB(
+                                V4rs.paddingValue(40), 0, 
+                                V4rs.paddingValue(10), V4rs.paddingValue(10)),
                               child: ColorPicker(
                                 pickerColor: Cv4rs.expandColor1, 
                                 enableAlpha: false,
@@ -846,7 +895,7 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
                           children: [
                             //hexcode input
                             Padding(
-                              padding: EdgeInsetsGeometry.symmetric(horizontal: 40, vertical: 20),
+                              padding: EdgeInsetsGeometry.symmetric(horizontal: V4rs.paddingValue(40), vertical: V4rs.paddingValue(20)),
                               child: HexCodeInput(
                                 startValue: Cv4rs.expandColor2.toHexString(),
                                 textStyle: Sv4rs.settingslabelStyle,
@@ -861,7 +910,10 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
                             ),
                             //color picker
                             Padding(
-                              padding: EdgeInsets.fromLTRB(40, 0, 10, 10),
+                              padding: EdgeInsets.fromLTRB(V4rs.paddingValue(40), 
+                              0, V4rs.paddingValue(10), 
+                              V4rs.paddingValue(10)
+                              ),
                               child: ColorPicker(
                                 pickerColor: Cv4rs.expandColor2, 
                                 enableAlpha: false,
@@ -907,7 +959,9 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
                           children: [
                             //hexcode input
                             Padding(
-                              padding: EdgeInsetsGeometry.symmetric(horizontal: 40, vertical: 20),
+                              padding: EdgeInsetsGeometry.symmetric(
+                                horizontal: V4rs.paddingValue(40), 
+                                vertical: V4rs.paddingValue(20)),
                               child: HexCodeInput(
                                 startValue: Cv4rs.expandColor3.toHexString(),
                                 textStyle: Sv4rs.settingslabelStyle,
@@ -922,7 +976,11 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
                             ),
                             //color picker
                             Padding(
-                              padding: EdgeInsets.fromLTRB(40, 0, 10, 10),
+                              padding: EdgeInsets.fromLTRB(
+                                V4rs.paddingValue(40), 
+                                0, V4rs.paddingValue(10), 
+                                V4rs.paddingValue(10)
+                              ),
                               child: ColorPicker(
                                 pickerColor: Cv4rs.expandColor3, 
                                 enableAlpha: false,
@@ -959,7 +1017,7 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
                           children: [
                             //hexcode input
                             Padding(
-                              padding: EdgeInsetsGeometry.symmetric(horizontal: 40, vertical: 20),
+                              padding: EdgeInsetsGeometry.symmetric(horizontal: V4rs.paddingValue(40), vertical: V4rs.paddingValue(20)),
                               child: HexCodeInput(
                                 startValue: Cv4rs.expandColor4.toHexString(),
                                 textStyle: Sv4rs.settingslabelStyle,
@@ -974,7 +1032,7 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
                             ),
                             //color picker
                             Padding(
-                              padding: EdgeInsets.fromLTRB(40, 0, 10, 10),
+                              padding: EdgeInsets.fromLTRB(V4rs.paddingValue(40), 0, V4rs.paddingValue(10), V4rs.paddingValue(10)),
                               child: ColorPicker(
                                 pickerColor: Cv4rs.expandColor4, 
                                 enableAlpha: false,
@@ -1011,7 +1069,7 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
                           children: [
                             //hexcode input
                             Padding(
-                              padding: EdgeInsetsGeometry.symmetric(horizontal: 40, vertical: 20),
+                              padding: EdgeInsetsGeometry.symmetric(horizontal: V4rs.paddingValue(40), vertical: V4rs.paddingValue(20)),
                               child: HexCodeInput(
                                 startValue: Cv4rs.expandIconColor.toHexString(),
                                 textStyle: Sv4rs.settingslabelStyle,
@@ -1026,7 +1084,7 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
                             ),
                             //color picker
                             Padding(
-                              padding: EdgeInsets.fromLTRB(40, 0, 10, 10),
+                              padding: EdgeInsets.fromLTRB(V4rs.paddingValue(40), 0, V4rs.paddingValue(10), V4rs.paddingValue(10)),
                               child: ColorPicker(
                                 pickerColor: Cv4rs.expandIconColor, 
                                 enableAlpha: false,
@@ -1100,7 +1158,7 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
                   title: Text('Message Window:', style: Sv4rs.settingslabelStyle,),
                   collapsedBackgroundColor: Cv4rs.themeColor4,
                   backgroundColor: Cv4rs.themeColor4,
-                  childrenPadding: EdgeInsets.symmetric(horizontal: 20),
+                  childrenPadding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(20)),
                   onExpansionChanged: (bool expanded) {  
                     if (Sv4rs.speakInterfaceButtonsOnSelect) {
                         V4rs.speakOnSelect(
@@ -1113,7 +1171,8 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
                         );
                       }},
                   children: [
-                    Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 15), child: 
+                    Padding(padding: EdgeInsetsGeometry.symmetric(
+                      horizontal: V4rs.paddingValue(15)), child: 
                     Row(
                       children: [
                         Text('Clear text after spoken:', style: Sv4rs.settingslabelStyle),
@@ -1161,11 +1220,11 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
                                 ]),
                         collapsedBackgroundColor: Cv4rs.themeColor4,
                         backgroundColor: Cv4rs.themeColor4,
-                        childrenPadding: EdgeInsets.symmetric(horizontal: 20),
+                        childrenPadding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(20)),
                         children: [
                           //underline
                            Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 15),
+                            padding:  EdgeInsets.symmetric(horizontal: V4rs.paddingValue(15)),
                             child: Row(
                                 children: [
                                   Expanded(flex: 3, child: 
@@ -1189,7 +1248,7 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
                          
                           //italics
                           Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 15),
+                            padding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(15)),
                             child: Row(
                                 children: [
                                   Expanded(flex: 3, child: 
@@ -1313,7 +1372,8 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
                           children: [
                             //hexcode input
                             Padding(
-                              padding: EdgeInsetsGeometry.symmetric(horizontal: 40, vertical: 20),
+                              padding: EdgeInsetsGeometry.symmetric(
+                                horizontal: V4rs.paddingValue(40), vertical: V4rs.paddingValue(20)),
                               child: HexCodeInput(
                                 startValue: Fv4rs.highlightBackgroundFontColor.toHexString(),
                                 textStyle: Sv4rs.settingslabelStyle,
@@ -1328,7 +1388,7 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
                             ),
                             //color picker
                             Padding(
-                              padding: EdgeInsets.fromLTRB(40, 0, 10, 10),
+                              padding: EdgeInsets.fromLTRB(V4rs.paddingValue(40), 0, V4rs.paddingValue(10), V4rs.paddingValue(10)),
                               child: ColorPicker(
                                 pickerColor: Fv4rs.highlightBackgroundFontColor, 
                                 enableAlpha: false,
@@ -1385,7 +1445,7 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
                             children: [
                               //hexcode input
                               Padding(
-                                padding: EdgeInsetsGeometry.symmetric(horizontal: 40, vertical: 20),
+                                padding: EdgeInsetsGeometry.symmetric(horizontal: V4rs.paddingValue(40), vertical: V4rs.paddingValue(20)),
                                 child: HexCodeInput(
                                   startValue: Fv4rs.highlightFontColor.toHexString(),
                                   textStyle: Sv4rs.settingslabelStyle,
@@ -1400,7 +1460,11 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
                               ),
                               //color picker
                               Padding(
-                                padding: EdgeInsets.fromLTRB(40, 0, 10, 10),
+                                padding: EdgeInsets.fromLTRB(
+                                  V4rs.paddingValue(40), 
+                                  0, 
+                                  V4rs.paddingValue(10), 
+                                  V4rs.paddingValue(10)),
                                 child: ColorPicker(
                                   pickerColor: Fv4rs.highlightFontColor, 
                                   enableAlpha: false,
@@ -1419,7 +1483,7 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
                         ],
                       ),
                     
-                    Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 15), child: 
+                    Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: V4rs.paddingValue(15)), child: 
                     Row(
                       children: [
                         Text('Show Scroll Buttons:', style: Sv4rs.settingslabelStyle),
@@ -1434,7 +1498,8 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
                     ),
                     ),
 
-                    Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 15), child: 
+                    if (Sv4rs.myLanguages.length > 1)
+                    Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: V4rs.paddingValue(15)), child: 
                     Row(
                       children: [
                         Text('Show Language Selector Slider:', style: Sv4rs.settingslabelStyle),
@@ -1507,7 +1572,7 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
                   title: Text('Boardset:', style: Sv4rs.settingslabelStyle,),
                   collapsedBackgroundColor: Cv4rs.themeColor4,
                   backgroundColor: Cv4rs.themeColor4,
-                  childrenPadding: EdgeInsets.symmetric(horizontal: 20),
+                  childrenPadding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(20)),
                   onExpansionChanged: (bool expanded) {  
                     if (Sv4rs.speakInterfaceButtonsOnSelect) {
                         V4rs.speakOnSelect(
@@ -1525,7 +1590,7 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
                       title: Text('Export Boardset:', style: Sv4rs.settingslabelStyle),
                       collapsedBackgroundColor: Cv4rs.themeColor4,
                       backgroundColor: Cv4rs.themeColor4,
-                      childrenPadding: EdgeInsets.symmetric(horizontal: 40),
+                      childrenPadding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(40)),
                       children: [ 
                         Row(
                         children: [
@@ -1564,7 +1629,7 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Padding(
-                                    padding: EdgeInsetsGeometry.symmetric(horizontal: 10), 
+                                    padding: EdgeInsetsGeometry.symmetric(horizontal: V4rs.paddingValue(V4rs.paddingValue(10)),), 
                                     child: Text('Export File', style: Fv4rs.mwLabelStyle.copyWith(
                                       color: Cv4rs.themeColor4,
                                     )),
@@ -1591,7 +1656,7 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Padding(
-                                    padding: EdgeInsetsGeometry.symmetric(horizontal: 10), 
+                                    padding: EdgeInsetsGeometry.symmetric(horizontal: V4rs.paddingValue(10),), 
                                     child: Text('Print', style: Fv4rs.mwLabelStyle.copyWith(
                                       color: Cv4rs.themeColor4,
                                     )),
@@ -1617,13 +1682,13 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
                       title: Text('Part of Speech Colors:', style: Sv4rs.settingslabelStyle),
                       collapsedBackgroundColor: Cv4rs.themeColor4,
                       backgroundColor: Cv4rs.themeColor4,
-                      childrenPadding: EdgeInsets.symmetric(horizontal: 20),
+                      childrenPadding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(20)),
                       children: [
                         ExpansionTile(
                           title: Text('Background Colors:', style: Sv4rs.settingslabelStyle),
                           collapsedBackgroundColor: Cv4rs.themeColor4,
                           backgroundColor: Cv4rs.themeColor4,
-                          childrenPadding: EdgeInsets.symmetric(horizontal: 20),
+                          childrenPadding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(20)),
                           children: [
                             ColorPickerWithHex(
                               label: 'Determiner Color:', 
@@ -1747,7 +1812,7 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
                           title: Text('Border Colors:', style: Sv4rs.settingslabelStyle),
                           collapsedBackgroundColor: Cv4rs.themeColor4,
                           backgroundColor: Cv4rs.themeColor4,
-                          childrenPadding: EdgeInsets.symmetric(horizontal: 20),
+                          childrenPadding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(20)),
                           children: [
                             ColorPickerWithHex(
                               label: 'Determiner Border Color:',
@@ -1899,7 +1964,7 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
                     title: Text('Navigation Row:', style: Sv4rs.settingslabelStyle),
                     collapsedBackgroundColor: Cv4rs.themeColor4,
                     backgroundColor: Cv4rs.themeColor4,
-                    childrenPadding: EdgeInsets.symmetric(horizontal: 20),
+                    childrenPadding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(20)),
                       children: [
 
                       //show nav row
@@ -1907,9 +1972,9 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
                         title: Text('Visibility:', style: Sv4rs.settingslabelStyle),
                         collapsedBackgroundColor: Cv4rs.themeColor4,
                         backgroundColor: Cv4rs.themeColor4,
-                        childrenPadding: EdgeInsets.symmetric(horizontal: 20),
+                        childrenPadding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(20)),
                         children: [
-                          Padding(padding: EdgeInsetsGeometry.fromLTRB(0, 0, 0, 20), child:
+                          Padding(padding: EdgeInsetsGeometry.fromLTRB(0, 0, 0, V4rs.paddingValue(20)), child:
                             Column(
                                 children: [
                                   Row(
@@ -1953,10 +2018,10 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
                         title: Text('Center Buttons:', style: Sv4rs.settingslabelStyle),
                         collapsedBackgroundColor: Cv4rs.themeColor4,
                         backgroundColor: Cv4rs.themeColor4,
-                        childrenPadding: EdgeInsets.symmetric(horizontal: 20),
+                        childrenPadding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(20)),
                         children: [
                           Padding(
-                            padding: EdgeInsetsGeometry.fromLTRB(0, 0, 0, 20),
+                            padding: EdgeInsetsGeometry.fromLTRB(0, 0, 0, V4rs.paddingValue(20)),
                             child: Column(
                                 children: [
                                   Row(
@@ -1993,7 +2058,7 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsetsGeometry.fromLTRB(0, 0, 0, 20),
+                            padding: EdgeInsetsGeometry.fromLTRB(0, 0, 0, V4rs.paddingValue(20)),
                             child: Column(
                                 children: [
                                   Row(
@@ -2039,10 +2104,10 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
                         title: Text('Button Format:', style: Sv4rs.settingslabelStyle),
                         collapsedBackgroundColor: Cv4rs.themeColor4,
                         backgroundColor: Cv4rs.themeColor4,
-                        childrenPadding: EdgeInsets.symmetric(horizontal: 20),
+                        childrenPadding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(20)),
                         children: [
                       Padding(
-                            padding: EdgeInsetsGeometry.fromLTRB(0, 0, 0, 20),
+                            padding: EdgeInsetsGeometry.fromLTRB(0, 0, 0, V4rs.paddingValue(20)),
                             child: 
                                   Row(
                                 children: [
@@ -2070,7 +2135,7 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
                           ),
                       
                       Padding(
-                            padding: EdgeInsetsGeometry.fromLTRB(0, 0, 0, 20),
+                            padding: EdgeInsetsGeometry.fromLTRB(0, 0, 0, V4rs.paddingValue(20)),
                             child: Column(
                                 children: [
                                   Row(
@@ -2115,9 +2180,9 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
                         title: Text('Speak on Select:', style: Sv4rs.settingslabelStyle),
                         collapsedBackgroundColor: Cv4rs.themeColor4,
                         backgroundColor: Cv4rs.themeColor4,
-                        childrenPadding: EdgeInsets.symmetric(horizontal: 20),
+                        childrenPadding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(20)),
                         children: [
-                          Padding(padding: EdgeInsetsGeometry.fromLTRB(0, 0, 0, 20), child:
+                          Padding(padding: EdgeInsetsGeometry.fromLTRB(0, 0, 0, V4rs.paddingValue(20)), child:
                         Column(
                           children: [
                             Row(
@@ -2247,7 +2312,7 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
                     title: Text('Grammer Row:', style: Sv4rs.settingslabelStyle),
                     collapsedBackgroundColor: Cv4rs.themeColor4,
                     backgroundColor: Cv4rs.themeColor4,
-                    childrenPadding: EdgeInsets.symmetric(horizontal: 20),
+                    childrenPadding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(20)),
                       children: [
 
                       //show grammer row
@@ -2255,7 +2320,7 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
                         title: Text('Visibility:', style: Sv4rs.settingslabelStyle),
                         collapsedBackgroundColor: Cv4rs.themeColor4,
                         backgroundColor: Cv4rs.themeColor4,
-                        childrenPadding: EdgeInsets.symmetric(horizontal: 40),
+                        childrenPadding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(40)),
                         children: [
                             Column(
                                 children: [
@@ -2298,7 +2363,7 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
                         title: Text('Format:', style: Sv4rs.settingslabelStyle),
                         collapsedBackgroundColor: Cv4rs.themeColor4,
                         backgroundColor: Cv4rs.themeColor4,
-                        childrenPadding: EdgeInsets.symmetric(horizontal: 40),
+                        childrenPadding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(40)),
                         children: [
                           Column(
                         children: [
@@ -2341,9 +2406,9 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
                         title: Text('Speak on Select:', style: Sv4rs.settingslabelStyle),
                         collapsedBackgroundColor: Cv4rs.themeColor4,
                         backgroundColor: Cv4rs.themeColor4,
-                        childrenPadding: EdgeInsets.symmetric(horizontal: 20),
+                        childrenPadding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(20)),
                         children: [
-                          Padding(padding: EdgeInsetsGeometry.fromLTRB(0, 0, 0, 20), child:
+                          Padding(padding: EdgeInsetsGeometry.fromLTRB(0, 0, 0, V4rs.paddingValue(20)), child:
                         Column(
                           children: [
                             Row(
@@ -2474,10 +2539,10 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
                     title: Text('Sub Folder Settings:', style: Sv4rs.settingslabelStyle),
                     collapsedBackgroundColor: Cv4rs.themeColor4,
                     backgroundColor: Cv4rs.themeColor4,
-                    childrenPadding: EdgeInsets.symmetric(horizontal: 20),
+                    childrenPadding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(20)),
                     children: [
                       //use sub folders
-                      Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 15), child:
+                      Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: V4rs.paddingValue(15)), child:
                       Row(
                       children: [
                         Text('Use Sub-Folders:', style: Sv4rs.settingslabelStyle, ),
@@ -2498,10 +2563,10 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
                         title: Text('Button Format:', style: Sv4rs.settingslabelStyle),
                         collapsedBackgroundColor: Cv4rs.themeColor4,
                         backgroundColor: Cv4rs.themeColor4,
-                        childrenPadding: EdgeInsets.symmetric(horizontal: 20),
+                        childrenPadding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(20)),
                         children: [
                           Padding(
-                            padding: EdgeInsetsGeometry.fromLTRB(0, 0, 0, 20),
+                            padding: EdgeInsetsGeometry.fromLTRB(0, 0, 0, V4rs.paddingValue(20)),
                             child: 
                             Row( children: [
                               Text('Border Weight', style: Sv4rs.settingslabelStyle),
@@ -2527,7 +2592,7 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
                           ),
                       
                       Padding(
-                            padding: EdgeInsetsGeometry.fromLTRB(0, 0, 0, 20),
+                            padding: EdgeInsetsGeometry.fromLTRB(0, 0, 0, V4rs.paddingValue(20)),
                             child: Column(
                                 children: [
                                   Row(
@@ -2572,9 +2637,9 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
                         title: Text('Speak on Select:', style: Sv4rs.settingslabelStyle),
                         collapsedBackgroundColor: Cv4rs.themeColor4,
                         backgroundColor: Cv4rs.themeColor4,
-                        childrenPadding: EdgeInsets.symmetric(horizontal: 20),
+                        childrenPadding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(20)),
                         children: [
-                          Padding(padding: EdgeInsetsGeometry.fromLTRB(0, 0, 0, 20), child:
+                          Padding(padding: EdgeInsetsGeometry.fromLTRB(0, 0, 0, V4rs.paddingValue(20)), child:
                         Column(
                           children: [
                             Row(
@@ -2706,17 +2771,17 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
                     title: Text('Button Settings:', style: Sv4rs.settingslabelStyle),
                     collapsedBackgroundColor: Cv4rs.themeColor4,
                     backgroundColor: Cv4rs.themeColor4,
-                    childrenPadding: EdgeInsets.symmetric(horizontal: 20),
+                    childrenPadding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(20)),
                     children: [
                       //button format
                       ExpansionTile(
                         title: Text('Button Format:', style: Sv4rs.settingslabelStyle),
                         collapsedBackgroundColor: Cv4rs.themeColor4,
                         backgroundColor: Cv4rs.themeColor4,
-                        childrenPadding: EdgeInsets.symmetric(horizontal: 20),
+                        childrenPadding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(20)),
                         children: [
                           Padding(
-                            padding: EdgeInsetsGeometry.fromLTRB(0, 0, 0, 20),
+                            padding: EdgeInsetsGeometry.fromLTRB(0, 0, 0, V4rs.paddingValue(20)),
                             child: 
                             Row( children: [
                               Text('Border Weight', style: Sv4rs.settingslabelStyle),
@@ -2742,7 +2807,7 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
                           ),
                       
                       Padding(
-                            padding: EdgeInsetsGeometry.fromLTRB(0, 0, 0, 20),
+                            padding: EdgeInsetsGeometry.fromLTRB(0, 0, 0, V4rs.paddingValue(20)),
                             child: Column(
                                 children: [
                                   Row(
@@ -2787,15 +2852,15 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
                         title: Text('Speak on Select:', style: Sv4rs.settingslabelStyle),
                         collapsedBackgroundColor: Cv4rs.themeColor4,
                         backgroundColor: Cv4rs.themeColor4,
-                        childrenPadding: EdgeInsets.symmetric(horizontal: 20),
+                        childrenPadding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(20)),
                         children: [
                            ExpansionTile(
                               title: Text('Button Speak on Select:', style: Sv4rs.settingslabelStyle),
                               collapsedBackgroundColor: Cv4rs.themeColor4,
                               backgroundColor: Cv4rs.themeColor4,
-                              childrenPadding: EdgeInsets.symmetric(horizontal: 20),
+                              childrenPadding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(20)),
                               children: [
-                                Padding(padding: EdgeInsetsGeometry.fromLTRB(0, 0, 0, 20), child:
+                                Padding(padding: EdgeInsetsGeometry.fromLTRB(0, 0, 0, V4rs.paddingValue(20)), child:
                               Column(
                                 children: [
                                   Row(
@@ -2840,9 +2905,9 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
                         title: Text('Pocket Folder Speak on Select:', style: Sv4rs.settingslabelStyle),
                         collapsedBackgroundColor: Cv4rs.themeColor4,
                         backgroundColor: Cv4rs.themeColor4,
-                        childrenPadding: EdgeInsets.symmetric(horizontal: 20),
+                        childrenPadding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(20)),
                         children: [
-                          Padding(padding: EdgeInsetsGeometry.fromLTRB(0, 0, 0, 20), child:
+                          Padding(padding: EdgeInsetsGeometry.fromLTRB(0, 0, 0, V4rs.paddingValue(20)), child:
                         Column(
                           children: [
                             Row(
@@ -2887,9 +2952,9 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
                         title: Text('Folder Speak on Select:', style: Sv4rs.settingslabelStyle),
                         collapsedBackgroundColor: Cv4rs.themeColor4,
                         backgroundColor: Cv4rs.themeColor4,
-                        childrenPadding: EdgeInsets.symmetric(horizontal: 20),
+                        childrenPadding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(20)),
                         children: [
-                          Padding(padding: EdgeInsetsGeometry.fromLTRB(0, 0, 0, 20), child:
+                          Padding(padding: EdgeInsetsGeometry.fromLTRB(0, 0, 0, V4rs.paddingValue(20)), child:
                         Column(
                           children: [
                             Row(
@@ -2934,9 +2999,9 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
                         title: Text('Audio Tile Speak on Select:', style: Sv4rs.settingslabelStyle),
                         collapsedBackgroundColor: Cv4rs.themeColor4,
                         backgroundColor: Cv4rs.themeColor4,
-                        childrenPadding: EdgeInsets.symmetric(horizontal: 20),
+                        childrenPadding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(20)),
                         children: [
-                          Padding(padding: EdgeInsetsGeometry.fromLTRB(0, 0, 0, 20), child:
+                          Padding(padding: EdgeInsetsGeometry.fromLTRB(0, 0, 0, V4rs.paddingValue(20)), child:
                         Column(
                           children: [
                             Row(
@@ -2981,9 +3046,9 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
                         title: Text('Typing Button Speak on Select:', style: Sv4rs.settingslabelStyle),
                         collapsedBackgroundColor: Cv4rs.themeColor4,
                         backgroundColor: Cv4rs.themeColor4,
-                        childrenPadding: EdgeInsets.symmetric(horizontal: 20),
+                        childrenPadding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(20)),
                         children: [
-                          Padding(padding: EdgeInsetsGeometry.fromLTRB(0, 0, 0, 20), child:
+                          Padding(padding: EdgeInsetsGeometry.fromLTRB(0, 0, 0, V4rs.paddingValue(20)), child:
                         Column(
                           children: [
                             Row(
@@ -3137,7 +3202,7 @@ class _Settings extends State<Settings> with WidgetsBindingObserver {
                   title: Text('Special Gestures:', style: Sv4rs.settingslabelStyle,),
                   collapsedBackgroundColor: Cv4rs.themeColor4,
                   backgroundColor: Cv4rs.themeColor4,
-                  childrenPadding: EdgeInsets.symmetric(horizontal: 40),
+                  childrenPadding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(40)),
                   onExpansionChanged: (bool expanded) {  
                     if (Sv4rs.speakInterfaceButtonsOnSelect) {
                         V4rs.speakOnSelect(

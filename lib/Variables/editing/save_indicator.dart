@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutterkeysaac/Variables/editing/editor_variables.dart';
+import 'package:flutterkeysaac/Variables/variables.dart';
 
 /// Small non-blocking save indicator bound to Ev4rs.isSaving
 class SaveIndicator extends StatelessWidget {
@@ -14,8 +15,8 @@ class SaveIndicator extends StatelessWidget {
         return Align(
           alignment: Alignment.topLeft,
           child: Container(
-            margin: const EdgeInsets.only(top: 8),
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+            margin: EdgeInsets.only(top: V4rs.paddingValue(8)),
+            padding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(10), vertical: V4rs.paddingValue(6)),
             decoration: BoxDecoration(
               color: const Color.fromRGBO(0, 0, 0, 0.6),
               borderRadius: BorderRadius.circular(12),
@@ -56,8 +57,10 @@ class LoadingIndicator extends StatelessWidget {
         return Align(
           alignment: Alignment.topLeft,
           child: Container(
-            margin: const EdgeInsets.only(top: 8),
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+            margin: EdgeInsets.only(top: V4rs.paddingValue(8)),
+            padding: EdgeInsets.symmetric(
+              horizontal: V4rs.paddingValue(10), 
+              vertical: V4rs.paddingValue(6)),
             decoration: BoxDecoration(
               color: const Color.fromRGBO(0, 0, 0, 0.6),
               borderRadius: BorderRadius.circular(12),

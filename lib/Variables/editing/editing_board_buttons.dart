@@ -46,7 +46,7 @@ import 'dart:async';
             //
             //back, in positioned is the tap expander
             //
-            Padding(padding: EdgeInsetsGeometry.all(7),
+            Padding(padding: EdgeInsetsGeometry.all(V4rs.paddingValue(7)),
             child: SizedBox( 
               height: (isLandscape) ? MediaQuery.of(context).size.height * 0.065 : MediaQuery.of(context).size.height * 0.03 ,
               child: ButtonStyle1(
@@ -72,7 +72,12 @@ import 'dart:async';
             Expanded(flex: 2, child: 
               Column( children:[
                 //undo
-                Padding(padding: EdgeInsetsGeometry.fromLTRB(3, 7, 3, 0),
+                Padding(padding: EdgeInsetsGeometry.fromLTRB(
+                  V4rs.paddingValue(3), 
+                  V4rs.paddingValue(7), 
+                  V4rs.paddingValue(3), 
+                  0
+                ),
             child:
                 SizedBox( 
               height: (isLandscape) ? MediaQuery.of(context).size.height * 0.06 : MediaQuery.of(context).size.height * 0.04 ,
@@ -93,7 +98,12 @@ import 'dart:async';
                 ),
 
                 //share
-                Padding(padding: EdgeInsetsGeometry.fromLTRB(3, 7, 3, 0),
+                Padding(padding: EdgeInsetsGeometry.fromLTRB(
+                  V4rs.paddingValue(3), 
+                  V4rs.paddingValue(7), 
+                  V4rs.paddingValue(3), 
+                  0
+                ),
             child:
                 SizedBox( 
               height: (isLandscape) ? MediaQuery.of(context).size.height * 0.06 : MediaQuery.of(context).size.height * 0.04 ,
@@ -118,7 +128,12 @@ import 'dart:async';
             Expanded(flex: 2, child: 
               Column( children:[
                 //redo
-                Padding(padding: EdgeInsetsGeometry.fromLTRB(3, 7, 3, 0),
+                Padding(padding: EdgeInsetsGeometry.fromLTRB(
+                  V4rs.paddingValue(3), 
+                  V4rs.paddingValue(7), 
+                  V4rs.paddingValue(3), 
+                  0
+                ),
             child:
                 SizedBox( 
               height: (isLandscape) ? MediaQuery.of(context).size.height * 0.06 : MediaQuery.of(context).size.height * 0.04,
@@ -138,7 +153,12 @@ import 'dart:async';
                 ),
                 ),
                 //print
-                Padding(padding: EdgeInsetsGeometry.fromLTRB(3, 7, 3, 0),
+                Padding(padding: EdgeInsetsGeometry.fromLTRB(
+                  V4rs.paddingValue(3), 
+                  V4rs.paddingValue(7), 
+                  V4rs.paddingValue(3), 
+                  0
+                ),
             child:
                 SizedBox( 
               height: (isLandscape) ? MediaQuery.of(context).size.height * 0.06 : MediaQuery.of(context).size.height * 0.04,
@@ -161,7 +181,12 @@ import 'dart:async';
             //
             Column( children:[
               Padding(
-                padding: EdgeInsetsGeometry.fromLTRB(7, 7, 7, 0),
+                padding: EdgeInsetsGeometry.fromLTRB(
+                  V4rs.paddingValue(7), 
+                  V4rs.paddingValue(7), 
+                  V4rs.paddingValue(7), 
+                  0
+                ),
                 child: SizedBox( 
                   height: (isLandscape) ? MediaQuery.of(context).size.height * 0.07 : MediaQuery.of(context).size.height * 0.04,
                   child: (Ev4rs.isButtonExpanded.value) 
@@ -184,11 +209,15 @@ import 'dart:async';
                 ),
               ),
               Padding(
-                padding: EdgeInsetsGeometry.fromLTRB(7, 0, 7, 7),
+                padding: EdgeInsetsGeometry.fromLTRB(
+                  V4rs.paddingValue(7), 
+                  V4rs.paddingValue(0), 
+                  V4rs.paddingValue(7), 
+                  V4rs.paddingValue(7)),
                 child: SizedBox( 
                   height: (isLandscape) ? MediaQuery.of(context).size.height * 0.08 : MediaQuery.of(context).size.height * 0.04 ,
                   child: Padding(
-                    padding: EdgeInsetsGeometry.all(10), child: 
+                    padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)), child: 
                       ButtonStyle1(
                         glow: (Ev4rs.boardEditor.value) ? true : false,
                         imagePath: 'assets/interface_icons/interface_icons/iBoard.png', 
@@ -211,7 +240,7 @@ import 'dart:async';
             child: ValueListenableBuilder<bool>(valueListenable: Ev4rs.showSelectionMenu, builder: (context, showSelectionMenu, _) {
             return SizedBox( 
               height: (isLandscape) ? MediaQuery.of(context).size.height * 0.09 : MediaQuery.of(context).size.height * 0.04,
-              child:  Padding(padding: EdgeInsetsGeometry.all(7), child:
+              child:  Padding(padding: EdgeInsetsGeometry.all(V4rs.paddingValue(7)), child:
             Row(
               children: [
                 //tap
@@ -376,7 +405,7 @@ import 'dart:async';
               //
               //back, in positioned is the tap expander
               //
-              Padding(padding: EdgeInsetsGeometry.all(7),
+              Padding(padding: EdgeInsetsGeometry.all(V4rs.paddingValue(7)),
               child: SizedBox( 
                 height: (isLandscape) ? MediaQuery.of(context).size.height * 0.065 : MediaQuery.of(context).size.height * 0.03 ,
                 child: ButtonStyle1(
@@ -406,7 +435,7 @@ import 'dart:async';
                   //image
                   //
                   Padding(
-                    padding: EdgeInsetsGeometry.all(10),
+                    padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)),
                     child: 
                           Container(
                             width: MediaQuery.of(context).size.height * 0.25,
@@ -417,7 +446,9 @@ import 'dart:async';
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
-                                Expanded(child: Padding(padding: EdgeInsetsGeometry.all(Ev4rs.padding.value), 
+                                Expanded(child: Padding(padding: EdgeInsetsGeometry.all(
+                                  V4rs.paddingValue(Ev4rs.padding.value)
+                                  ), 
                                   child: ImageStyle1(
                                       image: image, 
                                       symbolSaturation: Ev4rs.saturation.value, 
@@ -439,7 +470,8 @@ import 'dart:async';
                                   Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 10), child:
+                                      Padding(padding: EdgeInsetsGeometry.symmetric(
+                                        horizontal: V4rs.paddingValue(10)), child:
                                         SizedBox( 
                                           width: MediaQuery.of(context).size.height * 0.08,
                                           child: ButtonStyle3(
@@ -459,7 +491,8 @@ import 'dart:async';
                                     maintainSize: true,
                                     maintainAnimation: true,
                                     maintainState: true,
-                                    child: Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 10), child:
+                                    child: Padding(padding: EdgeInsetsGeometry.symmetric(
+                                      horizontal: V4rs.paddingValue(10)), child:
                                     SizedBox( 
                                       width: MediaQuery.of(context).size.height * 0.07,
                                       child: ButtonStyle3(
@@ -485,7 +518,7 @@ import 'dart:async';
                   //
                   //padding
                   //
-                  Padding(padding: EdgeInsetsGeometry.all(10),
+                  Padding(padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)),
                   child:
                   SizedBox( 
                     width: MediaQuery.of(context).size.height * 0.25,
@@ -499,11 +532,15 @@ import 'dart:async';
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Padding(padding: EdgeInsets.all(10), child: 
+                        Padding(padding: EdgeInsets.all(V4rs.paddingValue(10)), child: 
                         Column(children: [
                         Text('Image Padding: ${Ev4rs.padding.value}', style: Sv4rs.settingslabelStyle,),
                         Slider(
-                              padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+                              padding: EdgeInsets.fromLTRB(
+                                V4rs.paddingValue(10), 
+                                V4rs.paddingValue(10), 
+                                V4rs.paddingValue(10), 
+                                0),
                               value: Ev4rs.padding.value,
                               min: 0.0,
                               max: 10.0,
@@ -536,7 +573,7 @@ import 'dart:async';
                   //
                   //symbolColors
                   //
-                  Padding(padding: EdgeInsetsGeometry.all(10),
+                  Padding(padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)),
                   child:
                   SizedBox(
                     child:
@@ -611,7 +648,7 @@ import 'dart:async';
               Expanded(flex: 7, child: 
                 Column( children:[
                   //label and message
-                  Padding(padding: EdgeInsetsGeometry.all(10),
+                  Padding(padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)),
                   child: ValueListenableBuilder(
                       valueListenable: MiniCombinedValueNotifier(Ev4rs.label, Ev4rs.message, Ev4rs.matchLabel, null, null), 
                       builder: (context, values, _) {
@@ -631,7 +668,7 @@ import 'dart:async';
                         //label
                         Row(children: [ 
                           Expanded(flex: 5, child: 
-                            Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 10, vertical: 0), child: 
+                            Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: V4rs.paddingValue(10), vertical: 0), child: 
                               TextField(
                                 controller: labelController,
                                 style: Ev4rs.labelStyle,
@@ -646,7 +683,7 @@ import 'dart:async';
                             ),
                           ),
                           Flexible(flex: 2, child: 
-                          Padding(padding: EdgeInsetsGeometry.symmetric(vertical: 5), child: 
+                          Padding(padding: EdgeInsetsGeometry.symmetric(vertical: V4rs.paddingValue(5)), child: 
                           ButtonStyle4(
                           imagePath: 'assets/interface_icons/interface_icons/iCheck.png', 
                             onPressed: (){ setState(() {
@@ -670,7 +707,7 @@ import 'dart:async';
                         Expanded(
                           flex: 5,
                           child: 
-                        Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 10, vertical: 0), child: 
+                        Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: V4rs.paddingValue(10), vertical: 0), child: 
                           TextField(
                             controller: messageController,
                             style: Ev4rs.labelStyle,
@@ -687,7 +724,7 @@ import 'dart:async';
                         Flexible(
                           flex: 2,
                           child: 
-                          Padding(padding: EdgeInsetsGeometry.symmetric(vertical: 5), child: 
+                          Padding(padding: EdgeInsetsGeometry.symmetric(vertical: V4rs.paddingValue(5)), child: 
                         ButtonStyle4(
                         imagePath: 'assets/interface_icons/interface_icons/iCheck.png', 
                           onPressed: (){ setState(() {
@@ -710,14 +747,14 @@ import 'dart:async';
                         Row(children: [
                           Expanded(child: 
                             Padding(
-                              padding: EdgeInsetsGeometry.all(10), 
+                              padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)), 
                               child: Text(
                                 'Match Label & Message', 
                                 style: Sv4rs.settingslabelStyle
                               ),
                             ),
                           ),
-                          Padding(padding: EdgeInsetsGeometry.fromLTRB(0, 0, 10, 0), child: 
+                          Padding(padding: EdgeInsetsGeometry.fromLTRB(0, 0, V4rs.paddingValue(10), 0), child: 
                              Switch(
                               padding: EdgeInsets.all(0),
                               value: Ev4rs.matchLabel.value, 
@@ -738,7 +775,7 @@ import 'dart:async';
       ),
                   ),
                   //match speak on select, speak on select
-                  Padding(padding: EdgeInsetsGeometry.all(10),
+                  Padding(padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)),
                     child: Container(
                       decoration: BoxDecoration(
                         color: Cv4rs.themeColor4,
@@ -751,7 +788,11 @@ import 'dart:async';
                             return Row(children: [
                               Expanded(child: 
                               Padding(
-                                padding: EdgeInsetsGeometry.fromLTRB(10, 10, 10, 0), 
+                                padding: EdgeInsetsGeometry.fromLTRB(
+                                  V4rs.paddingValue(10), 
+                                  V4rs.paddingValue(10), 
+                                  V4rs.paddingValue(10), 
+                                  0), 
                                 child: Text(
                                   'Match Speak on Select:', 
                                   maxLines: 2,
@@ -762,7 +803,7 @@ import 'dart:async';
                                 ),
                               ),
                               Padding(
-                                padding: EdgeInsetsGeometry.fromLTRB(0, 0, 10, 0), 
+                                padding: EdgeInsetsGeometry.fromLTRB(0, 0, V4rs.paddingValue(10), 0), 
                                 child: Switch(
                                   padding: EdgeInsets.all(0),
                                   value: Ev4rs.matchSpeakOnSelect.value, 
@@ -779,10 +820,11 @@ import 'dart:async';
                           valueListenable: Ev4rs.speakOnSelect, 
                           builder: (context, speakOnSelect, _) {
                             return Padding(
-                              padding: EdgeInsetsGeometry.all(10), 
+                              padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)), 
                               child: Column(children: [
                                 Slider(
-                                  padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
+                                  padding: EdgeInsets.fromLTRB(
+                                    V4rs.paddingValue(5), 0, V4rs.paddingValue(5), 0),
                                   min: 1.0,
                                   max: 3.0,
                                   divisions: 2,
@@ -796,7 +838,7 @@ import 'dart:async';
                                     }
                                   ),
                                 Padding(
-                                  padding: EdgeInsetsGeometry.fromLTRB(0, 0, 0, 10), 
+                                  padding: EdgeInsetsGeometry.fromLTRB(0, 0, 0, V4rs.paddingValue(10)), 
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                     children: [
@@ -849,7 +891,7 @@ import 'dart:async';
                   ),
                   //font, match font settings, font picker
                   Padding(
-                      padding: EdgeInsetsGeometry.all(10), 
+                      padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)), 
                       child: FontPicker2(
                         widgety:  ButtonStyle2(
                           imagePath: 'assets/interface_icons/interface_icons/iCheck.png', 
@@ -917,9 +959,9 @@ import 'dart:async';
                   //
 
                   Padding(
-                    padding: EdgeInsetsGeometry.all(10), 
+                    padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)), 
                     child: Container( 
-                      padding: EdgeInsetsGeometry.all(10),
+                      padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)),
                       decoration: BoxDecoration(
                         color: Cv4rs.themeColor4,
                         borderRadius: BorderRadius.circular(10)
@@ -939,7 +981,7 @@ import 'dart:async';
                                 ),
                               ),
                               Padding(
-                                padding: EdgeInsetsGeometry.fromLTRB(0, 0, 10, 0), 
+                                padding: EdgeInsetsGeometry.fromLTRB(0, 0, V4rs.paddingValue(10), 0), 
                                 child: Switch(
                                   padding: EdgeInsets.all(0),
                                   value: Ev4rs.show.value, 
@@ -971,9 +1013,9 @@ import 'dart:async';
                   //
 
                   Padding(
-                    padding: EdgeInsetsGeometry.all(10), 
+                    padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)), 
                     child: Container(
-                      padding: EdgeInsetsGeometry.all(10),
+                      padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)),
                       decoration: BoxDecoration(
                         color: Cv4rs.themeColor4,
                         borderRadius: BorderRadius.circular(10)
@@ -985,7 +1027,7 @@ import 'dart:async';
                             return Row(children: [
                               Expanded(child: 
                                 Padding(
-                                  padding: EdgeInsetsGeometry.fromLTRB(5, 10, 5, 0), 
+                                  padding: EdgeInsetsGeometry.fromLTRB(V4rs.paddingValue(5), V4rs.paddingValue(10), V4rs.paddingValue(5), 0), 
                                     child: Text(
                                       'Match Format:', 
                                       maxLines: 2,
@@ -996,7 +1038,7 @@ import 'dart:async';
                                   ),
                               ),
                               Padding(
-                                padding: EdgeInsetsGeometry.fromLTRB(0, 0, 10, 0), 
+                                padding: EdgeInsetsGeometry.fromLTRB(0, 0, V4rs.paddingValue(10), 0), 
                                 child: Switch(
                                   padding: EdgeInsets.all(0),
                                   value: Ev4rs.matchFormat.value, 
@@ -1013,7 +1055,11 @@ import 'dart:async';
                           valueListenable: Ev4rs.format, 
                           builder: (context, format, _) {
                             return Padding(
-                              padding: EdgeInsetsGeometry.fromLTRB(5, 15, 5, 10), 
+                              padding: EdgeInsetsGeometry.fromLTRB(
+                                V4rs.paddingValue(5), 
+                                V4rs.paddingValue(15), 
+                                V4rs.paddingValue(5), 
+                                V4rs.paddingValue(10)), 
                               child: Column(children: [
                                       Text(
                                         "Format: ${
@@ -1033,7 +1079,7 @@ import 'dart:async';
                                         textAlign: TextAlign.center,
                                       ),
                                 Slider(
-                                  padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
+                                  padding: EdgeInsets.fromLTRB(0, V4rs.paddingValue(5), 0, 0),
                                   min: 1.0,
                                   max: 4.0,
                                   divisions: 3,
@@ -1069,9 +1115,9 @@ import 'dart:async';
                   //border
                   //
 
-                  Padding(padding: EdgeInsetsGeometry.all(10), child: //outer padding 
+                  Padding(padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)), child: //outer padding 
                     Container(
-                      padding: EdgeInsetsGeometry.all(10), //inner padding 
+                      padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)), //inner padding 
                       decoration: BoxDecoration(
                         color: Cv4rs.themeColor4,
                         borderRadius: BorderRadius.circular(10)
@@ -1087,7 +1133,11 @@ import 'dart:async';
                               children: [
                               Expanded(child: 
                                 Padding(
-                                  padding: EdgeInsetsGeometry.fromLTRB(5, 10, 5, 20), 
+                                  padding: EdgeInsetsGeometry.fromLTRB(
+                                    V4rs.paddingValue(5), 
+                                    V4rs.paddingValue(10), 
+                                    V4rs.paddingValue(5), 
+                                    V4rs.paddingValue(20)), 
                                     child: Text(
                                       'Match Border:', 
                                       maxLines: 2,
@@ -1098,7 +1148,7 @@ import 'dart:async';
                                   ),
                               ),
                               Padding(
-                                padding: EdgeInsetsGeometry.fromLTRB(0, 0, 10, 0), 
+                                padding: EdgeInsetsGeometry.fromLTRB(0, 0, V4rs.paddingValue(10), 0), 
                                 child: Switch(
                                   padding: EdgeInsets.all(0),
                                   value: Ev4rs.matchBorder.value, 
@@ -1119,7 +1169,8 @@ import 'dart:async';
                             return Column (children: [
                             Text('Border Weight: ${Ev4rs.borderWeight.value}', style: Sv4rs.settingslabelStyle),
                             Slider(
-                                  padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
+                                  padding: EdgeInsets.fromLTRB(
+                                    V4rs.paddingValue(5), 0, V4rs.paddingValue(5), 0),
                                   min: 0.0,
                                   max: 10.0,
                                   divisions: 20,
@@ -1164,7 +1215,9 @@ import 'dart:async';
                             Column(children:[
                             //hexcode input
                             Padding(
-                              padding: EdgeInsetsGeometry.symmetric(horizontal: 10, vertical: 20),
+                              padding: EdgeInsetsGeometry.symmetric(
+                                horizontal: V4rs.paddingValue(10), 
+                                vertical: V4rs.paddingValue(20)),
                               child: HexCodeInput2(
                                 startValue: Ev4rs.borderColor.value.toHexString(),
                                 textStyle: Sv4rs.settingslabelStyle,
@@ -1235,9 +1288,9 @@ import 'dart:async';
 
                   //background
                   
-                  Padding(padding: EdgeInsetsGeometry.all(10), child: //outer padding 
+                  Padding(padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)), child: //outer padding 
                     Container(
-                      padding: EdgeInsetsGeometry.all(10), //inner padding 
+                      padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)), //inner padding 
                       decoration: BoxDecoration(
                         color: Cv4rs.themeColor4,
                         borderRadius: BorderRadius.circular(10)
@@ -1253,7 +1306,12 @@ import 'dart:async';
                               children: [
                               Expanded(child: 
                                 Padding(
-                                  padding: EdgeInsetsGeometry.fromLTRB(5, 10, 5, 10), 
+                                  padding: EdgeInsetsGeometry.fromLTRB(
+                                    V4rs.paddingValue(5), 
+                                    V4rs.paddingValue(10), 
+                                    V4rs.paddingValue(5), 
+                                    V4rs.paddingValue(10)
+                                  ), 
                                     child: Text(
                                       'Match Color:', 
                                       maxLines: 3,
@@ -1264,7 +1322,7 @@ import 'dart:async';
                                   ),
                               ),
                               Padding(
-                                padding: EdgeInsetsGeometry.fromLTRB(0, 0, 10, 0), 
+                                padding: EdgeInsetsGeometry.fromLTRB(0, 0, V4rs.paddingValue(10), 0), 
                                 child: Switch(
                                   padding: EdgeInsets.all(0),
                                   value: Ev4rs.matchBackground.value,
@@ -1306,7 +1364,9 @@ import 'dart:async';
                             Column(children:[
                             //hexcode input
                             Padding(
-                              padding: EdgeInsetsGeometry.symmetric(horizontal: 10, vertical: 20),
+                              padding: EdgeInsetsGeometry.symmetric(
+                                horizontal: V4rs.paddingValue(10), 
+                                vertical: V4rs.paddingValue(20)),
                               child: HexCodeInput2(
                                 startValue: Ev4rs.backgroundColor.value.toHexString(),
                                 textStyle: Sv4rs.settingslabelStyle,
@@ -1385,7 +1445,7 @@ import 'dart:async';
                   //part of speech
                   
                   Padding(
-                    padding: EdgeInsetsGeometry.all(10),
+                    padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)),
                     child: SizedBox( child:
                       Container(
                         decoration: BoxDecoration(
@@ -1399,14 +1459,14 @@ import 'dart:async';
                           Column(children: [
                             SizedBox(child:
                             Padding (
-                              padding: EdgeInsetsGeometry.fromLTRB(0,15,0,0),
+                              padding: EdgeInsetsGeometry.fromLTRB(0,V4rs.paddingValue(15),0,0),
                               child: Text(
                                 'Part of Speech:', 
                                 style: Sv4rs.settingslabelStyle,
                                 ),
                             ),
                             ),
-                            Padding(padding: EdgeInsets.symmetric(horizontal: 10), child:
+                            Padding(padding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(10)), child:
                             DropdownButton<String>(
                               isExpanded: true,
                               hint: SizedBox(child: Text(
@@ -1450,7 +1510,7 @@ import 'dart:async';
                   ),
                   //type 
                   Padding(
-                    padding: EdgeInsetsGeometry.all(10),
+                    padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)),
                     child: 
                       Container(
                         decoration: BoxDecoration(
@@ -1463,13 +1523,14 @@ import 'dart:async';
                             return
                           Column(children: [
                             Padding (
-                              padding: EdgeInsetsGeometry.fromLTRB(0,15,0,0),
+                              padding: EdgeInsetsGeometry.fromLTRB(0,V4rs.paddingValue(15),0,0),
                               child: Text(
                                 'Button Type:', 
                                 style: Sv4rs.settingslabelStyle,
                                 ),
                             ),
-                            Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 10), child: 
+                            Padding(padding: EdgeInsetsGeometry.symmetric(
+                              horizontal: V4rs.paddingValue(10)), child: 
                             DropdownButton<int>(
                               isExpanded: true,
                                 hint: Text(
@@ -1513,7 +1574,7 @@ import 'dart:async';
                   //if pocket folder or folder
                   if (Ev4rs.buttonType.value == 3 || Ev4rs.buttonType.value == 2)
                   Padding(
-                    padding: EdgeInsetsGeometry.all(10),
+                    padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)),
                     child: 
                       Container(
                         decoration: BoxDecoration(
@@ -1526,13 +1587,13 @@ import 'dart:async';
                             return
                           Column(children: [
                             Padding (
-                              padding: EdgeInsetsGeometry.fromLTRB(0,15,0,0),
+                              padding: EdgeInsetsGeometry.fromLTRB(0,V4rs.paddingValue(15),0,0),
                               child: Text(
                                 'Link To...', 
                                 style: Sv4rs.settingslabelStyle,
                                 ),
                             ),
-                            Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 10), child: 
+                            Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: V4rs.paddingValue(10)), child: 
                             DropdownButton<String>(
                               isExpanded: true,
                                 hint: Text(
@@ -1582,7 +1643,7 @@ import 'dart:async';
 
                   if (Ev4rs.buttonType.value == 3 || Ev4rs.buttonType.value == 2)
                   Padding(
-                  padding: EdgeInsetsGeometry.all(10),
+                  padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)),
                   child: 
                     Container(
                       decoration: BoxDecoration(
@@ -1598,7 +1659,12 @@ import 'dart:async';
                             children: [
                             Expanded(child: 
                               Padding(
-                                padding: EdgeInsetsGeometry.fromLTRB(5, 10, 5, 10), 
+                                padding: EdgeInsetsGeometry.fromLTRB(
+                                  V4rs.paddingValue(5), 
+                                  V4rs.paddingValue(10), 
+                                  V4rs.paddingValue(5), 
+                                  V4rs.paddingValue(10)
+                                ), 
                                   child: Text(
                                     'Return After Select:', 
                                     maxLines: 3,
@@ -1609,7 +1675,7 @@ import 'dart:async';
                                 ),
                             ),
                             Padding(
-                              padding: EdgeInsetsGeometry.fromLTRB(0, 0, 10, 0), 
+                              padding: EdgeInsetsGeometry.fromLTRB(0, 0, V4rs.paddingValue(10), 0), 
                               child: Switch(
                                 padding: EdgeInsets.all(0),
                                 value: Ev4rs.returnAfterSelect.value,
@@ -1640,7 +1706,7 @@ import 'dart:async';
                   //if grammer
                   if (Ev4rs.buttonType.value == 6)
                   Padding(
-                    padding: EdgeInsetsGeometry.all(10),
+                    padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)),
                     child: 
                       Container(
                         decoration: BoxDecoration(
@@ -1653,13 +1719,13 @@ import 'dart:async';
                             return
                           Column(children: [
                             Padding (
-                              padding: EdgeInsetsGeometry.fromLTRB(0,15,0,0),
+                              padding: EdgeInsetsGeometry.fromLTRB(0,V4rs.paddingValue(15),0,0),
                               child: Text(
                                 'Grammer Function:', 
                                 style: Sv4rs.settingslabelStyle,
                                 ),
                             ),
-                          Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 10), child:
+                          Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: V4rs.paddingValue(10)), child:
                             DropdownButton<String>(
                                 isExpanded: true,
                                 hint: Text(
@@ -1702,10 +1768,10 @@ import 'dart:async';
                   //if audio tile
                   if (Ev4rs.buttonType.value == 4)
                   Padding(
-                    padding: EdgeInsetsGeometry.all(10),
+                    padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)),
                     child:
                     Container(
-                        padding: EdgeInsetsGeometry.all(10),
+                        padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)),
                         decoration: BoxDecoration(
                           color: Cv4rs.themeColor4,
                           borderRadius: BorderRadius.circular(10)
@@ -1738,7 +1804,7 @@ import 'dart:async';
                     ),
 
                   //notes
-                  Padding(padding: EdgeInsetsGeometry.all(10),
+                  Padding(padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)),
                   child:
                     Container(
                       decoration: BoxDecoration(
@@ -1748,7 +1814,9 @@ import 'dart:async';
                       child: Column(children: [
                         Row(children: [ 
                           Expanded(flex: 5, child: 
-                            Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 10, vertical: 10), child: 
+                            Padding(padding: EdgeInsetsGeometry.symmetric(
+                              horizontal: V4rs.paddingValue(10), 
+                              vertical: V4rs.paddingValue(10)), child: 
                               ValueListenableBuilder(valueListenable: Ev4rs.notes, builder: (context, value, _) {
                           final notesController = TextEditingController(text: value)
                           ..selection = TextSelection.collapsed(offset: value.length);
@@ -1772,7 +1840,7 @@ import 'dart:async';
                             ),
                           ),
                           Flexible(flex: 2, child: 
-                          Padding(padding: EdgeInsetsGeometry.symmetric(vertical: 5), child: 
+                          Padding(padding: EdgeInsetsGeometry.symmetric(vertical: V4rs.paddingValue(5)), child: 
                           ButtonStyle4(
                           imagePath: 'assets/interface_icons/interface_icons/iCheck.png', 
                             onPressed: (){setState(() {
@@ -1800,7 +1868,12 @@ import 'dart:async';
               Expanded(flex: 2, child: 
                 Column( children:[
                   //undo
-                  Padding(padding: EdgeInsetsGeometry.fromLTRB(3, 7, 3, 0),
+                  Padding(padding: EdgeInsetsGeometry.fromLTRB(
+                    V4rs.paddingValue(3), 
+                    V4rs.paddingValue(7), 
+                    V4rs.paddingValue(3), 
+                    0
+                  ),
               child:
                   SizedBox( 
                 height: (isLandscape) ? MediaQuery.of(context).size.height * 0.06 : MediaQuery.of(context).size.height * 0.04 ,
@@ -1821,7 +1894,11 @@ import 'dart:async';
                   ),
 
                   //share
-                  Padding(padding: EdgeInsetsGeometry.fromLTRB(3, 7, 3, 0),
+                  Padding(padding: EdgeInsetsGeometry.fromLTRB(
+                    V4rs.paddingValue(3), 
+                    V4rs.paddingValue(7), 
+                    V4rs.paddingValue(3), 
+                    0),
               child:
                   SizedBox( 
                 height: (isLandscape) ? MediaQuery.of(context).size.height * 0.06 : MediaQuery.of(context).size.height * 0.04 ,
@@ -1846,7 +1923,11 @@ import 'dart:async';
               Expanded(flex: 2, child: 
                 Column( children:[
                   //redo
-                  Padding(padding: EdgeInsetsGeometry.fromLTRB(3, 7, 3, 0),
+                  Padding(padding: EdgeInsetsGeometry.fromLTRB(
+                    V4rs.paddingValue(3), 
+                    V4rs.paddingValue(7), 
+                    V4rs.paddingValue(3), 
+                    0),
               child:
                   SizedBox( 
                 height: (isLandscape) ? MediaQuery.of(context).size.height * 0.06 : MediaQuery.of(context).size.height * 0.04,
@@ -1866,7 +1947,11 @@ import 'dart:async';
                   ),
                   ),
                   //print
-                  Padding(padding: EdgeInsetsGeometry.fromLTRB(3, 7, 3, 0),
+                  Padding(padding: EdgeInsetsGeometry.fromLTRB(
+                    V4rs.paddingValue(3), 
+                    V4rs.paddingValue(7), 
+                    V4rs.paddingValue(3), 
+                    0),
               child:
                   SizedBox( 
                 height: (isLandscape) ? MediaQuery.of(context).size.height * 0.06 : MediaQuery.of(context).size.height * 0.04,
@@ -1889,7 +1974,11 @@ import 'dart:async';
               //
               Column( children:[
                 Padding(
-                  padding: EdgeInsetsGeometry.fromLTRB(7, 7, 7, 0),
+                  padding: EdgeInsetsGeometry.fromLTRB(
+                    V4rs.paddingValue(7), 
+                    V4rs.paddingValue(7), 
+                    V4rs.paddingValue(7), 
+                    0),
                   child: SizedBox( 
                     height: (isLandscape) ? MediaQuery.of(context).size.height * 0.07 : MediaQuery.of(context).size.height * 0.04,
                     child: (Ev4rs.isButtonExpanded.value) 
@@ -1912,11 +2001,15 @@ import 'dart:async';
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsetsGeometry.fromLTRB(7, 0, 7, 7),
+                  padding: EdgeInsetsGeometry.fromLTRB(
+                    V4rs.paddingValue(7), 
+                    0, 
+                    V4rs.paddingValue(7), 
+                    V4rs.paddingValue(7)),
                   child: SizedBox( 
                     height: (isLandscape) ? MediaQuery.of(context).size.height * 0.08 : MediaQuery.of(context).size.height * 0.04 ,
                     child: Padding(
-                      padding: EdgeInsetsGeometry.all(10), child: 
+                      padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)), child: 
                        ButtonStyle1(
                           glow: (Ev4rs.boardEditor.value) ? true : false,
                           imagePath: 'assets/interface_icons/interface_icons/iBoard.png', 
@@ -1939,7 +2032,7 @@ import 'dart:async';
           child: ValueListenableBuilder<bool>(valueListenable: Ev4rs.showSelectionMenu, builder: (context, showSelectionMenu, _) {
           return SizedBox( 
             height: (isLandscape) ? MediaQuery.of(context).size.height * 0.09 : MediaQuery.of(context).size.height * 0.04,
-            child:  Padding(padding: EdgeInsetsGeometry.all(7), child:
+            child:  Padding(padding: EdgeInsetsGeometry.all(V4rs.paddingValue(7)), child:
           Row(
             children: [
               //tap
@@ -2100,7 +2193,7 @@ import 'dart:async';
         //
         //back, in positioned is the tap expander
         //
-        Padding(padding: EdgeInsetsGeometry.all(7),
+        Padding(padding: EdgeInsetsGeometry.all(V4rs.paddingValue(7)),
         child: SizedBox( 
           height: (isLandscape) ? MediaQuery.of(context).size.height * 0.065 : MediaQuery.of(context).size.height * 0.03 ,
           child: ButtonStyle1(
@@ -2130,7 +2223,7 @@ import 'dart:async';
             //image
             //
             Padding(
-              padding: EdgeInsetsGeometry.all(10),
+              padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)),
               child: 
                     Container(
                       width: MediaQuery.of(context).size.height * 0.25,
@@ -2141,7 +2234,8 @@ import 'dart:async';
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          Expanded(child: Padding(padding: EdgeInsetsGeometry.all(Ev4rs.padding.value), 
+                          Expanded(child: Padding(padding: EdgeInsetsGeometry.all(
+                            V4rs.paddingValue(Ev4rs.padding.value)), 
                             child: (!Ev4rs.compareObjFields(root.boards, (b) => b.symbol)) ?
                             Column(children: [
                               Text('--Not All Match--', style: Sv4rs.settingslabelStyle),
@@ -2201,7 +2295,8 @@ import 'dart:async';
                             Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 10), child:
+                                Padding(padding: EdgeInsetsGeometry.symmetric(
+                                  horizontal: V4rs.paddingValue(10)), child:
                                   SizedBox( 
                                     width: MediaQuery.of(context).size.height * 0.08,
                                     child: ButtonStyle3(
@@ -2221,7 +2316,8 @@ import 'dart:async';
                               maintainSize: true,
                               maintainAnimation: true,
                               maintainState: true,
-                              child: Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 10), child:
+                              child: Padding(padding: EdgeInsetsGeometry.symmetric(
+                                horizontal: V4rs.paddingValue(10)), child:
                               SizedBox( 
                                 width: MediaQuery.of(context).size.height * 0.07,
                                 child: ButtonStyle3(
@@ -2247,7 +2343,7 @@ import 'dart:async';
             //
             //padding
             //
-            Padding(padding: EdgeInsetsGeometry.all(10),
+            Padding(padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)),
             child:
             SizedBox( 
               width: MediaQuery.of(context).size.height * 0.25,
@@ -2261,13 +2357,13 @@ import 'dart:async';
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Padding(padding: EdgeInsets.all(10), child: 
+                  Padding(padding: EdgeInsets.all(V4rs.paddingValue(10)), child: 
                   Column(children: [
                     (Ev4rs.compareObjFields(root.boards, (b) => b.padding)) 
                   ? Text('Image Padding: ${Ev4rs.padding.value}', style: Sv4rs.settingslabelStyle,)
                   : Text('Image Padding: --Not All Match--', style: Sv4rs.settingslabelStyle,),
                   Slider(
-                        padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+                        padding: EdgeInsets.fromLTRB(V4rs.paddingValue(10), V4rs.paddingValue(10), V4rs.paddingValue(10), 0),
                         value: Ev4rs.padding.value,
                         min: 0.0,
                         max: 10.0,
@@ -2299,7 +2395,7 @@ import 'dart:async';
             //
             //symbolColors
             //
-            Padding(padding: EdgeInsetsGeometry.all(10),
+            Padding(padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)),
             child:
             SizedBox(
               child:
@@ -2403,7 +2499,7 @@ import 'dart:async';
         Expanded(flex: 7, child: 
           Column( children:[
             //label and message
-            Padding(padding: EdgeInsetsGeometry.all(10),
+            Padding(padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)),
             child: ValueListenableBuilder(
                       valueListenable: MiniCombinedValueNotifier(Ev4rs.label, Ev4rs.message, Ev4rs.matchLabel, null, null), 
                       builder: (context, values, _) {
@@ -2422,7 +2518,8 @@ import 'dart:async';
                 child: Column(children: [
                   Row(children: [ 
                     Expanded(flex: 5, child: 
-                      Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 10, vertical: 0), child: 
+                      Padding(padding: EdgeInsetsGeometry.symmetric(
+                        horizontal: V4rs.paddingValue(10), vertical: 0), child: 
                         TextField(
                           controller: labelController,
                           style: Ev4rs.labelStyle,
@@ -2437,7 +2534,7 @@ import 'dart:async';
                       ),
                     ),
                     Flexible(flex: 2, child: 
-                    Padding(padding: EdgeInsetsGeometry.symmetric(vertical: 5), child: 
+                    Padding(padding: EdgeInsetsGeometry.symmetric(vertical: V4rs.paddingValue(5)), child: 
                     ButtonStyle4(
                     imagePath: 'assets/interface_icons/interface_icons/iCheck.png', 
                       onPressed: (){setState(() {
@@ -2459,7 +2556,8 @@ import 'dart:async';
                   Expanded(
                     flex: 5,
                     child: 
-                  Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 10, vertical: 0), child: 
+                  Padding(padding: EdgeInsetsGeometry.symmetric(
+                    horizontal: V4rs.paddingValue(10), vertical: 0), child: 
                     TextField(
                       controller: messageController,
                       style: Ev4rs.labelStyle,
@@ -2476,7 +2574,7 @@ import 'dart:async';
                   Flexible(
                     flex: 2,
                     child: 
-                    Padding(padding: EdgeInsetsGeometry.symmetric(vertical: 5), child: 
+                    Padding(padding: EdgeInsetsGeometry.symmetric(vertical: V4rs.paddingValue(5)), child: 
                   ButtonStyle4(
                   imagePath: 'assets/interface_icons/interface_icons/iCheck.png', 
                     onPressed: (){setState(() {
@@ -2497,14 +2595,14 @@ import 'dart:async';
                   Row(children: [
                     Expanded(child: 
                       Padding(
-                        padding: EdgeInsetsGeometry.all(10), 
+                        padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)), 
                         child: Text(
                           'Match Label & Message', 
                           style: Sv4rs.settingslabelStyle
                         ),
                       ),
                     ),
-                    Padding(padding: EdgeInsetsGeometry.fromLTRB(0, 0, 10, 0), child: 
+                    Padding(padding: EdgeInsetsGeometry.fromLTRB(0, 0, V4rs.paddingValue(10), 0), child: 
                     ValueListenableBuilder<bool>(
                       valueListenable: Ev4rs.matchLabel,
                       builder: (context, matchLabel, _) {
@@ -2529,7 +2627,7 @@ import 'dart:async';
       )
       ),
             //match speak on select, speak on select
-            Padding(padding: EdgeInsetsGeometry.all(10),
+            Padding(padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)),
               child: Container(
                 decoration: BoxDecoration(
                   color: Cv4rs.themeColor4,
@@ -2542,7 +2640,12 @@ import 'dart:async';
                       return Row(children: [
                         Expanded(child: 
                         Padding(
-                          padding: EdgeInsetsGeometry.fromLTRB(10, 10, 10, 0), 
+                          padding: EdgeInsetsGeometry.fromLTRB(
+                            V4rs.paddingValue(10), 
+                            V4rs.paddingValue(10), 
+                            V4rs.paddingValue(10), 
+                            0
+                          ), 
                           child: Text( (Ev4rs.compareObjFields(root.boards, (b) => b.matchSpeakOS)) ?
                             'Match Speak on Select:' : 'Match Speak on Select: --Not All Match--', 
                             maxLines: 3,
@@ -2553,7 +2656,7 @@ import 'dart:async';
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsetsGeometry.fromLTRB(0, 0, 10, 0), 
+                          padding: EdgeInsetsGeometry.fromLTRB(0, 0, V4rs.paddingValue(10), 0), 
                           child: Switch(
                             padding: EdgeInsets.all(0),
                             value: Ev4rs.matchSpeakOnSelect.value, 
@@ -2570,12 +2673,14 @@ import 'dart:async';
                     valueListenable: Ev4rs.speakOnSelect, 
                     builder: (context, speakOnSelect, _) {
                       return Padding(
-                        padding: EdgeInsetsGeometry.all(10), 
+                        padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)), 
                         child: Column(children: [
                           if (!Ev4rs.compareObjFields(root.boards, (b) => b.matchSpeakOS)) 
                             Text('Speak on Select: --Not All Match--', style: Sv4rs.settingslabelStyle),
                           Slider(
-                            padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
+                            padding: EdgeInsets.fromLTRB(
+                              V4rs.paddingValue(5), 0, 
+                              V4rs.paddingValue(5), 0),
                             min: 1.0,
                             max: 3.0,
                             divisions: 2,
@@ -2592,7 +2697,7 @@ import 'dart:async';
                               }
                             ),
                           Padding(
-                            padding: EdgeInsetsGeometry.fromLTRB(0, 0, 0, 10), 
+                            padding: EdgeInsetsGeometry.fromLTRB(0, 0, 0, V4rs.paddingValue(10)), 
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
@@ -2645,7 +2750,7 @@ import 'dart:async';
             ),
             //font, match font settings, font picker
             Padding(
-                padding: EdgeInsetsGeometry.all(10), 
+                padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)), 
                 child: FontPicker2(
                   widgety:  ButtonStyle2(
                     imagePath: 'assets/interface_icons/interface_icons/iCheck.png', 
@@ -2723,9 +2828,9 @@ import 'dart:async';
             //
 
             Padding(
-              padding: EdgeInsetsGeometry.all(10), 
+              padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)), 
               child: Container( 
-                padding: EdgeInsetsGeometry.all(10),
+                padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)),
                 decoration: BoxDecoration(
                   color: Cv4rs.themeColor4,
                   borderRadius: BorderRadius.circular(10)
@@ -2747,7 +2852,7 @@ import 'dart:async';
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsetsGeometry.fromLTRB(0, 0, 10, 0), 
+                          padding: EdgeInsetsGeometry.fromLTRB(0, 0, V4rs.paddingValue(10), 0), 
                           child: Switch(
                             padding: EdgeInsets.all(0),
                             value: Ev4rs.show.value, 
@@ -2779,9 +2884,9 @@ import 'dart:async';
             //
 
             Padding(
-              padding: EdgeInsetsGeometry.all(10), 
+              padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)), 
               child: Container(
-                padding: EdgeInsetsGeometry.all(10),
+                padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)),
                 decoration: BoxDecoration(
                   color: Cv4rs.themeColor4,
                   borderRadius: BorderRadius.circular(10)
@@ -2793,7 +2898,7 @@ import 'dart:async';
                       return Row(children: [
                         Expanded(child: 
                           Padding(
-                            padding: EdgeInsetsGeometry.fromLTRB(0, 10, 0, 0), 
+                            padding: EdgeInsetsGeometry.fromLTRB(0, V4rs.paddingValue(10), 0, 0), 
                               child: Text(
                                 (Ev4rs.compareObjFields(root.boards, (b) => b.matchFormat)) 
                                   ? 'Match Format:'
@@ -2823,7 +2928,11 @@ import 'dart:async';
                     valueListenable: Ev4rs.format, 
                     builder: (context, format, _) {
                       return Padding(
-                        padding: EdgeInsetsGeometry.fromLTRB(5, 15, 5, 10), 
+                        padding: EdgeInsetsGeometry.fromLTRB(
+                          V4rs.paddingValue(5), 
+                          V4rs.paddingValue(15), 
+                          V4rs.paddingValue(5), 
+                          V4rs.paddingValue(10)), 
                         child: Column(children: [
                                 Text(
                                   "Format: ${ Ev4rs.compareObjFields(root.boards, (b) => b.format) 
@@ -2844,7 +2953,7 @@ import 'dart:async';
                                   textAlign: TextAlign.center,
                                 ),
                           Slider(
-                            padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
+                            padding: EdgeInsets.fromLTRB(0, V4rs.paddingValue(5), 0, 0),
                             min: 1.0,
                             max: 4.0,
                             divisions: 3,
@@ -2880,9 +2989,9 @@ import 'dart:async';
             //border
             //
 
-            Padding(padding: EdgeInsetsGeometry.all(10), child: //outer padding 
+            Padding(padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)), child: //outer padding 
               Container(
-                padding: EdgeInsetsGeometry.all(10), //inner padding 
+                padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)), //inner padding 
                 decoration: BoxDecoration(
                   color: Cv4rs.themeColor4,
                   borderRadius: BorderRadius.circular(10)
@@ -2897,7 +3006,12 @@ import 'dart:async';
                         children: [
                         Expanded(child: 
                           Padding(
-                            padding: EdgeInsetsGeometry.fromLTRB(0, 10, 3, 20), 
+                            padding: EdgeInsetsGeometry.fromLTRB(
+                              0, 
+                              V4rs.paddingValue(10), 
+                              V4rs.paddingValue(3), 
+                              V4rs.paddingValue(20)
+                            ), 
                               child: Text(
                                 (Ev4rs.compareObjFields(root.boards, (b) => b.matchBorder)) 
                                   ? 'Match Border: '
@@ -2935,7 +3049,7 @@ import 'dart:async';
                         : 'Border Weight: --Not All Match--',
                         style: Sv4rs.settingslabelStyle),
                       Slider(
-                            padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
+                            padding: EdgeInsets.fromLTRB(V4rs.paddingValue(5), 0, V4rs.paddingValue(5), 0),
                             min: 0.0,
                             max: 10.0,
                             divisions: 20,
@@ -2987,7 +3101,7 @@ import 'dart:async';
                       Column(children:[
                       //hexcode input
                       Padding(
-                        padding: EdgeInsetsGeometry.symmetric(horizontal: 10, vertical: 20),
+                        padding: EdgeInsetsGeometry.symmetric(horizontal: V4rs.paddingValue(10), vertical: 20),
                         child: HexCodeInput2(
                           startValue: Ev4rs.borderColor.value.toHexString(),
                           textStyle: Sv4rs.settingslabelStyle,
@@ -3058,9 +3172,9 @@ import 'dart:async';
 
             //background
             
-            Padding(padding: EdgeInsetsGeometry.all(10), child: //outer padding 
+            Padding(padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)), child: //outer padding 
               Container(
-                padding: EdgeInsetsGeometry.all(10), //inner padding 
+                padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)), //inner padding 
                 decoration: BoxDecoration(
                   color: Cv4rs.themeColor4,
                   borderRadius: BorderRadius.circular(10)
@@ -3076,7 +3190,9 @@ import 'dart:async';
                         children: [
                         Expanded(child: 
                           Padding(
-                            padding: EdgeInsetsGeometry.fromLTRB(5, 10, 5, 10), 
+                            padding: EdgeInsetsGeometry.fromLTRB(
+                              V4rs.paddingValue(5), V4rs.paddingValue(10), 
+                              V4rs.paddingValue(5), V4rs.paddingValue(10)), 
                               child: Text(
                                 (Ev4rs.compareObjFields(root.boards, (b) => b.matchPOS)) 
                                   ? 'Background Color:'
@@ -3089,7 +3205,7 @@ import 'dart:async';
                             ),
                         ),
                         Padding(
-                          padding: EdgeInsetsGeometry.fromLTRB(0, 0, 10, 0), 
+                          padding: EdgeInsetsGeometry.fromLTRB(0, 0, V4rs.paddingValue(10), 0), 
                           child: Switch(
                             padding: EdgeInsets.all(0),
                             value: Ev4rs.matchBackground.value,
@@ -3133,7 +3249,7 @@ import 'dart:async';
                       Column(children:[
                       //hexcode input
                       Padding(
-                        padding: EdgeInsetsGeometry.symmetric(horizontal: 10, vertical: 20),
+                        padding: EdgeInsetsGeometry.symmetric(horizontal: V4rs.paddingValue(10), vertical: 20),
                         child: HexCodeInput2(
                           startValue: Ev4rs.backgroundColor.value.toHexString(),
                           textStyle: Sv4rs.settingslabelStyle,
@@ -3212,7 +3328,7 @@ import 'dart:async';
             //part of speech
             
             Padding(
-              padding: EdgeInsetsGeometry.all(10),
+              padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)),
               child: SizedBox( child:
                 Container(
                   decoration: BoxDecoration(
@@ -3226,7 +3342,7 @@ import 'dart:async';
                     Column(children: [
                       SizedBox(child:
                       Padding (
-                        padding: EdgeInsetsGeometry.fromLTRB(0,15,0,0),
+                        padding: EdgeInsetsGeometry.fromLTRB(0,V4rs.paddingValue(15),0,0),
                         child: Text((Ev4rs.compareObjFields(root.boards, (b) => b.pos)) 
                             ? 'Part of Speech:'
                             : 'Part of Speech: --Not All Match--', 
@@ -3234,7 +3350,7 @@ import 'dart:async';
                           ),
                       ),
                       ),
-                      Padding(padding: EdgeInsets.symmetric(horizontal: 10), child:
+                      Padding(padding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(10)), child:
                       DropdownButton<String>(
                         isExpanded: true,
                         hint: SizedBox(child: Text(
@@ -3278,7 +3394,7 @@ import 'dart:async';
             ),
             //type 
             Padding(
-              padding: EdgeInsetsGeometry.all(10),
+              padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)),
               child: 
                 Container(
                   decoration: BoxDecoration(
@@ -3291,14 +3407,14 @@ import 'dart:async';
                       return
                     Column(children: [
                       Padding (
-                        padding: EdgeInsetsGeometry.fromLTRB(0,15,0,0),
+                        padding: EdgeInsetsGeometry.fromLTRB(0,V4rs.paddingValue(15),0,0),
                         child: Text((Ev4rs.compareObjFields(root.boards, (b) => b.type)) 
                             ? 'Button Type: '
                             : 'Button Type: --Not All Match--', 
                           style: Sv4rs.settingslabelStyle,
                           ),
                       ),
-                      Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 10), child: 
+                      Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: V4rs.paddingValue(10)), child: 
                       DropdownButton<int>(
                         isExpanded: true,
                           hint: Text(
@@ -3342,7 +3458,7 @@ import 'dart:async';
             //if pocket folder or folder
             if (Ev4rs.buttonType.value == 3 || Ev4rs.buttonType.value == 2)
             Padding(
-              padding: EdgeInsetsGeometry.all(10),
+              padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)),
               child: 
                 Container(
                   decoration: BoxDecoration(
@@ -3355,7 +3471,7 @@ import 'dart:async';
                       return
                     Column(children: [
                       Padding (
-                        padding: EdgeInsetsGeometry.fromLTRB(0,15,0,0),
+                        padding: EdgeInsetsGeometry.fromLTRB(0,V4rs.paddingValue(15),0,0),
                         child: Text(
                           (Ev4rs.compareObjFields(root.boards, (b) => b.linkToUUID)) 
                             ? 'Link To...'
@@ -3363,7 +3479,7 @@ import 'dart:async';
                           style: Sv4rs.settingslabelStyle,
                           ),
                       ),
-                    Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 10), child: 
+                    Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: V4rs.paddingValue(10)), child: 
                       DropdownButton<String>(
                         isExpanded: true,
                           hint: Text(
@@ -3412,7 +3528,7 @@ import 'dart:async';
 
             if (Ev4rs.buttonType.value == 3 || Ev4rs.buttonType.value == 2)
             Padding(
-            padding: EdgeInsetsGeometry.all(10),
+            padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)),
             child: 
               Container(
                 decoration: BoxDecoration(
@@ -3428,7 +3544,11 @@ import 'dart:async';
                       children: [
                       Expanded(child: 
                         Padding(
-                          padding: EdgeInsetsGeometry.fromLTRB(5, 10, 5, 10), 
+                          padding: EdgeInsetsGeometry.fromLTRB(
+                            V4rs.paddingValue(5), 
+                            V4rs.paddingValue(10), 
+                            V4rs.paddingValue(5), 
+                            V4rs.paddingValue(10)), 
                             child: Text(
                               (Ev4rs.compareObjFields(root.boards, (b) => b.returnAfterSelect)) 
                             ? 'Return After Select:'
@@ -3441,7 +3561,7 @@ import 'dart:async';
                           ),
                       ),
                       Padding(
-                        padding: EdgeInsetsGeometry.fromLTRB(0, 0, 10, 0), 
+                        padding: EdgeInsetsGeometry.fromLTRB(0, 0, V4rs.paddingValue(10), 0), 
                         child: Switch(
                           padding: EdgeInsets.all(0),
                           value: Ev4rs.returnAfterSelect.value,
@@ -3472,7 +3592,7 @@ import 'dart:async';
             //if grammer
             if (Ev4rs.buttonType.value == 6)
             Padding(
-              padding: EdgeInsetsGeometry.all(10),
+              padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)),
               child: 
                 Container(
                   decoration: BoxDecoration(
@@ -3485,7 +3605,7 @@ import 'dart:async';
                       return
                     Column(children: [
                       Padding (
-                        padding: EdgeInsetsGeometry.fromLTRB(0,15,0,0),
+                        padding: EdgeInsetsGeometry.fromLTRB(0,V4rs.paddingValue(15),0,0),
                         child: Text(
                           (Ev4rs.compareObjFields(root.boards, (b) => b.function)) 
                             ? 'Grammer Function:'
@@ -3493,7 +3613,7 @@ import 'dart:async';
                           style: Sv4rs.settingslabelStyle,
                           ),
                       ),
-                    Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 10), child:
+                    Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: V4rs.paddingValue(10)), child:
                       DropdownButton<String>(
                           isExpanded: true,
                           hint: Text(
@@ -3536,10 +3656,10 @@ import 'dart:async';
             //if audio tile
             if (Ev4rs.buttonType.value == 4)
             Padding(
-              padding: EdgeInsetsGeometry.all(10),
+              padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)),
               child:
               Container(
-                  padding: EdgeInsetsGeometry.all(10),
+                  padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)),
                   decoration: BoxDecoration(
                     color: Cv4rs.themeColor4,
                     borderRadius: BorderRadius.circular(10)
@@ -3575,7 +3695,7 @@ import 'dart:async';
               ),
 
             //notes
-            Padding(padding: EdgeInsetsGeometry.all(10),
+            Padding(padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)),
             child:
               Container(
                 decoration: BoxDecoration(
@@ -3585,7 +3705,8 @@ import 'dart:async';
                 child: Column(children: [
                   Row(children: [ 
                     Expanded(flex: 5, child: 
-                      Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 10, vertical: 10), child: 
+                      Padding(padding: EdgeInsetsGeometry.symmetric(
+                        horizontal: V4rs.paddingValue(10), vertical: V4rs.paddingValue(10)), child: 
                         ValueListenableBuilder(valueListenable: Ev4rs.notes, builder: (context, value, _) {
                           final notesController = TextEditingController(text: value)
                           ..selection = TextSelection.collapsed(offset: value.length);
@@ -3610,7 +3731,7 @@ import 'dart:async';
                       ),
                     ),
                     Flexible(flex: 2, child: 
-                    Padding(padding: EdgeInsetsGeometry.symmetric(vertical: 5), child: 
+                    Padding(padding: EdgeInsetsGeometry.symmetric(vertical: V4rs.paddingValue(5)), child: 
                     ButtonStyle4(
                     imagePath: 'assets/interface_icons/interface_icons/iCheck.png', 
                       onPressed: (){setState(() {
@@ -3638,7 +3759,11 @@ import 'dart:async';
         Expanded(flex: 2, child: 
           Column( children:[
             //undo
-            Padding(padding: EdgeInsetsGeometry.fromLTRB(3, 7, 3, 0),
+            Padding(padding: EdgeInsetsGeometry.fromLTRB(
+                    V4rs.paddingValue(3), 
+                    V4rs.paddingValue(7), 
+                    V4rs.paddingValue(3), 
+                    0),
         child:
             SizedBox( 
           height: (isLandscape) ? MediaQuery.of(context).size.height * 0.06 : MediaQuery.of(context).size.height * 0.04 ,
@@ -3659,7 +3784,11 @@ import 'dart:async';
             ),
 
             //share
-            Padding(padding: EdgeInsetsGeometry.fromLTRB(3, 7, 3, 0),
+            Padding(padding: EdgeInsetsGeometry.fromLTRB(
+                    V4rs.paddingValue(3), 
+                    V4rs.paddingValue(7), 
+                    V4rs.paddingValue(3), 
+                    0),
         child:
             SizedBox( 
           height: (isLandscape) ? MediaQuery.of(context).size.height * 0.06 : MediaQuery.of(context).size.height * 0.04,
@@ -3683,7 +3812,11 @@ import 'dart:async';
         Expanded(flex: 2, child: 
           Column( children:[
             //redo
-            Padding(padding: EdgeInsetsGeometry.fromLTRB(3, 7, 3, 0),
+            Padding(padding: EdgeInsetsGeometry.fromLTRB(
+                    V4rs.paddingValue(3), 
+                    V4rs.paddingValue(7), 
+                    V4rs.paddingValue(3), 
+                    0),
         child:
             SizedBox( 
           height: (isLandscape) ? MediaQuery.of(context).size.height * 0.06 : MediaQuery.of(context).size.height * 0.04,
@@ -3703,7 +3836,11 @@ import 'dart:async';
             ),
             ),
             //print
-            Padding(padding: EdgeInsetsGeometry.fromLTRB(3, 7, 3, 0),
+            Padding(padding: EdgeInsetsGeometry.fromLTRB(
+                    V4rs.paddingValue(3), 
+                    V4rs.paddingValue(7), 
+                    V4rs.paddingValue(3), 
+                    0),
         child:
             SizedBox( 
           height: (isLandscape) ? MediaQuery.of(context).size.height * 0.06 : MediaQuery.of(context).size.height * 0.04 ,
@@ -3726,7 +3863,12 @@ import 'dart:async';
         //
         Column( children:[
           Padding(
-            padding: EdgeInsetsGeometry.fromLTRB(7, 7, 7, 0),
+            padding: EdgeInsetsGeometry.fromLTRB(
+              V4rs.paddingValue(7), 
+              V4rs.paddingValue(7), 
+              V4rs.paddingValue(7), 
+              0
+            ),
             child: SizedBox( 
               height: (isLandscape) ? MediaQuery.of(context).size.height * 0.07 : MediaQuery.of(context).size.height * 0.04,
               child: (Ev4rs.isButtonExpanded.value) 
@@ -3749,11 +3891,16 @@ import 'dart:async';
             ),
           ),
           Padding(
-            padding: EdgeInsetsGeometry.fromLTRB(7, 0, 7, 7),
+            padding: EdgeInsetsGeometry.fromLTRB(
+              V4rs.paddingValue(7),
+               0,
+               V4rs.paddingValue(7),
+               V4rs.paddingValue(7),
+              ),
             child: SizedBox( 
               height: (isLandscape) ? MediaQuery.of(context).size.height * 0.08 : MediaQuery.of(context).size.height * 0.04 ,
               child: Padding(
-                padding: EdgeInsetsGeometry.all(10), child: 
+                padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)), child: 
                   ButtonStyle1(
                     glow: (Ev4rs.boardEditor.value) ? true : false,
                     imagePath: 'assets/interface_icons/interface_icons/iBoard.png', 
@@ -3776,7 +3923,7 @@ import 'dart:async';
           child: ValueListenableBuilder<bool>(valueListenable: Ev4rs.showSelectionMenu, builder: (context, showSelectionMenu, _) {
           return SizedBox( 
             height: (isLandscape) ? MediaQuery.of(context).size.height * 0.09 : MediaQuery.of(context).size.height * 0.04,
-            child:  Padding(padding: EdgeInsetsGeometry.all(7), child:
+            child:  Padding(padding: EdgeInsetsGeometry.all(V4rs.paddingValue(7)), child:
           Row(
             children: [
               //tap
@@ -3927,7 +4074,7 @@ import 'dart:async';
               //
               //back, in positioned is the tap expander
               //
-              Padding(padding: EdgeInsetsGeometry.all(7),
+              Padding(padding: EdgeInsetsGeometry.all(V4rs.paddingValue(7)),
               child: SizedBox( 
                 height: (isLandscape) ? MediaQuery.of(context).size.height * 0.065 : MediaQuery.of(context).size.height * 0.03 ,
                 child: ButtonStyle1(
@@ -3957,7 +4104,7 @@ import 'dart:async';
                   //image
                   //
                   Padding(
-                    padding: EdgeInsetsGeometry.all(10),
+                    padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)),
                     child: 
                           Container(
                             width: MediaQuery.of(context).size.height * 0.25,
@@ -3968,7 +4115,7 @@ import 'dart:async';
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
-                                Expanded(child: Padding(padding: EdgeInsetsGeometry.all(Ev4rs.padding.value), 
+                                Expanded(child: Padding(padding: EdgeInsetsGeometry.all(V4rs.paddingValue(Ev4rs.padding.value)), 
                                   child: ImageStyle1(
                                       image: image, 
                                       symbolSaturation: Ev4rs.saturation.value, 
@@ -3990,7 +4137,7 @@ import 'dart:async';
                                   Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 10), child:
+                                      Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: V4rs.paddingValue(10)), child:
                                         SizedBox( 
                                           width: MediaQuery.of(context).size.height * 0.08,
                                           child: ButtonStyle3(
@@ -4010,7 +4157,7 @@ import 'dart:async';
                                     maintainSize: true,
                                     maintainAnimation: true,
                                     maintainState: true,
-                                    child: Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 10), child:
+                                    child: Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: V4rs.paddingValue(10)), child:
                                     SizedBox( 
                                       width: MediaQuery.of(context).size.height * 0.07,
                                       child: ButtonStyle3(
@@ -4036,7 +4183,7 @@ import 'dart:async';
                   //
                   //padding
                   //
-                  Padding(padding: EdgeInsetsGeometry.all(10),
+                  Padding(padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)),
                   child:
                   SizedBox( 
                     width: MediaQuery.of(context).size.height * 0.25,
@@ -4054,7 +4201,7 @@ import 'dart:async';
                         Column(children: [
                         Text('Image Padding: ${Ev4rs.padding.value}', style: Sv4rs.settingslabelStyle,),
                         Slider(
-                              padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+                              padding: EdgeInsets.fromLTRB(V4rs.paddingValue(10), V4rs.paddingValue(10), V4rs.paddingValue(10), 0),
                               value: Ev4rs.padding.value,
                               min: 0.0,
                               max: 10.0,
@@ -4086,7 +4233,7 @@ import 'dart:async';
                   //
                   //symbolColors
                   //
-                  Padding(padding: EdgeInsetsGeometry.all(10),
+                  Padding(padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)),
                   child:
                   SizedBox(
                     child:
@@ -4161,7 +4308,7 @@ import 'dart:async';
               Expanded(flex: 7, child: 
                 Column( children:[
                   //label
-                  Padding(padding: EdgeInsetsGeometry.all(10),
+                  Padding(padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)),
                   child:
                     Container(
                       decoration: BoxDecoration(
@@ -4180,7 +4327,7 @@ import 'dart:async';
                       return Column(children: [
                         Row(children: [ 
                           Expanded(flex: 5, child: 
-                            Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 10, vertical: 0), child: 
+                            Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: V4rs.paddingValue(10), vertical: 0), child: 
                               TextField(
                                 controller: labelController,
                                 style: Ev4rs.labelStyle,
@@ -4195,7 +4342,7 @@ import 'dart:async';
                             ),
                           ),
                           Flexible(flex: 2, child: 
-                          Padding(padding: EdgeInsetsGeometry.symmetric(vertical: 5), child: 
+                          Padding(padding: EdgeInsetsGeometry.symmetric(vertical: V4rs.paddingValue(5)), child: 
                           ButtonStyle4(
                           imagePath: 'assets/interface_icons/interface_icons/iCheck.png', 
                             onPressed: (){setState(() {
@@ -4211,7 +4358,7 @@ import 'dart:async';
                       ),
                          Row(children: [ 
                           Expanded(flex: 5, child: 
-                            Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 10, vertical: 0), child: 
+                            Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: V4rs.paddingValue(10), vertical: 0), child: 
                               TextField(
                                 controller: alternateController,
                                 style: Ev4rs.labelStyle,
@@ -4226,7 +4373,7 @@ import 'dart:async';
                             ),
                           ),
                           Flexible(flex: 2, child: 
-                          Padding(padding: EdgeInsetsGeometry.symmetric(vertical: 5), child: 
+                          Padding(padding: EdgeInsetsGeometry.symmetric(vertical: V4rs.paddingValue(5)), child: 
                           ButtonStyle4(
                           imagePath: 'assets/interface_icons/interface_icons/iCheck.png', 
                             onPressed: (){setState(() {
@@ -4248,7 +4395,7 @@ import 'dart:async';
                     )
                     ),
                 //match speak on select, speak on select
-                  Padding(padding: EdgeInsetsGeometry.all(10),
+                  Padding(padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)),
                     child: Container(
                       decoration: BoxDecoration(
                         color: Cv4rs.themeColor4,
@@ -4261,7 +4408,10 @@ import 'dart:async';
                             return Row(children: [
                               Expanded(child: 
                               Padding(
-                                padding: EdgeInsetsGeometry.fromLTRB(10, 10, 10, 0), 
+                                padding: EdgeInsetsGeometry.fromLTRB(
+                                  V4rs.paddingValue(10), 
+                                  V4rs.paddingValue(10),
+                                   V4rs.paddingValue(10), 0), 
                                 child: Text(
                                   'Match Speak on Select:', 
                                   maxLines: 2,
@@ -4272,7 +4422,7 @@ import 'dart:async';
                                 ),
                               ),
                               Padding(
-                                padding: EdgeInsetsGeometry.fromLTRB(0, 0, 10, 0), 
+                                padding: EdgeInsetsGeometry.fromLTRB(0, 0, V4rs.paddingValue(10), 0), 
                                 child: Switch(
                                   padding: EdgeInsets.all(0),
                                   value: Ev4rs.matchSpeakOnSelect.value, 
@@ -4289,10 +4439,15 @@ import 'dart:async';
                           valueListenable: Ev4rs.speakOnSelect, 
                           builder: (context, speakOnSelect, _) {
                             return Padding(
-                              padding: EdgeInsetsGeometry.all(10), 
+                              padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)), 
                               child: Column(children: [
                                 Slider(
-                                  padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
+                                  padding: EdgeInsets.fromLTRB(
+                                    V4rs.paddingValue(5), 
+                                    0, 
+                                    V4rs.paddingValue(5), 
+                                    0
+                                  ),
                                   min: 1.0,
                                   max: 3.0,
                                   divisions: 2,
@@ -4306,7 +4461,7 @@ import 'dart:async';
                                     }
                                   ),
                                 Padding(
-                                  padding: EdgeInsetsGeometry.fromLTRB(0, 0, 0, 10), 
+                                  padding: EdgeInsetsGeometry.fromLTRB(0, 0, 0, V4rs.paddingValue(10)), 
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                     children: [
@@ -4359,7 +4514,7 @@ import 'dart:async';
                   ),
                   //font, match font settings, font picker
                   Padding(
-                      padding: EdgeInsetsGeometry.all(10), 
+                      padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)), 
                       child: FontPicker2(
                         widgety:  ButtonStyle2(
                           imagePath: 'assets/interface_icons/interface_icons/iCheck.png', 
@@ -4427,9 +4582,9 @@ import 'dart:async';
                   //
 
                   Padding(
-                    padding: EdgeInsetsGeometry.all(10), 
+                    padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)), 
                     child: Container( 
-                      padding: EdgeInsetsGeometry.all(10),
+                      padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)),
                       decoration: BoxDecoration(
                         color: Cv4rs.themeColor4,
                         borderRadius: BorderRadius.circular(10)
@@ -4449,7 +4604,7 @@ import 'dart:async';
                                 ),
                               ),
                               Padding(
-                                padding: EdgeInsetsGeometry.fromLTRB(0, 0, 10, 0), 
+                                padding: EdgeInsetsGeometry.fromLTRB(0, 0, V4rs.paddingValue(10), 0), 
                                 child: Switch(
                                   padding: EdgeInsets.all(0),
                                   value: Ev4rs.show.value, 
@@ -4481,9 +4636,9 @@ import 'dart:async';
                   //
 
                   Padding(
-                    padding: EdgeInsetsGeometry.all(10), 
+                    padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)), 
                     child: Container(
-                      padding: EdgeInsetsGeometry.all(10),
+                      padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)),
                       decoration: BoxDecoration(
                         color: Cv4rs.themeColor4,
                         borderRadius: BorderRadius.circular(10)
@@ -4495,7 +4650,10 @@ import 'dart:async';
                             return Row(children: [
                               Expanded(child: 
                                 Padding(
-                                  padding: EdgeInsetsGeometry.fromLTRB(5, 10, 5, 0), 
+                                  padding: EdgeInsetsGeometry.fromLTRB(
+                                    V4rs.paddingValue(5), 
+                                    V4rs.paddingValue(10), 
+                                    V4rs.paddingValue(5), 0), 
                                     child: Text(
                                       'Match Format:', 
                                       maxLines: 2,
@@ -4506,7 +4664,7 @@ import 'dart:async';
                                   ),
                               ),
                               Padding(
-                                padding: EdgeInsetsGeometry.fromLTRB(0, 0, 10, 0), 
+                                padding: EdgeInsetsGeometry.fromLTRB(0, 0, V4rs.paddingValue(10), 0), 
                                 child: Switch(
                                   padding: EdgeInsets.all(0),
                                   value: Ev4rs.matchFormat.value, 
@@ -4523,7 +4681,11 @@ import 'dart:async';
                           valueListenable: Ev4rs.format, 
                           builder: (context, format, _) {
                             return Padding(
-                              padding: EdgeInsetsGeometry.fromLTRB(5, 15, 5, 10), 
+                              padding: EdgeInsetsGeometry.fromLTRB(
+                                V4rs.paddingValue(5), 
+                                V4rs.paddingValue(15), 
+                                V4rs.paddingValue(5), 
+                                V4rs.paddingValue(10)), 
                               child: Column(children: [
                                       Text(
                                         "Format: ${
@@ -4543,7 +4705,7 @@ import 'dart:async';
                                         textAlign: TextAlign.center,
                                       ),
                                 Slider(
-                                  padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
+                                  padding: EdgeInsets.fromLTRB(0, V4rs.paddingValue(5), 0, 0),
                                   min: 1.0,
                                   max: 4.0,
                                   divisions: 3,
@@ -4579,9 +4741,9 @@ import 'dart:async';
                   //border
                   //
 
-                  Padding(padding: EdgeInsetsGeometry.all(10), child: //outer padding 
+                  Padding(padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)), child: //outer padding 
                     Container(
-                      padding: EdgeInsetsGeometry.all(10), //inner padding 
+                      padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)), //inner padding 
                       decoration: BoxDecoration(
                         color: Cv4rs.themeColor4,
                         borderRadius: BorderRadius.circular(10)
@@ -4597,7 +4759,9 @@ import 'dart:async';
                               children: [
                               Expanded(child: 
                                 Padding(
-                                  padding: EdgeInsetsGeometry.fromLTRB(5, 10, 5, 20), 
+                                  padding: EdgeInsetsGeometry.fromLTRB(
+                                    V4rs.paddingValue(5), V4rs.paddingValue(10), 
+                                    V4rs.paddingValue(5), V4rs.paddingValue(20)), 
                                     child: Text(
                                       'Match Border:', 
                                       maxLines: 2,
@@ -4608,7 +4772,7 @@ import 'dart:async';
                                   ),
                               ),
                               Padding(
-                                padding: EdgeInsetsGeometry.fromLTRB(0, 0, 10, 0), 
+                                padding: EdgeInsetsGeometry.fromLTRB(0, 0, V4rs.paddingValue(10), 0), 
                                 child: Switch(
                                   padding: EdgeInsets.all(0),
                                   value: Ev4rs.matchBorder.value, 
@@ -4629,7 +4793,7 @@ import 'dart:async';
                             return Column (children: [
                             Text('Border Weight: ${Ev4rs.borderWeight.value}', style: Sv4rs.settingslabelStyle),
                             Slider(
-                                  padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
+                                  padding: EdgeInsets.fromLTRB(V4rs.paddingValue(5), 0, V4rs.paddingValue(5), 0),
                                   min: 0.0,
                                   max: 10.0,
                                   divisions: 20,
@@ -4674,7 +4838,7 @@ import 'dart:async';
                             Column(children:[
                             //hexcode input
                             Padding(
-                              padding: EdgeInsetsGeometry.symmetric(horizontal: 10, vertical: 20),
+                              padding: EdgeInsetsGeometry.symmetric(horizontal: V4rs.paddingValue(10), vertical: V4rs.paddingValue(20)),
                               child: HexCodeInput2(
                                 startValue: Ev4rs.borderColor.value.toHexString(),
                                 textStyle: Sv4rs.settingslabelStyle,
@@ -4745,9 +4909,9 @@ import 'dart:async';
 
                   //background
                   
-                  Padding(padding: EdgeInsetsGeometry.all(10), child: //outer padding 
+                  Padding(padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)), child: //outer padding 
                     Container(
-                      padding: EdgeInsetsGeometry.all(10), //inner padding 
+                      padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)), //inner padding 
                       decoration: BoxDecoration(
                         color: Cv4rs.themeColor4,
                         borderRadius: BorderRadius.circular(10)
@@ -4763,7 +4927,7 @@ import 'dart:async';
                               children: [
                               Expanded(child: 
                                 Padding(
-                                  padding: EdgeInsetsGeometry.fromLTRB(5, 10, 5, 10), 
+                                  padding: EdgeInsetsGeometry.fromLTRB(V4rs.paddingValue(5), V4rs.paddingValue(10), V4rs.paddingValue(5), V4rs.paddingValue(10)), 
                                     child: Text(
                                       'Match Color:', 
                                       maxLines: 3,
@@ -4774,7 +4938,7 @@ import 'dart:async';
                                   ),
                               ),
                               Padding(
-                                padding: EdgeInsetsGeometry.fromLTRB(0, 0, 10, 0), 
+                                padding: EdgeInsetsGeometry.fromLTRB(0, 0, V4rs.paddingValue(10), 0), 
                                 child: Switch(
                                   padding: EdgeInsets.all(0),
                                   value: Ev4rs.matchBackground.value,
@@ -4816,7 +4980,9 @@ import 'dart:async';
                             Column(children:[
                             //hexcode input
                             Padding(
-                              padding: EdgeInsetsGeometry.symmetric(horizontal: 10, vertical: 20),
+                              padding: EdgeInsetsGeometry.symmetric(
+                                horizontal: V4rs.paddingValue(10), 
+                                vertical: V4rs.paddingValue(20)),
                               child: HexCodeInput2(
                                 startValue: Ev4rs.backgroundColor.value.toHexString(),
                                 textStyle: Sv4rs.settingslabelStyle,
@@ -4895,7 +5061,7 @@ import 'dart:async';
                   //part of speech
                   
                   Padding(
-                    padding: EdgeInsetsGeometry.all(10),
+                    padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)),
                     child: SizedBox( child:
                       Container(
                         decoration: BoxDecoration(
@@ -4909,14 +5075,14 @@ import 'dart:async';
                           Column(children: [
                             SizedBox(child:
                             Padding (
-                              padding: EdgeInsetsGeometry.fromLTRB(0,15,0,0),
+                              padding: EdgeInsetsGeometry.fromLTRB(0,V4rs.paddingValue(15),0,0),
                               child: Text(
                                 'Part of Speech:', 
                                 style: Sv4rs.settingslabelStyle,
                                 ),
                             ),
                             ),
-                            Padding(padding: EdgeInsets.symmetric(horizontal: 10), child:
+                            Padding(padding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(10)), child:
                             DropdownButton<String>(
                               isExpanded: true,
                               hint: SizedBox(child: Text(
@@ -4960,7 +5126,7 @@ import 'dart:async';
                   ),
                   //type 
                   Padding(
-                    padding: EdgeInsetsGeometry.all(10),
+                    padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)),
                     child: 
                       Container(
                         decoration: BoxDecoration(
@@ -4973,13 +5139,13 @@ import 'dart:async';
                             return
                           Column(children: [
                             Padding (
-                              padding: EdgeInsetsGeometry.fromLTRB(0,15,0,0),
+                              padding: EdgeInsetsGeometry.fromLTRB(0,V4rs.paddingValue(15),0,0),
                               child: Text(
                                 'Type:', 
                                 style: Sv4rs.settingslabelStyle,
                                 ),
                             ),
-                            Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 10), child: 
+                            Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: V4rs.paddingValue(10)), child: 
                             DropdownButton<String>(
                               isExpanded: true,
                                 hint: Text(
@@ -5029,7 +5195,7 @@ import 'dart:async';
 
                   if (Ev4rs.subFolderType.value == 'subFolderButton')
                   Padding(
-                    padding: EdgeInsetsGeometry.all(10),
+                    padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)),
                     child: 
                       Container(
                         decoration: BoxDecoration(
@@ -5042,13 +5208,13 @@ import 'dart:async';
                             return
                           Column(children: [
                             Padding (
-                              padding: EdgeInsetsGeometry.fromLTRB(0,15,0,0),
+                              padding: EdgeInsetsGeometry.fromLTRB(0,V4rs.paddingValue(15),0,0),
                               child: Text(
                                 'Link To...', 
                                 style: Sv4rs.settingslabelStyle,
                                 ),
                             ),
-                            Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 10), child: 
+                            Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: V4rs.paddingValue(10)), child: 
                             DropdownButton<String>(
                               isExpanded: true,
                                 hint: Text(
@@ -5096,7 +5262,7 @@ import 'dart:async';
                     ),
 
                   //notes
-                  Padding(padding: EdgeInsetsGeometry.all(10),
+                  Padding(padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)),
                   child:
                     Container(
                       decoration: BoxDecoration(
@@ -5106,7 +5272,9 @@ import 'dart:async';
                       child: Column(children: [
                         Row(children: [ 
                           Expanded(flex: 5, child: 
-                            Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 10, vertical: 10), child: 
+                            Padding(padding: EdgeInsetsGeometry.symmetric(
+                              horizontal: V4rs.paddingValue(10), 
+                              vertical: V4rs.paddingValue(10)), child: 
                               ValueListenableBuilder(valueListenable: Ev4rs.notes, builder: (context, value, _) {
                                 final notesController = TextEditingController(text: value)
                                 ..selection = TextSelection.collapsed(offset: value.length);
@@ -5129,7 +5297,7 @@ import 'dart:async';
                             ),
                           ),
                           Flexible(flex: 2, child: 
-                          Padding(padding: EdgeInsetsGeometry.symmetric(vertical: 5), child: 
+                          Padding(padding: EdgeInsetsGeometry.symmetric(vertical: V4rs.paddingValue(5)), child: 
                           ButtonStyle4(
                           imagePath: 'assets/interface_icons/interface_icons/iCheck.png', 
                             onPressed: (){setState(() {
@@ -5157,7 +5325,11 @@ import 'dart:async';
               Expanded(flex: 2, child: 
                 Column( children:[
                   //undo
-                  Padding(padding: EdgeInsetsGeometry.fromLTRB(3, 7, 3, 0),
+                  Padding(padding: EdgeInsetsGeometry.fromLTRB(
+                    V4rs.paddingValue(3), 
+                    V4rs.paddingValue(7), 
+                    V4rs.paddingValue(3), 
+                    0),
               child:
                   SizedBox( 
                 height: (isLandscape) ? MediaQuery.of(context).size.height * 0.06 : MediaQuery.of(context).size.height * 0.04 ,
@@ -5178,7 +5350,11 @@ import 'dart:async';
                   ),
 
                   //share
-                  Padding(padding: EdgeInsetsGeometry.fromLTRB(3, 7, 3, 0),
+                  Padding(padding: EdgeInsetsGeometry.fromLTRB(
+                    V4rs.paddingValue(3), 
+                    V4rs.paddingValue(7), 
+                    V4rs.paddingValue(3), 
+                    0),
               child:
                   SizedBox( 
                 height: (isLandscape) ? MediaQuery.of(context).size.height * 0.06 : MediaQuery.of(context).size.height * 0.04 ,
@@ -5202,7 +5378,11 @@ import 'dart:async';
               Expanded(flex: 2, child: 
                 Column( children:[
                   //redo
-                  Padding(padding: EdgeInsetsGeometry.fromLTRB(3, 7, 3, 0),
+                  Padding(padding: EdgeInsetsGeometry.fromLTRB(
+                    V4rs.paddingValue(3), 
+                    V4rs.paddingValue(7), 
+                    V4rs.paddingValue(3), 
+                    0),
               child:
                   SizedBox( 
                 height: (isLandscape) ? MediaQuery.of(context).size.height * 0.06 : MediaQuery.of(context).size.height * 0.04,
@@ -5222,7 +5402,11 @@ import 'dart:async';
                   ),
                   ),
                   //print
-                  Padding(padding: EdgeInsetsGeometry.fromLTRB(3, 7, 3, 0),
+                  Padding(padding: EdgeInsetsGeometry.fromLTRB(
+                    V4rs.paddingValue(3), 
+                    V4rs.paddingValue(7), 
+                    V4rs.paddingValue(3), 
+                    0),
               child:
                   SizedBox( 
                 height: (isLandscape) ? MediaQuery.of(context).size.height * 0.06 : MediaQuery.of(context).size.height * 0.04,
@@ -5245,7 +5429,8 @@ import 'dart:async';
               //
               Column( children:[
                 Padding(
-                  padding: EdgeInsetsGeometry.fromLTRB(7, 7, 7, 0),
+                  padding: EdgeInsetsGeometry.fromLTRB(
+                    V4rs.paddingValue(7), V4rs.paddingValue(7), V4rs.paddingValue(7), 0),
                   child: SizedBox( 
                     height: (isLandscape) ? MediaQuery.of(context).size.height * 0.07 : MediaQuery.of(context).size.height * 0.04,
                     child: (Ev4rs.isButtonExpanded.value) 
@@ -5268,11 +5453,12 @@ import 'dart:async';
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsetsGeometry.fromLTRB(7, 0, 7, 7),
+                  padding: EdgeInsetsGeometry.fromLTRB(
+                    V4rs.paddingValue(7), 0, V4rs.paddingValue(7), V4rs.paddingValue(7)),
                   child: SizedBox( 
                     height: (isLandscape) ? MediaQuery.of(context).size.height * 0.08 : MediaQuery.of(context).size.height * 0.04 ,
                     child: Padding(
-                      padding: EdgeInsetsGeometry.all(10), child: 
+                      padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)), child: 
                        ButtonStyle1(
                           glow: (Ev4rs.boardEditor.value) ? true : false,
                           imagePath: 'assets/interface_icons/interface_icons/iBoard.png', 
@@ -5295,7 +5481,7 @@ import 'dart:async';
           child: ValueListenableBuilder<bool>(valueListenable: Ev4rs.showSelectionMenu, builder: (context, showSelectionMenu, _) {
           return SizedBox( 
             height: (isLandscape) ? MediaQuery.of(context).size.height * 0.09 : MediaQuery.of(context).size.height * 0.04,
-            child:  Padding(padding: EdgeInsetsGeometry.all(7), child:
+            child:  Padding(padding: EdgeInsetsGeometry.all(V4rs.paddingValue(7)), child:
           Row(
             children: [
               //tap
@@ -5443,7 +5629,7 @@ import 'dart:async';
               //
               //back, in positioned is the tap expander
               //
-              Padding(padding: EdgeInsetsGeometry.all(7),
+              Padding(padding: EdgeInsetsGeometry.all(V4rs.paddingValue(7)),
               child: SizedBox( 
                 height: (isLandscape) ? MediaQuery.of(context).size.height * 0.065 : MediaQuery.of(context).size.height * 0.03 ,
                 child: ButtonStyle1(
@@ -5473,7 +5659,7 @@ import 'dart:async';
                   //image
                   //
                   Padding(
-                    padding: EdgeInsetsGeometry.all(10),
+                    padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)),
                     child: 
                           Container(
                             width: MediaQuery.of(context).size.height * 0.25,
@@ -5484,7 +5670,7 @@ import 'dart:async';
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
-                                Expanded(child: Padding(padding: EdgeInsetsGeometry.all(Ev4rs.padding.value), 
+                                Expanded(child: Padding(padding: EdgeInsetsGeometry.all(V4rs.paddingValue(Ev4rs.padding.value)), 
                                   child: (!Ev4rs.compareObjFields(root.boards, (b) => b.symbol)) ?
                                   Column(children: [
                                     Text('--Not All Match--', style: Sv4rs.settingslabelStyle),
@@ -5544,7 +5730,7 @@ import 'dart:async';
                                   Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 10), child:
+                                      Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: V4rs.paddingValue(10)), child:
                                         SizedBox( 
                                           width: MediaQuery.of(context).size.height * 0.08,
                                           child: ButtonStyle3(
@@ -5564,7 +5750,8 @@ import 'dart:async';
                                     maintainSize: true,
                                     maintainAnimation: true,
                                     maintainState: true,
-                                    child: Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 10), child:
+                                    child: Padding(padding: EdgeInsetsGeometry.symmetric(
+                                      horizontal: V4rs.paddingValue(10)), child:
                                     SizedBox( 
                                       width: MediaQuery.of(context).size.height * 0.07,
                                       child: ButtonStyle3(
@@ -5590,7 +5777,7 @@ import 'dart:async';
                   //
                   //padding
                   //
-                  Padding(padding: EdgeInsetsGeometry.all(10),
+                  Padding(padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)),
                   child:
                   SizedBox( 
                     width: MediaQuery.of(context).size.height * 0.25,
@@ -5604,13 +5791,13 @@ import 'dart:async';
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Padding(padding: EdgeInsets.all(10), child: 
+                        Padding(padding: EdgeInsets.all(V4rs.paddingValue(10)), child: 
                         Column(children: [
                           (Ev4rs.compareObjFields(root.boards, (b) => b.padding)) 
                         ? Text('Image Padding: ${Ev4rs.padding.value}', style: Sv4rs.settingslabelStyle,)
                         : Text('Image Padding: --Not All Match--', style: Sv4rs.settingslabelStyle,),
                         Slider(
-                              padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+                              padding: EdgeInsets.fromLTRB(V4rs.paddingValue(10), V4rs.paddingValue(10), V4rs.paddingValue(10), 0),
                               value: Ev4rs.padding.value,
                               min: 0.0,
                               max: 10.0,
@@ -5642,7 +5829,7 @@ import 'dart:async';
                   //
                   //symbolColors
                   //
-                  Padding(padding: EdgeInsetsGeometry.all(10),
+                  Padding(padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)),
                   child:
                   SizedBox(
                     child:
@@ -5746,7 +5933,7 @@ import 'dart:async';
               Expanded(flex: 7, child: 
                 Column( children:[
                   //label and message
-                  Padding(padding: EdgeInsetsGeometry.all(10),
+                  Padding(padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)),
                   child:
                     Container(
                       decoration: BoxDecoration(
@@ -5765,7 +5952,7 @@ import 'dart:async';
                       return Column(children: [
                         Row(children: [ 
                           Expanded(flex: 5, child: 
-                            Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 10, vertical: 0), child: 
+                            Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: V4rs.paddingValue(10), vertical: 0), child: 
                               TextField(
                                 controller: labelController,
                                 style: Ev4rs.labelStyle,
@@ -5780,7 +5967,7 @@ import 'dart:async';
                             ),
                           ),
                           Flexible(flex: 2, child: 
-                          Padding(padding: EdgeInsetsGeometry.symmetric(vertical: 5), child: 
+                          Padding(padding: EdgeInsetsGeometry.symmetric(vertical: V4rs.paddingValue(5)), child: 
                           ButtonStyle4(
                           imagePath: 'assets/interface_icons/interface_icons/iCheck.png', 
                             onPressed: (){setState(() {
@@ -5799,7 +5986,7 @@ import 'dart:async';
                         Expanded(
                           flex: 5,
                           child: 
-                        Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 10, vertical: 0), child: 
+                        Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: V4rs.paddingValue(10), vertical: 0), child: 
                           TextField(
                             controller: alternateController,
                             style: Ev4rs.labelStyle,
@@ -5816,7 +6003,7 @@ import 'dart:async';
                         Flexible(
                           flex: 2,
                           child: 
-                          Padding(padding: EdgeInsetsGeometry.symmetric(vertical: 5), child: 
+                          Padding(padding: EdgeInsetsGeometry.symmetric(vertical: V4rs.paddingValue(5)), child: 
                         ButtonStyle4(
                         imagePath: 'assets/interface_icons/interface_icons/iCheck.png', 
                           onPressed: (){setState(() {
@@ -5841,7 +6028,7 @@ import 'dart:async';
                     ),
                     ),
                   //match speak on select, speak on select
-                  Padding(padding: EdgeInsetsGeometry.all(10),
+                  Padding(padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)),
                     child: Container(
                       decoration: BoxDecoration(
                         color: Cv4rs.themeColor4,
@@ -5854,7 +6041,11 @@ import 'dart:async';
                             return Row(children: [
                               Expanded(child: 
                               Padding(
-                                padding: EdgeInsetsGeometry.fromLTRB(10, 10, 10, 0), 
+                                padding: EdgeInsetsGeometry.fromLTRB(
+                                  V4rs.paddingValue(10), 
+                                  V4rs.paddingValue(10), 
+                                  V4rs.paddingValue(10), 
+                                  0), 
                                 child: Text( (Ev4rs.compareObjFields(root.boards, (b) => b.matchSpeakOS)) ?
                                   'Match Speak on Select:' : 'Match Speak on Select: --Not All Match--', 
                                   maxLines: 3,
@@ -5865,7 +6056,7 @@ import 'dart:async';
                                 ),
                               ),
                               Padding(
-                                padding: EdgeInsetsGeometry.fromLTRB(0, 0, 10, 0), 
+                                padding: EdgeInsetsGeometry.fromLTRB(0, 0, V4rs.paddingValue(10), 0), 
                                 child: Switch(
                                   padding: EdgeInsets.all(0),
                                   value: Ev4rs.matchSpeakOnSelect.value, 
@@ -5882,12 +6073,12 @@ import 'dart:async';
                           valueListenable: Ev4rs.speakOnSelect, 
                           builder: (context, speakOnSelect, _) {
                             return Padding(
-                              padding: EdgeInsetsGeometry.all(10), 
+                              padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)), 
                               child: Column(children: [
                                 if (!Ev4rs.compareObjFields(root.boards, (b) => b.matchSpeakOS)) 
                                   Text('Speak on Select: --Not All Match--', style: Sv4rs.settingslabelStyle),
                                 Slider(
-                                  padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
+                                  padding: EdgeInsets.fromLTRB(V4rs.paddingValue(5), 0, V4rs.paddingValue(5), 0),
                                   min: 1.0,
                                   max: 3.0,
                                   divisions: 2,
@@ -5904,7 +6095,7 @@ import 'dart:async';
                                     }
                                   ),
                                 Padding(
-                                  padding: EdgeInsetsGeometry.fromLTRB(0, 0, 0, 10), 
+                                  padding: EdgeInsetsGeometry.fromLTRB(0, 0, 0, V4rs.paddingValue(10)), 
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                     children: [
@@ -5957,7 +6148,7 @@ import 'dart:async';
                   ),
                   //font, match font settings, font picker
                   Padding(
-                      padding: EdgeInsetsGeometry.all(10), 
+                      padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)), 
                       child: FontPicker2(
                         widgety:  ButtonStyle2(
                           imagePath: 'assets/interface_icons/interface_icons/iCheck.png', 
@@ -6035,9 +6226,9 @@ import 'dart:async';
                   //
 
                   Padding(
-                    padding: EdgeInsetsGeometry.all(10), 
+                    padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)), 
                     child: Container( 
-                      padding: EdgeInsetsGeometry.all(10),
+                      padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)),
                       decoration: BoxDecoration(
                         color: Cv4rs.themeColor4,
                         borderRadius: BorderRadius.circular(10)
@@ -6059,7 +6250,7 @@ import 'dart:async';
                                 ),
                               ),
                               Padding(
-                                padding: EdgeInsetsGeometry.fromLTRB(0, 0, 10, 0), 
+                                padding: EdgeInsetsGeometry.fromLTRB(0, 0, V4rs.paddingValue(10), 0), 
                                 child: Switch(
                                   padding: EdgeInsets.all(0),
                                   value: Ev4rs.show.value, 
@@ -6091,9 +6282,9 @@ import 'dart:async';
                   //
 
                   Padding(
-                    padding: EdgeInsetsGeometry.all(10), 
+                    padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)), 
                     child: Container(
-                      padding: EdgeInsetsGeometry.all(10),
+                      padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)),
                       decoration: BoxDecoration(
                         color: Cv4rs.themeColor4,
                         borderRadius: BorderRadius.circular(10)
@@ -6105,7 +6296,7 @@ import 'dart:async';
                             return Row(children: [
                               Expanded(child: 
                                 Padding(
-                                  padding: EdgeInsetsGeometry.fromLTRB(0, 10, 0, 0), 
+                                  padding: EdgeInsetsGeometry.fromLTRB(0, V4rs.paddingValue(10), 0, 0), 
                                     child: Text(
                                       (Ev4rs.compareObjFields(root.boards, (b) => b.matchFormat)) 
                                         ? 'Match Format:'
@@ -6135,7 +6326,11 @@ import 'dart:async';
                           valueListenable: Ev4rs.format, 
                           builder: (context, format, _) {
                             return Padding(
-                              padding: EdgeInsetsGeometry.fromLTRB(5, 15, 5, 10), 
+                              padding: EdgeInsetsGeometry.fromLTRB(
+                                V4rs.paddingValue(5), 
+                                V4rs.paddingValue(15), 
+                                V4rs.paddingValue(5), 
+                                V4rs.paddingValue(10)), 
                               child: Column(children: [
                                       Text(
                                         "Format: ${ Ev4rs.compareObjFields(root.boards, (b) => b.format) 
@@ -6156,7 +6351,7 @@ import 'dart:async';
                                         textAlign: TextAlign.center,
                                       ),
                                 Slider(
-                                  padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
+                                  padding: EdgeInsets.fromLTRB(0, V4rs.paddingValue(5), 0, 0),
                                   min: 1.0,
                                   max: 4.0,
                                   divisions: 3,
@@ -6192,9 +6387,9 @@ import 'dart:async';
                   //border
                   //
 
-                  Padding(padding: EdgeInsetsGeometry.all(10), child: //outer padding 
+                  Padding(padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)), child: //outer padding 
                     Container(
-                      padding: EdgeInsetsGeometry.all(10), //inner padding 
+                      padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)), //inner padding 
                       decoration: BoxDecoration(
                         color: Cv4rs.themeColor4,
                         borderRadius: BorderRadius.circular(10)
@@ -6209,7 +6404,10 @@ import 'dart:async';
                               children: [
                               Expanded(child: 
                                 Padding(
-                                  padding: EdgeInsetsGeometry.fromLTRB(0, 10, 3, 20), 
+                                  padding: EdgeInsetsGeometry.fromLTRB(
+                                    0, V4rs.paddingValue(10), 
+                                    V4rs.paddingValue(3), 
+                                    V4rs.paddingValue(20)), 
                                     child: Text(
                                       (Ev4rs.compareObjFields(root.boards, (b) => b.matchBorder)) 
                                         ? 'Match Border: '
@@ -6247,7 +6445,7 @@ import 'dart:async';
                               : 'Border Weight: --Not All Match--',
                               style: Sv4rs.settingslabelStyle),
                             Slider(
-                                  padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
+                                  padding: EdgeInsets.fromLTRB(V4rs.paddingValue(5), 0, V4rs.paddingValue(5), 0),
                                   min: 0.0,
                                   max: 10.0,
                                   divisions: 20,
@@ -6299,7 +6497,9 @@ import 'dart:async';
                             Column(children:[
                             //hexcode input
                             Padding(
-                              padding: EdgeInsetsGeometry.symmetric(horizontal: 10, vertical: 20),
+                              padding: EdgeInsetsGeometry.symmetric(
+                                horizontal: V4rs.paddingValue(10), 
+                                vertical: V4rs.paddingValue(20)),
                               child: HexCodeInput2(
                                 startValue: Ev4rs.borderColor.value.toHexString(),
                                 textStyle: Sv4rs.settingslabelStyle,
@@ -6370,9 +6570,9 @@ import 'dart:async';
 
                   //background
                   
-                  Padding(padding: EdgeInsetsGeometry.all(10), child: //outer padding 
+                  Padding(padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)), child: //outer padding 
                     Container(
-                      padding: EdgeInsetsGeometry.all(10), //inner padding 
+                      padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)), //inner padding 
                       decoration: BoxDecoration(
                         color: Cv4rs.themeColor4,
                         borderRadius: BorderRadius.circular(10)
@@ -6388,7 +6588,11 @@ import 'dart:async';
                               children: [
                               Expanded(child: 
                                 Padding(
-                                  padding: EdgeInsetsGeometry.fromLTRB(5, 10, 5, 10), 
+                                  padding: EdgeInsetsGeometry.fromLTRB(
+                                    V4rs.paddingValue(5), 
+                                    V4rs.paddingValue(10), 
+                                    V4rs.paddingValue(5), 
+                                    V4rs.paddingValue(10)), 
                                     child: Text(
                                       (Ev4rs.compareObjFields(root.boards, (b) => b.matchPOS)) 
                                         ? 'Background Color:'
@@ -6401,7 +6605,7 @@ import 'dart:async';
                                   ),
                               ),
                               Padding(
-                                padding: EdgeInsetsGeometry.fromLTRB(0, 0, 10, 0), 
+                                padding: EdgeInsetsGeometry.fromLTRB(0, 0, V4rs.paddingValue(10), 0), 
                                 child: Switch(
                                   padding: EdgeInsets.all(0),
                                   value: Ev4rs.matchBackground.value,
@@ -6445,7 +6649,7 @@ import 'dart:async';
                             Column(children:[
                             //hexcode input
                             Padding(
-                              padding: EdgeInsetsGeometry.symmetric(horizontal: 10, vertical: 20),
+                              padding: EdgeInsetsGeometry.symmetric(horizontal: V4rs.paddingValue(10), vertical: 20),
                               child: HexCodeInput2(
                                 startValue: Ev4rs.backgroundColor.value.toHexString(),
                                 textStyle: Sv4rs.settingslabelStyle,
@@ -6523,7 +6727,7 @@ import 'dart:async';
                 Column( children:[
                   //part of speech
                   Padding(
-                    padding: EdgeInsetsGeometry.all(10),
+                    padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)),
                     child: SizedBox( child:
                       Container(
                         decoration: BoxDecoration(
@@ -6537,7 +6741,7 @@ import 'dart:async';
                           Column(children: [
                             SizedBox(child:
                             Padding (
-                              padding: EdgeInsetsGeometry.fromLTRB(0,15,0,0),
+                              padding: EdgeInsetsGeometry.fromLTRB(0,V4rs.paddingValue(15),0,0),
                               child: Text((Ev4rs.compareObjFields(root.boards, (b) => b.pos)) 
                                   ? 'Part of Speech:'
                                   : 'Part of Speech: --Not All Match--', 
@@ -6545,7 +6749,7 @@ import 'dart:async';
                                 ),
                             ),
                             ),
-                            Padding(padding: EdgeInsets.symmetric(horizontal: 10), child:
+                            Padding(padding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(10)), child:
                             DropdownButton<String>(
                               isExpanded: true,
                               hint: SizedBox(child: Text(
@@ -6590,7 +6794,7 @@ import 'dart:async';
                   
                   //type 
                   Padding(
-                    padding: EdgeInsetsGeometry.all(10),
+                    padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)),
                     child: 
                       Container(
                         decoration: BoxDecoration(
@@ -6603,14 +6807,14 @@ import 'dart:async';
                             return
                           Column(children: [
                             Padding (
-                              padding: EdgeInsetsGeometry.fromLTRB(0,15,0,0),
+                              padding: EdgeInsetsGeometry.fromLTRB(0,V4rs.paddingValue(15),0,0),
                               child: Text((Ev4rs.compareObjFields(root.boards, (b) => b.type1)) 
                                   ? 'Type: '
                                   : 'Type: --Not All Match--', 
                                 style: Sv4rs.settingslabelStyle,
                                 ),
                             ),
-                            Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 10), child: 
+                            Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: V4rs.paddingValue(10)), child: 
                             DropdownButton<String>(
                               isExpanded: true,
                                 hint: Text((Ev4rs.compareObjFields(root.boards, (b) => b.type1)) 
@@ -6661,7 +6865,7 @@ import 'dart:async';
 
                   if (Ev4rs.subFolderType.value == 'subFolderButton')
                   Padding(
-                    padding: EdgeInsetsGeometry.all(10),
+                    padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)),
                     child: 
                       Container(
                         decoration: BoxDecoration(
@@ -6674,7 +6878,7 @@ import 'dart:async';
                             return
                           Column(children: [
                             Padding (
-                              padding: EdgeInsetsGeometry.fromLTRB(0,15,0,0),
+                              padding: EdgeInsetsGeometry.fromLTRB(0,V4rs.paddingValue(15),0,0),
                               child:  Text(
                                 (Ev4rs.compareObjFields(root.boards, (b) => b.linkToUUID)) 
                                   ? 'Link To...'
@@ -6730,7 +6934,7 @@ import 'dart:async';
                     ),
 
                   //notes
-                  Padding(padding: EdgeInsetsGeometry.all(10),
+                  Padding(padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)),
                   child:
                     Container(
                       decoration: BoxDecoration(
@@ -6740,7 +6944,7 @@ import 'dart:async';
                       child: Column(children: [
                         Row(children: [ 
                           Expanded(flex: 5, child: 
-                            Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 10, vertical: 10), child: 
+                            Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: V4rs.paddingValue(10), vertical: V4rs.paddingValue(10)), child: 
                               ValueListenableBuilder(valueListenable: Ev4rs.notes, builder: (context, value, _) {
                           final notesController = TextEditingController(text: value)
                           ..selection = TextSelection.collapsed(offset: value.length);
@@ -6766,7 +6970,7 @@ import 'dart:async';
                             ),
                           ),
                           Flexible(flex: 2, child: 
-                          Padding(padding: EdgeInsetsGeometry.symmetric(vertical: 5), child: 
+                          Padding(padding: EdgeInsetsGeometry.symmetric(vertical: V4rs.paddingValue(5)), child: 
                           ButtonStyle4(
                           imagePath: 'assets/interface_icons/interface_icons/iCheck.png', 
                             onPressed: (){setState(() {
@@ -6794,7 +6998,11 @@ import 'dart:async';
               Expanded(flex: 2, child: 
                 Column( children:[
                   //undo
-                  Padding(padding: EdgeInsetsGeometry.fromLTRB(3, 7, 3, 0),
+                  Padding(padding: EdgeInsetsGeometry.fromLTRB(
+                    V4rs.paddingValue(3), 
+                    V4rs.paddingValue(7), 
+                    V4rs.paddingValue(3), 
+                    0),
               child:
                   SizedBox( 
                 height: (isLandscape) ? MediaQuery.of(context).size.height * 0.06 : MediaQuery.of(context).size.height * 0.04 ,
@@ -6815,7 +7023,11 @@ import 'dart:async';
                   ),
 
                   //share
-                  Padding(padding: EdgeInsetsGeometry.fromLTRB(3, 7, 3, 0),
+                  Padding(padding: EdgeInsetsGeometry.fromLTRB(
+                    V4rs.paddingValue(3), 
+                    V4rs.paddingValue(7), 
+                    V4rs.paddingValue(3), 
+                    0),
               child:
                   SizedBox( 
                 height: (isLandscape) ? MediaQuery.of(context).size.height * 0.06 : MediaQuery.of(context).size.height * 0.04 ,
@@ -6839,7 +7051,11 @@ import 'dart:async';
               Expanded(flex: 2, child: 
                 Column( children:[
                   //redo
-                  Padding(padding: EdgeInsetsGeometry.fromLTRB(3, 7, 3, 0),
+                  Padding(padding: EdgeInsetsGeometry.fromLTRB(
+                    V4rs.paddingValue(3), 
+                    V4rs.paddingValue(7), 
+                    V4rs.paddingValue(3), 
+                    0),
               child:
                   SizedBox( 
                 height: (isLandscape) ? MediaQuery.of(context).size.height * 0.06 : MediaQuery.of(context).size.height * 0.04 ,
@@ -6859,7 +7075,11 @@ import 'dart:async';
                   ),
                   ),
                   //print
-                  Padding(padding: EdgeInsetsGeometry.fromLTRB(3, 7, 3, 0),
+                  Padding(padding: EdgeInsetsGeometry.fromLTRB(
+                    V4rs.paddingValue(3), 
+                    V4rs.paddingValue(7), 
+                    V4rs.paddingValue(3), 
+                    0),
               child:
                   SizedBox( 
                 height: (isLandscape) ? MediaQuery.of(context).size.height * 0.06 : MediaQuery.of(context).size.height * 0.04 ,
@@ -6882,7 +7102,12 @@ import 'dart:async';
               //
               Column( children:[
                 Padding(
-                  padding: EdgeInsetsGeometry.fromLTRB(7, 7, 7, 0),
+                  padding: EdgeInsetsGeometry.fromLTRB(
+                    V4rs.paddingValue(7), 
+                    V4rs.paddingValue(7), 
+                    V4rs.paddingValue(7), 
+                    0
+                  ),
                   child: SizedBox( 
                     height: (isLandscape) ? MediaQuery.of(context).size.height * 0.07 : MediaQuery.of(context).size.height * 0.04,
                     child: (Ev4rs.isButtonExpanded.value) 
@@ -6905,11 +7130,13 @@ import 'dart:async';
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsetsGeometry.fromLTRB(7, 0, 7, 7),
+                  padding: EdgeInsetsGeometry.fromLTRB(
+                    V4rs.paddingValue(7), 0, 
+                    V4rs.paddingValue(7), V4rs.paddingValue(7)),
                   child: SizedBox( 
                     height: (isLandscape) ? MediaQuery.of(context).size.height * 0.08 : MediaQuery.of(context).size.height * 0.04 ,
                     child: Padding(
-                      padding: EdgeInsetsGeometry.all(10), child: 
+                      padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)), child: 
                        ButtonStyle1(
                           glow: (Ev4rs.boardEditor.value) ? true : false,
                           imagePath: 'assets/interface_icons/interface_icons/iBoard.png', 
@@ -6931,7 +7158,7 @@ import 'dart:async';
           child: ValueListenableBuilder<bool>(valueListenable: Ev4rs.showSelectionMenu, builder: (context, showSelectionMenu, _) {
           return SizedBox( 
             height: (isLandscape) ? MediaQuery.of(context).size.height * 0.09 : MediaQuery.of(context).size.height * 0.04,
-            child:  Padding(padding: EdgeInsetsGeometry.all(7), child:
+            child:  Padding(padding: EdgeInsetsGeometry.all(V4rs.paddingValue(7)), child:
           Row(
             children: [
               //tap

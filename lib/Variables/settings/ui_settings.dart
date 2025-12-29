@@ -41,7 +41,11 @@ class _TopRowForSettings extends State<TopRowForSettings> with WidgetsBindingObs
       Row(
         children: [
           Padding(
-            padding: EdgeInsets.fromLTRB(0, 10, 10, 20),
+            padding: EdgeInsets.fromLTRB(
+              0, 
+              V4rs.paddingValue(10), 
+              V4rs.paddingValue(10), 
+              V4rs.paddingValue(20)),
             child: SizedBox(
               height: 50,
               width: 75,
@@ -64,7 +68,11 @@ class _TopRowForSettings extends State<TopRowForSettings> with WidgetsBindingObs
             ),
           ),
           Padding(
-            padding: EdgeInsets.fromLTRB(5, 10, 5, 20),
+            padding: EdgeInsets.fromLTRB(
+              V4rs.paddingValue(5), 
+              V4rs.paddingValue(10), 
+              V4rs.paddingValue(5), 
+              V4rs.paddingValue(20)),
             child: SizedBox(
               height: 50,
               width: 60,
@@ -90,7 +98,12 @@ class _TopRowForSettings extends State<TopRowForSettings> with WidgetsBindingObs
             ),
           ),
           Padding(
-            padding: EdgeInsets.fromLTRB(5, 10, 5, 20),
+            padding: EdgeInsets.fromLTRB(
+              V4rs.paddingValue(5), 
+              V4rs.paddingValue(10), 
+              V4rs.paddingValue(5), 
+              V4rs.paddingValue(20)
+            ),
             child: SizedBox(
               height: 50,
               width: 100,
@@ -336,7 +349,7 @@ class _VoicePicker extends State<VoicePicker> with WidgetsBindingObserver {
     }
     
     return Padding(
-      padding: EdgeInsetsGeometry.symmetric(horizontal: 20), 
+      padding: EdgeInsetsGeometry.symmetric(horizontal: V4rs.paddingValue(20)), 
       child: Column(children: [
         Row(children: [
           Text('Voice', style: Sv4rs.settingslabelStyle),
@@ -377,7 +390,7 @@ class _VoicePicker extends State<VoicePicker> with WidgetsBindingObserver {
         
 
           if (speakerDropdownCount > 1)
-          Padding(padding: EdgeInsetsGeometry.fromLTRB(20,0,0,0), child:
+          Padding(padding: EdgeInsetsGeometry.fromLTRB(V4rs.paddingValue(20),0,0,0), child:
             DropdownButton<int>(
               value: Vv4rs.sampleSpeaker, 
               onChanged: (value) {
@@ -430,7 +443,7 @@ class _VoicePicker extends State<VoicePicker> with WidgetsBindingObserver {
           //
           //Sample
           //
-          Padding(padding: EdgeInsetsGeometry.all(10), child:
+          Padding(padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)), child:
           SizedBox(height: 40, width: widget.totalWidth * 0.1,
             child: ButtonStyle1(
               imagePath: 'assets/interface_icons/interface_icons/iPlay.png',
@@ -460,7 +473,7 @@ class _VoicePicker extends State<VoicePicker> with WidgetsBindingObserver {
           //
           //Select
           //
-          Padding(padding: EdgeInsetsGeometry.all(10), child:
+          Padding(padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10)), child:
             ValueListenableBuilder(
               valueListenable: Vv4rs.isDownloading, 
               builder: (context, isDownloading, _) {
@@ -516,7 +529,7 @@ class _VoicePicker extends State<VoicePicker> with WidgetsBindingObserver {
 
   Widget systemRateSlider(bool forSS, String language){
    return Padding(
-      padding: EdgeInsets.fromLTRB(20, 0, 0, 15),
+      padding: EdgeInsets.fromLTRB(V4rs.paddingValue(20), 0, 0, V4rs.paddingValue(15)),
       child: Row(
         children: [
 
@@ -572,7 +585,7 @@ class _VoicePicker extends State<VoicePicker> with WidgetsBindingObserver {
 
   Widget systemPitchSlider(bool forSS, String language){
    return Padding(
-      padding: EdgeInsets.fromLTRB(20, 0, 0, 15),
+      padding: EdgeInsets.fromLTRB(V4rs.paddingValue(20), 0, 0, V4rs.paddingValue(15)),
       child: Row(
         children: [
 
@@ -628,7 +641,7 @@ class _VoicePicker extends State<VoicePicker> with WidgetsBindingObserver {
 
   Widget sherpaOnnxRateSlider(bool forSS, String language){
    return Padding(
-      padding: EdgeInsets.fromLTRB(20, 0, 0, 15),
+      padding: EdgeInsets.fromLTRB(V4rs.paddingValue(20), 0, 0, V4rs.paddingValue(15)),
       child: Row(
         children: [
           Text(
@@ -701,7 +714,7 @@ class _VoicePicker extends State<VoicePicker> with WidgetsBindingObserver {
 
   Widget testVoiceButton(bool forSS, String language){
    return Padding(
-      padding: EdgeInsets.fromLTRB(20, 0, 0, 15),
+      padding: EdgeInsets.fromLTRB(V4rs.paddingValue(20), 0, 0, V4rs.paddingValue(15)),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -759,7 +772,7 @@ class _VoicePicker extends State<VoicePicker> with WidgetsBindingObserver {
        ),
       collapsedBackgroundColor: Cv4rs.themeColor4,
       backgroundColor: Cv4rs.themeColor4,
-      childrenPadding: EdgeInsets.symmetric(horizontal: 20),
+      childrenPadding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(20)),
       onExpansionChanged: (bool expanded) {  
         if (Sv4rs.speakInterfaceButtonsOnSelect) {
             V4rs.speakOnSelect(
@@ -779,7 +792,7 @@ class _VoicePicker extends State<VoicePicker> with WidgetsBindingObserver {
         Row(children: [ 
           Expanded(
             child: Padding( 
-              padding: EdgeInsets.fromLTRB(20, 0, 0, 15),
+              padding: EdgeInsets.fromLTRB(V4rs.paddingValue(20), 0, 0, V4rs.paddingValue(15)),
               child: Text(
                 'Multilingual users should not rely on default voices- please manually select a voice for each language.', 
                 style: Sv4rs.settingsSecondaryLabelStyle,
@@ -837,7 +850,7 @@ class _VoicePicker extends State<VoicePicker> with WidgetsBindingObserver {
             title: Text(language, style: Sv4rs.settingslabelStyle),
             collapsedBackgroundColor: Cv4rs.themeColor4,
             backgroundColor: Cv4rs.themeColor4,
-            childrenPadding: EdgeInsets.symmetric(horizontal: 20),
+            childrenPadding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(20)),
             children: [
               
               engineDropdown(),
@@ -886,11 +899,11 @@ class _VoicePicker extends State<VoicePicker> with WidgetsBindingObserver {
       ExpansionTile(
         title: Text('Voice for Speak on Select:', style: Sv4rs.settingslabelStyle),
         backgroundColor: Cv4rs.themeColor4,
-        childrenPadding: EdgeInsets.symmetric(horizontal: 40),
+        childrenPadding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(40)),
         children: [
 
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10),
+            padding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(10)),
             child: Row(
               children: [
                 Text('Use unique voice for Speak on Select', style: Sv4rs.settingslabelStyle),
@@ -978,7 +991,7 @@ class _VoicePicker extends State<VoicePicker> with WidgetsBindingObserver {
             title: Text(language, style: Sv4rs.settingslabelStyle),
             collapsedBackgroundColor: Cv4rs.themeColor4,
             backgroundColor: Cv4rs.themeColor4,
-            childrenPadding: EdgeInsets.symmetric(horizontal: 20),
+            childrenPadding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(20)),
             children: [
               //saftey
               if (Vv4rs.systemVoices.isEmpty)

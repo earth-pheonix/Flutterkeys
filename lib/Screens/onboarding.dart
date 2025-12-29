@@ -68,7 +68,7 @@ void _showPopUp() {
           children: [
             //welcome to flutter keys
             Padding( 
-             padding: EdgeInsetsGeometry.all( 16),
+             padding: EdgeInsetsGeometry.all(V4rs.paddingValue(16)),
              child: Text(
               'Welcome to Flutterkeys!',
               style: TextStyle( 
@@ -80,7 +80,7 @@ void _showPopUp() {
             ),
             //language
             Padding (
-              padding: EdgeInsetsGeometry.all(16),
+              padding: EdgeInsetsGeometry.all(V4rs.paddingValue(16)),
               child: Row(
                 children: [
                   Text('Language / langue / Idioma / 语言 ',
@@ -115,7 +115,7 @@ void _showPopUp() {
               ),
             //theme colors
             Padding(
-              padding: EdgeInsetsGeometry.all(16),
+              padding: EdgeInsetsGeometry.all(V4rs.paddingValue(16)),
               child: ExpansionTile(
                 collapsedIconColor: Cv4rs.themeColor2,
                 title: Text('Theme Colors:', style: TextStyle( 
@@ -125,7 +125,7 @@ void _showPopUp() {
                     ),),
                 collapsedBackgroundColor: Cv4rs.themeColor4,
                 backgroundColor: Cv4rs.themeColor4,
-                childrenPadding: EdgeInsets.symmetric(horizontal: 20),
+                childrenPadding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(20)),
                 children: [
                   //theme color 1
                   ExpansionTile(
@@ -149,7 +149,10 @@ void _showPopUp() {
                     children: [
                       //hexcode input
                       Padding(
-                        padding: EdgeInsetsGeometry.symmetric(horizontal: 40, vertical: 20),
+                        padding: EdgeInsetsGeometry.symmetric(
+                          horizontal: V4rs.paddingValue(40), 
+                          vertical: V4rs.paddingValue(20)
+                        ),
                         child: HexCodeInput(
                           startValue: Cv4rs.themeColor1.toHexString(),
                           textStyle: TextStyle(color: Cv4rs.themeColor1, fontSize: 16),
@@ -164,7 +167,11 @@ void _showPopUp() {
                       ),
                       //color picker
                       Padding(
-                        padding: EdgeInsets.fromLTRB(40, 0, 10, 10),
+                        padding: EdgeInsets.fromLTRB(
+                          V4rs.paddingValue(40), 
+                          V4rs.paddingValue(0), 
+                          V4rs.paddingValue(10), 
+                          V4rs.paddingValue(10)),
                         child: ColorPicker(
                           pickerColor: Cv4rs.themeColor1, 
                           enableAlpha: false,
@@ -202,7 +209,10 @@ void _showPopUp() {
                     children: [
                       //hexcode input
                       Padding(
-                        padding: EdgeInsetsGeometry.symmetric(horizontal: 40, vertical: 20),
+                        padding: EdgeInsetsGeometry.symmetric(
+                          horizontal: V4rs.paddingValue(40), 
+                          vertical: V4rs.paddingValue(20)
+                        ),
                         child: HexCodeInput(
                           startValue: Cv4rs.themeColor2.toHexString(),
                           textStyle: TextStyle(color: Cv4rs.themeColor1, fontSize: 16),
@@ -217,7 +227,12 @@ void _showPopUp() {
                       ),
                       //color picker
                       Padding(
-                        padding: EdgeInsets.fromLTRB(40, 0, 10, 10),
+                        padding: EdgeInsets.fromLTRB(
+                          V4rs.paddingValue(40), 
+                          V4rs.paddingValue(0), 
+                          V4rs.paddingValue(10), 
+                          V4rs.paddingValue(10)
+                        ),
                         child: ColorPicker(
                           pickerColor: Cv4rs.themeColor2, 
                           enableAlpha: false,
@@ -264,7 +279,9 @@ void _showPopUp() {
                     children: [
                       //hexcode input
                       Padding(
-                        padding: EdgeInsetsGeometry.symmetric(horizontal: 40, vertical: 20),
+                        padding: EdgeInsetsGeometry.symmetric(
+                          horizontal: V4rs.paddingValue(40), 
+                          vertical: V4rs.paddingValue(20)),
                         child: HexCodeInput(
                           startValue: Cv4rs.themeColor3.toHexString(),
                           textStyle: TextStyle(color: Cv4rs.themeColor1, fontSize: 16),
@@ -279,7 +296,11 @@ void _showPopUp() {
                       ),
                       //color picker
                       Padding(
-                        padding: EdgeInsets.fromLTRB(40, 0, 10, 10),
+                        padding: EdgeInsets.fromLTRB(
+                          V4rs.paddingValue(40), 
+                          0, 
+                          V4rs.paddingValue(10), 
+                          V4rs.paddingValue(10)),
                         child: ColorPicker(
                           pickerColor: Cv4rs.themeColor3, 
                           enableAlpha: false,
@@ -317,7 +338,9 @@ void _showPopUp() {
                     children: [
                       //hexcode input
                       Padding(
-                        padding: EdgeInsetsGeometry.symmetric(horizontal: 40, vertical: 20),
+                        padding: EdgeInsetsGeometry.symmetric(
+                          horizontal: V4rs.paddingValue(40), 
+                          vertical: V4rs.paddingValue(20)),
                         child: HexCodeInput(
                           startValue: Cv4rs.themeColor4.toHexString(),
                           textStyle: TextStyle(color: Cv4rs.themeColor1, fontSize: 16),
@@ -332,7 +355,11 @@ void _showPopUp() {
                       ),
                       //color picker
                       Padding(
-                        padding: EdgeInsets.fromLTRB(40, 0, 10, 10),
+                        padding: EdgeInsets.fromLTRB(
+                          V4rs.paddingValue(40), 
+                          0, 
+                          V4rs.paddingValue(10), 
+                          V4rs.paddingValue(10)),
                         child: ColorPicker(
                           pickerColor: Cv4rs.themeColor4, 
                           enableAlpha: false,
@@ -370,7 +397,9 @@ void _showPopUp() {
                     children: [
                       //hexcode input
                       Padding(
-                        padding: EdgeInsetsGeometry.symmetric(horizontal: 40, vertical: 20),
+                        padding: EdgeInsetsGeometry.symmetric(
+                          horizontal: V4rs.paddingValue(40), 
+                          vertical: V4rs.paddingValue(20)),
                         child: HexCodeInput(
                           startValue: Cv4rs.uiIconColor.toHexString(),
                           textStyle: TextStyle(color: Cv4rs.themeColor1, fontSize: 16),
@@ -385,7 +414,11 @@ void _showPopUp() {
                       ),
                       //color picker
                       Padding(
-                        padding: EdgeInsets.fromLTRB(40, 0, 10, 10),
+                        padding: EdgeInsets.fromLTRB(
+                          V4rs.paddingValue(40), 
+                          0, 
+                          V4rs.paddingValue(10), 
+                          V4rs.paddingValue(10)),
                         child: ColorPicker(
                           pickerColor: Cv4rs.uiIconColor, 
                           enableAlpha: false,
@@ -406,11 +439,11 @@ void _showPopUp() {
             ),
             
             Padding( 
-             padding: EdgeInsetsGeometry.all( 16),
+             padding: EdgeInsetsGeometry.all( V4rs.paddingValue(16)),
              child: Column(
               children: [
                 Padding(
-                  padding: EdgeInsetsGeometry.fromLTRB(0, 0, 0, 5),
+                  padding: EdgeInsetsGeometry.fromLTRB(0, 0, 0, V4rs.paddingValue(5)),
                   child: Text(
                     'Before typing, turn your device to landcape mode', 
                     style: TextStyle(color: Cv4rs.themeColor1, fontSize: 16),
@@ -423,11 +456,11 @@ void _showPopUp() {
               ]
              ),
             ),
-            Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 30), child:
+            Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: V4rs.paddingValue(30)), child:
             Row(children: [
               Expanded(child: 
             Padding( 
-             padding: EdgeInsetsGeometry.all(20),
+             padding: EdgeInsetsGeometry.all(V4rs.paddingValue(20)),
              child: TextField(
                 style: TextStyle(color: Cv4rs.themeColor1, fontSize: 16),
                 textAlign: TextAlign.center,
@@ -439,25 +472,19 @@ void _showPopUp() {
             ),
               ),
             Padding( 
-             padding: EdgeInsetsGeometry.all(30),
+             padding: EdgeInsetsGeometry.all(V4rs.paddingValue(30)),
              child: ElevatedButton(
                style: ElevatedButton.styleFrom(backgroundColor: Cv4rs.themeColor2),
                child: Text('Continue to App!', style: TextStyle(color: Cv4rs.themeColor4, fontSize: 16),),
                onPressed: () async {
                  final mediaQuery = MediaQuery.of(context);
                  final keyboardHeight = mediaQuery.viewInsets.bottom;
-                 final screenHeight = mediaQuery.size.height;
-                 final screenWidth = mediaQuery.size.width;
 
-                 V4rs.screenheight = screenHeight; 
-                 V4rs.screenwidth = screenWidth; 
                  V4rs.keyboardheight = keyboardHeight > 0 ? keyboardHeight : 250.0; //  default keyboard height?
 
                  
 
                   //save to shared preferences
-                  await V4rs.savescreenheight(screenHeight);
-                  await V4rs.savescreenwidth(screenWidth);
                   await V4rs.savekeyboardheight(keyboardHeight);
                   _showPopUp();
                 },

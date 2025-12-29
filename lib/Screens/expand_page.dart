@@ -69,7 +69,7 @@ class _ExpandPage extends State<ExpandPage> with WidgetsBindingObserver {
       body: SafeArea(
         bottom: false, // Ignore keyboard
         child: Padding (
-          padding: const EdgeInsets.all(5.0),
+          padding: EdgeInsets.all(V4rs.paddingValue(5)),
           child: LayoutBuilder(
             builder: (context, constraints) {
               var totalHeight = constraints.maxHeight;
@@ -78,14 +78,45 @@ class _ExpandPage extends State<ExpandPage> with WidgetsBindingObserver {
               return Flex(
                 direction: Axis.vertical,
                 mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
+
+                 if (!_isFlipped) 
+                  SizedBox (
+                    height: V4rs.xSmallModeWidth 
+                      ? totalHeight *  0.05
+                      : totalHeight *  0.06,
+                    width: V4rs.xSmallModeWidth 
+                      ? totalWidth *  0.2
+                      : totalWidth *  0.09,
+                    child: ExpandButtonStyle(
+                      imagePath: 'assets/interface_icons/interface_icons/iClear.png',
+                      onPressed: () {
+                            if (Sv4rs.speakInterfaceButtonsOnSelect) {
+                            V4rs.speakOnSelect(
+                              'clear', 
+                              V4rs.selectedLanguage.value, 
+                              synth!,
+                              widget.speakSelectSherpaOnnxSynth,
+                              widget.initForSS,
+                              widget.playerForSS,
+                              );
+                            }
+                          _controller.clear();
+                        },
+                    ),
+                  ),
                 // Expanded Message Window
                 Expanded(
                   flex: 15,
                   child: Padding ( 
-                    padding: const EdgeInsets.all(5.0),
-                    child: Stack(
-                      children: [ 
+                    padding: EdgeInsets.fromLTRB(
+                      V4rs.paddingValue(5),
+                      5,
+                      V4rs.paddingValue(5),
+                      V4rs.paddingValue(5),
+                    ),
+                    child: 
                         Container(
                             decoration: BoxDecoration(
                               color: Cv4rs.expandColor4,
@@ -105,54 +136,35 @@ class _ExpandPage extends State<ExpandPage> with WidgetsBindingObserver {
                                     border: InputBorder.none,
                                     hintStyle: TextStyle(color: Cv4rs.expandColor3),
                                     hintText: 'Message Window...',
-                                    contentPadding: EdgeInsets.fromLTRB(20, 50, 20, 20),
+                                    contentPadding: EdgeInsets.fromLTRB(
+                                      V4rs.paddingValue(20), 
+                                      V4rs.paddingValue(50), 
+                                      V4rs.paddingValue(20), 
+                                      V4rs.paddingValue(20)
+                                    ),
                                   ),
                                   textAlign: TextAlign.left,
                               ),
                             ),
                           ),
-                          if (!_isFlipped) 
-                          Positioned(
-                          top: 0,
-                          right: 0,
-                          child: SizedBox (
-                            height: totalHeight *  0.06,
-                            width: totalWidth * 0.09,
-                            child:
-                              ExpandButtonStyle(
-                                imagePath: 'assets/interface_icons/interface_icons/iClear.png',
-                                onPressed: () {
-                                   if (Sv4rs.speakInterfaceButtonsOnSelect) {
-                                    V4rs.speakOnSelect(
-                                      'clear', 
-                                      V4rs.selectedLanguage.value, 
-                                      synth!,
-                                      widget.speakSelectSherpaOnnxSynth,
-                                      widget.initForSS,
-                                      widget.playerForSS,
-                                      );
-                                    }
-                                  _controller.clear();
-                                },
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
                   ),
                 ),
               
+                //bottom row
                 Expanded(
                   flex: 2,
-                  child: Padding(padding: const EdgeInsets.all(5.0),
+                  child: Padding(padding: EdgeInsets.all(V4rs.paddingValue(5)),
                   child: Row( 
                     children: [
                       //back button 
-                    SizedBox(
-                        height: totalHeight *  0.09,
-                        width: totalWidth * 0.1,
+                    Expanded(
+                      flex: 1,
+                      child:
+                    FractionallySizedBox(
+                        heightFactor: 0.8,
+                        widthFactor: 1,
                         child: Padding(
-                          padding: const EdgeInsets.all(10.0),
+                          padding: EdgeInsets.all(V4rs.xSmallMode ? 3 : 5),
                           child: ExpandButtonStyle(
                             imagePath: 'assets/interface_icons/interface_icons/iBack.png',
                             onPressed: () {
@@ -170,8 +182,10 @@ class _ExpandPage extends State<ExpandPage> with WidgetsBindingObserver {
                           ),
                         ),
                     ),
+                    ),
                     //slider for font size
                     Expanded(
+                      flex: V4rs.xSmallMode ? 6 : 10,
                       child: SliderTheme(
                         data: SliderTheme.of(context).copyWith(
                          overlayShape: SliderComponentShape.noOverlay,
@@ -205,11 +219,14 @@ class _ExpandPage extends State<ExpandPage> with WidgetsBindingObserver {
                         ),
                     ),
                     //copy text button
-                    SizedBox(
-                        height: totalHeight *  0.09,
-                        width: totalWidth * 0.09,
+                    Expanded(
+                      flex: 1, 
+                      child:
+                    FractionallySizedBox(
+                        heightFactor: 0.8,
+                        widthFactor: 1,
                         child: Padding(
-                          padding: const EdgeInsets.all(10.0),
+                          padding: EdgeInsets.all(V4rs.xSmallMode ? 3 : 5),
                           child: ExpandButtonStyle(
                             imagePath: 'assets/interface_icons/interface_icons/iCopy.png',
                             onPressed: () {
@@ -234,12 +251,16 @@ class _ExpandPage extends State<ExpandPage> with WidgetsBindingObserver {
                           ),
                         ),
                     ),
+                    ),
                     //flip text button
-                    SizedBox(
-                        height: totalHeight *  0.1,
-                        width: totalWidth * 0.09,
+                    Expanded(
+                      flex: 1, 
+                      child:
+                    FractionallySizedBox(
+                        heightFactor: 0.8,
+                        widthFactor: 1,
                         child: Padding(
-                          padding: const EdgeInsets.all(10.0),
+                          padding: EdgeInsets.all(V4rs.xSmallMode ? 3 : 5),
                           child: ExpandButtonStyle(
                             imagePath: 'assets/interface_icons/interface_icons/iFlip.png',
                             onPressed: () {
@@ -259,6 +280,7 @@ class _ExpandPage extends State<ExpandPage> with WidgetsBindingObserver {
                             },
                           ),
                         ),
+                    ),
                     ),
                   ],
                     ),

@@ -80,7 +80,7 @@ class _BuildPocketFolderState extends State<BuildPocketFolder> {
     TextStyle matchStyle =  
     TextStyle(
       color: Fv4rs.buttonFontColor,
-      fontSize: Fv4rs.buttonFontSize,
+      fontSize: V4rs.fontValue(Fv4rs.buttonFontSize),
       fontFamily: Fontsy.fontToFamily[Fv4rs.buttonFont], 
       fontWeight: FontWeight.values[((Fv4rs.buttonFontWeight ~/ 100) - 1 ).clamp(0, 8)],
       fontStyle: Fv4rs.buttonFontItalics ? FontStyle.italic : FontStyle.normal,
@@ -311,16 +311,16 @@ class _BuildPocketFolderState extends State<BuildPocketFolder> {
                 Flexible(
                   child: Padding(
                     padding: EdgeInsets.fromLTRB(
-                      obj.padding ?? 2.0,
-                      (obj.padding ?? 2.0) + 2.0,
-                      obj.padding ?? 2.0,
-                      obj.padding ?? 2.0,
+                      V4rs.paddingValue(obj.padding ?? 2.0),
+                      V4rs.paddingValue((obj.padding ?? 2.0) + 2.0),
+                      V4rs.paddingValue(obj.padding ?? 2.0),
+                      V4rs.paddingValue(obj.padding ?? 2.0),
                     ),
                     child: theSymbol,
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 5.0),
+                  padding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(5)),
                   child: theLabel,
                 ),
               ]),
@@ -332,16 +332,16 @@ class _BuildPocketFolderState extends State<BuildPocketFolder> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 5.0),
+                  padding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(5)),
                   child: theLabel,
                 ), 
                 Flexible(child: 
                 Padding(
                   padding: EdgeInsets.fromLTRB(
-                    obj.padding ?? 2.0,
-                    obj.padding ?? 2.0,
-                    obj.padding ?? 2.0,
-                    (obj.padding ?? 2.0) + 2.0,
+                    V4rs.paddingValue(obj.padding ?? 2.0),
+                    V4rs.paddingValue(obj.padding ?? 2.0),
+                    V4rs.paddingValue(obj.padding ?? 2.0),
+                    V4rs.paddingValue((obj.padding ?? 2.0) + 2.0),
                   ),
                   child: theSymbol,
                 ),
@@ -351,14 +351,14 @@ class _BuildPocketFolderState extends State<BuildPocketFolder> {
           case 3:
             return Stack(children: [
               Padding(
-                padding: EdgeInsets.all(obj.padding ?? 2.0),
+                padding: EdgeInsets.all(V4rs.paddingValue(obj.padding ?? 2.0)),
                 child: theSymbol,
               ),
             ]);
           case 4:
             return Stack(children: [
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 5.0),
+                padding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(5.0)),
                 child: theLabel2,
               ),
             ]);
@@ -460,7 +460,7 @@ class _BuildTypingKeyState extends State<BuildTypingKey> {
     TextStyle matchStyle =  
     TextStyle(
       color: Fv4rs.buttonFontColor,
-      fontSize: Fv4rs.buttonFontSize,
+      fontSize: V4rs.fontValue(Fv4rs.buttonFontSize),
       fontFamily: Fontsy.fontToFamily[Fv4rs.buttonFont], 
       fontWeight: FontWeight.values[((Fv4rs.buttonFontWeight ~/ 100) - 1 ).clamp(0, 8)],
       fontStyle: Fv4rs.buttonFontItalics ? FontStyle.italic : FontStyle.normal,
@@ -679,16 +679,16 @@ class _BuildTypingKeyState extends State<BuildTypingKey> {
                 Flexible(
                   child: Padding(
                     padding: EdgeInsets.fromLTRB(
-                      obj.padding ?? 2.0,
-                      (obj.padding ?? 2.0) + 2.0,
-                      obj.padding ?? 2.0,
-                      obj.padding ?? 2.0,
+                      V4rs.paddingValue(obj.padding ?? 2.0),
+                      V4rs.paddingValue((obj.padding ?? 2.0) + 2.0),
+                      V4rs.paddingValue(obj.padding ?? 2.0),
+                      V4rs.paddingValue(obj.padding ?? 2.0),
                     ),
                     child: theSymbol,
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 5.0),
+                  padding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(5.0)),
                   child: theLabel,
                 ),
               ]),
@@ -702,16 +702,16 @@ class _BuildTypingKeyState extends State<BuildTypingKey> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 5.0),
+                  padding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(5.0)),
                   child: theLabel,
                 ), 
                 Flexible(child: 
                 Padding(
                   padding: EdgeInsets.fromLTRB(
-                    obj.padding ?? 2.0,
-                    obj.padding ?? 2.0,
-                    obj.padding ?? 2.0,
-                    (obj.padding ?? 2.0) + 2.0,
+                    V4rs.paddingValue(obj.padding ?? 2.0),
+                    V4rs.paddingValue(obj.padding ?? 2.0),
+                    V4rs.paddingValue(obj.padding ?? 2.0),
+                    V4rs.paddingValue((obj.padding ?? 2.0) + 2.0),
                   ),
                   child: theSymbol,
                 ),
@@ -723,7 +723,7 @@ class _BuildTypingKeyState extends State<BuildTypingKey> {
           case 3:
             return Stack(children: [
               Padding(
-                padding: EdgeInsets.all(obj.padding ?? 2.0),
+                padding: EdgeInsets.all(V4rs.paddingValue(obj.padding ?? 2.0)),
                 child: theSymbol,
               ),
             ]);
@@ -732,7 +732,7 @@ class _BuildTypingKeyState extends State<BuildTypingKey> {
           case 4:
             return Stack(children: [
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 5.0),
+                padding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(5.0)),
                 child: theLabel2,
               ),
             ]);
@@ -848,7 +848,7 @@ class _BuildAudioTileState extends State<BuildAudioTile> {
     TextStyle matchStyle =  
     TextStyle(
       color: Fv4rs.buttonFontColor,
-      fontSize: Fv4rs.buttonFontSize,
+      fontSize: V4rs.fontValue(Fv4rs.buttonFontSize),
       fontFamily: Fontsy.fontToFamily[Fv4rs.buttonFont], 
       fontWeight: FontWeight.values[((Fv4rs.buttonFontWeight ~/ 100) - 1 ).clamp(0, 8)],
       fontStyle: Fv4rs.buttonFontItalics ? FontStyle.italic : FontStyle.normal,
@@ -1060,16 +1060,16 @@ class _BuildAudioTileState extends State<BuildAudioTile> {
                 Flexible(
                   child: Padding(
                     padding: EdgeInsets.fromLTRB(
-                      obj.padding ?? 2.0,
-                      (obj.padding ?? 2.0) + 2.0,
-                      obj.padding ?? 2.0,
-                      obj.padding ?? 2.0,
+                      V4rs.paddingValue(obj.padding ?? 2.0),
+                      V4rs.paddingValue((obj.padding ?? 2.0) + 2.0),
+                      V4rs.paddingValue(obj.padding ?? 2.0),
+                      V4rs.paddingValue(obj.padding ?? 2.0),
                     ),
                     child: theSymbol,
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 5.0),
+                  padding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(5.0)),
                   child: theLabel,
                 ),
               ]),
@@ -1083,16 +1083,16 @@ class _BuildAudioTileState extends State<BuildAudioTile> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 5.0),
+                  padding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(5.0)),
                   child: theLabel,
                 ), 
                 Flexible(child: 
                 Padding(
                   padding: EdgeInsets.fromLTRB(
-                    obj.padding ?? 2.0,
-                    obj.padding ?? 2.0,
-                    obj.padding ?? 2.0,
-                    (obj.padding ?? 2.0) + 2.0,
+                    V4rs.paddingValue(obj.padding ?? 2.0),
+                    V4rs.paddingValue(obj.padding ?? 2.0),
+                    V4rs.paddingValue(obj.padding ?? 2.0),
+                    V4rs.paddingValue((obj.padding ?? 2.0) + 2.0),
                   ),
                   child: theSymbol,
                 ),
@@ -1104,7 +1104,7 @@ class _BuildAudioTileState extends State<BuildAudioTile> {
           case 3:
             return Stack(children: [
               Padding(
-                padding: EdgeInsets.all(obj.padding ?? 2.0),
+                padding: EdgeInsets.all(V4rs.paddingValue(obj.padding ?? 2.0)),
                 child: theSymbol,
               ),
             ]);
@@ -1113,7 +1113,7 @@ class _BuildAudioTileState extends State<BuildAudioTile> {
           case 4:
             return Stack(children: [
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 5.0),
+                padding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(5.0)),
                 child: theLabel2,
               ),
             ]);
@@ -1200,7 +1200,7 @@ class BuildButtonGrammer extends StatelessWidget{
         TextStyle matchStyle =  
         TextStyle(
           color: Fv4rs.buttonFontColor,
-          fontSize: Fv4rs.buttonFontSize,
+          fontSize: V4rs.fontValue(Fv4rs.buttonFontSize),
           fontFamily: Fontsy.fontToFamily[Fv4rs.buttonFont], 
           fontWeight: FontWeight.values[((Fv4rs.buttonFontWeight ~/ 100) - 1 ).clamp(0, 8)],
           fontStyle: Fv4rs.buttonFontItalics ? FontStyle.italic : FontStyle.normal,
@@ -1325,13 +1325,18 @@ class BuildButtonGrammer extends StatelessWidget{
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                 Flexible(child: 
-                Padding(padding: EdgeInsets.fromLTRB(obj.padding ?? 2.0, (obj.padding ?? 2.0) + 2.0, obj.padding ?? 2.0, obj.padding ?? 2.0), 
+                Padding(padding: EdgeInsets.fromLTRB(
+                  V4rs.paddingValue(obj.padding ?? 2.0), 
+                  V4rs.paddingValue((obj.padding ?? 2.0) + 2.0), 
+                  V4rs.paddingValue(obj.padding ?? 2.0), 
+                  V4rs.paddingValue(obj.padding ?? 2.0)
+                ), 
                 child:
                 theSymbol,
                 ),
                 ),
                 Padding(
-                padding: EdgeInsets.symmetric(horizontal: 5.0), child:
+                padding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(5)), child:
                 theLabel,
                 ),
               ],
@@ -1342,11 +1347,16 @@ class BuildButtonGrammer extends StatelessWidget{
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                 Padding(
-                padding: EdgeInsets.symmetric(horizontal: 5.0), child:
+                padding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(5)), child:
                 theLabel,
                 ),
                 Flexible(child: 
-                Padding(padding: EdgeInsets.fromLTRB(obj.padding ?? 2.0, obj.padding ?? 2.0, obj.padding ?? 2.0, (obj.padding ?? 2.0) + 2.0), 
+                Padding(padding: EdgeInsets.fromLTRB(
+                  V4rs.paddingValue(obj.padding ?? 2.0),
+                  V4rs.paddingValue((obj.padding ?? 2.0) + 2.0),
+                  V4rs.paddingValue(obj.padding ?? 2.0),
+                  V4rs.paddingValue(obj.padding ?? 2.0),
+                ), 
                 child:
                   theSymbol,
                 ),
@@ -1355,12 +1365,12 @@ class BuildButtonGrammer extends StatelessWidget{
             );
             case 3: 
               return Padding(
-                padding: EdgeInsets.all(obj.padding ?? 2.0), child:
+                padding: EdgeInsets.all(V4rs.paddingValue(obj.padding ?? 2.0)), child:
                 theSymbol,
               );
             case 4:
               return Padding(
-                padding: EdgeInsets.symmetric(horizontal: 5.0), child:
+                padding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(5)), child:
               theLabel2);
           }
         } (),
@@ -1464,7 +1474,7 @@ class PreveiwButton extends StatelessWidget{
         TextStyle matchStyle =  
         TextStyle(
           color: Fv4rs.buttonFontColor,
-          fontSize: Fv4rs.buttonFontSize,
+          fontSize: V4rs.fontValue(Fv4rs.buttonFontSize),
           fontFamily: Fontsy.fontToFamily[Fv4rs.buttonFont], 
           fontWeight: FontWeight.values[((Fv4rs.buttonFontWeight ~/ 100) - 1 ).clamp(0, 8)],
           fontStyle: Fv4rs.buttonFontItalics ? FontStyle.italic : FontStyle.normal,
@@ -1532,7 +1542,12 @@ class PreveiwButton extends StatelessWidget{
                 Flexible(
                   flex: 2,
                   child: 
-                Padding(padding: EdgeInsets.fromLTRB(obj.padding ?? 2.0, (obj.padding ?? 2.0) + 2.0, obj.padding ?? 2.0, obj.padding ?? 2.0), 
+                Padding(padding: EdgeInsets.fromLTRB(
+                  V4rs.paddingValue(obj.padding ?? 2.0),
+                  V4rs.paddingValue((obj.padding ?? 2.0) + 2.0),
+                  V4rs.paddingValue(obj.padding ?? 2.0),
+                  V4rs.paddingValue(obj.padding ?? 2.0),
+                ), 
                 child:
                 theSymbol,
                 ),
@@ -1541,7 +1556,7 @@ class PreveiwButton extends StatelessWidget{
                   flex: 5, 
                   child:
                 Padding(
-                padding: EdgeInsets.symmetric(horizontal: 5.0), child:
+                padding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(5)), child:
                 theLabel,
                 ),
                 ),
@@ -1551,15 +1566,19 @@ class PreveiwButton extends StatelessWidget{
               return Row(children: [
                 Flexible( flex: 5, child:
                 Padding(
-                padding: EdgeInsets.symmetric(horizontal: 5.0), child:
+                padding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(5)), child:
                 theLabel,
                 ),
                 ),
                 Flexible(
                   flex: 2,
                   child: 
-                Padding(padding: EdgeInsets.fromLTRB(obj.padding ?? 2.0, obj.padding ?? 2.0, obj.padding ?? 2.0, (obj.padding ?? 2.0) + 2.0), 
-                child:
+                Padding(padding: EdgeInsets.fromLTRB(
+                  V4rs.paddingValue(obj.padding ?? 2.0),
+                  V4rs.paddingValue((obj.padding ?? 2.0) + 2.0),
+                  V4rs.paddingValue(obj.padding ?? 2.0),
+                  V4rs.paddingValue(obj.padding ?? 2.0),),
+                  child:
                   theSymbol,
                 ),
                 ),
@@ -1567,12 +1586,12 @@ class PreveiwButton extends StatelessWidget{
             );
             case 3: 
               return Padding(
-                padding: EdgeInsets.all(obj.padding ?? 2.0), child:
+                padding: EdgeInsets.all(V4rs.paddingValue(obj.padding ?? 2.0)), child:
                 theSymbol,
               );
             case 4:
               return Padding(
-                padding: EdgeInsets.symmetric(horizontal: 5.0), child:
+                padding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(5)), child:
               theLabel2);
           }
         } (),
@@ -1646,7 +1665,7 @@ class _BuildFolderState extends State<BuildFolder> {
     TextStyle matchStyle =  
     TextStyle(
       color: Fv4rs.buttonFontColor,
-      fontSize: Fv4rs.buttonFontSize,
+      fontSize: V4rs.fontValue(Fv4rs.buttonFontSize),
       fontFamily: Fontsy.fontToFamily[Fv4rs.buttonFont], 
       fontWeight: FontWeight.values[((Fv4rs.buttonFontWeight ~/ 100) - 1 ).clamp(0, 8)],
       fontStyle: Fv4rs.buttonFontItalics ? FontStyle.italic : FontStyle.normal,
@@ -1877,16 +1896,16 @@ class _BuildFolderState extends State<BuildFolder> {
                 Flexible(
                   child: Padding(
                     padding: EdgeInsets.fromLTRB(
-                      obj.padding ?? 2.0,
-                      (obj.padding ?? 2.0) + 2.0,
-                      obj.padding ?? 2.0,
-                      obj.padding ?? 2.0,
+                      V4rs.paddingValue(obj.padding ?? 2.0),
+                      V4rs.paddingValue((obj.padding ?? 2.0) + 2.0),
+                      V4rs.paddingValue(obj.padding ?? 2.0),
+                      V4rs.paddingValue(obj.padding ?? 2.0),
                     ),
                     child: theSymbol,
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 5.0),
+                  padding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(5)),
                   child: theLabel,
                 ),
               ]),
@@ -1900,16 +1919,16 @@ class _BuildFolderState extends State<BuildFolder> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 5.0),
+                  padding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(5)),
                   child: theLabel,
                 ), 
                 Flexible(child: 
                 Padding(
                   padding: EdgeInsets.fromLTRB(
-                    obj.padding ?? 2.0,
-                    obj.padding ?? 2.0,
-                    obj.padding ?? 2.0,
-                    (obj.padding ?? 2.0) + 2.0,
+                    V4rs.paddingValue(obj.padding ?? 2.0),
+                    V4rs.paddingValue((obj.padding ?? 2.0) + 2.0),
+                    V4rs.paddingValue(obj.padding ?? 2.0),
+                    V4rs.paddingValue(obj.padding ?? 2.0),
                   ),
                   child: theSymbol,
                 ),
@@ -1921,7 +1940,7 @@ class _BuildFolderState extends State<BuildFolder> {
           case 3:
             return Stack(children: [
               Padding(
-                padding: EdgeInsets.all(obj.padding ?? 2.0),
+                padding: EdgeInsets.all(V4rs.paddingValue(obj.padding ?? 2.0)),
                 child: theSymbol,
               ),
             ]);
@@ -1930,7 +1949,7 @@ class _BuildFolderState extends State<BuildFolder> {
           case 4:
             return Stack(children: [
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 5.0),
+                padding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(5)),
                 child: theLabel2,
               ),
             ]);
@@ -2017,7 +2036,7 @@ class BuildButton extends StatelessWidget{
         TextStyle matchStyle =  
         TextStyle(
           color: Fv4rs.buttonFontColor,
-          fontSize: Fv4rs.buttonFontSize,
+          fontSize: V4rs.fontValue(Fv4rs.buttonFontSize),
           fontFamily: Fontsy.fontToFamily[Fv4rs.buttonFont], 
           fontWeight: FontWeight.values[((Fv4rs.buttonFontWeight ~/ 100) - 1 ).clamp(0, 8)],
           fontStyle: Fv4rs.buttonFontItalics ? FontStyle.italic : FontStyle.normal,
@@ -2135,13 +2154,17 @@ class BuildButton extends StatelessWidget{
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                 Flexible(child: 
-                Padding(padding: EdgeInsets.fromLTRB(obj.padding ?? 2.0, (obj.padding ?? 2.0) + 2.0, obj.padding ?? 2.0, obj.padding ?? 2.0), 
+                Padding(padding: EdgeInsets.fromLTRB(
+                  V4rs.paddingValue(obj.padding ?? 2.0),
+                  V4rs.paddingValue((obj.padding ?? 2.0) + 2.0),
+                  V4rs.paddingValue(obj.padding ?? 2.0),
+                  V4rs.paddingValue(obj.padding ?? 2.0),), 
                 child:
                 theSymbol,
                 ),
                 ),
                 Padding(
-                padding: EdgeInsets.symmetric(horizontal: 5.0), child:
+                padding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(5)), child:
                 theLabel,
                 ),
               ],
@@ -2152,11 +2175,15 @@ class BuildButton extends StatelessWidget{
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                 Padding(
-                padding: EdgeInsets.symmetric(horizontal: 5.0), child:
+                padding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(5)), child:
                 theLabel,
                 ),
                 Flexible(child: 
-                Padding(padding: EdgeInsets.fromLTRB(obj.padding ?? 2.0, obj.padding ?? 2.0, obj.padding ?? 2.0, (obj.padding ?? 2.0) + 2.0), 
+                Padding(padding: EdgeInsets.fromLTRB(
+                  V4rs.paddingValue(obj.padding ?? 2.0),
+                  V4rs.paddingValue((obj.padding ?? 2.0) + 2.0),
+                  V4rs.paddingValue(obj.padding ?? 2.0),
+                  V4rs.paddingValue(obj.padding ?? 2.0),), 
                 child:
                   theSymbol,
                 ),
@@ -2165,12 +2192,12 @@ class BuildButton extends StatelessWidget{
             );
             case 3: 
               return Padding(
-                padding: EdgeInsets.all(obj.padding ?? 2.0), child:
+                padding: EdgeInsets.all(V4rs.paddingValue(obj.padding ?? 2.0)), child:
                 theSymbol,
               );
             case 4:
               return Padding(
-                padding: EdgeInsets.symmetric(horizontal: 5.0), child:
+                padding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(5)), child:
               theLabel2);
           }
         } (),
@@ -2218,7 +2245,7 @@ class BuildSubFolder extends StatelessWidget {
         TextStyle uniqueStyle =  
         TextStyle(
           color: obj.fontColor ?? Colors.black,
-          fontSize: obj.fontSize ?? 16,
+          fontSize: V4rs.fontValue(obj.fontSize ?? 16),
           fontFamily: Fontsy.fontToFamily[(obj.fontFamily ?? 'default')], 
           fontWeight: FontWeight.values[(((obj.fontWeight ?? 400) ~/ 100) - 1 ).clamp(0, 8)],
           fontStyle: (obj.fontItalics ?? false) ? FontStyle.italic : FontStyle.normal,
@@ -2228,7 +2255,7 @@ class BuildSubFolder extends StatelessWidget {
         TextStyle matchStyle =  
         TextStyle(
           color: Fv4rs.subFolderFontColor,
-          fontSize: Fv4rs.subFolderFontSize,
+          fontSize: V4rs.fontValue(Fv4rs.subFolderFontSize),
           fontFamily: Fontsy.fontToFamily[Fv4rs.subFolderFont], 
           fontWeight: FontWeight.values[((Fv4rs.subFolderFontWeight ~/ 100) - 1 ).clamp(0, 8)],
           fontStyle: Fv4rs.subFolderFontItalics ? FontStyle.italic : FontStyle.normal,
@@ -2279,7 +2306,10 @@ class BuildSubFolder extends StatelessWidget {
         child:
         ElevatedButton(
         style: ElevatedButton.styleFrom(
-            padding: EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+            padding: EdgeInsets.symmetric(
+              horizontal: V4rs.paddingValue(5), 
+              vertical: V4rs.paddingValue(2)
+            ),
             elevation: 2,
             backgroundColor: (V4rs.isSearchPath(V4rs.searchPathUUIDS.value, obj))
               ? Cv4rs.posToBorderColor(obj.pos ?? 'Extra 2')
@@ -2334,11 +2364,11 @@ class BuildSubFolder extends StatelessWidget {
               return Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                Padding(padding: EdgeInsets.all(obj.padding ?? 5.0), child:
+                Padding(padding: EdgeInsets.all(V4rs.paddingValue(obj.padding ?? 5)), child:
                 theSymbol,
                 ),
                 Flexible(child: 
-                Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 5.0), child:
+                Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: V4rs.paddingValue(5)), child:
                 theLabel,
                 ),
                 ),
@@ -2349,24 +2379,24 @@ class BuildSubFolder extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Flexible(child: 
-                  Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 5.0), child:
+                  Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: V4rs.paddingValue(5)), child:
                 theLabel,
                   ),
                   ),
-                Padding(padding: EdgeInsets.all(obj.padding ?? 5.0), child:
+                Padding(padding: EdgeInsets.all(V4rs.paddingValue(obj.padding ?? 5.0)), child:
                   theSymbol,
                 ),
             ],
             );
             case 3: 
               return Padding(
-                padding: EdgeInsets.all(obj.padding ?? 5.0), child:
+                padding: EdgeInsets.all(V4rs.paddingValue(obj.padding ?? 5.0)), child:
                 theSymbol,
               );
             case 4:
               return Column(children: [
               Flexible(child: 
-              Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 5.0), child:
+              Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: V4rs.paddingValue(5)), child:
               theLabel,
               )
               )
@@ -2388,7 +2418,7 @@ class BuildSubFolder extends StatelessWidget {
         maintainState: true, child:
       ElevatedButton(
         style: ElevatedButton.styleFrom(
-            padding: EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+            padding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(5), vertical: V4rs.paddingValue(2)),
             elevation: 2,
             backgroundColor: (V4rs.isSearchPath(V4rs.searchPathUUIDS.value, obj))
               ? Cv4rs.posToBorderColor(obj.pos ?? 'Extra 2')
@@ -2468,14 +2498,20 @@ class BuildSubFolder extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                Padding(padding: EdgeInsets.all(obj.padding ?? 2.0), child:
-                theSymbol,
-                ),
-                Flexible(child: 
-                Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 5.0), child:
-              theLabel
-              ),
-                ),
+                  Flexible(
+                    flex: 1,
+                    child: Padding(
+                      padding: EdgeInsets.all(V4rs.paddingValue(obj.padding ?? 2.0)), 
+                      child: theSymbol,
+                    ),
+                  ),
+                  Flexible(
+                    flex: 2,
+                    child: Padding(
+                      padding: EdgeInsetsGeometry.symmetric(horizontal: V4rs.paddingValue(5)), 
+                      child: theLabel
+                    ),
+                  ),
               ],
             );
             case 2: 
@@ -2483,19 +2519,25 @@ class BuildSubFolder extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Flexible(child: 
-                Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 5.0), child:
-              theLabel
-              ),
+                  Flexible(
+                    flex: 2,
+                    child: Padding(
+                      padding: EdgeInsetsGeometry.symmetric(horizontal: V4rs.paddingValue(5)), child:
+                      theLabel
+                    ),
                   ),
-                Padding(padding: EdgeInsets.all(obj.padding ?? 2.0), child:
-                  theSymbol,
-                ),
+                  Flexible(
+                      flex: 2,
+                      child: Padding(
+                        padding: EdgeInsets.all(V4rs.paddingValue(obj.padding ?? 2.0)), child:
+                        theSymbol,
+                    ),
+                  ),
             ],
             );
             case 3: 
               return Padding(
-                padding: EdgeInsets.all(obj.padding ?? 2.0), child:
+                padding: EdgeInsets.all(V4rs.paddingValue(obj.padding ?? 2.0)), child:
                 theSymbol,
               );
             case 4:
@@ -2504,7 +2546,7 @@ class BuildSubFolder extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                 Flexible(child: 
-              Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 5.0), child:
+              Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: V4rs.paddingValue(5)), child:
               theLabel
               )
                 ),
@@ -2572,7 +2614,7 @@ class NavButtonStyle extends StatelessWidget {
   TextStyle get labelStyle =>  
     TextStyle(
       color: fontColor,
-      fontSize: fontSize,
+      fontSize: V4rs.fontValue(fontSize),
       fontFamily: Fontsy.fontToFamily[fontFamily], 
       fontWeight: FontWeight.values[((fontWeight ~/ 100) - 1 ).clamp(0, 8)],
       fontStyle: fontItalics ? FontStyle.italic : FontStyle.normal,
@@ -2695,7 +2737,10 @@ class NavButtonStyle extends StatelessWidget {
             break;
           }},
         style: ElevatedButton.styleFrom(
-          padding: EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+          padding: EdgeInsets.symmetric(
+            horizontal: V4rs.paddingValue(5), 
+            vertical: V4rs.paddingValue(2)
+          ),
           backgroundColor: (V4rs.isSearchPathNav(V4rs.searchPathUUIDS.value, me)) 
           ? Cv4rs.posToBorderColor(pos)
           : matchPOS
@@ -2725,9 +2770,9 @@ class NavButtonStyle extends StatelessWidget {
               children: [
 
                 //image
-                Expanded( child:
+                Flexible( child:
                 Padding(
-                  padding: EdgeInsets.all(padding),
+                  padding: EdgeInsets.all(V4rs.paddingValue(padding)),
                   child: ImageStyle1(
                     image: image, 
                     matchSymbolSaturation: matchSymbolSaturation,
@@ -2778,7 +2823,7 @@ class NavButtonStyle extends StatelessWidget {
                 //image
                 Expanded( child:
                 Padding(
-                  padding: EdgeInsets.all(padding),
+                  padding: EdgeInsets.all(V4rs.paddingValue(padding)),
                   child: ImageStyle1(
                      image: image, 
                     matchSymbolSaturation: matchSymbolSaturation,
@@ -2806,7 +2851,7 @@ class NavButtonStyle extends StatelessWidget {
             return SizedBox.expand(
               child: Center( child:
             Padding(
-                  padding: EdgeInsets.all(padding),
+                  padding: EdgeInsets.all(V4rs.paddingValue(padding)),
                   child: ImageStyle1(
                     image: image, 
                     matchSymbolSaturation: matchSymbolSaturation,
@@ -2969,7 +3014,10 @@ class StorageButtonStyle extends StatelessWidget {
     ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
-          padding: EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+          padding: EdgeInsets.symmetric(
+            horizontal: V4rs.paddingValue(5), 
+            vertical: V4rs.paddingValue(2)
+          ),
           backgroundColor: matchPOS ? Cv4rs.posToColor(pos) : backgroundColor, 
           elevation: 2,
           shadowColor: Cv4rs.themeColor4, 
@@ -2998,7 +3046,7 @@ class StorageButtonStyle extends StatelessWidget {
                 //image
                 Expanded( child:
                 Padding(
-                  padding: EdgeInsets.all(padding),
+                  padding: EdgeInsets.all(V4rs.paddingValue(padding)),
                   child: ImageStyle1(
                     image: image, 
                     matchSymbolSaturation: matchSymbolSaturation,
@@ -3046,7 +3094,7 @@ class StorageButtonStyle extends StatelessWidget {
                 //image
                 Expanded( child:
                 Padding(
-                  padding: EdgeInsets.all(padding),
+                  padding: EdgeInsets.all(V4rs.paddingValue(padding)),
                   child: 
                   ImageStyle1(
                     image: image, 
@@ -3073,7 +3121,7 @@ class StorageButtonStyle extends StatelessWidget {
 
           case 3:
             return Padding(
-                  padding: EdgeInsets.all(padding),
+                  padding: EdgeInsets.all(V4rs.paddingValue(padding)),
                   child: ImageStyle1(
                     image: image, 
                     matchSymbolSaturation: matchSymbolSaturation,
@@ -3276,7 +3324,10 @@ class SpecialNavButtonStyle extends StatelessWidget {
             break;
           }},
         style: ElevatedButton.styleFrom(
-          padding: EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+          padding: EdgeInsets.symmetric(
+            horizontal: V4rs.paddingValue(5), 
+            vertical: V4rs.paddingValue(2)
+          ),
           backgroundColor: (V4rs.isSearchPathNav(V4rs.searchPathUUIDS.value, me)) 
             ? Cv4rs.posToBorderColor(pos)
             : matchPOS 
@@ -3309,7 +3360,7 @@ class SpecialNavButtonStyle extends StatelessWidget {
                 //image
                 Expanded(child: 
                 Padding(
-                  padding: EdgeInsets.all(padding),
+                  padding: EdgeInsets.all(V4rs.paddingValue(padding)),
                   child: ImageStyle1(
                     image: image, 
                     matchSymbolSaturation: matchSymbolSaturation,
@@ -3357,7 +3408,7 @@ class SpecialNavButtonStyle extends StatelessWidget {
                 //image
                 Expanded( child:
                 Padding(
-                  padding: EdgeInsets.all(padding),
+                  padding: EdgeInsets.all(V4rs.paddingValue(padding)),
                   child: ImageStyle1(
                     image: image, 
                     matchSymbolSaturation: matchSymbolSaturation,
@@ -3383,7 +3434,7 @@ class SpecialNavButtonStyle extends StatelessWidget {
 
           case 3:
             return Padding(
-                  padding: EdgeInsets.all(padding),
+                  padding: EdgeInsets.all(V4rs.paddingValue(padding)),
                   child: ImageStyle1(
                     image: image, 
                     matchSymbolSaturation: matchSymbolSaturation,
@@ -3454,7 +3505,7 @@ class BuildGrammerButton extends StatelessWidget{
         TextStyle uniqueStyle =  
         TextStyle(
           color: obj.fontColor ?? Colors.black,
-          fontSize: obj.fontSize ?? 16,
+          fontSize: V4rs.fontValue(obj.fontSize ?? 16),
           fontFamily: Fontsy.fontToFamily[(obj.fontFamily ?? 'default')], 
           fontWeight: FontWeight.values[(((obj.fontWeight ?? 400) ~/ 100) - 1 ).clamp(0, 8)],
           fontStyle: (obj.fontItalics ?? false) ? FontStyle.italic : FontStyle.normal,
@@ -3464,7 +3515,7 @@ class BuildGrammerButton extends StatelessWidget{
         TextStyle matchStyle =  
         TextStyle(
           color: Fv4rs.grammerFontColor,
-          fontSize: Fv4rs.grammerFontSize,
+          fontSize: V4rs.fontValue(Fv4rs.grammerFontSize),
           fontFamily: Fontsy.fontToFamily[Fv4rs.grammerFont], 
           fontWeight: FontWeight.values[((Fv4rs.grammerFontWeight ~/ 100) - 1 ).clamp(0, 8)],
           fontStyle: Fv4rs.grammerFontItalics ? FontStyle.italic : FontStyle.normal,
@@ -3559,49 +3610,69 @@ class BuildGrammerButton extends StatelessWidget{
         child: () {
           switch((obj.matchFormat ?? true) ? Bv4rs.grammerRowFormat : obj.format) {
             case 1: 
-              return Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
+              final children = <Widget> [
                 (obj.symbol != null) ?
                 Flexible(flex: 4, child: 
-                Padding(padding: EdgeInsets.fromLTRB(obj.padding ?? 2.0, (obj.padding ?? 2.0) + 2.0, obj.padding ?? 2.0, obj.padding ?? 2.0), 
+                Padding(padding: EdgeInsets.fromLTRB(
+                  V4rs.paddingValue(obj.padding ?? 2.0),
+                  V4rs.paddingValue((obj.padding ?? 2.0) + 2.0),
+                  V4rs.paddingValue(obj.padding ?? 2.0),
+                  V4rs.paddingValue(obj.padding ?? 2.0),), 
                 child:
                 theSymbol,
                 ),
                 ) : SizedBox.shrink(),
-                Expanded(flex: 7,
+                Flexible(flex: 7,
                   child: 
                 Padding(
-                padding: EdgeInsets.symmetric(horizontal: 5.0), child:
+                padding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(5)), child:
                 theLabel,
                 ),
                 ),
-              ],
-            );
-            case 2: 
-              return Row(
+              ];
+
+              if (!V4rs.xSmallModeWidth) { 
+                return Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: [
+                children: children);
+              } else {
+                return Column(mainAxisAlignment: MainAxisAlignment.center,
+                children: children);
+              }
+              
+            case 2:
+              final children = <Widget> [
                 Expanded(flex: 7, child: 
                 Padding(
-                padding: EdgeInsets.symmetric(horizontal: 5.0), child:
+                padding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(5)), child:
                 theLabel,
                 ),
                 ),
                 (obj.symbol != null) ?
                 Flexible(flex: 4, child: 
-                Padding(padding: EdgeInsets.fromLTRB(obj.padding ?? 2.0, obj.padding ?? 2.0, obj.padding ?? 2.0, (obj.padding ?? 2.0) + 2.0), 
+                Padding(padding: EdgeInsets.fromLTRB(
+                  V4rs.paddingValue(obj.padding ?? 2.0),
+                  V4rs.paddingValue((obj.padding ?? 2.0) + 2.0),
+                  V4rs.paddingValue(obj.padding ?? 2.0),
+                  V4rs.paddingValue(obj.padding ?? 2.0),), 
                 child:
                   theSymbol,
                 ),
                 ) : SizedBox.shrink(),
-            ],
-            );
+              ];
+              if (!V4rs.xSmallModeWidth) { 
+                return Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: children);
+              } else {
+                return Column(mainAxisAlignment: MainAxisAlignment.center,
+                children: children);
+              }
             case 3: 
               return (obj.symbol != null) ? Padding(
-                padding: EdgeInsets.all(obj.padding ?? 2.0), child:
+                padding: EdgeInsets.all(V4rs.paddingValue(obj.padding ?? 2.0)), child:
                 theSymbol,
               ) : SizedBox.shrink();
             case 4:
@@ -3611,7 +3682,7 @@ class BuildGrammerButton extends StatelessWidget{
                 children: [
                 Expanded(child: 
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 5.0), child:
+                padding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(5)), child:
               theLabel2
               )
                 )
@@ -3654,7 +3725,7 @@ class BuildGrammerFolder extends StatelessWidget{
         TextStyle uniqueStyle =  
         TextStyle(
           color: obj.fontColor ?? Colors.black,
-          fontSize: obj.fontSize ?? 16,
+          fontSize: V4rs.fontValue(obj.fontSize ?? 16),
           fontFamily: Fontsy.fontToFamily[(obj.fontFamily ?? 'default')], 
           fontWeight: FontWeight.values[(((obj.fontWeight ?? 400) ~/ 100) - 1 ).clamp(0, 8)],
           fontStyle: (obj.fontItalics ?? false) ? FontStyle.italic : FontStyle.normal,
@@ -3664,7 +3735,7 @@ class BuildGrammerFolder extends StatelessWidget{
         TextStyle matchStyle =  
         TextStyle(
           color: Fv4rs.grammerFontColor,
-          fontSize: Fv4rs.grammerFontSize,
+          fontSize: V4rs.fontValue(Fv4rs.grammerFontSize),
           fontFamily: Fontsy.fontToFamily[Fv4rs.grammerFont], 
           fontWeight: FontWeight.values[((Fv4rs.grammerFontWeight ~/ 100) - 1 ).clamp(0, 8)],
           fontStyle: Fv4rs.grammerFontItalics ? FontStyle.italic : FontStyle.normal,
@@ -3762,54 +3833,76 @@ class BuildGrammerFolder extends StatelessWidget{
         child: () {
           switch((obj.matchFormat ?? true) ? Bv4rs.buttonFormat : obj.format) {
             case 1: 
-              return Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
+              final children = <Widget> [
                 (obj.symbol != null) ?
                 Flexible(flex: 4, child: 
-                Padding(padding: EdgeInsets.fromLTRB(obj.padding ?? 2.0, (obj.padding ?? 2.0) + 2.0, obj.padding ?? 2.0, obj.padding ?? 2.0), 
+                Padding(padding: EdgeInsets.fromLTRB(
+                  V4rs.paddingValue(obj.padding ?? 2.0),
+                  V4rs.paddingValue((obj.padding ?? 2.0) + 2.0),
+                  V4rs.paddingValue(obj.padding ?? 2.0),
+                  V4rs.paddingValue(obj.padding ?? 2.0),), 
                 child:
                 theSymbol,
                 ),
                 ) : SizedBox.shrink(),
-                Expanded(flex: 7, child: 
+                Flexible(flex: 7,
+                  child: 
                 Padding(
-                padding: EdgeInsets.symmetric(horizontal: 5.0), child:
+                padding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(5)), child:
                 theLabel,
                 ),
                 ),
-              ],
-            );
-            case 2: 
-              return Row(
+              ];
+              if (!V4rs.xSmallModeWidth) { 
+                return Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                Expanded(flex: 7, child: 
+                children: children);
+              } else {
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: children);
+              }
+            case 2: 
+             final children = <Widget> [
+              Expanded(flex: 7, child: 
                 Padding(
-                padding: EdgeInsets.symmetric(horizontal: 5.0), child:
+                padding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(5)), child:
                 theLabel,
-                ),),
+                ),
+                ),
                 (obj.symbol != null) ?
                 Flexible(flex: 4, child: 
-                Padding(padding: EdgeInsets.fromLTRB(obj.padding ?? 2.0, obj.padding ?? 2.0, obj.padding ?? 2.0, (obj.padding ?? 2.0) + 2.0), 
+                Padding(padding: EdgeInsets.fromLTRB(
+                  V4rs.paddingValue(obj.padding ?? 2.0),
+                  V4rs.paddingValue((obj.padding ?? 2.0) + 2.0),
+                  V4rs.paddingValue(obj.padding ?? 2.0),
+                  V4rs.paddingValue(obj.padding ?? 2.0),), 
                 child:
                   theSymbol,
                 ),
                 ) : SizedBox.shrink(),
-            ],
-            );
+              ];
+
+              if (!V4rs.xSmallModeWidth) { 
+                return Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: children);
+              } else {
+                return Column(mainAxisAlignment: MainAxisAlignment.center, 
+                children: children);
+              }
             case 3: 
               return (obj.symbol != null) ? Padding(
-                padding: EdgeInsets.all(obj.padding ?? 2.0), child:
+                padding: EdgeInsets.all(V4rs.paddingValue(obj.padding ?? 2.0)), child:
                 theSymbol,
               ) : SizedBox.shrink();
             case 4:
               return Column( children: [
                 Expanded(child: 
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 5.0), child:
+                padding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(5)), child:
               theLabel2
               )
                 )
@@ -3893,7 +3986,6 @@ class BuildGrammerPlacholder extends StatelessWidget{
             Spacer(),
           ]
           );
-          
            } (),
         );
     }

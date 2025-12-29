@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutterkeysaac/Variables/variables.dart';
 import 'package:flutterkeysaac/Variables/editing/editable_buttons.dart';
 import 'package:flutterkeysaac/Variables/assorted_ui/ui_boards.dart';
 import 'package:flutterkeysaac/Variables/system_tts/tts_interface.dart';
@@ -186,7 +187,6 @@ extension BoardsDisplay on GrammerObjects {
     final Future<void> Function() initForSS,
     final AudioPlayer playerForSS,
     ) {
-
        int index = 0;
 
       return Row(
@@ -228,11 +228,14 @@ extension BoardsDisplay on GrammerObjects {
                 )
               ),
              
-          if (i < 10) Padding(padding: EdgeInsetsGeometry.symmetric(vertical: 10, horizontal: 6), child:
+          if (i < 10) Padding(padding: EdgeInsetsGeometry.symmetric(
+            vertical: V4rs.paddingValue(10), 
+            horizontal: V4rs.paddingValue(6),
+          ), child:
           FractionallySizedBox(heightFactor: 0.5, child:
           VerticalDivider(
             width: 3,
-            thickness: 2,
+            thickness: V4rs.xSmallMode ? 1 : 2,
             color: Cv4rs.themeColor1,
           )
           )
@@ -251,8 +254,9 @@ extension BoardsDisplay on GrammerObjects {
     final Map<String, sherpa_onnx.OfflineTts?>? speakSelectSherpaOnnxSynth,
     final Future<void> Function() initForSS,
     final AudioPlayer playerForSS,
-   ) {
-       int index = 0;
+   ) { 
+    
+      int index = 0;
 
       return Row(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -263,12 +267,12 @@ extension BoardsDisplay on GrammerObjects {
             ? Expanded(
               child: 
              BuildEditableGrammerFolder(
+              root: root,
               obj: content[index++],
               synth: synth, 
               openBoard: openBoard, 
               boards: boards, 
               findBoardById: findBoardById,
-              root: root,
               speakSelectSherpaOnnxSynth: speakSelectSherpaOnnxSynth,
               initForSS: initForSS,
               playerForSS: playerForSS,
@@ -277,30 +281,33 @@ extension BoardsDisplay on GrammerObjects {
             : (content[i].type == 'placeholder') 
               ? Expanded(child: 
               BuildEditableGrammerPlacholder(
+                root: root,
                 obj: content[index++], 
                 synth: synth,
-                root: root,
                 speakSelectSherpaOnnxSynth: speakSelectSherpaOnnxSynth,
                 initForSS: initForSS,
                 playerForSS: playerForSS,
-               )
+                )
               )
               : Expanded(child: 
-               BuildEditableGrammerButton(
+              BuildEditableGrammerButton(
+                root: root,
                 obj: content[index++], 
                 synth: synth,
-                root: root,
                 speakSelectSherpaOnnxSynth: speakSelectSherpaOnnxSynth,
                 initForSS: initForSS,
                 playerForSS: playerForSS,
                 )
               ),
              
-          if (i < 10) Padding(padding: EdgeInsetsGeometry.symmetric(vertical: 10, horizontal: 6), child:
+          if (i < 10) Padding(padding: EdgeInsetsGeometry.symmetric(
+            vertical: V4rs.paddingValue(10), 
+            horizontal: V4rs.paddingValue(6),
+          ), child:
           FractionallySizedBox(heightFactor: 0.5, child:
           VerticalDivider(
             width: 3,
-            thickness: 2,
+            thickness: V4rs.xSmallMode ? 1 : 2,
             color: Cv4rs.themeColor1,
           )
           )
@@ -308,7 +315,7 @@ extension BoardsDisplay on GrammerObjects {
           ]
         ],
       );
-    }
+      }
 
 }
 

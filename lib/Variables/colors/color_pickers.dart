@@ -59,10 +59,13 @@ class _ColorPickerWithHex extends State<ColorPickerWithHex> {
       ),
       collapsedBackgroundColor: Cv4rs.themeColor4,
       backgroundColor: Cv4rs.themeColor4,
-      childrenPadding: EdgeInsets.symmetric(horizontal: 20),
+      childrenPadding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(20)),
       children: [
         Padding(
-          padding: EdgeInsetsGeometry.symmetric(horizontal: 40, vertical: 20),
+          padding: EdgeInsetsGeometry.symmetric(
+            horizontal: V4rs.paddingValue(40), 
+            vertical: V4rs.paddingValue(20)
+          ),
           child: HexCodeInput(
             startValue: _color.toHexString(),
             textStyle: Sv4rs.settingslabelStyle,
@@ -76,7 +79,7 @@ class _ColorPickerWithHex extends State<ColorPickerWithHex> {
           ),
         ),
         Padding(
-          padding: EdgeInsets.fromLTRB(40, 0, 10, 10),
+          padding: EdgeInsets.fromLTRB(V4rs.paddingValue(40), 0, V4rs.paddingValue(10), V4rs.paddingValue(10),),
           child: ColorPicker(
             pickerColor: _color,
             enableAlpha: true,
@@ -148,7 +151,7 @@ class _HexCodeInputState extends State<HexCodeInput> {
     return Row (
       children: [
         Padding(
-          padding: EdgeInsetsGeometry.all(10),
+          padding: EdgeInsetsGeometry.all(V4rs.paddingValue(10),),
           child: Text('Input hex code:', style: widget.textStyle,),
         ),
         Expanded(child: TextField(
@@ -217,7 +220,11 @@ class _HexCodeInput2State extends State<HexCodeInput2> {
     return Column (
       children: [
         Padding(
-          padding: EdgeInsetsGeometry.fromLTRB(10, 10, 10, 0),
+          padding: EdgeInsetsGeometry.fromLTRB(
+            V4rs.paddingValue(10), 
+            V4rs.paddingValue(10), 
+            V4rs.paddingValue(10), 
+            0),
           child: Text('Input hex code:', style: widget.textStyle,),
         ),
         TextField(
@@ -332,7 +339,7 @@ class _SymbolColorCustomizer extends State<SymbolColorCustomizer> {
         ]),
       collapsedBackgroundColor: Cv4rs.themeColor4,
       backgroundColor: Cv4rs.themeColor4,
-      childrenPadding: EdgeInsets.symmetric(horizontal: 20),
+      childrenPadding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(20)),
       onExpansionChanged: (bool expanded) {  
         if (Sv4rs.speakInterfaceButtonsOnSelect) {
             V4rs.speakOnSelect(
@@ -347,7 +354,7 @@ class _SymbolColorCustomizer extends State<SymbolColorCustomizer> {
       children: [
 
         // invert
-        Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 20), child:
+        Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: V4rs.paddingValue(20)), child:
         Row(
           children: [
             Text(
@@ -366,7 +373,7 @@ class _SymbolColorCustomizer extends State<SymbolColorCustomizer> {
         ),
 
         // Symbol Saturation
-         Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 20), child:
+         Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: V4rs.paddingValue(20)), child:
         Row(
           children: [
             Text('Symbol Saturation:  $_saturation', style: Sv4rs.settingslabelStyle,),
@@ -390,7 +397,7 @@ class _SymbolColorCustomizer extends State<SymbolColorCustomizer> {
         ),
 
         //symbol contrast
-        Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 20), child:
+        Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: V4rs.paddingValue(20)), child:
         Row(
           children: [
             Text('Symbol Contrast:  $_contrast', style: Sv4rs.settingslabelStyle,),
@@ -433,7 +440,9 @@ class _SymbolColorCustomizer extends State<SymbolColorCustomizer> {
             children: [
               //hexcode input
               Padding(
-                padding: EdgeInsetsGeometry.symmetric(horizontal: 40, vertical: 20),
+                padding: EdgeInsetsGeometry.symmetric(
+                  horizontal: V4rs.paddingValue(40), 
+                  vertical: V4rs.paddingValue(20)),
                 child: HexCodeInput(
                   startValue: _overlay.toHexString(),
                   textStyle: Sv4rs.settingslabelStyle,
@@ -447,7 +456,12 @@ class _SymbolColorCustomizer extends State<SymbolColorCustomizer> {
               ),
               //color picker
               Padding(
-                padding: EdgeInsets.fromLTRB(40, 0, 10, 10),
+                padding: EdgeInsets.fromLTRB(
+                  V4rs.paddingValue(40), 
+                  0, 
+                  V4rs.paddingValue(10), 
+                  V4rs.paddingValue(10)
+                ),
                 child: ColorPicker(
                   pickerColor: _overlay, 
                   enableAlpha: true,
@@ -585,7 +599,7 @@ class _SymbolColorCustomizer2 extends State<SymbolColorCustomizer2> {
     return 
           Container(
             width: _width,
-            padding: EdgeInsets.all(10),
+            padding: EdgeInsets.all(V4rs.paddingValue(10)),
             decoration: BoxDecoration(
               color: Cv4rs.themeColor4,
               borderRadius: BorderRadius.circular(10)
@@ -663,7 +677,7 @@ class _SymbolColorCustomizer2 extends State<SymbolColorCustomizer2> {
         
         Column(
           children: [
-            Padding(padding: EdgeInsetsGeometry.fromLTRB(0, 10, 0, 0), child:
+            Padding(padding: EdgeInsetsGeometry.fromLTRB(0, V4rs.paddingValue(10), 0, 0), child:
             Text('Symbol Saturation:  $_saturation', 
             style: Sv4rs.settingslabelStyle,
             maxLines: 1,
@@ -671,7 +685,12 @@ class _SymbolColorCustomizer2 extends State<SymbolColorCustomizer2> {
               ),
             ),
               Slider(
-                padding: EdgeInsets.fromLTRB(5, 5, 5, 10),
+                padding: EdgeInsets.fromLTRB(
+                  V4rs.paddingValue(5), 
+                  V4rs.paddingValue(5), 
+                  V4rs.paddingValue(5), 
+                  V4rs.paddingValue(10)
+                ),
                 value: _saturation,
                 min: 0.0,
                 max: 2.0,
@@ -713,7 +732,7 @@ class _SymbolColorCustomizer2 extends State<SymbolColorCustomizer2> {
        
         Column(
           children: [
-            Padding(padding: EdgeInsetsGeometry.fromLTRB(0, 10, 0, 0), child:
+            Padding(padding: EdgeInsetsGeometry.fromLTRB(0, V4rs.paddingValue(10), 0, 0), child:
             Text('Symbol Contrast:  $_contrast', 
               style: Sv4rs.settingslabelStyle,
               maxLines: 1,
@@ -721,7 +740,12 @@ class _SymbolColorCustomizer2 extends State<SymbolColorCustomizer2> {
               ),
               ),
               Slider(
-                padding: EdgeInsets.fromLTRB(5, 5, 5, 10),
+                padding: EdgeInsets.fromLTRB(
+                  V4rs.paddingValue(5), 
+                  V4rs.paddingValue(5), 
+                  V4rs.paddingValue(5), 
+                  V4rs.paddingValue(10)
+                ),
                 value: _contrast,
                 min: 0.0,
                 max: 2.0,
@@ -761,7 +785,7 @@ class _SymbolColorCustomizer2 extends State<SymbolColorCustomizer2> {
         ),
         
          ExpansionTile(
-          tilePadding: EdgeInsets.all(2),
+          tilePadding: EdgeInsets.all(V4rs.paddingValue(2)),
           title: Row(
               children: [
                 Expanded(child:
@@ -785,7 +809,7 @@ class _SymbolColorCustomizer2 extends State<SymbolColorCustomizer2> {
             ),
           children: [
               //hexcode input
-              Padding(padding: EdgeInsetsGeometry.fromLTRB(0, 0, 0, 10), child: 
+              Padding(padding: EdgeInsetsGeometry.fromLTRB(0, 0, 0, V4rs.paddingValue(10)), child: 
                HexCodeInput2(
                   startValue: _overlay.toHexString(),
                   textStyle: Sv4rs.settingslabelStyle,

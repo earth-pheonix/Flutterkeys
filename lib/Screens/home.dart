@@ -11,6 +11,7 @@ import 'package:flutterkeysaac/Variables/editing/save_indicator.dart';
 import 'package:flutterkeysaac/Variables/export_variables.dart';
 import 'package:flutterkeysaac/Variables/fonts/font_variables.dart';
 import 'package:flutterkeysaac/Screens/settings.dart';
+import 'package:flutterkeysaac/Screens/expand_page.dart';
 import 'dart:async';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
@@ -150,19 +151,28 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
    
     final media = MediaQuery.of(context);
     final screenSize = MediaQuery.of(context).size;
-    final double defaultBoardHeight = screenSize.height * (4 / 6);
-    final isLandscape = screenSize.width > screenSize.height;
+    final double defaultBoardHeight = screenSize.height * (7 / 12);
     final safeScreenHeight = screenSize.height - media.padding.top;
+    final view = View.of(context);
+    final physcialWidth = view.physicalSize.width / view.devicePixelRatio;
+    final physicalHeight = view.physicalSize.height / view.devicePixelRatio;
+    final isShrunk = (physcialWidth > (screenSize.width - 10)) 
+        || ((physicalHeight > (screenSize.height - 10)));
 
-    final double boardHeight = isLandscape && V4rs.keyboardheight > 0
+    V4rs.isLandscape = screenSize.width > screenSize.height;
+    V4rs.xSmallModeWidth = (screenSize.width <= 500);
+    V4rs.xSmallModeHeight = (screenSize.height <= 600);
+    V4rs.xSmallMode = V4rs.xSmallModeHeight || V4rs.xSmallModeWidth;
+  
+    final double boardHeight = (V4rs.isLandscape) && (V4rs.keyboardheight > 0) && (!isShrunk)
         ? V4rs.keyboardheight
         : defaultBoardHeight;
     
     double availableFlex = safeScreenHeight - boardHeight;
     if (availableFlex < 0) availableFlex = 0;
 
-    final double flexForMW = 10;
-    final double flexNav = 8;
+    final double flexForMW = V4rs.xSmallMode ? 12 : 10;
+    final double flexNav = V4rs.xSmallMode ? 6 : 8;
     final double flexGrammer = 4;
     final double totalFlex = flexGrammer + flexNav + flexForMW;
 
@@ -195,6 +205,10 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
           }
 
         return Stack(children: [
+        
+        //
+        //Settings
+        //
           if (V4rs.showSettings.value)
                 Settings(
                   synth: widget.synth,
@@ -205,7 +219,20 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
                   reloadSherpaOnnx: widget.reloadSherpaOnnx,
                 ),
 
-          if (!V4rs.showSettings.value)
+        //
+        //Expand Page
+        //
+          if (V4rs.showExpandPage.value) 
+            ExpandPage(
+              speakSelectSherpaOnnxSynth: widget.speakSelectSherpaOnnxSynth,
+              initForSS: widget.initForSS,
+              playerForSS: widget.playerForSS,
+            ),
+
+        //
+        //Home
+        //
+          if (!V4rs.showSettings.value && !V4rs.showExpandPage.value)
           Scaffold(
             resizeToAvoidBottomInset: false,
             body: SafeArea(
@@ -358,7 +385,9 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
     final double flexForMW = 10;
     final double flexNav = 8;
     final double flexForIndicator = (ExV4rs.includeMessageRow == 3) ? 10 : 6;
-    final double paddingForIndicator = (ExV4rs.includeMessageRow == 3) ? 15 : 6;
+    final double paddingForIndicator = (ExV4rs.includeMessageRow == 3) 
+      ? V4rs.paddingValue(15) 
+      : V4rs.paddingValue(6);
     final double flexGrammer = 4;
     final double totalFlex 
         = flexForMW
@@ -467,7 +496,9 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
                                 borderRadius: BorderRadius.circular(10),
                                 color: Cv4rs.themeColor4,
                               ),
-                              child: Padding(padding: EdgeInsetsGeometry.all(paddingForIndicator), child:
+                              child: Padding(
+                                padding: EdgeInsetsGeometry.all(paddingForIndicator), 
+                                child:
                               Text(
                                   ExV4rs.indicator1, 
                                   style: Fv4rs.buttonLabelStyle,

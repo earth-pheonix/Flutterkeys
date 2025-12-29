@@ -337,18 +337,18 @@ extension NavRowDisplay on NavObjects {
             children: [
               for (var row in visibleRows)
               Expanded(child: 
-              Padding(padding: EdgeInsetsGeometry.all(6), child:
+              Padding(padding: EdgeInsetsGeometry.all(V4rs.paddingValue(6)), child:
               Row(
                 children : [
                 for (var item in row.sublist(0, (row.length / 2).ceil())) 
-                  Expanded(child: Padding(padding: EdgeInsetsGeometry.all(3), 
+                  Expanded(child: Padding(padding: EdgeInsetsGeometry.all(V4rs.paddingValue(3)), 
                     child: item.buildWidget(
                       synth, toggleStorage, openBoard, 
                       boards, findBoardById, item, 
                       speakSelectSherpaOnnxSynth, initForSS, playerForSS,
                     ))),
                 for (var i = 0; i < (perRow / 2 ).ceil() - (row.length / 2).ceil(); i++)
-                 Expanded(child: Padding(padding: EdgeInsetsGeometry.all(3), child: SizedBox())),  // empty slot
+                 Expanded(child: Padding(padding: EdgeInsetsGeometry.all(V4rs.paddingValue(3)), child: SizedBox())),  // empty slot
               ])
               ),
               )
@@ -359,7 +359,7 @@ extension NavRowDisplay on NavObjects {
         Expanded(
           flex: 6,
           child: Padding(
-            padding: const EdgeInsets.all(7),
+            padding: EdgeInsets.all(V4rs.paddingValue(7)),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -369,7 +369,7 @@ extension NavRowDisplay on NavObjects {
                   Expanded(
                     flex: 11,
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 2),
+                      padding:  EdgeInsets.symmetric(horizontal: V4rs.paddingValue(2)),
                       child: btn.buildWidget(
                         synth, toggleStorage, openBoard, 
                         boards, findBoardById, btn,
@@ -381,7 +381,7 @@ extension NavRowDisplay on NavObjects {
                 Expanded(
                   flex: 13,
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 10),
+                    padding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(2), vertical: V4rs.paddingValue(10)),
                     child: Column(
                       children: [
                         for (var chest in storageChest)
@@ -399,7 +399,7 @@ extension NavRowDisplay on NavObjects {
                   Expanded(
                     flex: 11,
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 2),
+                      padding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(2)),
                       child: btn.buildWidget(
                         synth, toggleStorage, openBoard, 
                         boards, findBoardById, btn,
@@ -420,18 +420,18 @@ extension NavRowDisplay on NavObjects {
             children: [
               for (var row in visibleRows)
               Expanded( child:
-              Padding(padding: EdgeInsetsGeometry.all(7), child:
+              Padding(padding: EdgeInsetsGeometry.all(V4rs.paddingValue(7)), child:
               Row(
                 children : [
                 for (var item in row.sublist((row.length / 2).ceil(), row.length)) 
-                  Expanded(child: Padding(padding: EdgeInsetsGeometry.all(3), 
+                  Expanded(child: Padding(padding: EdgeInsetsGeometry.all(V4rs.paddingValue(3)), 
                     child: item.buildWidget(
                       synth, toggleStorage, openBoard, 
                       boards, findBoardById, item,
                       speakSelectSherpaOnnxSynth, initForSS, playerForSS,
                     ))),
                 for (var i = 0; i < (perRow / 2).floor() - (row.length / 2).floor(); i++)
-                  Expanded(child: Padding(padding: EdgeInsetsGeometry.all(3), child: SizedBox())),  // empty slot
+                  Expanded(child: Padding(padding: EdgeInsetsGeometry.all(V4rs.paddingValue(3)), child: SizedBox())),  // empty slot
               ]),
               ),
               )
@@ -479,18 +479,18 @@ extension NavRowDisplay on NavObjects {
             children: [
               for (var row in visibleRows)
               Expanded(child: 
-              Padding(padding: EdgeInsetsGeometry.all(6), child:
+              Padding(padding: EdgeInsetsGeometry.all(V4rs.paddingValue(6)), child:
               Row(
                 children : [
                 for (var item in row.sublist(0, (row.length / 2).ceil())) 
-                  Expanded(child: Padding(padding: EdgeInsetsGeometry.all(3), 
+                  Expanded(child: Padding(padding: EdgeInsetsGeometry.all(V4rs.paddingValue(3)), 
                     child:  item.buildEditableWidget(
                       root, synth, item, 
                       toggleStorage, openBoard, boards, 
                       findBoardById, speakSelectSherpaOnnxSynth, initForSS, playerForSS,
                     ))),
                 for (var i = 0; i < (perRow / 2 ).ceil() - (row.length / 2).ceil(); i++)
-                 Expanded(child: Padding(padding: EdgeInsetsGeometry.all(3), child: SizedBox())),  // empty slot
+                 Expanded(child: Padding(padding: EdgeInsetsGeometry.all(V4rs.paddingValue(3)), child: SizedBox())),  // empty slot
               ])
               ),
               )
@@ -501,7 +501,7 @@ extension NavRowDisplay on NavObjects {
         Expanded(
           flex: 6,
           child: Padding(
-            padding: const EdgeInsets.all(7),
+            padding: EdgeInsets.all(V4rs.paddingValue(7)),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -511,7 +511,7 @@ extension NavRowDisplay on NavObjects {
                   Expanded(
                     flex: 11,
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 2),
+                      padding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(2)),
                       child: btn.buildEditableWidget(
                         root, synth, btn, toggleStorage, 
                         openBoard, boards, findBoardById,
@@ -523,7 +523,10 @@ extension NavRowDisplay on NavObjects {
                 Expanded(
                   flex: 13,
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 10),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: V4rs.paddingValue(2), 
+                      vertical: V4rs.paddingValue(10)
+                    ),
                     child: Column(
                       children: [
                         for (var chest in storageChest)
@@ -541,7 +544,7 @@ extension NavRowDisplay on NavObjects {
                   Expanded(
                     flex: 11,
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 2),
+                      padding:  EdgeInsets.symmetric(horizontal: V4rs.paddingValue(2)),
                       child: btn.buildEditableWidget(
                         root, synth, btn, toggleStorage, 
                         openBoard, boards, findBoardById,
@@ -562,18 +565,18 @@ extension NavRowDisplay on NavObjects {
             children: [
               for (var row in visibleRows)
               Expanded( child:
-              Padding(padding: EdgeInsetsGeometry.all(7), child:
+              Padding(padding: EdgeInsetsGeometry.all(V4rs.paddingValue(7)), child:
               Row(
                 children : [
                 for (var item in row.sublist((row.length / 2).ceil(), row.length)) 
-                  Expanded(child: Padding(padding: EdgeInsetsGeometry.all(3), 
+                  Expanded(child: Padding(padding: EdgeInsetsGeometry.all(V4rs.paddingValue(3)), 
                     child: item.buildEditableWidget(
                       root, synth, item, toggleStorage, 
                       openBoard, boards, findBoardById,
                       speakSelectSherpaOnnxSynth, initForSS, playerForSS,
                     ))),
                 for (var i = 0; i < (perRow / 2).floor() - (row.length / 2).floor(); i++)
-                  Expanded(child: Padding(padding: EdgeInsetsGeometry.all(3), child: SizedBox())),  // empty slot
+                  Expanded(child: Padding(padding: EdgeInsetsGeometry.all(V4rs.paddingValue(3)), child: SizedBox())),  // empty slot
               ]),
               ),
               )
@@ -677,7 +680,7 @@ extension NavRowDisplay on NavObjects {
     fontUnderline: fontUnderline ?? false,
     fontColor: fontColor ?? Colors.black,
     symbol: symbol ?? 'assets/interface_icons/interface_icons/iPlaceholder.png',
-    padding: padding ?? 5,
+    padding: padding ?? V4rs.paddingValue(5),
 
     matchOverlayColor: matchOverlayColor ?? true,
     overlayColor: overlayColor ?? Colors.black,
@@ -727,7 +730,7 @@ extension NavRowDisplay on NavObjects {
       fontUnderline: fontUnderline ?? false,
       fontColor: fontColor ?? Colors.black,
       symbol: symbol ?? 'assets/interface_icons/interface_icons/iPlaceholder.png',
-      padding: padding ?? 5,
+      padding: padding ?? V4rs.paddingValue(5),
       matchOverlayColor: matchOverlayColor ?? true,
       overlayColor: overlayColor ?? Colors.black,
       symbolSaturation: symbolSaturation ?? 0.5,
@@ -768,7 +771,7 @@ extension NavRowDisplay on NavObjects {
           fontUnderline: fontUnderline ?? false,
           fontColor: fontColor ?? Colors.black,
           symbol: symbolOpen ?? 'assets/interface_icons/interface_icons/iPlaceholder.png',
-          padding: padding ?? 10,
+          padding: padding ?? V4rs.paddingValue(10),
           matchOverlayColor: matchOverlayColor ?? true,
           matchSymbolContrast: matchSymbolContrast ?? true,
           matchSymbolInvert: matchInvertSymbol ?? true,
@@ -803,7 +806,7 @@ extension NavRowDisplay on NavObjects {
           fontUnderline: fontUnderline ?? false,
           fontColor: fontColor ?? Colors.black,
           symbol: symbolOpen ?? 'assets/interface_icons/interface_icons/iPlaceholder.png',
-          padding: padding ?? 10,
+          padding: padding ?? V4rs.paddingValue(10),
           matchOverlayColor: matchOverlayColor ?? true,
           overlayColor: overlayColor ?? Colors.black,
           symbolSaturation: symbolSaturation ?? 0.5,
@@ -834,7 +837,7 @@ extension NavRowDisplay on NavObjects {
           fontUnderline: fontUnderline ?? false,
           fontColor: fontColor ?? Colors.black,
           symbol: symbolOpen ?? 'assets/interface_icons/interface_icons/iPlaceholder.png',
-          padding: padding ?? 10,
+          padding: padding ?? V4rs.paddingValue(10),
           matchOverlayColor: matchOverlayColor ?? true,
           overlayColor: overlayColor ?? Colors.black,
           symbolSaturation: symbolSaturation ?? 0.5,
@@ -868,7 +871,7 @@ extension NavRowDisplay on NavObjects {
           fontUnderline: fontUnderline ?? false,
           fontColor: fontColor ?? Colors.black,
           symbol: symbolClosed ??  'assets/interface_icons/interface_icons/iPlaceholder.png',
-          padding: padding ?? 10,
+          padding: padding ?? V4rs.paddingValue(10),
           matchOverlayColor: matchOverlayColor ?? true,
           overlayColor: overlayColor ?? Colors.black,
           symbolSaturation: symbolSaturation ?? 0.5,
@@ -900,7 +903,7 @@ extension NavRowDisplay on NavObjects {
           fontUnderline: fontUnderline ?? false,
           fontColor: fontColor ?? Colors.black,
           symbol: symbolClosed ??  'assets/interface_icons/interface_icons/iPlaceholder.png',
-          padding: padding ?? 10,
+          padding: padding ?? V4rs.paddingValue(10),
           matchOverlayColor: matchOverlayColor ?? true,
           overlayColor: overlayColor ?? Colors.black,
           symbolSaturation: symbolSaturation ?? 0.5,
@@ -953,8 +956,7 @@ extension NavRowDisplay on NavObjects {
     fontUnderline: fontUnderline ?? false,
     fontColor: fontColor ?? Colors.black,
     symbol: symbol ?? 'assets/interface_icons/interface_icons/iPlaceholder.png',
-    padding: padding ?? 5,
-
+    padding: padding ?? V4rs.paddingValue(5),
     matchOverlayColor: matchOverlayColor ?? true,
     overlayColor: overlayColor ?? Colors.black,
     matchSymbolSaturation: matchSymbolSaturation ?? true,

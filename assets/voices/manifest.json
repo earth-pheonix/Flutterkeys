@@ -21,7 +21,7 @@
       "multilingual": true,
       "languageList": ["en", "zh"], 
       "license": "Apache 2.0",
-      "download_url": "https://archive.org/download/kokoro-multi-lang-v1_0/kokoro-multi-lang-v1_0.zip",
+      "download_url": "https://archive.org/download/kokoro-int8-multi-lang-v1_0/kokoro-int8-multi-lang-v1_0.zip",
       "speakers": [
         {
           "idSpeaker": 0,

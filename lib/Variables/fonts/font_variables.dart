@@ -1,5 +1,6 @@
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutterkeysaac/Variables/colors/color_variables.dart';
+import 'package:flutterkeysaac/Variables/variables.dart';
 import 'package:flutterkeysaac/Variables/fonts/font_options.dart';
 import 'package:flutter/material.dart';
 
@@ -147,7 +148,7 @@ class Fv4rs {
     static TextStyle get mwLabelStyle =>  
     TextStyle(
       color: mwFontColor,
-      fontSize: mwFontSize,
+      fontSize: V4rs.fontValue(mwFontSize),
       fontFamily: Fontsy.fontToFamily[mwFont], 
       fontWeight: FontWeight.values[((mwFontWeight ~/ 100) - 1 ).clamp(0, 8)],
       fontStyle: mwFontItalics ? FontStyle.italic : FontStyle.normal,
@@ -159,7 +160,7 @@ class Fv4rs {
     static TextStyle get hintMWLabelStyle =>  
     TextStyle(
       color: Cv4rs.themeColor3,
-      fontSize: mwFontSize,
+      fontSize: V4rs.fontValue(mwFontSize),
       fontFamily: Fontsy.fontToFamily[mwFont], 
       fontWeight: FontWeight.values[((mwFontWeight ~/ 100) - 1 ).clamp(0, 8)],
       fontStyle: mwFontItalics ? FontStyle.italic : FontStyle.normal,
@@ -314,7 +315,7 @@ class Fv4rs {
     static TextStyle get navRowLabelStyle =>  
     TextStyle(
       color: navRowFontColor,
-      fontSize: navRowFontSize,
+      fontSize: V4rs.fontValue(navRowFontSize),
       fontFamily: Fontsy.fontToFamily[navRowFont], 
       fontWeight: FontWeight.values[((navRowFontWeight ~/ 100) - 1 ).clamp(0, 8)],
       fontStyle: navRowFontItalics ? FontStyle.italic : FontStyle.normal,

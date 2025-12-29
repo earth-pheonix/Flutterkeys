@@ -144,13 +144,18 @@ import 'dart:async';
                 case 1: 
                   return Column(children: [
                     Flexible(child: 
-                    Padding(padding: EdgeInsets.fromLTRB(obj.padding ?? 2.0, (obj.padding ?? 2.0) + 2.0, obj.padding ?? 2.0, obj.padding ?? 2.0), 
+                    Padding(padding: EdgeInsets.fromLTRB(
+                      V4rs.paddingValue(obj.padding ?? 2.0), 
+                      V4rs.paddingValue((obj.padding ?? 2.0) + 2.0), 
+                      V4rs.paddingValue(obj.padding ?? 2.0), 
+                      V4rs.paddingValue(obj.padding ?? 2.0)
+                    ), 
                     child:
                     theSymbol,
                     ),
                     ),
                     Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 5.0), child:
+                    padding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(5)), child:
                     theLabel,
                     ),
                   ],
@@ -158,11 +163,15 @@ import 'dart:async';
                 case 2: 
                   return Column(children: [
                     Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 5.0), child:
+                    padding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(5)), child:
                     theLabel,
                     ),
                     Flexible(child: 
-                    Padding(padding: EdgeInsets.fromLTRB(obj.padding ?? 2.0, obj.padding ?? 2.0, obj.padding ?? 2.0, (obj.padding ?? 2.0) + 2.0), 
+                    Padding(padding: EdgeInsets.fromLTRB(
+                      V4rs.paddingValue(obj.padding ?? 2.0), 
+                      V4rs.paddingValue((obj.padding ?? 2.0) + 2.0), 
+                      V4rs.paddingValue(obj.padding ?? 2.0), 
+                      V4rs.paddingValue(obj.padding ?? 2.0)), 
                     child:
                       theSymbol,
                     ),
@@ -171,12 +180,12 @@ import 'dart:async';
                 );
                 case 3: 
                   return Padding(
-                    padding: EdgeInsets.all(obj.padding ?? 2.0), child:
+                    padding: EdgeInsets.all(V4rs.paddingValue(obj.padding ?? 2.0)), child:
                     theSymbol,
                   );
                 case 4:
                   return Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 5.0), child:
+                    padding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(5)), child:
                   theLabel2);
               }
             } (),
@@ -426,16 +435,16 @@ import 'dart:async';
                     Flexible(
                       child: Padding(
                         padding: EdgeInsets.fromLTRB(
-                          obj.padding ?? 2.0,
-                          (obj.padding ?? 2.0) + 2.0,
-                          obj.padding ?? 2.0,
-                          obj.padding ?? 2.0,
+                          V4rs.paddingValue(obj.padding ?? 2.0), 
+                          V4rs.paddingValue((obj.padding ?? 2.0) + 2.0), 
+                          V4rs.paddingValue(obj.padding ?? 2.0), 
+                          V4rs.paddingValue(obj.padding ?? 2.0)
                         ),
                         child: theSymbol,
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 5.0),
+                      padding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(5)),
                       child: theLabel,
                     ),
                   ]),
@@ -444,16 +453,16 @@ import 'dart:async';
                 return Stack(children: [
                   Column(children: [
                     Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 5.0),
+                      padding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(5)),
                       child: theLabel,
                     ), 
                     Flexible(child: 
                     Padding(
                       padding: EdgeInsets.fromLTRB(
-                        obj.padding ?? 2.0,
-                        obj.padding ?? 2.0,
-                        obj.padding ?? 2.0,
-                        (obj.padding ?? 2.0) + 2.0,
+                        V4rs.paddingValue(obj.padding ?? 2.0), 
+                        V4rs.paddingValue((obj.padding ?? 2.0) + 2.0), 
+                        V4rs.paddingValue(obj.padding ?? 2.0), 
+                        V4rs.paddingValue(obj.padding ?? 2.0)
                       ),
                       child: theSymbol,
                     ),
@@ -463,14 +472,14 @@ import 'dart:async';
               case 3:
                 return Stack(children: [
                   Padding(
-                    padding: EdgeInsets.all(obj.padding ?? 2.0),
+                    padding: EdgeInsets.all(V4rs.paddingValue(obj.padding ?? 2.0)),
                     child: theSymbol,
                   ),
                 ]);
               case 4:
                 return Stack(children: [
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 5.0),
+                    padding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(5)),
                     child: theLabel2,
                   ),
                 ]);
@@ -753,16 +762,16 @@ import 'dart:async';
                     Flexible(
                       child: Padding(
                         padding: EdgeInsets.fromLTRB(
-                          obj.padding ?? 2.0,
-                          (obj.padding ?? 2.0) + 2.0,
-                          obj.padding ?? 2.0,
-                          obj.padding ?? 2.0,
+                          V4rs.paddingValue(obj.padding ?? 2.0), 
+                          V4rs.paddingValue((obj.padding ?? 2.0) + 2.0), 
+                          V4rs.paddingValue(obj.padding ?? 2.0), 
+                          V4rs.paddingValue(obj.padding ?? 2.0)
                         ),
                         child: theSymbol,
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 5.0),
+                      padding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(5)),
                       child: theLabel,
                     ),
                   ]),
@@ -773,16 +782,16 @@ import 'dart:async';
                 return Stack(children: [
                   Column(children: [
                     Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 5.0),
+                      padding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(5)),
                       child: theLabel,
                     ), 
                     Flexible(child: 
                     Padding(
                       padding: EdgeInsets.fromLTRB(
-                        obj.padding ?? 2.0,
-                        obj.padding ?? 2.0,
-                        obj.padding ?? 2.0,
-                        (obj.padding ?? 2.0) + 2.0,
+                        V4rs.paddingValue(obj.padding ?? 2.0), 
+                        V4rs.paddingValue((obj.padding ?? 2.0) + 2.0), 
+                        V4rs.paddingValue(obj.padding ?? 2.0), 
+                        V4rs.paddingValue(obj.padding ?? 2.0)
                       ),
                       child: theSymbol,
                     ),
@@ -794,7 +803,7 @@ import 'dart:async';
               case 3:
                 return Stack(children: [
                   Padding(
-                    padding: EdgeInsets.all(obj.padding ?? 2.0),
+                    padding: EdgeInsets.all(V4rs.paddingValue(obj.padding ?? 2.0)),
                     child: theSymbol,
                   ),
                 ]);
@@ -803,7 +812,7 @@ import 'dart:async';
               case 4:
                 return Stack(children: [
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 5.0),
+                    padding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(5)),
                     child: theLabel2,
                   ),
                 ]);
@@ -1046,16 +1055,16 @@ import 'dart:async';
                     Flexible(
                       child: Padding(
                         padding: EdgeInsets.fromLTRB(
-                          obj.padding ?? 2.0,
-                          (obj.padding ?? 2.0) + 2.0,
-                          obj.padding ?? 2.0,
-                          obj.padding ?? 2.0,
+                          V4rs.paddingValue(obj.padding ?? 2.0), 
+                          V4rs.paddingValue((obj.padding ?? 2.0) + 2.0), 
+                          V4rs.paddingValue(obj.padding ?? 2.0), 
+                          V4rs.paddingValue(obj.padding ?? 2.0)
                         ),
                         child: theSymbol,
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 5.0),
+                      padding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(5)),
                       child: theLabel,
                     ),
                   ]),
@@ -1066,16 +1075,16 @@ import 'dart:async';
                 return Stack(children: [
                   Column(children: [
                     Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 5.0),
+                      padding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(5)),
                       child: theLabel,
                     ), 
                     Flexible(child: 
                     Padding(
                       padding: EdgeInsets.fromLTRB(
-                        obj.padding ?? 2.0,
-                        obj.padding ?? 2.0,
-                        obj.padding ?? 2.0,
-                        (obj.padding ?? 2.0) + 2.0,
+                        V4rs.paddingValue(obj.padding ?? 2.0), 
+                        V4rs.paddingValue((obj.padding ?? 2.0) + 2.0), 
+                        V4rs.paddingValue(obj.padding ?? 2.0), 
+                        V4rs.paddingValue(obj.padding ?? 2.0)
                       ),
                       child: theSymbol,
                     ),
@@ -1087,7 +1096,7 @@ import 'dart:async';
               case 3:
                 return Stack(children: [
                   Padding(
-                    padding: EdgeInsets.all(obj.padding ?? 2.0),
+                    padding: EdgeInsets.all(V4rs.paddingValue(obj.padding ?? 2.0)),
                     child: theSymbol,
                   ),
                 ]);
@@ -1096,7 +1105,7 @@ import 'dart:async';
               case 4:
                 return Stack(children: [
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 5.0),
+                    padding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(5)),
                     child: theLabel2,
                   ),
                 ]);
@@ -1384,16 +1393,16 @@ import 'dart:async';
                     Flexible(
                       child: Padding(
                         padding: EdgeInsets.fromLTRB(
-                          obj.padding ?? 2.0,
-                          (obj.padding ?? 2.0) + 2.0,
-                          obj.padding ?? 2.0,
-                          obj.padding ?? 2.0,
+                          V4rs.paddingValue(obj.padding ?? 2.0), 
+                          V4rs.paddingValue((obj.padding ?? 2.0) + 2.0), 
+                          V4rs.paddingValue(obj.padding ?? 2.0), 
+                          V4rs.paddingValue(obj.padding ?? 2.0)
                         ),
                         child: theSymbol,
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 5.0),
+                      padding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(5)),
                       child: theLabel,
                     ),
                   ]),
@@ -1404,16 +1413,16 @@ import 'dart:async';
                 return Stack(children: [
                   Column(children: [
                     Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 5.0),
+                      padding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(5)),
                       child: theLabel,
                     ), 
                     Flexible(child: 
                     Padding(
                       padding: EdgeInsets.fromLTRB(
-                        obj.padding ?? 2.0,
-                        obj.padding ?? 2.0,
-                        obj.padding ?? 2.0,
-                        (obj.padding ?? 2.0) + 2.0,
+                        V4rs.paddingValue(obj.padding ?? 2.0), 
+                        V4rs.paddingValue((obj.padding ?? 2.0) + 2.0), 
+                        V4rs.paddingValue(obj.padding ?? 2.0), 
+                        V4rs.paddingValue(obj.padding ?? 2.0)
                       ),
                       child: theSymbol,
                     ),
@@ -1425,7 +1434,7 @@ import 'dart:async';
               case 3:
                 return Stack(children: [
                   Padding(
-                    padding: EdgeInsets.all(obj.padding ?? 2.0),
+                    padding: EdgeInsets.all(V4rs.paddingValue(obj.padding ?? 2.0)),
                     child: theSymbol,
                   ),
                 ]);
@@ -1434,7 +1443,7 @@ import 'dart:async';
               case 4:
                 return Stack(children: [
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 5.0),
+                    padding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(5)),
                     child: theLabel2,
                   ),
                 ]);
@@ -1640,13 +1649,17 @@ import 'dart:async';
                 case 1: 
                   return Column(children: [
                     Flexible(child: 
-                    Padding(padding: EdgeInsets.fromLTRB(obj.padding ?? 2.0, (obj.padding ?? 2.0) + 2.0, obj.padding ?? 2.0, obj.padding ?? 2.0), 
+                    Padding(padding: EdgeInsets.fromLTRB(
+                        V4rs.paddingValue(obj.padding ?? 2.0), 
+                        V4rs.paddingValue((obj.padding ?? 2.0) + 2.0), 
+                        V4rs.paddingValue(obj.padding ?? 2.0), 
+                        V4rs.paddingValue(obj.padding ?? 2.0)), 
                     child:
                     theSymbol,
                     ),
                     ),
                     Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 5.0), child:
+                    padding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(5)), child:
                     theLabel,
                     ),
                   ],
@@ -1654,11 +1667,15 @@ import 'dart:async';
                 case 2: 
                   return Column(children: [
                     Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 5.0), child:
+                    padding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(5)), child:
                     theLabel,
                     ),
                     Flexible(child: 
-                    Padding(padding: EdgeInsets.fromLTRB(obj.padding ?? 2.0, obj.padding ?? 2.0, obj.padding ?? 2.0, (obj.padding ?? 2.0) + 2.0), 
+                    Padding(padding: EdgeInsets.fromLTRB(
+                        V4rs.paddingValue(obj.padding ?? 2.0), 
+                        V4rs.paddingValue((obj.padding ?? 2.0) + 2.0), 
+                        V4rs.paddingValue(obj.padding ?? 2.0), 
+                        V4rs.paddingValue(obj.padding ?? 2.0)), 
                     child:
                       theSymbol,
                     ),
@@ -1667,12 +1684,12 @@ import 'dart:async';
                 );
                 case 3: 
                   return Padding(
-                    padding: EdgeInsets.all(obj.padding ?? 2.0), child:
+                    padding: EdgeInsets.all(V4rs.paddingValue(obj.padding ?? 2.0)), child:
                     theSymbol,
                   );
                 case 4:
                   return Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 5.0), child:
+                    padding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(5)), child:
                   theLabel2);
               }
             } (),
@@ -1862,7 +1879,7 @@ import 'dart:async';
             child:
             ElevatedButton(
             style: ElevatedButton.styleFrom(
-                padding: EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+                padding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(5), vertical: V4rs.paddingValue(2)),
                 elevation: 2,
                 backgroundColor: (Ev4rs.firstSubFolderSelectedUUID.value == obj.id || Ev4rs.secondSubFolderSelectedUUID.value == obj.id
                     || Ev4rs.subFolderSelectedUUIDs.value.contains(obj.id) || Ev4rs.subFolderSelectedUUIDs.value.contains(obj.id)) 
@@ -1924,11 +1941,12 @@ import 'dart:async';
                   return Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                    Padding(padding: EdgeInsets.all(obj.padding ?? 5.0), child:
+                    Padding(padding: EdgeInsets.all(V4rs.paddingValue(obj.padding ?? 5.0)), child:
                     theSymbol,
                     ),
                     Flexible(child: 
-                    Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 5.0), child:
+                    Padding(padding: EdgeInsetsGeometry.symmetric(
+                      horizontal: V4rs.paddingValue(5)), child:
                     theLabel,
                     ),
                   
@@ -1937,7 +1955,7 @@ import 'dart:async';
                     Flexible(
                     fit: FlexFit.tight,
                     child:
-                    Padding(padding: EdgeInsetsGeometry.all(5), child: 
+                    Padding(padding: EdgeInsetsGeometry.all(V4rs.paddingValue(5)), child: 
                     ButtonStyle1(
                         glow: true,
                         imagePath: 'assets/interface_icons/interface_icons/iEdit.png', 
@@ -1956,18 +1974,18 @@ import 'dart:async';
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Flexible(child: 
-                      Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 5.0), child:
+                      Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: V4rs.paddingValue(5)), child:
                     theLabel,
                       ),
                       ),
-                    Padding(padding: EdgeInsets.all(obj.padding ?? 5.0), child:
+                    Padding(padding: EdgeInsets.all(V4rs.paddingValue(obj.padding ?? 5.0)), child:
                       theSymbol,
                     ),
                     
                     Flexible(
                     fit: FlexFit.tight,
                     child:
-                    Padding(padding: EdgeInsetsGeometry.all(5), child: 
+                    Padding(padding: EdgeInsetsGeometry.all(V4rs.paddingValue(5)), child: 
                     ButtonStyle1(
                         glow: true,
                         imagePath: 'assets/interface_icons/interface_icons/iEdit.png', 
@@ -1984,14 +2002,14 @@ import 'dart:async';
                 case 3: 
                   return Row(children: [
                   Padding(
-                    padding: EdgeInsets.all(obj.padding ?? 5.0), child:
+                    padding: EdgeInsets.all(V4rs.paddingValue(obj.padding ?? 5.0)), child:
                     theSymbol,
                   ),
                   
                     Flexible(
                     fit: FlexFit.tight,
                     child:
-                    Padding(padding: EdgeInsetsGeometry.all(5), child: 
+                    Padding(padding: EdgeInsetsGeometry.all(V4rs.paddingValue(5)), child: 
                     ButtonStyle1(
                         glow: true,
                         imagePath: 'assets/interface_icons/interface_icons/iEdit.png', 
@@ -2011,7 +2029,7 @@ import 'dart:async';
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                   Flexible(child: 
-                  Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 5.0), child:
+                  Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: V4rs.paddingValue(5)), child:
                   theLabel,
                   )
                   ),
@@ -2019,7 +2037,7 @@ import 'dart:async';
                     Flexible(
                     fit: FlexFit.tight,
                     child:
-                    Padding(padding: EdgeInsetsGeometry.all(5), child: 
+                    Padding(padding: EdgeInsetsGeometry.all(V4rs.paddingValue(5)), child: 
                     ButtonStyle1(
                         glow: true,
                         imagePath: 'assets/interface_icons/interface_icons/iEdit.png', 
@@ -2047,7 +2065,7 @@ import 'dart:async';
             child:
           ElevatedButton(
             style: ElevatedButton.styleFrom(
-                padding: EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+                padding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(5), vertical: V4rs.paddingValue(2)),
                 elevation: 2,
                 backgroundColor: (Ev4rs.firstSubFolderSelectedUUID.value == obj.id || Ev4rs.secondSubFolderSelectedUUID.value == obj.id
                     || Ev4rs.subFolderSelectedUUIDs.value.contains(obj.id) || Ev4rs.subFolderSelectedUUIDs.value.contains(obj.id)) 
@@ -2131,11 +2149,11 @@ import 'dart:async';
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                    Padding(padding: EdgeInsets.all(obj.padding ?? 2.0), child:
+                    Padding(padding: EdgeInsets.all(V4rs.paddingValue(obj.padding ?? 2.0)), child:
                     theSymbol,
                     ),
                   Flexible(child: 
-                  Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 5.0), child:
+                  Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: V4rs.paddingValue(5)), child:
                   theLabel
                   )
                     ),
@@ -2143,7 +2161,7 @@ import 'dart:async';
                     Flexible(
                     fit: FlexFit.tight,
                     child:
-                    Padding(padding: EdgeInsetsGeometry.all(5), child: 
+                    Padding(padding: EdgeInsetsGeometry.all(V4rs.paddingValue(5)), child: 
                     ButtonStyle1(
                         glow: true,
                         imagePath: 'assets/interface_icons/interface_icons/iEdit.png', 
@@ -2163,18 +2181,18 @@ import 'dart:async';
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                     Flexible(child: 
-                  Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 5.0), child:
+                  Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: V4rs.paddingValue(5)), child:
                   theLabel
                   )
                       ),
-                    Padding(padding: EdgeInsets.all(obj.padding ?? 2.0), child:
+                    Padding(padding: EdgeInsets.all(V4rs.paddingValue(obj.padding ?? 2.0)), child:
                       theSymbol,
                     ),
                     
                     Flexible(
                     fit: FlexFit.tight,
                     child:
-                    Padding(padding: EdgeInsetsGeometry.all(5), child: 
+                    Padding(padding: EdgeInsetsGeometry.all(V4rs.paddingValue(5)), child: 
                     ButtonStyle1(
                         glow: true,
                         imagePath: 'assets/interface_icons/interface_icons/iEdit.png', 
@@ -2191,14 +2209,14 @@ import 'dart:async';
                 case 3: 
                   return Row(children: [
                   Padding(
-                    padding: EdgeInsets.all(obj.padding ?? 2.0), child:
+                    padding: EdgeInsets.all(V4rs.paddingValue(obj.padding ?? 2.0)), child:
                     theSymbol,
                   ),
                   
                     Flexible(
                     fit: FlexFit.tight,
                     child:
-                    Padding(padding: EdgeInsetsGeometry.all(5), child: 
+                    Padding(padding: EdgeInsetsGeometry.all(V4rs.paddingValue(5)), child: 
                     ButtonStyle1(
                         glow: true,
                         imagePath: 'assets/interface_icons/interface_icons/iEdit.png', 
@@ -2215,7 +2233,7 @@ import 'dart:async';
                 case 4:
                   return Row( children: [
                     Flexible(child: 
-                  Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: 5.0), child:
+                  Padding(padding: EdgeInsetsGeometry.symmetric(horizontal: V4rs.paddingValue(5)), child:
                   theLabel
                   )
                     ),
@@ -2223,7 +2241,7 @@ import 'dart:async';
                     Flexible(
                     fit: FlexFit.tight,
                     child:
-                    Padding(padding: EdgeInsetsGeometry.all(5), child: 
+                    Padding(padding: EdgeInsetsGeometry.all(V4rs.paddingValue(5)), child: 
                     ButtonStyle1(
                         glow: true,
                         imagePath: 'assets/interface_icons/interface_icons/iEdit.png', 
@@ -2373,7 +2391,11 @@ import 'dart:async';
                   children: [
                   (obj.symbol != null) ?
                   Flexible(flex: 4, child: 
-                  Padding(padding: EdgeInsets.fromLTRB(obj.padding ?? 2.0, (obj.padding ?? 2.0) + 2.0, obj.padding ?? 2.0, obj.padding ?? 2.0), 
+                  Padding(padding: EdgeInsets.fromLTRB(
+                      V4rs.paddingValue(obj.padding ?? 2.0), 
+                        V4rs.paddingValue((obj.padding ?? 2.0) + 2.0), 
+                        V4rs.paddingValue(obj.padding ?? 2.0), 
+                        V4rs.paddingValue(obj.padding ?? 2.0)), 
                   child:
                   theSymbol,
                   ),
@@ -2381,7 +2403,7 @@ import 'dart:async';
                   Expanded(flex: 7,
                     child: 
                   Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 5.0), child:
+                  padding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(5)), child:
                   theLabel,
                   ),
                   ),
@@ -2394,13 +2416,17 @@ import 'dart:async';
                   children: [
                   Expanded(flex: 7, child: 
                   Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 5.0), child:
+                  padding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(5)), child:
                   theLabel,
                   ),
                   ),
                   (obj.symbol != null) ?
                   Flexible(flex: 4, child: 
-                  Padding(padding: EdgeInsets.fromLTRB(obj.padding ?? 2.0, obj.padding ?? 2.0, obj.padding ?? 2.0, (obj.padding ?? 2.0) + 2.0), 
+                  Padding(padding: EdgeInsets.fromLTRB(
+                    V4rs.paddingValue(obj.padding ?? 2.0), 
+                    V4rs.paddingValue((obj.padding ?? 2.0) + 2.0), 
+                    V4rs.paddingValue(obj.padding ?? 2.0), 
+                    V4rs.paddingValue(obj.padding ?? 2.0)), 
                   child:
                     theSymbol,
                   ),
@@ -2409,14 +2435,14 @@ import 'dart:async';
               );
               case 3: 
                 return (obj.symbol != null) ? Padding(
-                  padding: EdgeInsets.all(obj.padding ?? 2.0), child:
+                  padding: EdgeInsets.all(V4rs.paddingValue(obj.padding ?? 2.0)), child:
                   theSymbol,
                 ) : SizedBox.shrink();
               case 4:
                 return Column(children: [
                   Expanded(child: 
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 5.0), child:
+                  padding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(5)), child:
                 theLabel2
                 )
                   )
@@ -2607,14 +2633,19 @@ import 'dart:async';
                   children: [
                   (obj.symbol != null) ?
                   Flexible(flex: 4, child: 
-                  Padding(padding: EdgeInsets.fromLTRB(obj.padding ?? 2.0, (obj.padding ?? 2.0) + 2.0, obj.padding ?? 2.0, obj.padding ?? 2.0), 
+                  Padding(padding: EdgeInsets.fromLTRB(
+                    V4rs.paddingValue(obj.padding ?? 2.0), 
+                    V4rs.paddingValue((obj.padding ?? 2.0) + 2.0), 
+                    V4rs.paddingValue(obj.padding ?? 2.0), 
+                    V4rs.paddingValue(obj.padding ?? 2.0)
+                  ), 
                   child:
                   theSymbol,
                   ),
                   ) : SizedBox.shrink(),
                   Expanded(flex: 7, child: 
                   Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 5.0), child:
+                  padding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(5)), child:
                   theLabel,
                   ),
                   ),
@@ -2627,12 +2658,17 @@ import 'dart:async';
                   children: [
                   Expanded(flex: 7, child: 
                   Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 5.0), child:
+                  padding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(5)), child:
                   theLabel,
                   ),),
                   (obj.symbol != null) ?
                   Flexible(flex: 4, child: 
-                  Padding(padding: EdgeInsets.fromLTRB(obj.padding ?? 2.0, obj.padding ?? 2.0, obj.padding ?? 2.0, (obj.padding ?? 2.0) + 2.0), 
+                  Padding(padding: EdgeInsets.fromLTRB(
+                    V4rs.paddingValue(obj.padding ?? 2.0), 
+                    V4rs.paddingValue((obj.padding ?? 2.0) + 2.0), 
+                    V4rs.paddingValue(obj.padding ?? 2.0), 
+                    V4rs.paddingValue(obj.padding ?? 2.0)
+                  ), 
                   child:
                     theSymbol,
                   ),
@@ -2641,14 +2677,14 @@ import 'dart:async';
               );
               case 3: 
                 return (obj.symbol != null) ? Padding(
-                  padding: EdgeInsets.all(obj.padding ?? 2.0), child:
+                  padding: EdgeInsets.all(V4rs.paddingValue(obj.padding ?? 2.0)), child:
                   theSymbol,
                 ) : SizedBox.shrink();
               case 4:
                 return Column( children: [
                   Expanded(child: 
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 5.0), child:
+                  padding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(5)), child:
                 theLabel2
                 )
                   )
@@ -2951,7 +2987,7 @@ class _EditableNavButton extends State<EditableNavButton> {
         },
         
         style: ElevatedButton.styleFrom(
-          padding: EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+          padding: EdgeInsets.symmetric(horizontal: V4rs.paddingValue(5), vertical: V4rs.paddingValue(2)),
           backgroundColor: (Ev4rs.firstNavSelectedUUID.value == obj.id 
                   || Ev4rs.secondNavSelectedUUID.value == obj.id
                   || Ev4rs.navSelectedUUIDs.value.contains(obj.id) 
@@ -2983,7 +3019,7 @@ class _EditableNavButton extends State<EditableNavButton> {
                 //image
                 Expanded( child:
                 Padding(
-                  padding: EdgeInsets.all(padding),
+                  padding: EdgeInsets.all(V4rs.paddingValue(padding)),
                   child: ImageStyle1(
                     image: image, 
                     matchSymbolSaturation: matchSymbolSaturation,
@@ -3033,7 +3069,7 @@ class _EditableNavButton extends State<EditableNavButton> {
                 //image
                 Expanded( child:
                 Padding(
-                  padding: EdgeInsets.all(padding),
+                  padding: EdgeInsets.all(V4rs.paddingValue(padding)),
                   child: ImageStyle1(
                      image: image, 
                     matchSymbolSaturation: matchSymbolSaturation,
@@ -3061,7 +3097,7 @@ class _EditableNavButton extends State<EditableNavButton> {
             return SizedBox.expand(
               child: Center( child:
             Padding(
-                  padding: EdgeInsets.all(padding),
+                  padding: EdgeInsets.all(V4rs.paddingValue(padding)),
                   child: ImageStyle1(
                     image: image, 
                     matchSymbolSaturation: matchSymbolSaturation,

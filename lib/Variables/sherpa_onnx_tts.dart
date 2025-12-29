@@ -15,7 +15,7 @@ class SherpaOnnxV4rs {
 
   late final String globalVocoderPath;
 
-  static Future<sherpa_onnx.OfflineTts> createOfflineTts(String voiceId) async {
+  static Future<sherpa_onnx.OfflineTts> createOfflineTts(String voiceId, String lang) async {
     sherpa_onnx.initBindings();
 
     final base = p.join(
@@ -61,6 +61,7 @@ class SherpaOnnxV4rs {
     late final sherpa_onnx.OfflineTtsMatchaModelConfig matcha;
 
     if (isKokoro) {
+      print('isKokoro');
       vits = sherpa_onnx.OfflineTtsVitsModelConfig(); // unused
       kokoro = sherpa_onnx.OfflineTtsKokoroModelConfig(
         model: modelOnnx,
@@ -71,6 +72,7 @@ class SherpaOnnxV4rs {
       );
       matcha = sherpa_onnx.OfflineTtsMatchaModelConfig(); //unused
     } else if (isMultiMatcha){
+       print('isMultiMatcha');
       vits = sherpa_onnx.OfflineTtsVitsModelConfig(); //unused
       kokoro = sherpa_onnx.OfflineTtsKokoroModelConfig(); // unused
       matcha = sherpa_onnx.OfflineTtsMatchaModelConfig(
@@ -81,6 +83,7 @@ class SherpaOnnxV4rs {
         lexicon: lexicons,
       );
     } else if (isMatcha){
+       print('isMatcha');
       vits = sherpa_onnx.OfflineTtsVitsModelConfig(); //unused
       kokoro = sherpa_onnx.OfflineTtsKokoroModelConfig();
       matcha = sherpa_onnx.OfflineTtsMatchaModelConfig(
@@ -114,11 +117,11 @@ class SherpaOnnxV4rs {
     final config = sherpa_onnx.OfflineTtsConfig(
       model: modelConfig, //vits, kokoro, matcha
       ruleFsts: 
-        (isMatcha || isMultiMatcha) 
+        (isMatcha || isMultiMatcha || (isKokoro && lang != '中文')) 
         ? ''
         : ruleFsts, 
       ruleFars: 
-        (isMatcha || isMultiMatcha) 
+        (isMatcha || isMultiMatcha || (isKokoro && lang != '中文')) 
         ? ''
         : ruleFars,
       maxNumSenetences: 1, //sentance count for proccess per call
@@ -131,14 +134,14 @@ class SherpaOnnxV4rs {
     }
 
   static Future<dynamic> loadSherpaOnnxEngine(String lang) async {
-    print('loadSherpaOnnxEngine');
+    print('loadSherpaOnnxEngine lang: $lang');
     print('Engine: ${Vv4rs.myEngineForVoiceLang[lang]}');
     print('voice: ${Vv4rs.sherpaOnnxLanguageVoice[lang]}');
     print('voice id: ${Vv4rs.sherpaOnnxLanguageVoice[lang]?.id}');
       if (Vv4rs.myEngineForVoiceLang[lang] == 'sherpa-onnx'){
         if (Vv4rs.sherpaOnnxLanguageVoice[lang] != null){
           final tts = await createOfflineTts(
-            Vv4rs.sherpaOnnxLanguageVoice[lang]!.id ?? '',
+            Vv4rs.sherpaOnnxLanguageVoice[lang]!.id ?? '', lang
           );
           print('returned with tts');
           return tts;
@@ -150,7 +153,7 @@ class SherpaOnnxV4rs {
       if (Vv4rs.myEngineForSSVoiceLang[language] == 'sherpa-onnx'){
         if (Vv4rs.sherpaOnnxSSLanguageVoice[language] != null){
           final tts = await createOfflineTts(
-            Vv4rs.sherpaOnnxSSLanguageVoice[language]!.id ?? '',
+            Vv4rs.sherpaOnnxSSLanguageVoice[language]!.id ?? '', language
           );
           return tts;
         }

@@ -113,27 +113,18 @@ class _MessageRowState extends State<MessageRow> {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        return Flex(
-          direction: Axis.horizontal,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Expanded(
-              flex: 2,
+          
+        //message window and right of message window
+        final children = <Widget> [
+          Expanded(
+              flex: V4rs.xSmallModeWidth ? 8 : 10,
               child: Padding(
-                padding: EdgeInsets.symmetric(vertical: 5.0),
-                child: LeftOfMessageWindow(
-                  controller: _controller,
-                  synth: widget.synth, 
-                  speakSelectSherpaOnnxSynth: widget.speakSelectSherpaOnnxSynth,
-                  initForSS: widget.initForSS,
-                  playerForSS: widget.playerForSS,
-                )
-              ),
-            ),
-            Expanded(
-              flex: 10,
-              child: Padding(
-                padding: EdgeInsets.all(8.0),
+                padding: EdgeInsets.fromLTRB(
+                  8, 
+                  V4rs.xSmallModeWidth ? 2 : 8, 
+                  V4rs.xSmallModeWidth ? 5 : 8, 
+                  8
+                ),
                 child: Container(
                   decoration: BoxDecoration(
                   color: Cv4rs.themeColor4,
@@ -154,29 +145,48 @@ class _MessageRowState extends State<MessageRow> {
               ),
               ),
             ),
-            Expanded (
-              flex: 3,
-              child: ValueListenableBuilder(
-                valueListenable: SeV4rs.openSearch, 
-                builder: (context, openSearch, _) {
-                  return (openSearch && (widget.root != null)) 
-                    ? SearchDisplay(root: widget.root) 
-                    : RightOfMessageWindow(
-                      controller: _controller,
-                      onUndo: _undo,
-                      onRedo: _redo,
-                      synth: widget.synth,
-                      sherpaOnnxSynth: widget.sherpaOnnxSynth,
-                      init: widget.init,
-                      player: widget.player,
-                      speakSelectSherpaOnnxSynth: widget.speakSelectSherpaOnnxSynth,
-                      initForSS: widget.initForSS,
-                      playerForSS: widget.playerForSS,
-                    );
+          Expanded (
+            flex: V4rs.xSmallModeWidth ? 5 : 3,
+            child: ValueListenableBuilder(
+              valueListenable: SeV4rs.openSearch, 
+              builder: (context, openSearch, _) {
+                return (openSearch && (widget.root != null)) 
+                  ? SearchDisplay(root: widget.root) 
+                  : RightOfMessageWindow(
+                    controller: _controller,
+                    onUndo: _undo,
+                    onRedo: _redo,
+                    synth: widget.synth,
+                    sherpaOnnxSynth: widget.sherpaOnnxSynth,
+                    init: widget.init,
+                    player: widget.player,
+                    speakSelectSherpaOnnxSynth: widget.speakSelectSherpaOnnxSynth,
+                    initForSS: widget.initForSS,
+                    playerForSS: widget.playerForSS,
+                  );
                 }
             )
         ),
-            
+        ];
+        
+        return Flex(
+          direction: V4rs.xSmallModeWidth ? Axis.vertical : Axis.horizontal,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Expanded(
+            flex: V4rs.xSmallModeWidth ? 3 : 2,
+            child: Padding(
+              padding: EdgeInsets.symmetric(vertical: V4rs.xSmallModeWidth ? 0 : 5),
+              child: LeftOfMessageWindow(
+                controller: _controller,
+                synth: widget.synth, 
+                speakSelectSherpaOnnxSynth: widget.speakSelectSherpaOnnxSynth,
+                initForSS: widget.initForSS,
+                playerForSS: widget.playerForSS,
+              ),
+            ),
+          ),
+          Expanded(flex: V4rs.xSmallModeWidth ? 10 : 13, child: Row(children: children,))
           ],
         );
       },
@@ -209,28 +219,122 @@ class _LeftOfMessageWindow extends State<LeftOfMessageWindow> {
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder ( 
-       builder: (context, constraints) { 
-
+      builder: (context, constraints) { 
         var totalHeight = constraints.maxHeight;
         var totalWidth = constraints.maxWidth;
-
-      return Column (
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          //settings and expand button 
-          Row( 
+        final children = <Widget>[
+          //settings and expand button
+            Row( 
+                children: [
+                  SizedBox(
+                    height: totalHeight * (V4rs.xSmallModeWidth ? 0.8 : 0.33),
+                    width: totalWidth * (V4rs.xSmallModeWidth ? 0.15 : 0.5),
+                    child: Padding (
+                  padding: EdgeInsets.symmetric(
+                      horizontal: 3, 
+                      vertical: V4rs.xSmallModeWidth ? 0 : V4rs.paddingValue(3),
+                    ),
+                  child: ButtonStyle1(
+                    padding: V4rs.xSmallModeHeight ? 15 : 5,
+                    imagePath: 'assets/interface_icons/interface_icons/iSettings.png',
+                    onPressed: () {
+                      if (Sv4rs.speakInterfaceButtonsOnSelect) {
+                            V4rs.speakOnSelect(
+                              'settings', 
+                              V4rs.selectedLanguage.value, 
+                              widget.synth,
+                              widget.speakSelectSherpaOnnxSynth,
+                              widget.initForSS,
+                              widget.playerForSS,
+                              );
+                            }
+                      V4rs.showSettings.value = true;
+                    },
+                  ),
+                  ),
+                  ),
+                  SizedBox(
+                    height: totalHeight * (V4rs.xSmallModeWidth ? 0.8 : 0.33),
+                    width: totalWidth * (V4rs.xSmallModeWidth ? 0.15 : 0.5),
+                    child: Padding (
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 3, 
+                      vertical: V4rs.xSmallModeWidth ? 0 : V4rs.paddingValue(3),
+                    ),
+                    child: ButtonStyle1(
+                    padding: V4rs.xSmallModeHeight ? 15 : 5,
+                    imagePath: 'assets/interface_icons/interface_icons/iExpand.png',
+                    onPressed: () {
+                      if (Sv4rs.speakInterfaceButtonsOnSelect) {
+                            V4rs.speakOnSelect(
+                              'expand page', 
+                              V4rs.selectedLanguage.value, 
+                              widget.synth,
+                              widget.speakSelectSherpaOnnxSynth,
+                              widget.initForSS,
+                              widget.playerForSS,
+                          );
+                        }
+                      V4rs.showExpandPage.value = true;
+                    },
+                  ),
+                  ),
+                  ),
+                ],
+              ),
+            if (V4rs.xSmallMode) 
+            Spacer(),
+          //copy and bookmark button 
+            Row( 
               children: [
-                SizedBox(
-                  height: totalHeight * 0.33,
-                  width: totalWidth * 0.5,
-                  child: Padding (
-                padding: const EdgeInsets.all(3.0),
+                SizedBox( 
+                  height: totalHeight * (V4rs.xSmallModeWidth ? 0.8 : 0.33),
+                    width: totalWidth * (V4rs.xSmallModeWidth ? 0.15 : 0.5),
+                child: Padding (
+                padding: EdgeInsets.symmetric(
+                      horizontal: 3, 
+                      vertical: V4rs.xSmallModeWidth ? 0 : V4rs.paddingValue(3),
+                    ),
                 child: ButtonStyle1(
-                  imagePath: 'assets/interface_icons/interface_icons/iSettings.png',
+                  padding: V4rs.xSmallModeHeight ? 15 : 5,
+                  imagePath: 'assets/interface_icons/interface_icons/iCopy.png',
                   onPressed: () {
                     if (Sv4rs.speakInterfaceButtonsOnSelect) {
                           V4rs.speakOnSelect(
-                            'settings', 
+                            'copy', 
+                            V4rs.selectedLanguage.value, 
+                            widget.synth,
+                            widget.speakSelectSherpaOnnxSynth,
+                            widget.initForSS,
+                            widget.playerForSS,
+                          );
+                        }
+                      Clipboard.setData(ClipboardData(text: widget.controller.text));
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text('Text copied to clipboard'), 
+                                  duration: Duration(milliseconds: 750),
+                                  ),
+                              );
+                  },
+                ),
+                ),
+                ),
+                SizedBox(
+                  height: totalHeight * (V4rs.xSmallModeWidth ? 0.8 : 0.33),
+                    width: totalWidth * (V4rs.xSmallModeWidth ? 0.15 : 0.5),
+                child: Padding (
+                padding: EdgeInsets.symmetric(
+                      horizontal: 3, 
+                      vertical: V4rs.xSmallModeWidth ? 0 : V4rs.paddingValue(3),
+                    ),
+                child: ButtonStyle1(
+                  padding: V4rs.xSmallModeHeight ? 15 : 5,
+                  imagePath: 'assets/interface_icons/interface_icons/iBookmark.png',
+                  onPressed: () {
+                    if (Sv4rs.speakInterfaceButtonsOnSelect) {
+                          V4rs.speakOnSelect(
+                            'bookmark', 
                             V4rs.selectedLanguage.value, 
                             widget.synth,
                             widget.speakSelectSherpaOnnxSynth,
@@ -238,119 +342,56 @@ class _LeftOfMessageWindow extends State<LeftOfMessageWindow> {
                             widget.playerForSS,
                             );
                           }
-                    V4rs.showSettings.value = true;
-                  },
-                ),
-                ),
-                ),
-                SizedBox(
-                  height: totalHeight * 0.33,
-                  width: totalWidth * 0.5,
-                  child: Padding (
-                  padding: const EdgeInsets.all(3.0),
-                  child: ButtonStyle1(
-                  imagePath: 'assets/interface_icons/interface_icons/iExpand.png',
-                  onPressed: () {
-                    if (Sv4rs.speakInterfaceButtonsOnSelect) {
-                          V4rs.speakOnSelect(
-                            'expand page', 
-                            V4rs.selectedLanguage.value, 
-                            widget.synth,
-                            widget.speakSelectSherpaOnnxSynth,
-                            widget.initForSS,
-                            widget.playerForSS,
-                        );
-                      }
-                    V4rs.showExpandPage.value = true;
+                    // put action here
                   },
                 ),
                 ),
                 ),
               ],
             ),
-          //copy and bookmark button 
-          Row( 
-            children: [
-              SizedBox( 
-                height: totalHeight * 0.33,
-              width: totalWidth * 0.5,
-              child: Padding (
-              padding: const EdgeInsets.all(3.0),
-              child: ButtonStyle1(
-                imagePath: 'assets/interface_icons/interface_icons/iCopy.png',
-                onPressed: () {
-                  if (Sv4rs.speakInterfaceButtonsOnSelect) {
-                        V4rs.speakOnSelect(
-                          'copy', 
-                          V4rs.selectedLanguage.value, 
-                          widget.synth,
-                          widget.speakSelectSherpaOnnxSynth,
-                          widget.initForSS,
-                          widget.playerForSS,
-                        );
-                      }
-                    Clipboard.setData(ClipboardData(text: widget.controller.text));
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text('Text copied to clipboard'), 
-                                duration: Duration(milliseconds: 750),
-                                ),
-                            );
-                },
-              ),
-              ),
-              ),
-              SizedBox(
-                height: totalHeight * 0.33,
-              width: totalWidth * 0.5,
-              child: Padding (
-              padding: const EdgeInsets.all(3.0),
-              child: ButtonStyle1(
-                imagePath: 'assets/interface_icons/interface_icons/iBookmark.png',
-                onPressed: () {
-                  if (Sv4rs.speakInterfaceButtonsOnSelect) {
-                        V4rs.speakOnSelect(
-                          'bookmark', 
-                          V4rs.selectedLanguage.value, 
-                          widget.synth,
-                          widget.speakSelectSherpaOnnxSynth,
-                          widget.initForSS,
-                          widget.playerForSS,
-                          );
-                        }
-                  // put action here
-                },
-              ),
-              ),
-              ),
-            ],
-          ),
+            if (V4rs.xSmallMode) 
+            Spacer(),
           //boardset button 
-          SizedBox(
-            height: totalHeight * 0.33,
-            width: totalWidth * 0.5,
-            child: Padding (
-              padding: const EdgeInsets.all(3.0),
-              child: ButtonStyle1(
-                imagePath: 'assets/interface_icons/interface_icons/iBoardset.png',
-                onPressed: () {
-                  if (Sv4rs.speakInterfaceButtonsOnSelect) {
-                    V4rs.speakOnSelect(
-                      'quick swap', 
-                      V4rs.selectedLanguage.value, 
-                      widget.synth,
-                      widget.speakSelectSherpaOnnxSynth,
-                      widget.initForSS,
-                      widget.playerForSS,
-                    );
-                  }
-                  // put action here
-                },
-              ),
-              ),
-        ),
-         ],
+            SizedBox(
+              height: totalHeight * (V4rs.xSmallModeWidth ? 0.8 : 0.33),
+              width: totalWidth * (V4rs.xSmallModeWidth ? 0.15 : 0.5),
+              child: Padding (
+                padding: EdgeInsets.symmetric(
+                      horizontal: 3, 
+                      vertical: V4rs.xSmallModeWidth ? 0 : V4rs.paddingValue(3),
+                    ),
+                child: ButtonStyle1(
+                  padding: V4rs.xSmallModeHeight ? 15 : 5,
+                  imagePath: 'assets/interface_icons/interface_icons/iBoardset.png',
+                  onPressed: () {
+                    if (Sv4rs.speakInterfaceButtonsOnSelect) {
+                      V4rs.speakOnSelect(
+                        'quick swap', 
+                        V4rs.selectedLanguage.value, 
+                        widget.synth,
+                        widget.speakSelectSherpaOnnxSynth,
+                        widget.initForSS,
+                        widget.playerForSS,
+                      );
+                    }
+                    // put action here
+                  },
+                ),
+                ),
+          ),
+        ];
+
+      if (V4rs.xSmallModeWidth) {
+        return Row (
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: children
         );
+      } else {
+        return Column (
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: children
+        );
+      }
       },
     );
   }
@@ -496,9 +537,9 @@ class _MessageWindowState extends State<MessageWindow> {
           children: [
             // Message window
             Expanded(
-              flex: 10,
+              flex: 20,
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(8, 0, 0, 0),
+                padding: EdgeInsets.fromLTRB(V4rs.paddingValue(8), 0, 0, 0),
                 child: Stack(
                   children: [
                     ValueListenableBuilder<bool>(
@@ -507,7 +548,10 @@ class _MessageWindowState extends State<MessageWindow> {
                      return isSpeaking
                           ? Positioned.fill(
                             child: Padding(
-                              padding: EdgeInsets.symmetric(vertical: HV4rs.highlightAsSpoken ? 8 : 10),
+                              padding: EdgeInsets.symmetric(vertical: HV4rs.highlightAsSpoken 
+                                ? V4rs.paddingValue(8) 
+                                : V4rs.paddingValue(10)
+                              ),
                                child:
                                SizedBox( child: 
                             HV4rs.highlightAsSpoken ? 
@@ -535,54 +579,52 @@ class _MessageWindowState extends State<MessageWindow> {
                     //
                    
                     Positioned(
-                      right: 0,
-                      bottom: 0,
+                      right: V4rs.xSmallMode ? 2 : 0,
+                      bottom: V4rs.xSmallMode ? 2 : 0,
                       child: 
                      Visibility(
                       visible: V4rs.showScrollButtons,
-                      child:   
-                      Container( 
-                        height: 37,
-                        width: 50,
-                        padding: EdgeInsets.all(5),
-                        child:
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Cv4rs.themeColor3,
-                          padding: EdgeInsets.all(2),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8),
+                      child: Container( 
+                        height: V4rs.xSmallMode ? 27 : 37,
+                        width: V4rs.xSmallMode ? 40 : 50,
+                        padding: EdgeInsets.all(V4rs.paddingValue(5)),
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Cv4rs.themeColor3,
+                            padding: EdgeInsets.all(V4rs.paddingValue(2)),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                          ),
+                          onPressed: _scrollOneLineDown,
+                          child: ColorFiltered(
+                            colorFilter: ColorFilter.mode(
+                              Cv4rs.uiIconColor,
+                              BlendMode.srcIn,
+                            ),
+                            child: Image.asset("assets/interface_icons/interface_icons/iArrow.png"),
                           ),
                         ),
-                        onPressed: _scrollOneLineDown,
-                        child: ColorFiltered(
-                          colorFilter: ColorFilter.mode(
-                            Cv4rs.uiIconColor,
-                            BlendMode.srcIn,
-                          ),
-                          child: Image.asset("assets/interface_icons/interface_icons/iArrow.png"),
-                        ),
-                      ),
                       ),
                     ),
                     ),
                     
                     Positioned(
-                      right: 0,
-                      bottom: 37,
+                      right: V4rs.xSmallModeWidth ? 2 : 0,
+                      bottom: V4rs.xSmallMode ? 32 : 37,
                       child: 
                     Visibility(
                       visible: V4rs.showScrollButtons,
                       child:   
                       Container( 
-                        height: 37,
-                        width: 50,
-                        padding: EdgeInsets.all(5),
+                        height: V4rs.xSmallMode ? 27 : 37,
+                        width: V4rs.xSmallMode ? 40 : 50,
+                        padding: EdgeInsets.all(V4rs.paddingValue(5)),
                         child:
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Cv4rs.themeColor3,
-                          padding: EdgeInsets.all(2),
+                          padding: EdgeInsets.all(V4rs.paddingValue(2)),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8),
                           ),
@@ -604,9 +646,10 @@ class _MessageWindowState extends State<MessageWindow> {
                     //
                     //language selector slider
                     //
+                    if (Sv4rs.myLanguages.length != 1)
                     Positioned(
-                      right: V4rs.showScrollButtons ? 50 : 0,
-                      bottom: 0,
+                      right: V4rs.showScrollButtons ? (V4rs.xSmallMode ? 45 : 50) : 0,
+                      bottom: V4rs.xSmallMode ? 2 : 0,
                       child: 
                      Visibility(
                       visible: V4rs.showLanguageSelectorSlider,
@@ -629,7 +672,7 @@ class _MessageWindowState extends State<MessageWindow> {
             // Alerts
             if (Sv4rs.alertCount > 0)
             Expanded(
-              flex: 1,
+              flex: V4rs.xSmallModeWidth ? 5 : 2,
               child: Alerts(
                 tts: widget.synth,
                 sherpaOnnxSynth: widget.sherpaOnnxSynth,
@@ -649,18 +692,24 @@ class _MessageWindowState extends State<MessageWindow> {
   Widget languageSelectorSlider() {
   final languages = Sv4rs.myLanguages.toList();
   
-  final double sliderWidth = languages.length * 40.0;
+  final double sliderWidth = languages.length * (V4rs.xSmallModeWidth ? 30 : 40.0);
 
-  return Padding(padding: EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+  return Padding(padding: EdgeInsets.symmetric(
+    horizontal: V4rs.paddingValue(10), 
+    vertical: V4rs.paddingValue(3)
+  ),
   child: Row(
     mainAxisSize: MainAxisSize.min,
     crossAxisAlignment: CrossAxisAlignment.center,
     children: [
       //slider
-      Padding(padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
+      Padding(padding: EdgeInsets.symmetric(
+        horizontal: V4rs.paddingValue(4), 
+        vertical: V4rs.paddingValue(4)
+      ),
       child: 
       SizedBox(
-        width: sliderWidth, // You can adjust this
+        width: sliderWidth, 
         child: SliderTheme(
           data: SliderTheme.of(context).copyWith(
             activeTrackColor: Cv4rs.themeColor3,
@@ -698,7 +747,7 @@ class _MessageWindowState extends State<MessageWindow> {
       Container(
         width: 40,
         alignment: Alignment.center,
-        padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+        padding: const EdgeInsets.all(0),
         decoration: BoxDecoration(
           color: Cv4rs.themeColor3,
           borderRadius: BorderRadius.circular(8),
@@ -715,7 +764,8 @@ class _MessageWindowState extends State<MessageWindow> {
     ],
   ),
   );
-}}
+}
+}
 
 class Alerts extends StatelessWidget {
   final TTSInterface tts;
@@ -916,7 +966,7 @@ class _RightOfMessageWindowState extends State<RightOfMessageWindow> {
         children: [
 
           //undo, play, pause, redo
-          Padding(padding: EdgeInsets.fromLTRB(0, 0, 0, 5),
+          Padding(padding: EdgeInsets.fromLTRB(0, 0, 0, V4rs.paddingValue(5)),
             child: 
           Row( 
            children: [
@@ -924,8 +974,9 @@ class _RightOfMessageWindowState extends State<RightOfMessageWindow> {
                 height: totalHeight * 0.35,
                 width: totalWidth * 0.33,
                 child: Padding (
-                  padding: const EdgeInsets.all(3.0),
+                  padding: EdgeInsets.all(V4rs.paddingValue(3)),
                     child: ButtonStyle1(
+                      padding: V4rs.xSmallMode ? 15 : 5,
                       imagePath: 'assets/interface_icons/interface_icons/iUndo.png',
                       onPressed: () {
                         if (Sv4rs.speakInterfaceButtonsOnSelect) {
@@ -952,8 +1003,9 @@ class _RightOfMessageWindowState extends State<RightOfMessageWindow> {
                             height: totalHeight * 0.35,
                             width: totalWidth * 0.33,
                             child:  Padding (
-                            padding: const EdgeInsets.all(3.0),
+                            padding: EdgeInsets.all(V4rs.paddingValue(3)),
                             child: ButtonStyle1(
+                              padding: V4rs.xSmallMode ? 15 : 5,
                               imagePath: 'assets/interface_icons/interface_icons/iPause.png',
                               onPressed: () 
                                 async {
@@ -979,8 +1031,9 @@ class _RightOfMessageWindowState extends State<RightOfMessageWindow> {
                             height: totalHeight * 0.35,
                             width: totalWidth * 0.33,
                             child:  Padding (
-                            padding: const EdgeInsets.all(3.0),
+                            padding: EdgeInsets.all(V4rs.paddingValue(3)),
                             child: ButtonStyle1(
+                              padding: V4rs.xSmallMode ? 15 : 5,
                               imagePath: 'assets/interface_icons/interface_icons/iPlay.png',
                               onPressed: () 
                                 async {
@@ -1022,8 +1075,9 @@ class _RightOfMessageWindowState extends State<RightOfMessageWindow> {
                 height: totalHeight * 0.35,
                 width: totalWidth * 0.33,
                 child:  Padding (
-                padding: const EdgeInsets.all(3.0),
+                padding: EdgeInsets.all(V4rs.paddingValue(3)),
                 child: ButtonStyle1(
+                  padding: V4rs.xSmallMode ? 15 : 5,
                   imagePath: 'assets/interface_icons/interface_icons/iRe-do.png',
                   onPressed: () {
                     if (Sv4rs.speakInterfaceButtonsOnSelect) {
@@ -1051,8 +1105,9 @@ class _RightOfMessageWindowState extends State<RightOfMessageWindow> {
                   height: totalHeight * 0.35,
                   width: totalWidth * 0.3,
                   child: Padding (
-                      padding: const EdgeInsets.all(3.0),
+                      padding: EdgeInsets.all(V4rs.paddingValue(3)),
                       child: ButtonStyle1(
+                        padding: V4rs.xSmallMode ? 15 : 5,
                         imagePath: 'assets/interface_icons/interface_icons/iRewind.png',
                         onPressed: () async {
                          
@@ -1094,8 +1149,9 @@ class _RightOfMessageWindowState extends State<RightOfMessageWindow> {
                   height: totalHeight * 0.35,
                   width: totalWidth * 0.3,
                   child: Padding (
-                    padding: const EdgeInsets.all(3.0),
+                    padding: EdgeInsets.all(V4rs.paddingValue(3)),
                     child: ButtonStyle1(
+                      padding: V4rs.xSmallMode ? 15 : 5,
                       imagePath: 'assets/interface_icons/interface_icons/iSearch.png',
                       onPressed: () { setState((){
                         if (Sv4rs.speakInterfaceButtonsOnSelect) {
@@ -1120,8 +1176,9 @@ class _RightOfMessageWindowState extends State<RightOfMessageWindow> {
                 height: totalHeight * 0.35,
                 width: totalWidth * 0.4,
                 child: Padding (
-                  padding: const EdgeInsets.all(2.0),
+                  padding: EdgeInsets.all(V4rs.paddingValue(2)),
                   child: ButtonStyle1(
+                    padding: V4rs.xSmallMode ? 15 : 5,
                     imagePath: 'assets/interface_icons/interface_icons/iClear.png',
                     onPressed: () {
                       if (Sv4rs.speakInterfaceButtonsOnSelect) {
@@ -1210,7 +1267,12 @@ class _SearchDisplay extends State<SearchDisplay> {
 
           //search box
           Padding(
-            padding: EdgeInsets.fromLTRB(3, 3, 3, 8),
+            padding: EdgeInsets.fromLTRB(
+              V4rs.paddingValue(3), 
+              V4rs.paddingValue(3), 
+              V4rs.paddingValue(3), 
+              V4rs.paddingValue(8)
+            ),
             child: Container(
               decoration: BoxDecoration(
                 color: Cv4rs.themeColor4,
@@ -1241,7 +1303,7 @@ class _SearchDisplay extends State<SearchDisplay> {
                 height: totalHeight * 0.35,
                 width: totalWidth * 0.3,
                 child: Padding (
-                    padding: const EdgeInsets.all(3.0),
+                    padding: EdgeInsets.all(V4rs.paddingValue(3)),
                     child: ButtonStyle1(
                       imagePath: 'assets/interface_icons/interface_icons/iClose.png',
                       onPressed: () {
@@ -1261,7 +1323,7 @@ class _SearchDisplay extends State<SearchDisplay> {
               height: totalHeight * 0.35,
               width: totalWidth * 0.4,
               child: Padding (
-                padding: const EdgeInsets.all(2.0),
+                padding: EdgeInsets.all(V4rs.paddingValue(2)),
                 child: ButtonStyle1(
                   imagePath: 'assets/interface_icons/interface_icons/iCheck.png',
                   onPressed: () { 
@@ -1336,7 +1398,7 @@ class _SearchDisplay extends State<SearchDisplay> {
         children: [
 
           //search box
-           Padding(padding: EdgeInsets.fromLTRB(0, 0, 0, 5),
+           Padding(padding: EdgeInsets.fromLTRB(0, 0, 0, V4rs.paddingValue(5)),
             child: 
           Row( 
            children: [
@@ -1354,7 +1416,7 @@ class _SearchDisplay extends State<SearchDisplay> {
                 height: totalHeight * 0.35,
                 width: totalWidth * 0.33,
                 child:  Padding (
-                padding: const EdgeInsets.all(3.0),
+                padding: EdgeInsets.all(V4rs.paddingValue(3)),
                 child: ButtonStyle1(
                   turn: 270,
                   imagePath: 'assets/interface_icons/interface_icons/iArrow.png',
@@ -1373,7 +1435,7 @@ class _SearchDisplay extends State<SearchDisplay> {
                 height: totalHeight * 0.35,
                 width: totalWidth * 0.3,
                 child: Padding (
-                    padding: const EdgeInsets.all(3.0),
+                    padding: EdgeInsets.all(V4rs.paddingValue(3)),
                     child: ButtonStyle1(
                       imagePath: 'assets/interface_icons/interface_icons/iClose.png',
                       onPressed: () {
@@ -1395,7 +1457,7 @@ class _SearchDisplay extends State<SearchDisplay> {
               height: totalHeight * 0.35,
               width: totalWidth * 0.4,
               child: Padding (
-                padding: const EdgeInsets.all(2.0),
+                padding: EdgeInsets.all(V4rs.paddingValue(2)),
                 child: ButtonStyle1(
                   imagePath: 'assets/interface_icons/interface_icons/iCheck.png',
                   onPressed: () { 
